@@ -1,0 +1,400 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations \u0026 Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 53,
+  "iteration": 1655212832569,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "description": "",
+      "gridPos": {
+        "h": 18,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 36,
+      "options": {
+        "dataMapping": {
+          "aggregationType": "hostname",
+          "baselineRtUpper": "",
+          "errorRateColumn": "",
+          "errorRateOutgoingColumn": "",
+          "extOrigin": "",
+          "extTarget": "",
+          "requestRateColumn": "Value #A",
+          "requestRateOutgoingColumn": "Value #B",
+          "responseTimeColumn": "",
+          "responseTimeOutgoingColumn": "",
+          "showDummyData": false,
+          "sourceColumn": "",
+          "targetColumn": "cnxhostname",
+          "type": ""
+        },
+        "drillDownLink": "",
+        "externalIcons": [
+          {
+            "filename": "web",
+            "pattern": "web"
+          },
+          {
+            "filename": "message",
+            "pattern": "jms"
+          },
+          {
+            "filename": "database",
+            "pattern": "jdbc"
+          },
+          {
+            "filename": "http",
+            "pattern": "http"
+          }
+        ],
+        "filterEmptyConnections": false,
+        "icons": [
+          {
+            "filename": "java",
+            "pattern": "java"
+          },
+          {
+            "filename": "star_trek",
+            "pattern": "spok|star trek"
+          }
+        ],
+        "showBaselines": false,
+        "showConnectionStats": true,
+        "showDebugInformation": false,
+        "style": {
+          "dangerColor": "rgb(196, 22, 42)",
+          "healthyColor": "rgb(87, 148, 242)",
+          "noDataColor": "rgb(123, 123, 138)"
+        },
+        "sumTimings": false,
+        "timeFormat": "m"
+      },
+      "pluginVersion": "4.0.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "exemplar": false,
+          "expr": "voltdb_iostats_sent_messages{namespace=\"$cluster\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "exemplar": true,
+          "expr": "voltdb_iostats_sent_bytes{namespace=\"$cluster\"}",
+          "format": "table",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "exemplar": true,
+          "expr": "voltdb_iostats_received_bytes{namespace=\"$cluster\"}",
+          "format": "table",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "exemplar": true,
+          "expr": "voltdb_iostats_received_messages{namespace=\"$cluster\"}",
+          "format": "table",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "D"
+        }
+      ],
+      "title": "Cluster connections",
+      "type": "novatec-sdg-panel"
+    },
+    {
+      "description": "",
+      "gridPos": {
+        "h": 18,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
+      "id": 37,
+      "options": {
+        "dataMapping": {
+          "aggregationType": "hostname",
+          "baselineRtUpper": "",
+          "errorRateColumn": "",
+          "errorRateOutgoingColumn": "",
+          "extOrigin": "",
+          "extTarget": "",
+          "requestRateColumn": "Value #A",
+          "requestRateOutgoingColumn": "",
+          "responseTimeColumn": "",
+          "responseTimeOutgoingColumn": "",
+          "showDummyData": false,
+          "sourceColumn": "",
+          "targetColumn": "remotehostname",
+          "type": ""
+        },
+        "drillDownLink": "",
+        "externalIcons": [
+          {
+            "filename": "web",
+            "pattern": "web"
+          },
+          {
+            "filename": "message",
+            "pattern": "jms"
+          },
+          {
+            "filename": "database",
+            "pattern": "jdbc"
+          },
+          {
+            "filename": "http",
+            "pattern": "http"
+          }
+        ],
+        "filterEmptyConnections": false,
+        "icons": [
+          {
+            "filename": "java",
+            "pattern": "java"
+          },
+          {
+            "filename": "star_trek",
+            "pattern": "spok|star trek"
+          }
+        ],
+        "showBaselines": false,
+        "showConnectionStats": true,
+        "showDebugInformation": false,
+        "style": {
+          "dangerColor": "rgb(196, 22, 42)",
+          "healthyColor": "rgb(87, 148, 242)",
+          "noDataColor": "rgb(123, 123, 138)"
+        },
+        "sumTimings": false,
+        "timeFormat": "m"
+      },
+      "pluginVersion": "4.0.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "exemplar": false,
+          "expr": "sum by (hostname, remotehostname)(voltdb_clockskew_ms{namespace=\"$cluster\"})",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Clock skew",
+      "type": "novatec-sdg-panel"
+    },
+    {
+      "description": "",
+      "gridPos": {
+        "h": 18,
+        "w": 24,
+        "x": 0,
+        "y": 36
+      },
+      "id": 38,
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "exemplar": false,
+          "expr": "sum by (id, title)\n (\n    label_replace(\n     label_replace(\n       voltdb_clockskew_ms{namespace=\"$cluster\"},\"id\", \"$1\", \"hostname\", \"(.*)\"),\n       \"title\", \"$1\", \"hostname\", \"(.*)\"\n     )\n)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "exemplar": false,
+          "expr": "sum by (id, source, target)\n (\n   label_replace(\n    label_replace(\n     label_replace(\n       voltdb_clockskew_ms{namespace=\"$cluster\"},\"id\", \"$1\", \"hostname\", \"(.*)\"),\n       \"source\", \"$1\", \"hostname\", \"(.*)\"\n     ),\n      \"target\", \"$1\", \"remotehostname\", \"(.*)\"\n   )\n)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
+        }
+      ],
+      "title": "Clock skew",
+      "transformations": [],
+      "type": "nodeGraph"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 34,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "tkowalcz",
+          "value": "tkowalcz"
+        },
+        "definition": "label_values(namespace)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Cluster",
+        "multi": false,
+        "name": "cluster",
+        "options": [],
+        "query": {
+          "query": "label_values(namespace)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "definition": "label_values({namespace=\"$cluster\"},hostname)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Host",
+        "multi": false,
+        "name": "host",
+        "options": [],
+        "query": {
+          "query": "label_values({namespace=\"$cluster\"},hostname)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},partitionid)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Partition",
+        "multi": false,
+        "name": "partition",
+        "options": [],
+        "query": {
+          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},partitionid)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": false,
+          "text": "0",
+          "value": "0"
+        },
+        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},siteid)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Site",
+        "multi": false,
+        "name": "site",
+        "options": [],
+        "query": {
+          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},siteid)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "VoltDB Cluster connections test",
+  "uid": "J7oTqVUnk",
+  "version": 13,
+  "weekStart": ""
+}
