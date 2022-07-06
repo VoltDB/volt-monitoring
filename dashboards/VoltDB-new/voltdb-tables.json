@@ -90,7 +90,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(voltdb_table_tuple_allocated_memory_bytes{namespace=\"$cluster\"})",
+          "expr": "sum(voltdb_table_tuple_allocated_memory_bytes{cluster=\"$cluster\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "",
@@ -152,7 +152,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(voltdb_table_tuple_count{namespace=\"$cluster\"})",
+          "expr": "sum(voltdb_table_tuple_count{cluster=\"$cluster\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "",
@@ -214,7 +214,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(voltdb_index_memory_estimate_bytes{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(voltdb_index_memory_estimate_bytes{cluster=\"$cluster\",hostname=~\"$host\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "",
@@ -276,7 +276,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(voltdb_index_entries_count{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(voltdb_index_entries_count{cluster=\"$cluster\",hostname=~\"$host\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "",
@@ -380,7 +380,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by(tablename)(voltdb_table_tuple_allocated_memory_bytes{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",tablename=~\"$table\"})",
+          "expr": "sum by(tablename)(voltdb_table_tuple_allocated_memory_bytes{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",tablename=~\"$table\"})",
           "interval": "",
           "legendFormat": "{{table}}",
           "refId": "A"
@@ -436,7 +436,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by (tablename, partitionid)(voltdb_table_tuple_count{namespace=\"$cluster\",hostname=~\"$host\",tablename=~\"$table\",partitionid=~\"$partition\"})",
+          "expr": "sum by (tablename, partitionid)(voltdb_table_tuple_count{cluster=\"$cluster\",hostname=~\"$host\",tablename=~\"$table\",partitionid=~\"$partition\"})",
           "format": "table",
           "interval": "",
           "legendFormat": "",
@@ -508,7 +508,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by (hostname, partitionid)(voltdb_table_tuple_count{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum by (hostname, partitionid)(voltdb_table_tuple_count{cluster=\"$cluster\",hostname=~\"$host\"})",
           "format": "table",
           "interval": "",
           "legendFormat": "",
@@ -580,7 +580,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by (indexname, partitionid)(voltdb_index_entries_count{namespace=\"$cluster\",hostname=~\"$host\",tablename=~\"$table\",partitionid=~\"$partition\"})",
+          "expr": "sum by (indexname, partitionid)(voltdb_index_entries_count{cluster=\"$cluster\",hostname=~\"$host\",tablename=~\"$table\",partitionid=~\"$partition\"})",
           "format": "table",
           "interval": "",
           "legendFormat": "",
@@ -592,7 +592,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by (indexname, partitionid)(voltdb_index_memory_estimate_bytes{namespace=\"$cluster\",hostname=~\"$host\",tablename=~\"$table\",partitionid=~\"$partition\"})",
+          "expr": "sum by (indexname, partitionid)(voltdb_index_memory_estimate_bytes{cluster=\"$cluster\",hostname=~\"$host\",tablename=~\"$table\",partitionid=~\"$partition\"})",
           "format": "table",
           "hide": false,
           "interval": "",
@@ -644,7 +644,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(namespace)",
+        "definition": "label_values(cluster)",
         "hide": 0,
         "includeAll": false,
         "label": "Cluster",
@@ -652,7 +652,7 @@
         "name": "cluster",
         "options": [],
         "query": {
-          "query": "label_values(namespace)",
+          "query": "label_values(cluster)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -672,7 +672,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({namespace=\"$cluster\"},hostname)",
+        "definition": "label_values({cluster=\"$cluster\"},hostname)",
         "hide": 0,
         "includeAll": true,
         "label": "Host",
@@ -680,7 +680,7 @@
         "name": "host",
         "options": [],
         "query": {
-          "query": "label_values({namespace=\"$cluster\"},hostname)",
+          "query": "label_values({cluster=\"$cluster\"},hostname)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -700,7 +700,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},tablename)",
+        "definition": "label_values({cluster=\"$cluster\", hostname=~\"$host\"},tablename)",
         "hide": 0,
         "includeAll": true,
         "label": "Table",
@@ -708,7 +708,7 @@
         "name": "table",
         "options": [],
         "query": {
-          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},tablename)",
+          "query": "label_values({cluster=\"$cluster\", hostname=~\"$host\"},tablename)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -728,7 +728,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\",tablename=~\"$table\"}, partitionid)",
+        "definition": "label_values({cluster=\"$cluster\", hostname=~\"$host\",tablename=~\"$table\"}, partitionid)",
         "hide": 0,
         "includeAll": true,
         "label": "Partition",
@@ -736,7 +736,7 @@
         "name": "partition",
         "options": [],
         "query": {
-          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\",tablename=~\"$table\"}, partitionid)",
+          "query": "label_values({cluster=\"$cluster\", hostname=~\"$host\",tablename=~\"$table\"}, partitionid)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -754,7 +754,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Tables",
-  "uid": "5fFvY18nk",
+  "uid": "5fFvY18nkA",
   "version": 46,
   "weekStart": ""
 }

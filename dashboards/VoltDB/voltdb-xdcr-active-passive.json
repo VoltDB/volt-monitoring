@@ -21,8 +21,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 475,
-  "iteration": 1657090736029,
+  "id": 571,
+  "iteration": 1657031631640,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -36,7 +36,7 @@
       },
       "id": 16,
       "panels": [],
-      "title": "Overview",
+      "title": "Producer Overview",
       "type": "row"
     },
     {
@@ -44,6 +44,7 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
+      "description": "The total number of bytes currently queued for transmission\nto the replica.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -56,19 +57,16 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
-          }
+          },
+          "unit": "bytes"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
-        "w": 6,
+        "h": 4,
+        "w": 4,
         "x": 0,
         "y": 1
       },
@@ -91,13 +89,13 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max(voltdb_export_pending_tuples_count{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(voltdb_drproducer_total_queued_bytes{namespace=\"$active\",hostname=~\"$host\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "title": "Pending tuples",
+      "title": "Size of pending tuples",
       "type": "gauge"
     },
     {
@@ -105,6 +103,7 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
+      "description": "The total number of bytes of queued data currently held\nin memory. If the amount of total bytes is larger than the\namount in memory, the remainder is kept in overflow storage on disk.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -117,20 +116,17 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
-          }
+          },
+          "unit": "bytes"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
-        "w": 6,
-        "x": 6,
+        "h": 4,
+        "w": 4,
+        "x": 4,
         "y": 1
       },
       "id": 7,
@@ -152,13 +148,13 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(increase(voltdb_export_total_queued_tuples_count{namespace=\"$cluster\",hostname=~\"$host\"}[$__interval]))",
+          "expr": "sum(voltdb_drproducer_total_queued_in_memory_bytes{namespace=\"$active\",hostname=~\"$host\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "title": "Total queued tuples",
+      "title": "Memory queues size",
       "type": "gauge"
     },
     {
@@ -166,6 +162,76 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 60
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 1
+      },
+      "id": 18,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "avg(((10 * 1024 * 1024) -voltdb_drproducer_consumer_available_bytes{namespace=\"$active\",hostname=~\"$host\"}) / (10 * 1024 * 1024))",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Buffers usage",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "The timestamp of the last transaction acknowledged by the\nconsumer.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -178,23 +244,81 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
-          }
+          },
+          "unit": "dateTimeFromNow"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
-        "w": 6,
+        "h": 4,
+        "w": 4,
         "x": 12,
         "y": 1
       },
-      "id": 8,
+      "id": 19,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "min(voltdb_drproducer_last_acked_timestamp_seconds{namespace=\"$active\",hostname=~\"$host\"}* 1000)",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Last acknowledged transaction",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "The timestamp of the last transaction acknowledged by the\nconsumer.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 1
+      },
+      "id": 27,
       "options": {
         "orientation": "auto",
         "reduceOptions": {
@@ -213,13 +337,13 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(voltdb_export_missing_tuples_count{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max(replication_rtt_5m_max{namespace=\"$active\",hostname=~\"$host\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "title": "Total missing tuples",
+      "title": "Replication lag (5m max)",
       "type": "gauge"
     },
     {
@@ -227,6 +351,7 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
+      "description": "The number of missing transactions between those already\nacknowledged by the consumer and the next available for\ntransmission. Under normal operating conditions, this value\nis zero.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -242,20 +367,95 @@
               },
               {
                 "color": "red",
-                "value": 80
+                "value": 1
               }
             ]
-          }
+          },
+          "unit": "short"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 5,
-        "w": 6,
-        "x": 18,
+        "h": 4,
+        "w": 4,
+        "x": 20,
         "y": 1
       },
-      "id": 2,
+      "id": 41,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "max(voltdb_drproducer_missing_txn_count{namespace=\"$active\",hostname=~\"$host\"})",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Queue gap",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "id": 22,
+      "panels": [],
+      "title": "Consumer Overview",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "The average rate of replication over the past minute.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 6
+      },
+      "id": 20,
       "options": {
         "orientation": "auto",
         "reduceOptions": {
@@ -274,13 +474,285 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max(voltdb_export_max_latency_seconds{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "avg(voltdb_drconsumer_1min_avg_replication_bytes_per_second{namespace=\"$passive\",hostname=~\"$host\"})",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
+        }
+      ],
+      "title": "Average replication speed",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 60
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 6
+      },
+      "id": 42,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "avg(((10 * 1024 * 1024) -voltdb_drconsumer_available_bytes{namespace=\"$passive\",hostname=~\"$host\"}) / (10 * 1024 * 1024))",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "title": "Max export latency",
+      "title": "Buffers usage",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "The timestamp of the last transaction received from the producer.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "yellow",
+                  "index": 0,
+                  "text": "-"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "dateTimeFromNow"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 6
+      },
+      "id": 35,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "max(voltdb_drconsumer_last_received_timestamp_seconds{namespace=\"$passive\",hostname=~\"$host\"}) * 1000",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "{{hostname}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Last received transaction",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "The number of repeated buffers received after the initial\npackets were dropped because the queue was full.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 6
+      },
+      "id": 24,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "avg(voltdb_drconsumer_duplicate_buffers{namespace=\"$passive\",hostname=~\"$host\"})",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Duplicated buffers",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "The number of buffers received but dropped because the\nqueue was full.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 6
+      },
+      "id": 25,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "sum(voltdb_drconsumer_ignored_buffers{namespace=\"$passive\",hostname=~\"$host\"})",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Ignored buffers",
       "type": "gauge"
     },
     {
@@ -289,9 +761,9 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 6
+        "y": 10
       },
-      "id": 4,
+      "id": 32,
       "panels": [],
       "title": "Details",
       "type": "row"
@@ -301,276 +773,7 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 7
-      },
-      "id": 13,
-      "options": {
-        "colorByField": "Value #A",
-        "groupByField": "source",
-        "tiling": "treemapSquarify"
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "sum by (source, partitionid) (voltdb_export_pending_tuples_count{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",source=~\"$source\"})",
-          "format": "table",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "1",
-          "format": "table",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "DUMMY QUERY FOR DASHBOARDS COMPATIBILITY"
-        }
-      ],
-      "title": "Pending tuples count by source and partition",
-      "transformations": [],
-      "type": "marcusolsson-treemap-panel"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 7
-      },
-      "id": 14,
-      "options": {
-        "colorByField": "Value #A",
-        "groupByField": "source",
-        "tiling": "treemapSquarify"
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "sum by (source, partitionid) (voltdb_export_missing_tuples_count)",
-          "format": "table",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "1",
-          "format": "table",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "DUMMY QUERY FOR DASHBOARDS COMPATIBILITY"
-        }
-      ],
-      "title": "Missing tuples count by source and partition",
-      "transformations": [],
-      "type": "marcusolsson-treemap-panel"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 16
-      },
-      "id": 5,
-      "options": {
-        "displayMode": "gradient",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "min by (partitionid) (voltdb_export_last_acked_timestamp)",
-          "interval": "",
-          "legendFormat": "{{partitionid}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Acknowledgements lag (max across partitions)",
-      "transformations": [],
-      "type": "bargauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 16
-      },
-      "id": 10,
-      "options": {
-        "displayMode": "gradient",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "showUnfilled": true
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "min by (source) (voltdb_export_last_acked_timestamp)",
-          "interval": "",
-          "legendFormat": "{{source}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Acknowledgements lag (max across sources)",
-      "transformations": [],
-      "type": "bargauge"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
+      "description": "Exponentially weighted moving average rate of replication over the past minute.\ndata rate is measured in bytes per second",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -624,11 +827,114 @@
       },
       "gridPos": {
         "h": 10,
-        "w": 24,
+        "w": 12,
         "x": 0,
-        "y": 25
+        "y": 11
       },
-      "id": 12,
+      "id": 29,
+      "options": {
+        "legend": {
+          "calcs": ["last"],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "avg by (hostname) (voltdb_drconsumer_1min_avg_replication_bytes_per_second{namespace=\"$passive\",hostname=~\"$host\"})",
+          "interval": "",
+          "legendFormat": "{{partitionid}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Rate of replication (1m moving average)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "The timestamp of the last transaction queued for transmission to the consumer.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "super-light-blue",
+                  "index": 1,
+                  "text": "-"
+                },
+                "1199145600000": {
+                  "color": "super-light-blue",
+                  "index": 0,
+                  "text": "-"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "dateTimeFromNow"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 11
+      },
+      "id": 39,
       "options": {
         "legend": {
           "calcs": ["lastNotNull"],
@@ -648,14 +954,14 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "exemplar": true,
-          "expr": "sum by (source) (voltdb_export_pending_tuples_count)",
+          "exemplar": false,
+          "expr": "max by (partitionid) (voltdb_drproducer_last_queued_timestamp_seconds{namespace=\"$active\",hostname=~\"$host\"} * 1000 \u003e 1199145600000)",
           "interval": "",
-          "legendFormat": "{{source}}",
+          "legendFormat": "{{partitionid}}",
           "refId": "A"
         }
       ],
-      "title": "Pending tuples count by source",
+      "title": "Timestamp of the last transaction queued for transmission to the consumer. (per partition)",
       "transformations": [],
       "type": "timeseries"
     },
@@ -664,6 +970,7 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -716,19 +1023,17 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
-        "w": 24,
+        "h": 8,
+        "w": 12,
         "x": 0,
-        "y": 35
+        "y": 21
       },
-      "id": 11,
+      "id": 33,
       "options": {
         "legend": {
           "calcs": ["lastNotNull"],
           "displayMode": "table",
-          "placement": "right",
-          "sortBy": "Last *",
-          "sortDesc": true
+          "placement": "right"
         },
         "tooltip": {
           "mode": "single"
@@ -742,17 +1047,17 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by (source) (voltdb_export_missing_tuples_count)",
+          "expr": "sum by (partitionid) (voltdb_drproducer_total_buffer_count{namespace=\"$active\",hostname=~\"$host\"})",
           "interval": "",
-          "legendFormat": "{{source}}",
+          "legendFormat": "{{partitionid}}",
           "refId": "A"
         }
       ],
-      "title": "Missing tuples count by source",
-      "transformations": [],
+      "title": "Buffers sent but not yet acknowledged (per partition)",
       "type": "timeseries"
     }
   ],
+  "refresh": false,
   "schemaVersion": 34,
   "style": "dark",
   "tags": [],
@@ -778,9 +1083,9 @@
       },
       {
         "current": {
-          "selected": false,
-          "text": "ajgent",
-          "value": "ajgent"
+          "selected": true,
+          "text": "twxdcr1",
+          "value": "twxdcr1"
         },
         "datasource": {
           "type": "prometheus",
@@ -789,9 +1094,36 @@
         "definition": "label_values(namespace)",
         "hide": 0,
         "includeAll": false,
-        "label": "Cluster",
+        "label": "Active",
         "multi": false,
-        "name": "cluster",
+        "name": "active",
+        "options": [],
+        "query": {
+          "query": "label_values(namespace)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": "twxdcr2",
+          "value": "twxdcr2"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "definition": "label_values(namespace)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Passive",
+        "multi": false,
+        "name": "passive",
         "options": [],
         "query": {
           "query": "label_values(namespace)",
@@ -834,37 +1166,9 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${datasource}"
-        },
-        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},partitionid)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Partition",
-        "multi": true,
-        "name": "partition",
-        "options": [],
-        "query": {
-          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},partitionid)",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
-      },
-      {
-        "allValue": ".*",
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": ["All"],
+          "value": ["$__all"]
         },
         "datasource": {
           "type": "prometheus",
@@ -895,8 +1199,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "VoltDB Export",
-  "uid": "7Hn1fAj7z",
-  "version": 29,
+  "title": "VoltDB XDCR Active-Passive",
+  "uid": "bETM2_q7z",
+  "version": 9,
   "weekStart": ""
 }

@@ -21,8 +21,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 478,
-  "iteration": 1657090738408,
+  "id": 572,
+  "iteration": 1657090735663,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -33,8 +33,8 @@
         "x": 0,
         "y": 0
       },
-      "id": 48,
-      "title": "Status",
+      "id": 44,
+      "title": "Row title",
       "type": "row"
     },
     {
@@ -94,7 +94,7 @@
         "x": 0,
         "y": 1
       },
-      "id": 50,
+      "id": 46,
       "options": {
         "footer": {
           "fields": "",
@@ -112,7 +112,6 @@
           },
           "exemplar": true,
           "expr": "voltdb_drproducer_replication_info{namespace=\"$cluster\"}",
-          "instant": false,
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -125,7 +124,7 @@
           "options": {
             "includeTimeField": false,
             "mode": "reduceFields",
-            "reducers": ["lastNotNull"]
+            "reducers": ["max"]
           }
         },
         {
@@ -163,132 +162,17 @@
       "type": "table"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "fillOpacity": 70,
-            "lineWidth": 0
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "replication_connection_status"
-            },
-            "properties": [
-              {
-                "id": "mappings",
-                "value": [
-                  {
-                    "options": {
-                      "DOWN": {
-                        "color": "red",
-                        "index": 0,
-                        "text": "DOWN"
-                      }
-                    },
-                    "type": "value"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 13,
-        "x": 0,
-        "y": 6
-      },
-      "id": 51,
-      "options": {
-        "alignValue": "left",
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "mergeValues": true,
-        "rowHeight": 0.9,
-        "showValue": "auto",
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "voltdb_drproducer_replication_info{namespace=\"$cluster\"}",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Status of replication to other clusters",
-      "transformations": [
-        {
-          "id": "labelsToFields",
-          "options": {
-            "keepLabels": [
-              "replication_connection_status",
-              "replication_in_progress",
-              "replication_mode"
-            ],
-            "mode": "columns"
-          }
-        },
-        {
-          "id": "merge",
-          "options": {}
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Value": true
-            },
-            "indexByName": {},
-            "renameByName": {}
-          }
-        }
-      ],
-      "type": "state-timeline"
-    },
-    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 11
+        "y": 6
       },
       "id": 16,
       "panels": [],
-      "title": "Producer Overview",
+      "repeat": "cluster",
+      "title": "$cluster - Producer Overview",
       "type": "row"
     },
     {
@@ -320,7 +204,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 12
+        "y": 7
       },
       "id": 6,
       "options": {
@@ -379,7 +263,7 @@
         "h": 4,
         "w": 4,
         "x": 4,
-        "y": 12
+        "y": 7
       },
       "id": 7,
       "options": {
@@ -448,7 +332,7 @@
         "h": 4,
         "w": 4,
         "x": 8,
-        "y": 12
+        "y": 7
       },
       "id": 18,
       "options": {
@@ -507,7 +391,7 @@
         "h": 4,
         "w": 4,
         "x": 12,
-        "y": 12
+        "y": 7
       },
       "id": 19,
       "options": {
@@ -568,7 +452,7 @@
         "h": 4,
         "w": 4,
         "x": 16,
-        "y": 12
+        "y": 7
       },
       "id": 27,
       "options": {
@@ -631,7 +515,7 @@
         "h": 4,
         "w": 4,
         "x": 20,
-        "y": 12
+        "y": 7
       },
       "id": 41,
       "options": {
@@ -669,11 +553,12 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 11
       },
       "id": 22,
       "panels": [],
-      "title": "Consumer Overview",
+      "repeat": "cluster",
+      "title": "$cluster - Consumer Overview",
       "type": "row"
     },
     {
@@ -705,7 +590,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 17
+        "y": 12
       },
       "id": 20,
       "options": {
@@ -786,7 +671,7 @@
         "h": 4,
         "w": 4,
         "x": 4,
-        "y": 17
+        "y": 12
       },
       "id": 42,
       "options": {
@@ -856,7 +741,7 @@
         "h": 4,
         "w": 4,
         "x": 8,
-        "y": 17
+        "y": 12
       },
       "id": 35,
       "options": {
@@ -918,7 +803,7 @@
         "h": 4,
         "w": 4,
         "x": 12,
-        "y": 17
+        "y": 12
       },
       "id": 24,
       "options": {
@@ -977,7 +862,7 @@
         "h": 4,
         "w": 4,
         "x": 16,
-        "y": 17
+        "y": 12
       },
       "id": 25,
       "options": {
@@ -1036,7 +921,7 @@
         "h": 4,
         "w": 4,
         "x": 20,
-        "y": 17
+        "y": 12
       },
       "id": 26,
       "options": {
@@ -1057,7 +942,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "voltdb_drproducer_replication_info{namespace=\"$cluster\",hostname=~\"$host\"}",
+          "expr": "max(voltdb_drproducer_last_acked_timestamp_seconds{namespace=\"$cluster\",hostname=~\"$host\"}-voltdb_drproducer_last_queued_timestamp_seconds{namespace=\"$cluster\",hostname=~\"$host\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1072,556 +957,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 21
-      },
-      "id": 32,
-      "panels": [],
-      "title": "Producer details",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 22
-      },
-      "id": 33,
-      "options": {
-        "legend": {
-          "calcs": ["lastNotNull"],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "sum by (partitionid) (voltdb_drproducer_total_buffer_count{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"})",
-          "interval": "",
-          "legendFormat": "{{partitionid}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Buffers sent but not yet acknowledged (per partition)",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 10
-              },
-              {
-                "color": "red",
-                "value": 20
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 22
-      },
-      "id": 34,
-      "options": {
-        "colorByField": "Value #A",
-        "groupByField": "hostname",
-        "labelFields": [],
-        "sizeField": "Value #A",
-        "textField": "partitionid",
-        "tiling": "treemapSquarify"
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": false,
-          "expr": "sum by (hostname, partitionid) (voltdb_drproducer_total_buffer_count{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"})",
-          "format": "table",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "1",
-          "format": "table",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "DUMMY QUERY FOR DASHBOARDS COMPATIBILITY"
-        }
-      ],
-      "title": "Buffers sent but not yet acknowledged (per host, per partition)",
-      "type": "marcusolsson-treemap-panel"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "description": "The total number of bytes currently queued for transmission\nto the replica",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 0
-              }
-            ]
-          },
-          "unit": "decbytes"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 30
-      },
-      "id": 37,
-      "options": {
-        "legend": {
-          "calcs": ["lastNotNull"],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "sum by (partitionid) (voltdb_drproducer_total_queued_bytes{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"})",
-          "interval": "",
-          "legendFormat": "{{partitionid}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Bytes queued for transmission to the replica (per partition)",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "description": "The total number of bytes currently queued for transmission\nto the replica",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 1000000
-              },
-              {
-                "color": "red",
-                "value": 10000000
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 30
-      },
-      "id": 38,
-      "options": {
-        "colorByField": "Value #A",
-        "groupByField": "hostname",
-        "labelFields": [],
-        "sizeField": "Value #A",
-        "textField": "partitionid",
-        "tiling": "treemapSquarify"
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": false,
-          "expr": "sum by (hostname, partitionid) (voltdb_drproducer_total_buffer_count{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"})",
-          "format": "table",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "1",
-          "format": "table",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "DUMMY QUERY FOR DASHBOARDS COMPATIBILITY"
-        }
-      ],
-      "title": "Bytes queued for transmission to the replica (per host, per partition)",
-      "type": "marcusolsson-treemap-panel"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "description": "The timestamp of the last transaction queued for transmission to the consumer.",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "color": "super-light-blue",
-                  "index": 1,
-                  "text": "-"
-                },
-                "1199145600000": {
-                  "color": "super-light-blue",
-                  "index": 0,
-                  "text": "-"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "dateTimeFromNow"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 38
-      },
-      "id": 39,
-      "options": {
-        "legend": {
-          "calcs": ["lastNotNull"],
-          "displayMode": "table",
-          "placement": "right",
-          "sortBy": "Last *",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": false,
-          "expr": "max by (partitionid) (voltdb_drproducer_last_queued_timestamp_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"} * 1000 \u003e 1199145600000)",
-          "interval": "",
-          "legendFormat": "{{partitionid}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Timestamp of the last transaction queued for transmission to the consumer. (per partition)",
-      "transformations": [],
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "description": "The timestamp of the last transaction queued for transmission to the consumer.",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "color": "super-light-blue",
-                  "index": 1,
-                  "text": "-"
-                },
-                "1199145600000": {
-                  "color": "super-light-blue",
-                  "index": 0,
-                  "text": "-"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "dateTimeFromNow"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 38
-      },
-      "id": 40,
-      "options": {
-        "colorByField": "Value #A",
-        "groupByField": "hostname",
-        "labelFields": [],
-        "sizeField": "Value #A",
-        "textField": "partitionid",
-        "tiling": "treemapSquarify"
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": false,
-          "expr": "max by (hostname, partitionid) (voltdb_drproducer_last_queued_timestamp_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"} * 1000)",
-          "format": "table",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "1",
-          "format": "table",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "DUMMY QUERY FOR DASHBOARDS COMPATIBILITY"
-        }
-      ],
-      "title": "The timestamp of the last transaction queued for transmission to the consumer. (per host, per partition)",
-      "type": "marcusolsson-treemap-panel"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 46
+        "y": 16
       },
       "id": 4,
       "panels": [],
@@ -1689,7 +1025,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 47
+        "y": 17
       },
       "id": 29,
       "options": {
@@ -1703,6 +1039,8 @@
         }
       },
       "pluginVersion": "8.3.3",
+      "repeat": "cluster",
+      "repeatDirection": "h",
       "targets": [
         {
           "datasource": {
@@ -1720,104 +1058,24 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "description": "Exponentially weighted moving average rate of replication over the past minute.\ndata rate is measured in bytes per second",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
+      "collapsed": false,
       "gridPos": {
-        "h": 9,
-        "w": 9,
+        "h": 1,
+        "w": 24,
         "x": 0,
-        "y": 57
+        "y": 27
       },
-      "id": 45,
-      "options": {
-        "legend": {
-          "calcs": ["lastNotNull", "sum"],
-          "displayMode": "table",
-          "placement": "bottom",
-          "sortBy": "Total",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "sum by (hostname) (voltdb_drconsumer_duplicate_buffers{namespace=\"$cluster\",hostname=~\"$host\"})",
-          "interval": "",
-          "legendFormat": "{{partitionid}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Duplicated buffers (by host)",
-      "type": "timeseries"
+      "id": 32,
+      "panels": [],
+      "title": "Producer details",
+      "type": "row"
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "${datasource}"
       },
-      "description": "Exponentially weighted moving average rate of replication over the past minute.\ndata rate is measured in bytes per second",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1870,15 +1128,15 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
-        "w": 15,
-        "x": 9,
-        "y": 57
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 28
       },
-      "id": 46,
+      "id": 33,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull", "sum"],
+          "calcs": ["lastNotNull"],
           "displayMode": "table",
           "placement": "right"
         },
@@ -1894,13 +1152,13 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by (partitionid, hostname) (voltdb_drconsumer_duplicate_buffers{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum by (partitionid) (voltdb_drproducer_total_buffer_count{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"})",
           "interval": "",
-          "legendFormat": "{{hostname}}-{{partitionid}}",
+          "legendFormat": "{{partitionid}}",
           "refId": "A"
         }
       ],
-      "title": "Duplicated buffers (by partition, host)",
+      "title": "Buffers sent but not yet acknowledged (per partition)",
       "type": "timeseries"
     },
     {
@@ -1908,6 +1166,95 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
+      "description": "The timestamp of the last transaction queued for transmission to the consumer.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "color": "super-light-blue",
+                  "index": 1,
+                  "text": "-"
+                },
+                "1199145600000": {
+                  "color": "super-light-blue",
+                  "index": 0,
+                  "text": "-"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "dateTimeFromNow"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 28
+      },
+      "id": 40,
+      "options": {
+        "colorByField": "Value #A",
+        "groupByField": "hostname",
+        "labelFields": [],
+        "sizeField": "Value #A",
+        "textField": "partitionid",
+        "tiling": "treemapSquarify"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": false,
+          "expr": "max by (hostname, partitionid) (voltdb_drproducer_last_queued_timestamp_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"} * 1000)",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "1",
+          "format": "table",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "DUMMY QUERY FOR DASHBOARDS COMPATIBILITY"
+        }
+      ],
+      "title": "The timestamp of the last transaction queued for transmission to the consumer. (per host, per partition)",
+      "type": "marcusolsson-treemap-panel"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "description": "The timestamp of the last transaction queued for transmission to the consumer.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1946,108 +1293,10 @@
               "options": {
                 "0": {
                   "color": "super-light-blue",
-                  "index": 0,
+                  "index": 1,
                   "text": "-"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "dateTimeFromNow"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 9,
-        "x": 0,
-        "y": 66
-      },
-      "id": 43,
-      "options": {
-        "legend": {
-          "calcs": ["lastNotNull"],
-          "displayMode": "table",
-          "placement": "bottom",
-          "sortBy": "Last *",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "min by (hostname) (voltdb_drconsumer_last_received_timestamp_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"} * 1000)",
-          "interval": "",
-          "legendFormat": "{{hostname}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Last received timestamp (min, by host)",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [
-            {
-              "options": {
-                "0": {
+                },
+                "1199145600000": {
                   "color": "super-light-blue",
                   "index": 0,
                   "text": "-"
@@ -2062,10 +1311,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -2074,105 +1319,12 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
-        "w": 15,
-        "x": 9,
-        "y": 66
-      },
-      "id": 44,
-      "options": {
-        "legend": {
-          "calcs": ["last"],
-          "displayMode": "table",
-          "placement": "right",
-          "sortBy": "Last",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "min by (partitionid, hostname) (voltdb_drconsumer_last_received_timestamp_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"} * 1000)",
-          "interval": "",
-          "legendFormat": "{{hostname}}-{{partitionid}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Last received timestamp (by hostname)",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "max": 256,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 10,
-        "w": 24,
+        "h": 8,
+        "w": 12,
         "x": 0,
-        "y": 75
+        "y": 36
       },
-      "id": 30,
+      "id": 39,
       "options": {
         "legend": {
           "calcs": ["lastNotNull"],
@@ -2192,14 +1344,15 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "exemplar": true,
-          "expr": "sum by (hostname, partitionid) (voltdb_drconsumer_available_buffers{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"})",
+          "exemplar": false,
+          "expr": "max by (partitionid) (voltdb_drproducer_last_queued_timestamp_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"} * 1000 \u003e 1199145600000)",
           "interval": "",
-          "legendFormat": "{{hostname}} ({{partitionid}})",
+          "legendFormat": "{{partitionid}}",
           "refId": "A"
         }
       ],
-      "title": "Available buffers",
+      "title": "Timestamp of the last transaction queued for transmission to the consumer. (per partition)",
+      "transformations": [],
       "type": "timeseries"
     }
   ],
@@ -2209,6 +1362,33 @@
   "tags": [],
   "templating": {
     "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": ["tkowalcz1"],
+          "value": ["tkowalcz1"]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "definition": "label_values(namespace)",
+        "hide": 0,
+        "includeAll": false,
+        "label": "Clusters",
+        "multi": true,
+        "name": "cluster",
+        "options": [],
+        "query": {
+          "query": "label_values(namespace)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
       {
         "current": {
           "selected": false,
@@ -2226,33 +1406,6 @@
         "regex": "",
         "skipUrlSync": false,
         "type": "datasource"
-      },
-      {
-        "current": {
-          "selected": false,
-          "text": "ajgent",
-          "value": "ajgent"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${datasource}"
-        },
-        "definition": "label_values(namespace)",
-        "hide": 0,
-        "includeAll": false,
-        "label": "Cluster",
-        "multi": false,
-        "name": "cluster",
-        "options": [],
-        "query": {
-          "query": "label_values(namespace)",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "type": "query"
       },
       {
         "allValue": ".*",
@@ -2309,45 +1462,17 @@
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
-      },
-      {
-        "allValue": ".*",
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${datasource}"
-        },
-        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\",partitionid=~\"$partition\"}, source)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Source",
-        "multi": true,
-        "name": "source",
-        "options": [],
-        "query": {
-          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\",partitionid=~\"$partition\"}, source)",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
       }
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-3h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "VoltDB XDCR",
-  "uid": "VBIZq0jnz",
-  "version": 85,
+  "title": "VoltDB XDCR Active-Active",
+  "uid": "chJfh_3nk",
+  "version": 17,
   "weekStart": ""
 }

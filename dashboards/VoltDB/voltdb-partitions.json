@@ -22,7 +22,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 55,
-  "iteration": 1652696283107,
+  "iteration": 1657090739346,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -1338,20 +1338,7 @@
           },
           "unit": "short"
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Value #B"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "short"
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 9,
@@ -1380,15 +1367,23 @@
           "interval": "",
           "legendFormat": "",
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "1",
+          "format": "table",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "DUMMY QUERY FOR DASHBOARDS COMPATIBILITY"
         }
       ],
       "title": "Tuples in table by table and partition",
-      "transformations": [
-        {
-          "id": "merge",
-          "options": {}
-        }
-      ],
+      "transformations": [],
       "type": "marcusolsson-treemap-panel"
     }
   ],
@@ -1537,6 +1532,6 @@
   "timezone": "",
   "title": "VoltDB Partitions",
   "uid": "nEOSzH8nz",
-  "version": 38,
+  "version": 42,
   "weekStart": ""
 }

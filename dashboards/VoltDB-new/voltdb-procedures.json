@@ -91,7 +91,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(rate(voltdb_procedure_invocations{namespace=\"$cluster\",hostname=~\"$host\"}[$__interval]))",
+          "expr": "sum(rate(voltdb_procedure_invocations{cluster=\"$cluster\",hostname=~\"$host\"}[$__interval]))",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{hostname}}",
@@ -162,7 +162,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(rate(voltdb_procedure_failures{namespace=\"$cluster\",hostname=~\"$host\"}[$__interval]))",
+          "expr": "sum(rate(voltdb_procedure_failures{cluster=\"$cluster\",hostname=~\"$host\"}[$__interval]))",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{hostname}}",
@@ -233,7 +233,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(rate(voltdb_procedure_aborts{namespace=\"$cluster\",hostname=~\"$host\"}[$__interval]))",
+          "expr": "sum(rate(voltdb_procedure_aborts{cluster=\"$cluster\",hostname=~\"$host\"}[$__interval]))",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{hostname}}",
@@ -304,7 +304,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max(voltdb_procedure_max_execution_time_seconds{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max(voltdb_procedure_max_execution_time_seconds{cluster=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{hostname}}",
@@ -408,7 +408,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(rate(voltdb_procedure_invocations{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"}[$__interval]))",
+          "expr": "sum(rate(voltdb_procedure_invocations{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"}[$__interval]))",
           "interval": "",
           "legendFormat": "{{procedure}}",
           "refId": "A"
@@ -419,7 +419,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "avg(rate(voltdb_procedure_failures{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",siteid=~\"$site\",procedure=~\"$procedure\"}[$__interval]))",
+          "expr": "avg(rate(voltdb_procedure_failures{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",siteid=~\"$site\",procedure=~\"$procedure\"}[$__interval]))",
           "hide": true,
           "interval": "",
           "legendFormat": "Average failure rate",
@@ -431,7 +431,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "avg(rate(voltdb_procedure_aborts{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",siteid=~\"$site\",procedure=~\"$procedure\"}[$__interval]))",
+          "expr": "avg(rate(voltdb_procedure_aborts{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",siteid=~\"$site\",procedure=~\"$procedure\"}[$__interval]))",
           "hide": true,
           "interval": "",
           "legendFormat": "Average abort rate",
@@ -529,7 +529,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sort(max by (procedure)(voltdb_procedure_max_execution_time_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"}))",
+          "expr": "sort(max by (procedure)(voltdb_procedure_max_execution_time_seconds{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"}))",
           "interval": "",
           "legendFormat": "{{procedure}}",
           "refId": "A"
@@ -621,7 +621,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by (procedure)(voltdb_procedure_invocations{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"})",
+          "expr": "sum by (procedure)(voltdb_procedure_invocations{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{procname}}",
@@ -744,7 +744,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by (procedure)(voltdb_procedure_max_execution_time_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"})",
+          "expr": "sum by (procedure)(voltdb_procedure_max_execution_time_seconds{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{procname}}",
@@ -832,7 +832,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "voltdb_procedure_avg_result_size_bytes{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"}",
+          "expr": "voltdb_procedure_avg_result_size_bytes{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "{{procedure}}",
@@ -899,7 +899,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "voltdb_procedure_avg_execution_time_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"}",
+          "expr": "voltdb_procedure_avg_execution_time_seconds{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "{{procedure}}",
@@ -979,7 +979,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by (procedure, hostname)(voltdb_procedure_max_execution_time_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"})",
+          "expr": "sum by (procedure, hostname)(voltdb_procedure_max_execution_time_seconds{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"})",
           "format": "table",
           "interval": "",
           "legendFormat": "",
@@ -1080,7 +1080,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by (procedure, hostname)(voltdb_procedure_max_execution_time_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"})",
+          "expr": "sum by (procedure, hostname)(voltdb_procedure_max_execution_time_seconds{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "",
@@ -1224,7 +1224,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by (procedure, partitionid)(voltdb_procedure_max_execution_time_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"})",
+          "expr": "sum by (procedure, partitionid)(voltdb_procedure_max_execution_time_seconds{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "",
@@ -1314,7 +1314,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(namespace)",
+        "definition": "label_values(cluster)",
         "hide": 0,
         "includeAll": false,
         "label": "Cluster",
@@ -1322,7 +1322,7 @@
         "name": "cluster",
         "options": [],
         "query": {
-          "query": "label_values(namespace)",
+          "query": "label_values(cluster)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -1342,7 +1342,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({namespace=\"$cluster\"},hostname)",
+        "definition": "label_values({cluster=\"$cluster\"},hostname)",
         "hide": 0,
         "includeAll": true,
         "label": "Host",
@@ -1350,7 +1350,7 @@
         "name": "host",
         "options": [],
         "query": {
-          "query": "label_values({namespace=\"$cluster\"},hostname)",
+          "query": "label_values({cluster=\"$cluster\"},hostname)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -1370,7 +1370,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},partitionid)",
+        "definition": "label_values({cluster=\"$cluster\", hostname=~\"$host\"},partitionid)",
         "hide": 0,
         "includeAll": true,
         "label": "Partition",
@@ -1378,7 +1378,7 @@
         "name": "partition",
         "options": [],
         "query": {
-          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},partitionid)",
+          "query": "label_values({cluster=\"$cluster\", hostname=~\"$host\"},partitionid)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -1398,7 +1398,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\",partitionid=~\"$partition\"}, procedure)",
+        "definition": "label_values({cluster=\"$cluster\", hostname=~\"$host\",partitionid=~\"$partition\"}, procedure)",
         "hide": 0,
         "includeAll": true,
         "label": "Procedure",
@@ -1406,7 +1406,7 @@
         "name": "procedure",
         "options": [],
         "query": {
-          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\",partitionid=~\"$partition\"}, procedure)",
+          "query": "label_values({cluster=\"$cluster\", hostname=~\"$host\",partitionid=~\"$partition\"}, procedure)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -1424,7 +1424,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Procedures",
-  "uid": "EyzUq4U7z",
+  "uid": "EyzUq4U7zA",
   "version": 46,
   "weekStart": ""
 }
