@@ -43,3 +43,46 @@ scrape_configs:
 It will add a `cluster` label with the value `local-volt`.
 
 In the future, we might add it as a configuration option to the Prometheus agent.
+
+## Quick GDG tutorial
+
+Unfortunately, until Grafana adds support for native dashboard git storage, we need to handle it ourselves.
+Here I describe how we can easily import dashboards from Grafana to a local disk and then upload them to our dashboards repo.
+(It is a manual process, you need to run these commands every time you make changes to our dashboards if someone has too much free time at work, feel free to automate it :P - and ping me before because I already tried some approaches and I might be able to help)
+
+Prerequisites:
+
+You need to download [gdg](https://github.com/esnet/gdg). It is the tool that we use to download dashboards - https://github.com/esnet/gdg/releases. Find the one for your architecture, and download it.
+Unpack the archive and move it to some convenient place for you.
+
+Add it to your PATH.
+Run `gdg ctx new grafana-central1`
+And configure our Grafana context accordingly:
+
+```
+? Will you be using a Token, BasicAuth, or both? basicauth
+? List the folders you wish to manage (example: folder1,folder2)? (Blank for General)? VoltDB
+? Please enter your datasource default username
+? Please enter your datasource default password
+? What is the Grafana URL include http(s)? http://104.155.171.198/
+? Destination Folder?
+? Please enter your admin UserName admin
+? Please enter your admin Password *****
+```
+
+BONUS TIP
+```
+Your context configuration will be saved to /Users/<user>/conf/importer.yml. GDG uses this file if it can't find one in your directory.
+```
+
+Run `gdg ctx list`, to verify if our context configuration is active. grafana-central1 should be marked as active
+
+Run `gdg dash list`, to list available dashboards,
+
+Now, we can go to the repo with dashboards if everything is working.
+
+And we can import them using `gdg dash import`.
+
+It will save them to <output_path - we set it to .>/dashboards/<folder - in our case VoltDB>/*
+
+Then we can add them to git, commit and push.
