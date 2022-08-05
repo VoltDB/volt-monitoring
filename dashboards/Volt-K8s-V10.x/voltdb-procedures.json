@@ -21,8 +21,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 55,
-  "iteration": 1657090739346,
+  "id": 659,
+  "iteration": 1658840690066,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -36,7 +36,7 @@
       },
       "id": 19,
       "panels": [],
-      "title": "Partitions overview (Rate Errors Duration)",
+      "title": "Procedures Overview (Rate Errors Duration)",
       "type": "row"
     },
     {
@@ -66,7 +66,7 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 6,
+        "w": 8,
         "x": 0,
         "y": 1
       },
@@ -131,14 +131,14 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "short"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 5,
-        "w": 6,
-        "x": 6,
+        "w": 4,
+        "x": 8,
         "y": 1
       },
       "id": 24,
@@ -162,14 +162,14 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max(voltdb_queue_max_wait_seconds{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(rate(voltdb_procedure_failures{namespace=\"$cluster\",hostname=~\"$host\"}[$__interval]))",
           "format": "time_series",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{hostname}}",
           "refId": "A"
         }
       ],
-      "title": "Command execution max wait time",
+      "title": "Failure rate",
       "transformations": [],
       "type": "stat"
     },
@@ -178,7 +178,6 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -195,11 +194,11 @@
               },
               {
                 "color": "#EAB839",
-                "value": 1000
+                "value": 1
               },
               {
                 "color": "red",
-                "value": 10000
+                "value": 2
               }
             ]
           },
@@ -234,14 +233,14 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max(voltdb_queue_depth{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(rate(voltdb_procedure_aborts{namespace=\"$cluster\",hostname=~\"$host\"}[$__interval]))",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{hostname}}",
           "refId": "A"
         }
       ],
-      "title": "Max queue depth",
+      "title": "Abort rate",
       "transformations": [],
       "type": "stat"
     },
@@ -250,7 +249,6 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -267,11 +265,11 @@
               },
               {
                 "color": "#EAB839",
-                "value": 1000
+                "value": 0.3
               },
               {
                 "color": "red",
-                "value": 10000
+                "value": 0.6
               }
             ]
           },
@@ -281,79 +279,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
+        "w": 8,
         "x": 16,
-        "y": 1
-      },
-      "id": 49,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "max(voltdb_queue_max_wait_seconds{namespace=\"$cluster\",hostname=~\"$host\"})",
-          "format": "time_series",
-          "interval": "",
-          "legendFormat": "{{hostname}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Max wait across sites",
-      "transformations": [],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "max": 100,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 45
-              },
-              {
-                "color": "red",
-                "value": 60
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 4,
-        "x": 20,
         "y": 1
       },
       "id": 36,
@@ -377,14 +304,14 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "100 -max(voltdb_idletime_idle_ratio{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max(voltdb_procedure_max_execution_time_seconds{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{hostname}}",
           "refId": "A"
         }
       ],
-      "title": "Percent busy",
+      "title": "Worst case time",
       "transformations": [],
       "type": "stat"
     },
@@ -396,128 +323,8 @@
         "y": 6
       },
       "id": 29,
-      "title": "Partitions",
+      "title": "Procedures",
       "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 100,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Total"
-            },
-            "properties": [
-              {
-                "id": "custom.drawStyle",
-                "value": "line"
-              },
-              {
-                "id": "custom.fillOpacity",
-                "value": 0
-              },
-              {
-                "id": "custom.axisPlacement",
-                "value": "right"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 7
-      },
-      "id": 38,
-      "options": {
-        "legend": {
-          "calcs": ["max", "sum"],
-          "displayMode": "table",
-          "placement": "right",
-          "sortBy": "Max",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "sum by (partitionid)(rate(voltdb_procedure_invocations{namespace=\"$cluster\",hostname=~\"$host\",siteid=~\"$site\",partitionid=~\"$partition\"}[$__interval]))",
-          "interval": "",
-          "legendFormat": "{{partitionid}}",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "sum (rate(voltdb_procedure_invocations{namespace=\"$cluster\",hostname=~\"$host\",siteid=~\"$site\",partitionid=~\"$partition\"}[$__interval]))",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Total",
-          "refId": "B"
-        }
-      ],
-      "title": "TPS ($partition)",
-      "type": "timeseries"
     },
     {
       "datasource": {
@@ -571,23 +378,23 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "short"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 9,
-        "w": 12,
-        "x": 12,
+        "w": 14,
+        "x": 0,
         "y": 7
       },
-      "id": 39,
+      "id": 38,
       "options": {
         "legend": {
-          "calcs": ["max", "lastNotNull"],
+          "calcs": ["lastNotNull"],
           "displayMode": "table",
           "placement": "right",
-          "sortBy": "Max",
+          "sortBy": "Last *",
           "sortDesc": true
         },
         "tooltip": {
@@ -601,316 +408,37 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "avg by (siteid)(100-voltdb_idletime_idle_ratio{namespace=\"$cluster\",hostname=~\"$host\",siteid=~\"$site\"})",
+          "expr": "sum(rate(voltdb_procedure_invocations{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"}[$__interval]))",
           "interval": "",
-          "legendFormat": "{{siteid}}",
+          "legendFormat": "{{procedure}}",
           "refId": "A"
-        }
-      ],
-      "title": "Busiest sites (percent of the time)",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short"
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "16383"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "-1"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 8,
-        "x": 0,
-        "y": 16
-      },
-      "id": 41,
-      "options": {
-        "legend": {
-          "calcs": ["lastNotNull", "sum"],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by(partitionid)(rate(voltdb_procedure_invocations{namespace=\"$cluster\",hostname=~\"$host\",siteid=~\"$site\",partitionid=~\"$partition\"}[$__interval]))",
-          "format": "time_series",
+          "expr": "avg(rate(voltdb_procedure_failures{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",siteid=~\"$site\",procedure=~\"$procedure\"}[$__interval]))",
+          "hide": true,
           "interval": "",
-          "legendFormat": "{{partitionid}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Procedure invocations per partition",
-      "transformations": [],
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short"
+          "legendFormat": "Average failure rate",
+          "refId": "B"
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "16383"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "-1"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 8,
-        "x": 8,
-        "y": 16
-      },
-      "id": 50,
-      "options": {
-        "legend": {
-          "calcs": ["lastNotNull", "sum"],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
         {
           "datasource": {
             "type": "prometheus",
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by(partitionid)(rate(voltdb_procedure_failures{namespace=\"$cluster\",hostname=~\"$host\",siteid=~\"$site\",partitionid=~\"$partition\"}[$__interval]))",
-          "format": "time_series",
+          "expr": "avg(rate(voltdb_procedure_aborts{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",siteid=~\"$site\",procedure=~\"$procedure\"}[$__interval]))",
+          "hide": true,
           "interval": "",
-          "legendFormat": "{{partitionid}}",
-          "refId": "A"
+          "legendFormat": "Average abort rate",
+          "refId": "C"
         }
       ],
-      "title": "Procedure failures per partition",
-      "transformations": [],
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "16383"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "-1"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 8,
-        "x": 16,
-        "y": 16
-      },
-      "id": 51,
-      "options": {
-        "legend": {
-          "calcs": ["lastNotNull", "sum"],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "sum by(partitionid)(rate(voltdb_procedure_failures{namespace=\"$cluster\",hostname=~\"$host\",siteid=~\"$site\",partitionid=~\"$partition\"}[$__interval]))",
-          "format": "time_series",
-          "interval": "",
-          "legendFormat": "{{partitionid}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Procedure failures per partition",
-      "transformations": [],
+      "title": "Procedures invocation counts ($procedure)",
       "type": "timeseries"
     },
     {
@@ -924,8 +452,9 @@
             "mode": "thresholds"
           },
           "custom": {
-            "align": "auto",
-            "displayMode": "lcd-gauge"
+            "align": "center",
+            "displayMode": "lcd-gauge",
+            "filterable": false
           },
           "mappings": [],
           "thresholds": {
@@ -947,12 +476,20 @@
             },
             "properties": [
               {
-                "id": "displayName",
-                "value": "Procedure"
+                "id": "custom.width",
+                "value": 205
               },
               {
                 "id": "custom.displayMode",
                 "value": "auto"
+              },
+              {
+                "id": "custom.align",
+                "value": "auto"
+              },
+              {
+                "id": "displayName",
+                "value": "Procedure"
               }
             ]
           }
@@ -960,18 +497,24 @@
       },
       "gridPos": {
         "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 25
+        "w": 10,
+        "x": 14,
+        "y": 7
       },
-      "id": 52,
+      "id": 41,
       "options": {
         "footer": {
           "fields": "",
           "reducer": ["sum"],
           "show": false
         },
-        "showHeader": true
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Max"
+          }
+        ]
       },
       "pluginVersion": "8.3.3",
       "targets": [
@@ -981,18 +524,20 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by(procedure)(increase(voltdb_procedure_invocations{namespace=\"$cluster\",hostname=~\"$host\",siteid=~\"$site\",partitionid=~\"$partition\"}[$__interval]))",
+          "expr": "sum by (procedure)(voltdb_procedure_invocations{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"})",
           "format": "time_series",
           "interval": "",
-          "legendFormat": "{{partitionid}}",
+          "legendFormat": "{{procname}}",
           "refId": "A"
         }
       ],
-      "title": "Top executed procedures",
+      "title": "Hottest procedures ($procedure)",
       "transformations": [
         {
           "id": "reduce",
           "options": {
+            "includeTimeField": false,
+            "mode": "seriesToRows",
             "reducers": ["sum"]
           }
         },
@@ -1019,110 +564,13 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "min": 0,
-          "noValue": "0",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 200
-              },
-              {
-                "color": "red",
-                "value": 300
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Value #B"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "short"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 25
-      },
-      "id": 48,
-      "options": {
-        "colorByField": "Value #A",
-        "groupByField": "procedure",
-        "labelFields": ["Value #A"],
-        "sizeField": "Value #B",
-        "textField": "partitionid",
-        "tiling": "treemapSquarify"
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "max by (procedure, partitionid)(voltdb_procedure_max_execution_time_seconds{namespace=\"$cluster\",hostname=~\"$host\",siteid=~\"$site\",partitionid=~\"$partition\"})",
-          "format": "table",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "sum by (procedure, partitionid)(voltdb_procedure_invocations{namespace=\"$cluster\",hostname=~\"$host\",siteid=~\"$site\",partitionid=~\"$partition\"})",
-          "format": "table",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "B"
-        }
-      ],
-      "title": "Procedures x Partition execution time matrix",
-      "transformations": [
-        {
-          "id": "merge",
-          "options": {}
-        }
-      ],
-      "type": "marcusolsson-treemap-panel"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
             "mode": "palette-classic"
           },
           "custom": {
             "axisLabel": "",
             "axisPlacement": "auto",
+            "axisSoftMax": 3,
+            "axisSoftMin": 0,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 0,
@@ -1145,188 +593,10 @@
               "mode": "none"
             },
             "thresholdsStyle": {
-              "mode": "off"
+              "mode": "area"
             }
           },
           "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Field"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Procedure"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 34
-      },
-      "id": 53,
-      "options": {
-        "legend": {
-          "calcs": ["lastNotNull"],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "voltdb_queue_depth{namespace=\"$cluster\",hostname=~\"$host\",siteid=~\"$site\"}",
-          "format": "time_series",
-          "interval": "",
-          "legendFormat": "{{siteid}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Command queue depth by site",
-      "transformations": [],
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Field"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "Procedure"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 34
-      },
-      "id": 54,
-      "options": {
-        "legend": {
-          "calcs": ["lastNotNull"],
-          "displayMode": "table",
-          "placement": "right",
-          "sortBy": "Last *",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "sort(voltdb_queue_max_wait_seconds{namespace=\"$cluster\",hostname=~\"$host\",siteid=~\"$site\"})",
-          "format": "time_series",
-          "interval": "",
-          "legendFormat": "{{siteid}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Command queue max wait times by site",
-      "transformations": [],
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "min": 0,
-          "noValue": "0",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1344,14 +614,473 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 43
+        "y": 16
       },
-      "id": 55,
+      "id": 49,
       "options": {
-        "groupByField": "tablename",
-        "labelFields": [],
+        "legend": {
+          "calcs": ["max", "lastNotNull"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "sort(max by (procedure)(increase(voltdb_procedure_invocations{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"}[$__interval])))",
+          "interval": "",
+          "legendFormat": "{{procedure}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Top procedure invocation counts ($procedure)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMax": 3,
+            "axisSoftMin": 0,
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "area"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 2
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": ["voter.Vote"],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "id": 39,
+      "options": {
+        "legend": {
+          "calcs": ["max", "lastNotNull"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "sort(max by (procedure)(voltdb_procedure_max_execution_time_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"}))",
+          "interval": "",
+          "legendFormat": "{{procedure}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Top procedure invocation times ($procedure)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "center",
+            "displayMode": "lcd-gauge",
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.2
+              },
+              {
+                "color": "red",
+                "value": 0.3
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Field"
+            },
+            "properties": [
+              {
+                "id": "custom.minWidth",
+                "value": 200
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "auto"
+              },
+              {
+                "id": "custom.align",
+                "value": "left"
+              },
+              {
+                "id": "displayName",
+                "value": "Procedure"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 25
+      },
+      "id": 33,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": ["sum"],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Max"
+          }
+        ]
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "sum by (procedure)(voltdb_procedure_max_execution_time_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"})",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "{{procname}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Slowest procedures ($procedure)",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "mode": "seriesToRows",
+            "reducers": ["min", "mean", "max", "lastNotNull"]
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "field": "Max"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "fillOpacity": 80,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 36
+      },
+      "id": 42,
+      "options": {
+        "bucketOffset": 0,
+        "combine": true,
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "voltdb_procedure_avg_result_size_bytes{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{procedure}}",
+          "refId": "C"
+        }
+      ],
+      "title": "Average result size distribution ($procedure)",
+      "type": "histogram"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "fillOpacity": 80,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 36
+      },
+      "id": 43,
+      "options": {
+        "bucketOffset": 0,
+        "combine": true,
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "voltdb_procedure_avg_execution_time_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{procedure}}",
+          "refId": "C"
+        }
+      ],
+      "title": "Average execution times distribution ($procedure)",
+      "type": "histogram"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 45
+      },
+      "id": 47,
+      "panels": [],
+      "title": "Execution time matrices",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "min": 0,
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.2003
+              },
+              {
+                "color": "red",
+                "value": 0.3
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 46
+      },
+      "id": 48,
+      "options": {
+        "colorByField": "Value #A",
+        "groupByField": "hostname",
+        "labelFields": ["Value #A", "hostname", "procedure"],
         "sizeField": "Value #A",
-        "textField": "partitionid",
+        "textField": "procedure",
         "tiling": "treemapSquarify"
       },
       "pluginVersion": "8.3.3",
@@ -1362,7 +1091,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by (tablename, partitionid)(voltdb_table_tuple_count{namespace=\"$cluster\",hostname=~\"$host\",siteid=~\"$site\",partitionid=~\"$partition\"})",
+          "expr": "sum by (procedure, hostname)(voltdb_procedure_max_execution_time_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"})",
           "format": "table",
           "interval": "",
           "legendFormat": "",
@@ -1382,15 +1111,291 @@
           "refId": "DUMMY QUERY FOR DASHBOARDS COMPATIBILITY"
         }
       ],
-      "title": "Tuples in table by table and partition",
+      "title": "Procedures x Hostame execution time matrix ($procedure) - size proportional to time",
       "transformations": [],
       "type": "marcusolsson-treemap-panel"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "gradient-gauge",
+            "filterable": false
+          },
+          "mappings": [],
+          "min": 0,
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.2
+              },
+              {
+                "color": "red",
+                "value": 0.3
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "procedure"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "auto"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 55
+      },
+      "id": 45,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": ["sum"],
+          "show": false
+        },
+        "frameIndex": 0,
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "sum by (procedure, hostname)(voltdb_procedure_max_execution_time_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"})",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Procedures x Hostame execution time matrix ($procedure)",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "labelsToFields": false,
+            "mode": "reduceFields",
+            "reducers": ["max"]
+          }
+        },
+        {
+          "id": "labelsToFields",
+          "options": {
+            "mode": "columns",
+            "valueLabel": "hostname"
+          }
+        },
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "0": 1,
+              "1": 2,
+              "10": 11,
+              "11": 12,
+              "16383": 13,
+              "2": 3,
+              "3": 4,
+              "4": 5,
+              "5": 6,
+              "6": 7,
+              "7": 8,
+              "8": 9,
+              "9": 10,
+              "procedure": 0
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "gradient-gauge",
+            "filterable": false
+          },
+          "mappings": [],
+          "min": 0,
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.2
+              },
+              {
+                "color": "red",
+                "value": 0.3
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "procedure"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "auto"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "16383"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "MP"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 64
+      },
+      "id": 44,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": ["sum"],
+          "show": false
+        },
+        "frameIndex": 0,
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "sum by (procedure, partitionid)(voltdb_procedure_max_execution_time_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"})",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Procedures x Partition execution time matrix ($procedure)",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "labelsToFields": false,
+            "mode": "reduceFields",
+            "reducers": ["max"]
+          }
+        },
+        {
+          "id": "labelsToFields",
+          "options": {
+            "mode": "columns",
+            "valueLabel": "partitionid"
+          }
+        },
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "0": 1,
+              "1": 2,
+              "10": 11,
+              "11": 12,
+              "16383": 13,
+              "2": 3,
+              "3": 4,
+              "4": 5,
+              "5": 6,
+              "6": 7,
+              "7": 8,
+              "8": 9,
+              "9": 10,
+              "procedure": 0
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "table"
     }
   ],
   "refresh": "",
   "schemaVersion": 34,
   "style": "dark",
-  "tags": [],
+  "tags": ["voltdb", "procedures"],
   "templating": {
     "list": [
       {
@@ -1399,7 +1404,7 @@
           "text": "Prometheus",
           "value": "Prometheus"
         },
-        "hide": 0,
+        "hide": 2,
         "includeAll": false,
         "label": "datasource",
         "multi": false,
@@ -1497,23 +1502,23 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": ["All"],
+          "value": ["$__all"]
         },
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},siteid)",
+        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\",partitionid=~\"$partition\"}, procedure)",
         "hide": 0,
         "includeAll": true,
-        "label": "Site",
-        "multi": false,
-        "name": "site",
+        "label": "Procedure",
+        "multi": true,
+        "name": "procedure",
         "options": [],
         "query": {
-          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},siteid)",
+          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\",partitionid=~\"$partition\"}, procedure)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -1530,8 +1535,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "VoltDB Partitions",
-  "uid": "nEOSzH8nz",
-  "version": 42,
+  "title": "VoltDB Procedures",
+  "uid": "-YN5WSRVk",
+  "version": 3,
   "weekStart": ""
 }

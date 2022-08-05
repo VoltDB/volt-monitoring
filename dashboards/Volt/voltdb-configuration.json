@@ -22,7 +22,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 184,
-  "iteration": 1653918166362,
+  "iteration": 1658840834310,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -106,7 +106,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max by (version) (voltdb_systeminformation_overview_host_info{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max by (version) (voltdb_systeminformation_overview_host_info{cluster=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -119,7 +119,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max by (version) (voltdb_systeminformation_overview_info{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max by (version) (voltdb_systeminformation_overview_info{cluster=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "hide": true,
           "interval": "",
@@ -182,7 +182,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "(time()*1000) - voltdb_systeminformation_overview_cluster{namespace=\"$cluster\",hostname=~\"$host\", property=\"starttime\"}",
+          "expr": "(time()*1000) - voltdb_systeminformation_overview_cluster{cluster=\"$cluster\",hostname=~\"$host\", property=\"starttime\"}",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -259,7 +259,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max by (clusterstate) (voltdb_systeminformation_overview_cluster_info{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max by (clusterstate) (voltdb_systeminformation_overview_cluster_info{cluster=\"$cluster\",hostname=~\"$host\"})",
           "format": "table",
           "instant": false,
           "interval": "",
@@ -336,7 +336,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max by (clustersafety) (voltdb_systeminformation_overview_cluster_info{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max by (clustersafety) (voltdb_systeminformation_overview_cluster_info{cluster=\"$cluster\",hostname=~\"$host\"})",
           "format": "table",
           "interval": "",
           "legendFormat": "{{dummy}}",
@@ -399,7 +399,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max by (clusterid) (voltdb_systeminformation_overview_cluster_info{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max by (clusterid) (voltdb_systeminformation_overview_cluster_info{cluster=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{dummy}}",
@@ -461,7 +461,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "voltdb_systeminformation_overview_cluster{namespace=\"$cluster\",hostname=~\"$host\", property=\"fullclustersize\"}",
+          "expr": "voltdb_systeminformation_overview_cluster{cluster=\"$cluster\",hostname=~\"$host\", property=\"fullclustersize\"}",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -525,7 +525,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "voltdb_systeminformation_overview_cluster{namespace=\"$cluster\",hostname=~\"$host\", property=\"currentclustersize\"}",
+          "expr": "voltdb_systeminformation_overview_cluster{cluster=\"$cluster\",hostname=~\"$host\", property=\"currentclustersize\"}",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -609,7 +609,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "max (voltdb_systeminformation_overview_cluster_info{namespace=\"$cluster\",hostname=~\"$host\"}) by (kubernetes,replicationrole)",
+          "expr": "max (voltdb_systeminformation_overview_cluster_info{cluster=\"$cluster\",hostname=~\"$host\"}) by (kubernetes,replicationrole)",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -680,7 +680,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "voltdb_systeminformation_overview_cluster{namespace=\"$cluster\",hostname=~\"$host\", property=\"cpucores\"}",
+          "expr": "voltdb_systeminformation_overview_cluster{cluster=\"$cluster\",hostname=~\"$host\", property=\"cpucores\"}",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -744,7 +744,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "voltdb_systeminformation_overview_cluster{namespace=\"$cluster\",hostname=~\"$host\", property=\"cputhreads\"}",
+          "expr": "voltdb_systeminformation_overview_cluster{cluster=\"$cluster\",hostname=~\"$host\", property=\"cputhreads\"}",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -880,7 +880,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "max (voltdb_systeminformation_deployment_info{namespace=\"$cluster\",hostname=~\"$host\"}) by (drpriority,prioritiesenabled,drrole,elasticduration,elasticthroughput,export,heartbeattimeout,partitiondetection,temptablesmaxsize)",
+          "expr": "max (voltdb_systeminformation_deployment_info{cluster=\"$cluster\",hostname=~\"$host\"}) by (drpriority,prioritiesenabled,drrole,elasticduration,elasticthroughput,export,heartbeattimeout,partitiondetection,temptablesmaxsize)",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -986,7 +986,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "max (voltdb_systeminformation_commandlog_info{namespace=\"$cluster\",hostname=~\"$host\"}) by (commandlogenabled, commandlogfreqtime, commandlogfreqtxns, commandlogmode)",
+          "expr": "max (voltdb_systeminformation_commandlog_info{cluster=\"$cluster\",hostname=~\"$host\"}) by (commandlogenabled, commandlogfreqtime, commandlogfreqtxns, commandlogmode)",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1056,7 +1056,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "voltdb_systeminformation_deployment{namespace=\"$cluster\",hostname=~\"$host\", property=\"sitesperhost\"}",
+          "expr": "voltdb_systeminformation_deployment{cluster=\"$cluster\",hostname=~\"$host\", property=\"sitesperhost\"}",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -1159,7 +1159,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "max (voltdb_systeminformation_snapshot_info{namespace=\"$cluster\",hostname=~\"$host\"}) by (snapshotenabled, snapshotfrequency, snapshotpriority, snapshotretain)",
+          "expr": "max (voltdb_systeminformation_snapshot_info{cluster=\"$cluster\",hostname=~\"$host\"}) by (snapshotenabled, snapshotfrequency, snapshotpriority, snapshotretain)",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -1230,7 +1230,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "voltdb_systeminformation_deployment{namespace=\"$cluster\",hostname=~\"$host\", property=\"sitesperhost\"}",
+          "expr": "voltdb_systeminformation_deployment{cluster=\"$cluster\",hostname=~\"$host\", property=\"sitesperhost\"}",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -1346,7 +1346,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "max (voltdb_systeminformation_commandlog_info{namespace=\"$cluster\",hostname=~\"$host\"}) by (commandlogenabled, commandlogfreqtime, commandlogfreqtxns, commandlogmode)",
+          "expr": "max (voltdb_systeminformation_commandlog_info{cluster=\"$cluster\",hostname=~\"$host\"}) by (commandlogenabled, commandlogfreqtime, commandlogfreqtxns, commandlogmode)",
           "format": "time_series",
           "hide": true,
           "instant": true,
@@ -1360,7 +1360,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "max (voltdb_systeminformation_license_info{namespace=\"$cluster\",hostname=~\"$host\"}) by (features_commandlogging, features_dractiveactive, features_drreplication, features_trial)",
+          "expr": "max (voltdb_systeminformation_license_info{cluster=\"$cluster\",hostname=~\"$host\"}) by (features_commandlogging, features_dractiveactive, features_drreplication, features_trial)",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -1439,7 +1439,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "voltdb_systeminformation_license{namespace=\"$cluster\",hostname=~\"$host\", property=\"expiration\"} - (time()*1000)",
+          "expr": "voltdb_systeminformation_license{cluster=\"$cluster\",hostname=~\"$host\", property=\"expiration\"} - (time()*1000)",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -1503,7 +1503,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "voltdb_systeminformation_license{namespace=\"$cluster\",hostname=~\"$host\", property=\"expiration\"}",
+          "expr": "voltdb_systeminformation_license{cluster=\"$cluster\",hostname=~\"$host\", property=\"expiration\"}",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -1578,7 +1578,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "voltdb_systeminformation_license{namespace=\"$cluster\",hostname=~\"$host\", property=\"hostcount_max\"}",
+          "expr": "voltdb_systeminformation_license{cluster=\"$cluster\",hostname=~\"$host\", property=\"hostcount_max\"}",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -1653,7 +1653,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "voltdb_systeminformation_license{namespace=\"$cluster\",hostname=~\"$host\", property=\"corecount_max\"}",
+          "expr": "voltdb_systeminformation_license{cluster=\"$cluster\",hostname=~\"$host\", property=\"corecount_max\"}",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -1670,7 +1670,7 @@
   "refresh": "",
   "schemaVersion": 34,
   "style": "dark",
-  "tags": [],
+  "tags": ["voltdb", "configuration"],
   "templating": {
     "list": [
       {
@@ -1701,7 +1701,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(namespace)",
+        "definition": "label_values(cluster)",
         "hide": 0,
         "includeAll": false,
         "label": "Cluster",
@@ -1709,7 +1709,7 @@
         "name": "cluster",
         "options": [],
         "query": {
-          "query": "label_values(namespace)",
+          "query": "label_values(cluster)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -1729,7 +1729,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({namespace=\"$cluster\"},hostname)",
+        "definition": "label_values({cluster=\"$cluster\"},hostname)",
         "hide": 0,
         "includeAll": true,
         "label": "Host",
@@ -1737,7 +1737,7 @@
         "name": "host",
         "options": [],
         "query": {
-          "query": "label_values({namespace=\"$cluster\"},hostname)",
+          "query": "label_values({cluster=\"$cluster\"},hostname)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -1755,7 +1755,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Configuration",
-  "uid": "sdafsd32s",
-  "version": 34,
+  "uid": "sdafsd32sA",
+  "version": 35,
   "weekStart": ""
 }

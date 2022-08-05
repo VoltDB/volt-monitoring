@@ -22,7 +22,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 54,
-  "iteration": 1657090737456,
+  "iteration": 1658840839496,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -384,7 +384,7 @@
       },
       "gridPos": {
         "h": 9,
-        "w": 10,
+        "w": 14,
         "x": 0,
         "y": 7
       },
@@ -449,103 +449,6 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "axisSoftMax": 3,
-            "axisSoftMin": 0,
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "area"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 1
-              },
-              {
-                "color": "red",
-                "value": 2
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 14,
-        "x": 10,
-        "y": 7
-      },
-      "id": 39,
-      "options": {
-        "legend": {
-          "calcs": ["max", "lastNotNull"],
-          "displayMode": "table",
-          "placement": "bottom",
-          "sortBy": "Max",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "sort(max by (procedure)(voltdb_procedure_max_execution_time_seconds{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"}))",
-          "interval": "",
-          "legendFormat": "{{procedure}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Top procedure invocation times ($procedure)",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
             "mode": "thresholds"
           },
           "custom": {
@@ -595,8 +498,8 @@
       "gridPos": {
         "h": 9,
         "w": 10,
-        "x": 0,
-        "y": 16
+        "x": 14,
+        "y": 7
       },
       "id": 41,
       "options": {
@@ -661,6 +564,215 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMax": 3,
+            "axisSoftMin": 0,
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "area"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "id": 49,
+      "options": {
+        "legend": {
+          "calcs": ["max", "lastNotNull"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "sort(max by (procedure)(increase(voltdb_procedure_invocations{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"}[$__interval])))",
+          "interval": "",
+          "legendFormat": "{{procedure}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Top procedure invocation counts ($procedure)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMax": 3,
+            "axisSoftMin": 0,
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "area"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 1
+              },
+              {
+                "color": "red",
+                "value": 2
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": ["voter.Vote"],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": true
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "id": 39,
+      "options": {
+        "legend": {
+          "calcs": ["max", "lastNotNull"],
+          "displayMode": "table",
+          "placement": "bottom",
+          "sortBy": "Max",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "sort(max by (procedure)(voltdb_procedure_max_execution_time_seconds{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",procedure=~\"$procedure\"}))",
+          "interval": "",
+          "legendFormat": "{{procedure}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Top procedure invocation times ($procedure)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
             "mode": "thresholds"
           },
           "custom": {
@@ -716,10 +828,10 @@
         ]
       },
       "gridPos": {
-        "h": 9,
-        "w": 14,
-        "x": 10,
-        "y": 16
+        "h": 11,
+        "w": 24,
+        "x": 0,
+        "y": 25
       },
       "id": 33,
       "options": {
@@ -813,7 +925,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 25
+        "y": 36
       },
       "id": 42,
       "options": {
@@ -880,7 +992,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 25
+        "y": 36
       },
       "id": 43,
       "options": {
@@ -915,7 +1027,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 45
       },
       "id": 47,
       "panels": [],
@@ -960,7 +1072,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 35
+        "y": 46
       },
       "id": 48,
       "options": {
@@ -1059,7 +1171,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 44
+        "y": 55
       },
       "id": 45,
       "options": {
@@ -1203,7 +1315,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 53
+        "y": 64
       },
       "id": 44,
       "options": {
@@ -1283,7 +1395,7 @@
   "refresh": "",
   "schemaVersion": 34,
   "style": "dark",
-  "tags": [],
+  "tags": ["voltdb", "procedures"],
   "templating": {
     "list": [
       {
@@ -1425,6 +1537,6 @@
   "timezone": "",
   "title": "VoltDB Procedures",
   "uid": "EyzUq4U7zA",
-  "version": 46,
+  "version": 50,
   "weekStart": ""
 }

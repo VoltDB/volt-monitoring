@@ -3,7 +3,7 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "${datasource}",
+        "datasource": "-- Grafana --",
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -21,8 +21,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 81,
-  "iteration": 1657090739357,
+  "id": 475,
+  "iteration": 1658840835850,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -34,9 +34,9 @@
         "x": 0,
         "y": 0
       },
-      "id": 19,
+      "id": 16,
       "panels": [],
-      "title": "Procedures Overview (Rate Errors Duration)",
+      "title": "Overview",
       "type": "row"
     },
     {
@@ -56,10 +56,13 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
-          },
-          "unit": "decbytes"
+          }
         },
         "overrides": []
       },
@@ -69,18 +72,16 @@
         "x": 0,
         "y": 1
       },
-      "id": 49,
+      "id": 6,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": ["lastNotNull"],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
       },
       "pluginVersion": "8.3.3",
       "targets": [
@@ -90,16 +91,14 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(voltdb_table_tuple_allocated_memory_bytes{namespace=\"$cluster\"})",
-          "format": "time_series",
+          "expr": "max(voltdb_export_pending_tuples_count{namespace=\"$cluster\",hostname=~\"$host\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "title": "Table allocated memory",
-      "transformations": [],
-      "type": "stat"
+      "title": "Pending tuples",
+      "type": "gauge"
     },
     {
       "datasource": {
@@ -118,10 +117,13 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
-          },
-          "unit": "short"
+          }
         },
         "overrides": []
       },
@@ -131,18 +133,16 @@
         "x": 6,
         "y": 1
       },
-      "id": 3,
+      "id": 7,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": ["lastNotNull"],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
       },
       "pluginVersion": "8.3.3",
       "targets": [
@@ -152,16 +152,14 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(voltdb_table_tuple_count{namespace=\"$cluster\"})",
-          "format": "time_series",
+          "expr": "sum(increase(voltdb_export_total_queued_tuples_count{namespace=\"$cluster\",hostname=~\"$host\"}[$__interval]))",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
       ],
-      "title": "Tuple count",
-      "transformations": [],
-      "type": "stat"
+      "title": "Total queued tuples",
+      "type": "gauge"
     },
     {
       "datasource": {
@@ -180,10 +178,13 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
-          },
-          "unit": "decbytes"
+          }
         },
         "overrides": []
       },
@@ -193,18 +194,16 @@
         "x": 12,
         "y": 1
       },
-      "id": 36,
+      "id": 8,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": ["lastNotNull"],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
       },
       "pluginVersion": "8.3.3",
       "targets": [
@@ -214,16 +213,14 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(voltdb_index_memory_estimate_bytes{namespace=\"$cluster\",hostname=~\"$host\"})",
-          "hide": false,
+          "expr": "sum(voltdb_export_missing_tuples_count{namespace=\"$cluster\",hostname=~\"$host\"})",
           "interval": "",
           "legendFormat": "",
-          "refId": "B"
+          "refId": "A"
         }
       ],
-      "title": "Index memory usage",
-      "transformations": [],
-      "type": "stat"
+      "title": "Total missing tuples",
+      "type": "gauge"
     },
     {
       "datasource": {
@@ -242,10 +239,13 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
-          },
-          "unit": "short"
+          }
         },
         "overrides": []
       },
@@ -255,18 +255,16 @@
         "x": 18,
         "y": 1
       },
-      "id": 50,
+      "id": 2,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": ["lastNotNull"],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
       },
       "pluginVersion": "8.3.3",
       "targets": [
@@ -276,27 +274,297 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(voltdb_index_entries_count{namespace=\"$cluster\",hostname=~\"$host\"})",
-          "hide": false,
+          "expr": "max(voltdb_export_max_latency_seconds{namespace=\"$cluster\",hostname=~\"$host\"})",
           "interval": "",
           "legendFormat": "",
-          "refId": "B"
+          "refId": "A"
         }
       ],
-      "title": "Number of index entries",
-      "transformations": [],
-      "type": "stat"
+      "title": "Max export latency",
+      "type": "gauge"
     },
     {
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
         "y": 6
       },
-      "id": 29,
-      "title": "Tables",
+      "id": 4,
+      "panels": [],
+      "title": "Details",
       "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 7
+      },
+      "id": 13,
+      "options": {
+        "colorByField": "Value #A",
+        "groupByField": "source",
+        "tiling": "treemapSquarify"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "sum by (source, partitionid) (voltdb_export_pending_tuples_count{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",source=~\"$source\"})",
+          "format": "table",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "1",
+          "format": "table",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "DUMMY QUERY FOR DASHBOARDS COMPATIBILITY"
+        }
+      ],
+      "title": "Pending tuples count by source and partition",
+      "transformations": [],
+      "type": "marcusolsson-treemap-panel"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 7
+      },
+      "id": 14,
+      "options": {
+        "colorByField": "Value #A",
+        "groupByField": "source",
+        "tiling": "treemapSquarify"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "sum by (source, partitionid) (voltdb_export_missing_tuples_count)",
+          "format": "table",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "1",
+          "format": "table",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "DUMMY QUERY FOR DASHBOARDS COMPATIBILITY"
+        }
+      ],
+      "title": "Missing tuples count by source and partition",
+      "transformations": [],
+      "type": "marcusolsson-treemap-panel"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 16
+      },
+      "id": 5,
+      "options": {
+        "displayMode": "gradient",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "min by (partitionid) (voltdb_export_last_acked_timestamp)",
+          "interval": "",
+          "legendFormat": "{{partitionid}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Acknowledgements lag (max across partitions)",
+      "transformations": [],
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 16
+      },
+      "id": 10,
+      "options": {
+        "displayMode": "gradient",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "min by (source) (voltdb_export_last_acked_timestamp)",
+          "interval": "",
+          "legendFormat": "{{source}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Acknowledgements lag (max across sources)",
+      "transformations": [],
+      "type": "bargauge"
     },
     {
       "datasource": {
@@ -350,17 +618,17 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "short"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 9,
+        "h": 10,
         "w": 24,
         "x": 0,
-        "y": 7
+        "y": 25
       },
-      "id": 38,
+      "id": 12,
       "options": {
         "legend": {
           "calcs": ["lastNotNull"],
@@ -373,6 +641,7 @@
           "mode": "single"
         }
       },
+      "pluginVersion": "8.3.3",
       "targets": [
         {
           "datasource": {
@@ -380,13 +649,14 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by(tablename)(voltdb_table_tuple_allocated_memory_bytes{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",tablename=~\"$table\"})",
+          "expr": "sum by (source) (voltdb_export_pending_tuples_count)",
           "interval": "",
-          "legendFormat": "{{table}}",
+          "legendFormat": "{{source}}",
           "refId": "A"
         }
       ],
-      "title": "Table sizes ($table)",
+      "title": "Pending tuples count by source",
+      "transformations": [],
       "type": "timeseries"
     },
     {
@@ -394,11 +664,38 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -407,6 +704,10 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
           },
@@ -415,18 +716,23 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 11,
+        "h": 9,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 35
       },
-      "id": 33,
+      "id": 11,
       "options": {
-        "groupByField": "partitionid",
-        "labelFields": ["partitionid", "tablename", "Value #A", "Value #B"],
-        "sizeField": "Value #A",
-        "textField": "tablename",
-        "tiling": "treemapSquarify"
+        "legend": {
+          "calcs": ["lastNotNull"],
+          "displayMode": "table",
+          "placement": "right",
+          "sortBy": "Last *",
+          "sortDesc": true
+        },
+        "tooltip": {
+          "mode": "single"
+        }
       },
       "pluginVersion": "8.3.3",
       "targets": [
@@ -436,184 +742,20 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by (tablename, partitionid)(voltdb_table_tuple_count{namespace=\"$cluster\",hostname=~\"$host\",tablename=~\"$table\",partitionid=~\"$partition\"})",
-          "format": "table",
+          "expr": "sum by (source) (voltdb_export_missing_tuples_count)",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{source}}",
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "1",
-          "format": "table",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "DUMMY QUERY FOR DASHBOARDS COMPATIBILITY"
         }
       ],
-      "title": "Tuple count by partition matrix (table == $table, partition == $partition)",
+      "title": "Missing tuples count by source",
       "transformations": [],
-      "type": "marcusolsson-treemap-panel"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "continuous-BlPu"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 24,
-        "x": 0,
-        "y": 27
-      },
-      "id": 52,
-      "options": {
-        "colorByField": "Value #A",
-        "groupByField": "partitionid",
-        "labelFields": ["Value #A", "hostname"],
-        "sizeField": "Value #A",
-        "textField": "hostname",
-        "tiling": "treemapSquarify"
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "sum by (hostname, partitionid)(voltdb_table_tuple_count{namespace=\"$cluster\",hostname=~\"$host\"})",
-          "format": "table",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "1",
-          "format": "table",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "DUMMY QUERY FOR DASHBOARDS COMPATIBILITY"
-        }
-      ],
-      "title": "Hosts by partitions",
-      "transformations": [],
-      "type": "marcusolsson-treemap-panel"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 24,
-        "x": 0,
-        "y": 38
-      },
-      "id": 51,
-      "options": {
-        "colorByField": "Value #B",
-        "groupByField": "indexname",
-        "labelFields": ["Value #A"],
-        "sizeField": "Value #A",
-        "textField": "partitionid",
-        "tiling": "treemapSquarify"
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "sum by (indexname, partitionid)(voltdb_index_entries_count{namespace=\"$cluster\",hostname=~\"$host\",tablename=~\"$table\",partitionid=~\"$partition\"})",
-          "format": "table",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "sum by (indexname, partitionid)(voltdb_index_memory_estimate_bytes{namespace=\"$cluster\",hostname=~\"$host\",tablename=~\"$table\",partitionid=~\"$partition\"})",
-          "format": "table",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "B"
-        }
-      ],
-      "title": "Index name by partition matrix (table == $table, partition == $partition)",
-      "transformations": [
-        {
-          "id": "merge",
-          "options": {}
-        }
-      ],
-      "type": "marcusolsson-treemap-panel"
+      "type": "timeseries"
     }
   ],
-  "refresh": "",
   "schemaVersion": 34,
   "style": "dark",
-  "tags": [],
+  "tags": ["voltdb", "export"],
   "templating": {
     "list": [
       {
@@ -637,8 +779,8 @@
       {
         "current": {
           "selected": false,
-          "text": "tkowalcz",
-          "value": "tkowalcz"
+          "text": "ajgent",
+          "value": "ajgent"
         },
         "datasource": {
           "type": "prometheus",
@@ -692,23 +834,23 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": true,
-          "text": ["All"],
-          "value": ["$__all"]
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},tablename)",
+        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},partitionid)",
         "hide": 0,
         "includeAll": true,
-        "label": "Table",
+        "label": "Partition",
         "multi": true,
-        "name": "table",
+        "name": "partition",
         "options": [],
         "query": {
-          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},tablename)",
+          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},partitionid)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -728,15 +870,15 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\",tablename=~\"$table\"}, partitionid)",
+        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\",partitionid=~\"$partition\"}, source)",
         "hide": 0,
         "includeAll": true,
-        "label": "Partition",
+        "label": "Source",
         "multi": true,
-        "name": "partition",
+        "name": "source",
         "options": [],
         "query": {
-          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\",tablename=~\"$table\"}, partitionid)",
+          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\",partitionid=~\"$partition\"}, source)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -748,13 +890,13 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "VoltDB Tables",
-  "uid": "5fFvY18nk",
-  "version": 46,
+  "title": "VoltDB Export",
+  "uid": "7Hn1fAj7z",
+  "version": 30,
   "weekStart": ""
 }

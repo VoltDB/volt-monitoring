@@ -22,7 +22,7 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 26,
-  "iteration": 1657031625913,
+  "iteration": 1658840832792,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -90,9 +90,10 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "exemplar": true,
-          "expr": "max by (version) (voltdb_systeminformation_overview_host_info{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "exemplar": false,
+          "expr": "max by (version) (voltdb_systeminformation_overview_host_info{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
+          "instant": true,
           "interval": "",
           "legendFormat": "{{dummy}}",
           "refId": "A"
@@ -153,7 +154,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "(time()*1000) - voltdb_systeminformation_overview_cluster{cluster=\"$cluster\",hostname=~\"$host\", property=\"starttime\"}",
+          "expr": "(time()*1000) - voltdb_systeminformation_overview_cluster{namespace=\"$cluster\",hostname=~\"$host\", property=\"starttime\"}",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -230,7 +231,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max by (clustersafety) (voltdb_systeminformation_overview_cluster_info{cluster=\"$cluster\"})",
+          "expr": "max by (clustersafety) (voltdb_systeminformation_overview_cluster_info{namespace=\"$cluster\"})",
           "format": "table",
           "interval": "",
           "legendFormat": "{{dummy}}",
@@ -305,7 +306,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max by (clusterstate) (voltdb_systeminformation_overview_cluster_info{cluster=\"$cluster\"})",
+          "expr": "max by (clusterstate) (voltdb_systeminformation_overview_cluster_info{namespace=\"$cluster\"})",
           "format": "table",
           "instant": false,
           "interval": "",
@@ -410,6 +411,40 @@
                 "value": 167
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "XDCR ready"
+            },
+            "properties": [
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "options": {
+                      "false": {
+                        "color": "red",
+                        "index": 0
+                      }
+                    },
+                    "type": "value"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "version"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "string"
+              }
+            ]
           }
         ]
       },
@@ -438,7 +473,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "(time()*1000) - voltdb_systeminformation_overview_host{cluster=\"$cluster\",hostname=~\"$host\",property=\"hoststarttime\"}",
+          "expr": "(time()*1000) - voltdb_systeminformation_overview_host{namespace=\"$cluster\",hostname=~\"$host\",property=\"hoststarttime\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -452,7 +487,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "voltdb_systeminformation_overview_host_info{cluster=\"$cluster\",hostname=~\"$host\"}",
+          "expr": "voltdb_systeminformation_overview_host_info{namespace=\"$cluster\",hostname=~\"$host\"}",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -466,13 +501,27 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "voltdb_cpu_usage_percent{cluster=\"$cluster\",hostname=~\"$host\"}",
+          "expr": "voltdb_cpu_usage_percent{namespace=\"$cluster\",hostname=~\"$host\"}",
           "format": "table",
           "hide": false,
           "instant": true,
           "interval": "",
           "legendFormat": "",
           "refId": "host_cpu"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "voltdb_xdcr_readiness_info{namespace=\"$cluster\",hostname=~\"$host\"}",
+          "format": "table",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
         }
       ],
       "title": "Nodes",
@@ -492,20 +541,31 @@
               "Time 2": true,
               "Time 3": true,
               "Value": false,
+              "Value #A": true,
               "Value #host_info": true,
               "__name__ 1": true,
               "__name__ 2": true,
               "__name__ 3": true,
               "buildstring": true,
+              "dr_consumer_is_covered": true,
+              "dr_consumer_is_paused": true,
+              "dr_consumer_state": true,
+              "dr_producer_connection": true,
+              "dr_producer_is_synced": true,
+              "dr_producer_state": true,
+              "dr_role_state": true,
               "endpoint 1": true,
               "endpoint 2": true,
               "endpoint 3": true,
+              "endpoint 4": true,
               "instance 1": true,
               "instance 2": true,
               "instance 3": true,
+              "instance 4": true,
               "job 1": true,
               "job 2": true,
               "job 3": true,
+              "job 4": true,
               "namespace": true,
               "namespace 1": true,
               "namespace 2": true,
@@ -513,10 +573,12 @@
               "pod 1": true,
               "pod 2": true,
               "pod 3": true,
+              "pod 4": true,
               "property": true,
               "service 1": true,
               "service 2": true,
-              "service 3": true
+              "service 3": true,
+              "service 4": true
             },
             "indexByName": {
               "Time 1": 24,
@@ -554,6 +616,7 @@
               "Time": "version (fake)",
               "Value #host_cpu": "",
               "instance": "",
+              "is_ready": "XDCR ready",
               "namespace": "status (fake)"
             }
           }
@@ -616,7 +679,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "voltdb_systeminformation_deployment{cluster=\"$cluster\", property=\"kfactor\"}",
+          "expr": "voltdb_systeminformation_deployment{namespace=\"$cluster\", property=\"kfactor\"}",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -682,7 +745,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "voltdb_systeminformation_deployment{cluster=\"$cluster\", property=\"sitesperhost\"}",
+          "expr": "voltdb_systeminformation_deployment{namespace=\"$cluster\", property=\"sitesperhost\"}",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -748,7 +811,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "voltdb_systeminformation_overview_cluster{cluster=\"$cluster\", property=\"fullclustersize\"}",
+          "expr": "voltdb_systeminformation_overview_cluster{namespace=\"$cluster\", property=\"fullclustersize\"}",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -814,7 +877,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "voltdb_systeminformation_overview_cluster{cluster=\"$cluster\", property=\"currentclustersize\"}",
+          "expr": "voltdb_systeminformation_overview_cluster{namespace=\"$cluster\", property=\"currentclustersize\"}",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -885,7 +948,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max(voltdb_latency_tps{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max(voltdb_latency_tps{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{hostname}}",
@@ -955,7 +1018,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max(voltdb_procedure_aborts{cluster=\"$cluster\",hostname=~\"$host\"})+max(voltdb_procedure_failures{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max(voltdb_procedure_aborts{namespace=\"$cluster\",hostname=~\"$host\"})+max(voltdb_procedure_failures{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{hostname}}",
@@ -1025,7 +1088,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max (voltdb_latency_99th_seconds{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max (voltdb_latency_99th_seconds{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{hostname}}",
@@ -1095,7 +1158,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(voltdb_commandlog_outstanding_txns{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(voltdb_commandlog_outstanding_txns{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "",
@@ -1187,7 +1250,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "max (voltdb_cpu_usage_percent{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max (voltdb_cpu_usage_percent{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1257,7 +1320,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "max(voltdb_memory_rss_bytes{cluster=\"$cluster\",hostname=~\"$host\"}/ on (hostname) voltdb_memory_physicalmemory_bytes{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max(voltdb_memory_rss_bytes{namespace=\"$cluster\",hostname=~\"$host\"}/ on (hostname) voltdb_memory_physicalmemory_bytes{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1327,7 +1390,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "max(voltdb_memory_javaused_bytes{cluster=\"$cluster\",hostname=~\"$host\"}/ on (hostname) voltdb_memory_javamaxheap_bytes{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max(voltdb_memory_javaused_bytes{namespace=\"$cluster\",hostname=~\"$host\"}/ on (hostname) voltdb_memory_javamaxheap_bytes{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -1391,7 +1454,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(voltdb_gc_newgen_avg_gc_time_seconds{cluster=\"$cluster\",hostname=~\"$host\"}) + sum( voltdb_gc_oldgen_avg_gc_time_seconds{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(voltdb_gc_newgen_avg_gc_time_seconds{namespace=\"$cluster\",hostname=~\"$host\"}) + sum( voltdb_gc_oldgen_avg_gc_time_seconds{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "Sum dropped connections",
@@ -1414,6 +1477,99 @@
       "panels": [],
       "title": "Cluster Advisor",
       "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "false": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "Not ready"
+                },
+                "true": {
+                  "color": "green",
+                  "index": 1,
+                  "text": "Ready"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 0,
+        "y": 18
+      },
+      "id": 69,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "/^value$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": false,
+          "expr": "voltdb_xdcr_readiness_info{namespace=\"$cluster\"}",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "XDCR readiness",
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {
+            "keepLabels": ["is_ready"],
+            "mode": "rows",
+            "valueLabel": "is_ready"
+          }
+        },
+        {
+          "id": "merge",
+          "options": {}
+        }
+      ],
+      "type": "stat"
     },
     {
       "datasource": {
@@ -1479,7 +1635,7 @@
       "gridPos": {
         "h": 4,
         "w": 3,
-        "x": 0,
+        "x": 3,
         "y": 18
       },
       "id": 14,
@@ -1504,7 +1660,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "min (voltdb_limits_file_descriptors_limit{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "min (voltdb_limits_file_descriptors_limit{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "Descriptors limit",
@@ -1579,7 +1735,7 @@
       "gridPos": {
         "h": 4,
         "w": 3,
-        "x": 3,
+        "x": 6,
         "y": 18
       },
       "id": 15,
@@ -1603,7 +1759,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max(voltdb_clockskew_max{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max(voltdb_clockskew_max{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "Max reported skew",
@@ -1664,7 +1820,7 @@
       "gridPos": {
         "h": 4,
         "w": 3,
-        "x": 6,
+        "x": 9,
         "y": 18
       },
       "id": 26,
@@ -1688,7 +1844,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(voltdb_limits_client_connections_dropped{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(voltdb_limits_client_connections_dropped{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "Sum dropped connections",
@@ -1763,7 +1919,7 @@
       "gridPos": {
         "h": 4,
         "w": 3,
-        "x": 9,
+        "x": 12,
         "y": 18
       },
       "id": 16,
@@ -1788,7 +1944,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "min(voltdb_limits_client_connections_limit{cluster=\"$cluster\",hostname=~\"$host\"}) - max(voltdb_limits_client_connections_open{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "min(voltdb_limits_client_connections_limit{namespace=\"$cluster\",hostname=~\"$host\"}) - max(voltdb_limits_client_connections_open{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "",
@@ -1796,106 +1952,6 @@
         }
       ],
       "title": "Available connections",
-      "transformations": [],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "from": 0,
-                "result": {
-                  "color": "red",
-                  "index": 0,
-                  "text": "Critical"
-                },
-                "to": 100
-              },
-              "type": "range"
-            },
-            {
-              "options": {
-                "from": 100,
-                "result": {
-                  "color": "yellow",
-                  "index": 1,
-                  "text": "Low"
-                },
-                "to": 1000
-              },
-              "type": "range"
-            },
-            {
-              "options": {
-                "from": 10000,
-                "result": {
-                  "color": "green",
-                  "index": 2,
-                  "text": "OK"
-                },
-                "to": 1000000000
-              },
-              "type": "range"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "ms"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 12,
-        "y": 18
-      },
-      "id": 17,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "min(voltdb_limits_file_descriptors_limit{cluster=\"$cluster\",hostname=~\"$host\"}) - max(voltdb_limits_file_descriptors_open{cluster=\"$cluster\",hostname=~\"$host\"})",
-          "format": "time_series",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Descriptor usage",
       "transformations": [],
       "type": "stat"
     },
@@ -1988,7 +2044,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max(sum by (hostname) (voltdb_gc_newgen_avg_gc_time_seconds{cluster=\"$cluster\",hostname=~\"$host\"})+ sum by (hostname) (voltdb_gc_oldgen_avg_gc_time_seconds{cluster=\"$cluster\",hostname=~\"$host\"}))",
+          "expr": "max(sum by (hostname) (voltdb_gc_newgen_avg_gc_time_seconds{namespace=\"$cluster\",hostname=~\"$host\"})+ sum by (hostname) (voltdb_gc_oldgen_avg_gc_time_seconds{namespace=\"$cluster\",hostname=~\"$host\"}))",
           "format": "time_series",
           "interval": "",
           "legendFormat": "",
@@ -1996,6 +2052,106 @@
         }
       ],
       "title": "GC",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "from": 0,
+                "result": {
+                  "color": "red",
+                  "index": 0,
+                  "text": "Critical"
+                },
+                "to": 100
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 100,
+                "result": {
+                  "color": "yellow",
+                  "index": 1,
+                  "text": "Low"
+                },
+                "to": 1000
+              },
+              "type": "range"
+            },
+            {
+              "options": {
+                "from": 10000,
+                "result": {
+                  "color": "green",
+                  "index": 2,
+                  "text": "OK"
+                },
+                "to": 1000000000
+              },
+              "type": "range"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 18,
+        "y": 18
+      },
+      "id": 17,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "min(voltdb_limits_file_descriptors_limit{namespace=\"$cluster\",hostname=~\"$host\"}) - max(voltdb_limits_file_descriptors_open{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Descriptor usage",
       "transformations": [],
       "type": "stat"
     },
@@ -2041,7 +2197,7 @@
       "gridPos": {
         "h": 4,
         "w": 3,
-        "x": 18,
+        "x": 21,
         "y": 18
       },
       "id": 34,
@@ -2065,7 +2221,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "voltdb_rebalance_moved_ratio{cluster=\"$cluster\",hostname=~\"$host\"}",
+          "expr": "voltdb_rebalance_moved_ratio{namespace=\"$cluster\",hostname=~\"$host\"}",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -2074,80 +2230,6 @@
         }
       ],
       "title": "Rebalance",
-      "transformations": [],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "options": {
-                "0": {
-                  "color": "green",
-                  "index": 0,
-                  "text": "?"
-                }
-              },
-              "type": "value"
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "ms"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 21,
-        "y": 18
-      },
-      "id": 69,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "none",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "voltdb_rebalance_moved_ratio{cluster=\"$cluster\",hostname=~\"$host\"}",
-          "format": "time_series",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Your check here",
       "transformations": [],
       "type": "stat"
     },
@@ -2249,7 +2331,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max by(hostname)(voltdb_latency_tps{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max by(hostname)(voltdb_latency_tps{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{hostname}}",
@@ -2336,7 +2418,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max by (procedure)(voltdb_procedure_max_execution_time_seconds{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max by (procedure)(voltdb_procedure_max_execution_time_seconds{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{procname}}",
@@ -2451,7 +2533,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max by(hostname)(voltdb_latency_max_seconds{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max by(hostname)(voltdb_latency_max_seconds{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{hostname}}",
@@ -2572,7 +2654,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "min (voltdb_limits_client_connections_limit{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "min (voltdb_limits_client_connections_limit{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "Connections limit",
@@ -2584,7 +2666,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sort(voltdb_limits_client_connections_open{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sort(voltdb_limits_client_connections_open{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2695,7 +2777,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "rate(voltdb_limits_client_connections_dropped{cluster=\"$cluster\",hostname=~\"$host\"}[$__interval])",
+          "expr": "rate(voltdb_limits_client_connections_dropped{namespace=\"$cluster\",hostname=~\"$host\"}[$__interval])",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{hostname}} accepted",
@@ -2805,7 +2887,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "rate(voltdb_limits_client_connections_accepted{cluster=\"$cluster\",hostname=~\"$host\"}[$__interval])",
+          "expr": "rate(voltdb_limits_client_connections_accepted{namespace=\"$cluster\",hostname=~\"$host\"}[$__interval])",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -2894,7 +2976,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "voltdb_liveclients_outstanding_txns{cluster=\"$cluster\",hostname=~\"$host\"}",
+          "expr": "voltdb_liveclients_outstanding_txns{namespace=\"$cluster\",hostname=~\"$host\"}",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{hostname}}",
@@ -2982,7 +3064,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "voltdb_liveclients_outstanding_reponse_messages{cluster=\"$cluster\",hostname=~\"$host\"}",
+          "expr": "voltdb_liveclients_outstanding_reponse_messages{namespace=\"$cluster\",hostname=~\"$host\"}",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{hostname}}",
@@ -3112,7 +3194,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sort(voltdb_limits_file_descriptors_open{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sort(voltdb_limits_file_descriptors_open{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{hostname}}",
@@ -3206,7 +3288,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by (cnxhostname, hostname)(increase(voltdb_iostats_received_messages{cluster=\"$cluster\",hostname=~\"$host\"}[$__interval]))",
+          "expr": "sum by (cnxhostname, hostname)(increase(voltdb_iostats_received_messages{namespace=\"$cluster\",hostname=~\"$host\"}[$__interval]))",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{cnxhostname}}",
@@ -3349,7 +3431,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "sum by (hostname, remotehostname)(voltdb_clockskew_ms{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum by (hostname, remotehostname)(voltdb_clockskew_ms{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -3488,7 +3570,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "voltdb_gc_newgen_avg_gc_time_seconds{cluster=\"$cluster\",hostname=~\"$host\"}",
+          "expr": "voltdb_gc_newgen_avg_gc_time_seconds{namespace=\"$cluster\",hostname=~\"$host\"}",
           "interval": "",
           "legendFormat": "{{hostname}}",
           "refId": "A"
@@ -3577,7 +3659,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "increase(voltdb_gc_newgen_gc_count{cluster=\"$cluster\",hostname=~\"$host\"}[$__interval])",
+          "expr": "increase(voltdb_gc_newgen_gc_count{namespace=\"$cluster\",hostname=~\"$host\"}[$__interval])",
           "interval": "",
           "legendFormat": "{{hostname}}",
           "refId": "A"
@@ -3666,7 +3748,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "increase(voltdb_gc_oldgen_avg_gc_time_seconds{cluster=\"$cluster\",hostname=~\"$host\"}[$__interval])",
+          "expr": "increase(voltdb_gc_oldgen_avg_gc_time_seconds{namespace=\"$cluster\",hostname=~\"$host\"}[$__interval])",
           "interval": "",
           "legendFormat": "{{hostname}}",
           "refId": "A"
@@ -3755,7 +3837,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "increase(voltdb_gc_oldgen_gc_count{cluster=\"$cluster\",hostname=~\"$host\"}[$__interval])",
+          "expr": "increase(voltdb_gc_oldgen_gc_count{namespace=\"$cluster\",hostname=~\"$host\"}[$__interval])",
           "interval": "",
           "legendFormat": "{{hostname}}",
           "refId": "A"
@@ -3765,12 +3847,192 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 97
+      },
+      "id": 73,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull"],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "voltdb_memory_javaused_bytes{namespace=\"$cluster\",hostname=~\"$host\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{pod}}",
+          "refId": "B"
+        }
+      ],
+      "title": "Java Heap Memory Usage",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 97
+      },
+      "id": 74,
+      "options": {
+        "legend": {
+          "calcs": ["lastNotNull"],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "voltdb_memory_rss_bytes{namespace=\"$cluster\",hostname=~\"$host\"}",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{pod}}",
+          "refId": "B"
+        }
+      ],
+      "title": "RSS size",
+      "type": "timeseries"
+    },
+    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 97
+        "y": 105
       },
       "id": 36,
       "panels": [],
@@ -3805,7 +4067,7 @@
         "h": 5,
         "w": 5,
         "x": 0,
-        "y": 98
+        "y": 106
       },
       "id": 47,
       "options": {
@@ -3826,7 +4088,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "rate(voltdb_rebalance_calls_per_seconds{cluster=\"$cluster\"}[$__interval])",
+          "expr": "rate(voltdb_rebalance_calls_per_seconds{namespace=\"$cluster\"}[$__interval])",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{instance}}",
@@ -3865,7 +4127,7 @@
         "h": 5,
         "w": 5,
         "x": 5,
-        "y": 98
+        "y": 106
       },
       "id": 46,
       "options": {
@@ -3886,7 +4148,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "voltdb_rebalance_remaining_time_seconds{cluster=\"$cluster\"}",
+          "expr": "voltdb_rebalance_remaining_time_seconds{namespace=\"$cluster\"}",
           "hide": false,
           "interval": "",
           "legendFormat": "",
@@ -3953,7 +4215,7 @@
         "h": 10,
         "w": 14,
         "x": 10,
-        "y": 98
+        "y": 106
       },
       "id": 44,
       "options": {
@@ -3974,7 +4236,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "voltdb_rebalance_moved_ratio{cluster=\"$cluster\"}",
+          "expr": "voltdb_rebalance_moved_ratio{namespace=\"$cluster\"}",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{instance}}",
@@ -4013,7 +4275,7 @@
         "h": 5,
         "w": 5,
         "x": 0,
-        "y": 103
+        "y": 111
       },
       "id": 48,
       "options": {
@@ -4034,7 +4296,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "voltdb_rebalance_avg_data_transfer_time_seconds{cluster=\"$cluster\"}",
+          "expr": "voltdb_rebalance_avg_data_transfer_time_seconds{namespace=\"$cluster\"}",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{instance}}",
@@ -4073,7 +4335,7 @@
         "h": 5,
         "w": 5,
         "x": 5,
-        "y": 103
+        "y": 111
       },
       "id": 49,
       "options": {
@@ -4094,7 +4356,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "voltdb_rebalance_avg_execution_time_seconds{cluster=\"$cluster\"}",
+          "expr": "voltdb_rebalance_avg_execution_time_seconds{namespace=\"$cluster\"}",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{instance}}",
@@ -4109,7 +4371,7 @@
   "refresh": false,
   "schemaVersion": 34,
   "style": "dark",
-  "tags": [],
+  "tags": ["voltdb", "overview"],
   "templating": {
     "list": [
       {
@@ -4141,7 +4403,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(cluster)",
+        "definition": "label_values(namespace)",
         "hide": 0,
         "includeAll": false,
         "label": "Cluster",
@@ -4149,7 +4411,7 @@
         "name": "cluster",
         "options": [],
         "query": {
-          "query": "label_values(cluster)",
+          "query": "label_values(namespace)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -4169,7 +4431,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({cluster=\"$cluster\"},hostname)",
+        "definition": "label_values({namespace=\"$cluster\"},hostname)",
         "hide": 0,
         "includeAll": true,
         "label": "Host",
@@ -4177,7 +4439,7 @@
         "name": "host",
         "options": [],
         "query": {
-          "query": "label_values({cluster=\"$cluster\"},hostname)",
+          "query": "label_values({namespace=\"$cluster\"},hostname)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
@@ -4195,7 +4457,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Cluster overview",
-  "uid": "DIHIuCynkA",
-  "version": 140,
+  "uid": "DIHIuCynk",
+  "version": 153,
   "weekStart": ""
 }
