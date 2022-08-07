@@ -27,7 +27,7 @@ There are several different methods you can use for importing dashboards into Gr
 
 ## Setting up Prometheus
 
-For the dashboards to work properly, you need to configure the scrape interval rate setting for the Prometheus data source in Grafana. The recommended setting is ???.
+For the dashboards to work properly, you need to configure the scrape interval rate setting for the Prometheus data source in Grafana. The recommended setting is 15 seconds.
 
 ## Applying the "cluster" Label
 
