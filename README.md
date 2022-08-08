@@ -23,11 +23,11 @@ The dashboards require a Grafana plugin, `Treemap`, that must be loaded into Gra
 
 Next, you need to select the dashboards appropriate to your Volt version and operating system. Only install dashboards from the subdirectory that matches your operating environment.
 
-There are several different methods you can use for importing dashboards into Grafana. You can download the dashboard JSON file then use the `import` menu item in the Grafana UI to load the dashboard. Alternately, you can import dashboards directly using a URL, or even a github repository. The VoltDB dashboards are in standard Grafana JSON format so use the process that best suits your needs. (See the [Grafana documentation](https://grafana.com/docs/) for more information.)
+There are several different methods you can use for importing dashboards into Grafana. You can download the dashboard JSON files then use the `import` menu item in the Grafana UI to load the dashboards. Alternately, you can clone the github repository locally and provision the dashboards using the Grafana REST API pointing to the local copy. See the [Grafana documentation](https://grafana.com/docs/) for more information on how to install dashboards.
 
-## Setting up Prometheus
+## Configuring Prometheus and Grafana
 
-For the dashboards to work properly, you need to configure the scrape interval rate setting for the Prometheus data source in Grafana. The recommended setting is 15 seconds.
+For the dashboards to work properly, Grafana and Prometheus must agree on how frequently data is collected. Make sure the scrape interval setting in the Grafana configuration matches the scrape interval in Prometheus.
 
 ## Applying the "cluster" Label
 
