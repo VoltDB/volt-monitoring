@@ -23,7 +23,7 @@ The dashboards require a Grafana plugin, `Treemap`, that must be loaded into Gra
 
 Next, you need to select the dashboards appropriate to your Volt version and operating system. Only install dashboards from the subdirectory that matches your operating environment.
 
-There are several different methods you can use for importing dashboards into Grafana. You can download the dashboard JSON files then use the `import` menu item in the Grafana UI to load the dashboards. Alternately, you can clone the github repository locally and provision the dashboards using the Grafana REST API pointing to the local copy. See the [Grafana documentation](https://grafana.com/docs/) for more information on how to install dashboards.
+There are several different methods you can use for importing dashboards into Grafana. You can download the dashboard JSON files then use the `import` menu item in the Grafana UI to load the dashboards. Alternately, you can include the dashboards using the Grafana REST API pointing to the individual JSON files. Or you can provision a directory of dashboards as part of the Grafana startup process. See the [Grafana documentation](https://grafana.com/docs/) for more information on how to install dashboards.
 
 ## Configuring Prometheus and Grafana
 
