@@ -1,13 +1,56 @@
 {
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__elements": [],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "8.3.3"
+    },
+    {
+      "type": "panel",
+      "id": "marcusolsson-treemap-panel",
+      "name": "Treemap",
+      "version": "2.0.0"
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "stat",
+      "name": "Stat",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "timeseries",
+      "name": "Time series",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
         "builtIn": 1,
-        "datasource": "${datasource}",
+        "datasource": "${DS_PROMETHEUS}",
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations \u0026 Alerts",
+        "name": "Annotations & Alerts",
         "target": {
           "limit": 100,
           "matchAny": false,
@@ -21,8 +64,8 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 81,
-  "iteration": 1658840842744,
+  "id": null,
+  "iteration": 1667226727384,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -42,7 +85,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${datasource}"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -76,7 +119,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -87,7 +132,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
           "expr": "sum(voltdb_table_tuple_allocated_memory_bytes{namespace=\"$cluster\"})",
@@ -105,7 +150,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${datasource}"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -139,7 +184,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -150,7 +197,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
           "expr": "sum(voltdb_table_tuple_count{namespace=\"$cluster\"})",
@@ -168,7 +215,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${datasource}"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -202,7 +249,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -213,7 +262,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
           "expr": "sum(voltdb_index_memory_estimate_bytes{namespace=\"$cluster\",hostname=~\"$host\"})",
@@ -230,7 +279,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${datasource}"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -264,7 +313,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -275,7 +326,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
           "expr": "sum(voltdb_index_entries_count{namespace=\"$cluster\",hostname=~\"$host\"})",
@@ -303,7 +354,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${datasource}"
+        "uid": "${DS_PROMETHEUS}"
       },
       "fieldConfig": {
         "defaults": {
@@ -365,7 +416,9 @@
       "id": 38,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right",
           "sortBy": "Last *",
@@ -379,7 +432,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
           "expr": "sum by(tablename)(voltdb_table_tuple_allocated_memory_bytes{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",tablename=~\"$table\"})",
@@ -392,9 +445,109 @@
       "type": "timeseries"
     },
     {
+      "description": "Average time spent in compaction per table and Average number of Tuples compacted per table.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      },
+      "id": 54,
+      "options": {
+        "legend": {
+          "calcs": [
+            "last"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "exemplar": true,
+          "expr": "avg by(tablename)(voltdb_compaction_max_execution_time_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",tablename=~\"$table\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{table}}",
+          "refId": "Average Compaction Per Table"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "exemplar": true,
+          "expr": "avg by(tablename)(voltdb_compaction_avg_relocated_count{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",tablename=~\"$table\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{table}}",
+          "refId": "Average Compacted Tuple Count"
+        }
+      ],
+      "title": "Table Compaction ($table)",
+      "type": "timeseries"
+    },
+    {
       "datasource": {
         "type": "prometheus",
-        "uid": "${datasource}"
+        "uid": "${DS_PROMETHEUS}"
       },
       "description": "",
       "fieldConfig": {
@@ -420,12 +573,17 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 24
       },
       "id": 33,
       "options": {
         "groupByField": "partitionid",
-        "labelFields": ["partitionid", "tablename", "Value #A", "Value #B"],
+        "labelFields": [
+          "partitionid",
+          "tablename",
+          "Value #A",
+          "Value #B"
+        ],
         "sizeField": "Value #A",
         "textField": "tablename",
         "tiling": "treemapSquarify"
@@ -435,7 +593,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
           "expr": "sum by (tablename, partitionid)(voltdb_table_tuple_count{namespace=\"$cluster\",hostname=~\"$host\",tablename=~\"$table\",partitionid=~\"$partition\"})",
@@ -447,7 +605,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
           "expr": "1",
@@ -465,7 +623,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${datasource}"
+        "uid": "${DS_PROMETHEUS}"
       },
       "description": "",
       "fieldConfig": {
@@ -491,13 +649,16 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 27
+        "y": 35
       },
       "id": 52,
       "options": {
         "colorByField": "Value #A",
         "groupByField": "partitionid",
-        "labelFields": ["Value #A", "hostname"],
+        "labelFields": [
+          "Value #A",
+          "hostname"
+        ],
         "sizeField": "Value #A",
         "textField": "hostname",
         "tiling": "treemapSquarify"
@@ -507,7 +668,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
           "expr": "sum by (hostname, partitionid)(voltdb_table_tuple_count{namespace=\"$cluster\",hostname=~\"$host\"})",
@@ -519,7 +680,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
           "expr": "1",
@@ -537,7 +698,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${datasource}"
+        "uid": "${DS_PROMETHEUS}"
       },
       "description": "",
       "fieldConfig": {
@@ -563,13 +724,15 @@
         "h": 11,
         "w": 24,
         "x": 0,
-        "y": 38
+        "y": 46
       },
       "id": 51,
       "options": {
         "colorByField": "Value #B",
         "groupByField": "indexname",
-        "labelFields": ["Value #A"],
+        "labelFields": [
+          "Value #A"
+        ],
         "sizeField": "Value #A",
         "textField": "partitionid",
         "tiling": "treemapSquarify"
@@ -579,7 +742,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
           "expr": "sum by (indexname, partitionid)(voltdb_index_entries_count{namespace=\"$cluster\",hostname=~\"$host\",tablename=~\"$table\",partitionid=~\"$partition\"})",
@@ -591,7 +754,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${datasource}"
+            "uid": "${DS_PROMETHEUS}"
           },
           "exemplar": true,
           "expr": "sum by (indexname, partitionid)(voltdb_index_memory_estimate_bytes{namespace=\"$cluster\",hostname=~\"$host\",tablename=~\"$table\",partitionid=~\"$partition\"})",
@@ -615,7 +778,10 @@
   "refresh": false,
   "schemaVersion": 34,
   "style": "dark",
-  "tags": ["voltdb", "tables"],
+  "tags": [
+    "voltdb",
+    "tables"
+  ],
   "templating": {
     "list": [
       {
@@ -637,14 +803,10 @@
         "type": "datasource"
       },
       {
-        "current": {
-          "selected": false,
-          "text": "tkowalcz",
-          "value": "tkowalcz"
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "${datasource}"
+          "uid": "${DS_PROMETHEUS}"
         },
         "definition": "label_values(namespace)",
         "hide": 0,
@@ -665,14 +827,10 @@
       },
       {
         "allValue": ".*",
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "${datasource}"
+          "uid": "${DS_PROMETHEUS}"
         },
         "definition": "label_values({namespace=\"$cluster\"},hostname)",
         "hide": 0,
@@ -693,14 +851,10 @@
       },
       {
         "allValue": ".*",
-        "current": {
-          "selected": true,
-          "text": ["All"],
-          "value": ["$__all"]
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "${datasource}"
+          "uid": "${DS_PROMETHEUS}"
         },
         "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},tablename)",
         "hide": 0,
@@ -721,14 +875,10 @@
       },
       {
         "allValue": ".*",
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "${datasource}"
+          "uid": "${DS_PROMETHEUS}"
         },
         "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\",tablename=~\"$table\"}, partitionid)",
         "hide": 0,
@@ -757,6 +907,6 @@
   "timezone": "",
   "title": "VoltDB Tables",
   "uid": "5fFvY18nk",
-  "version": 48,
+  "version": 50,
   "weekStart": ""
 }
