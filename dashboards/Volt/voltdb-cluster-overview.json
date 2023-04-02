@@ -77,7 +77,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -140,7 +142,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -217,7 +221,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "/^clustersafety$/",
           "values": false
         },
@@ -292,7 +298,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "/^clusterstate$/",
           "values": false
         },
@@ -458,7 +466,9 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "frameIndex": 2,
@@ -566,10 +576,10 @@
               "job 2": true,
               "job 3": true,
               "job 4": true,
-              "namespace": true,
-              "namespace 1": true,
-              "namespace 2": true,
-              "namespace 3": true,
+              "cluster": true,
+              "cluster 1": true,
+              "cluster 2": true,
+              "cluster 3": true,
               "pod 1": true,
               "pod 2": true,
               "pod 3": true,
@@ -600,9 +610,9 @@
               "job 1": 9,
               "job 2": 16,
               "job 3": 21,
-              "namespace 1": 25,
-              "namespace 2": 27,
-              "namespace 3": 29,
+              "cluster 1": 25,
+              "cluster 2": 27,
+              "cluster 3": 29,
               "pod 1": 10,
               "pod 2": 17,
               "pod 3": 22,
@@ -617,7 +627,7 @@
               "Value #host_cpu": "",
               "instance": "",
               "is_ready": "XDCR ready",
-              "namespace": "status (fake)"
+              "cluster": "status (fake)"
             }
           }
         }
@@ -665,7 +675,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -731,7 +743,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -797,7 +811,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -863,7 +879,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -934,7 +952,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -947,9 +967,10 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "exemplar": true,
-          "expr": "max(voltdb_latency_tps{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "exemplar": false,
+          "expr": "sum(voltdb_latency_tps{cluster=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
+          "instant": true,
           "interval": "",
           "legendFormat": "{{hostname}}",
           "refId": "A"
@@ -997,14 +1018,16 @@
         "x": 3,
         "y": 9
       },
-      "id": 31,
+      "id": 75,
       "options": {
         "colorMode": "background",
         "graphMode": "area",
-        "justifyMode": "center",
+        "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -1017,15 +1040,16 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "exemplar": true,
-          "expr": "max(voltdb_procedure_aborts{cluster=\"$cluster\",hostname=~\"$host\"})+max(voltdb_procedure_failures{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "exemplar": false,
+          "expr": "sum(voltdb_import_successful_txns{cluster=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
+          "instant": true,
           "interval": "",
           "legendFormat": "{{hostname}}",
           "refId": "A"
         }
       ],
-      "title": "Procedure errors",
+      "title": "Import TPS",
       "transformations": [],
       "type": "stat"
     },
@@ -1046,18 +1070,10 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 30
-              },
-              {
-                "color": "red",
-                "value": 45
               }
             ]
           },
-          "unit": "s"
+          "unit": "short"
         },
         "overrides": []
       },
@@ -1067,14 +1083,16 @@
         "x": 6,
         "y": 9
       },
-      "id": 8,
+      "id": 31,
       "options": {
         "colorMode": "background",
         "graphMode": "area",
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -1088,14 +1106,14 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max (voltdb_latency_99th_seconds{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(voltdb_procedure_invocations{cluster=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
+          "instant": true,
           "interval": "",
-          "legendFormat": "{{hostname}}",
           "refId": "A"
         }
       ],
-      "title": "Max Latency",
+      "title": "Procedure invocations",
       "transformations": [],
       "type": "stat"
     },
@@ -1137,6 +1155,78 @@
         "x": 9,
         "y": 9
       },
+      "id": 76,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "sum(voltdb_procedure_aborts{cluster=\"$cluster\",hostname=~\"$host\"})+sum(voltdb_procedure_failures{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "{{hostname}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Procedure errors",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 30
+              },
+              {
+                "color": "red",
+                "value": 45
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 12,
+        "y": 9
+      },
       "id": 32,
       "options": {
         "colorMode": "background",
@@ -1144,7 +1234,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -1172,8 +1264,8 @@
     {
       "gridPos": {
         "h": 8,
-        "w": 12,
-        "x": 12,
+        "w": 9,
+        "x": 15,
         "y": 9
       },
       "id": 71,
@@ -1235,7 +1327,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -1305,7 +1399,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -1375,7 +1471,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -1440,7 +1538,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -1462,6 +1562,78 @@
         }
       ],
       "title": "Total GC time",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 30
+              },
+              {
+                "color": "red",
+                "value": 45
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 12,
+        "y": 13
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "max (voltdb_latency_three_nines_seconds{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "{{hostname}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Max Latency",
       "transformations": [],
       "type": "stat"
     },
@@ -1531,7 +1703,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "/^value$/",
           "values": false
         },
@@ -1559,7 +1733,9 @@
         {
           "id": "labelsToFields",
           "options": {
-            "keepLabels": ["is_ready"],
+            "keepLabels": [
+              "is_ready"
+            ],
             "mode": "rows",
             "valueLabel": "is_ready"
           }
@@ -1645,7 +1821,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -1745,7 +1923,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -1830,7 +2010,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -1929,7 +2111,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -2029,7 +2213,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -2129,7 +2315,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -2207,7 +2395,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -2405,7 +2595,9 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "showHeader": true
@@ -2430,7 +2622,9 @@
         {
           "id": "reduce",
           "options": {
-            "reducers": ["max"]
+            "reducers": [
+              "max"
+            ]
           }
         },
         {
@@ -2638,7 +2832,9 @@
       "id": 9,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "bottom"
         },
@@ -2759,7 +2955,9 @@
       "id": 13,
       "options": {
         "legend": {
-          "calcs": ["sum"],
+          "calcs": [
+            "sum"
+          ],
           "displayMode": "table",
           "placement": "bottom",
           "sortBy": "Total",
@@ -2869,7 +3067,9 @@
       "id": 45,
       "options": {
         "legend": {
-          "calcs": ["sum"],
+          "calcs": [
+            "sum"
+          ],
           "displayMode": "table",
           "placement": "bottom",
           "sortBy": "Total",
@@ -2904,6 +3104,7 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
+      "description": "The number of transactions (that is, stored procedures) initiated on behalf of the client that have yet to be completed.\n",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2960,7 +3161,9 @@
       "id": 38,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "bottom"
         },
@@ -3048,7 +3251,9 @@
       "id": 39,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "bottom"
         },
@@ -3151,7 +3356,9 @@
               "id": "byNames",
               "options": {
                 "mode": "exclude",
-                "names": ["db2-voltdb-cluster-2"],
+                "names": [
+                  "db2-voltdb-cluster-2"
+                ],
                 "prefix": "All except:",
                 "readOnly": true
               }
@@ -3178,7 +3385,9 @@
       "id": 37,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "bottom"
         },
@@ -3268,7 +3477,9 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "frameIndex": 11,
@@ -3302,13 +3513,18 @@
           "options": {
             "includeTimeField": false,
             "mode": "reduceFields",
-            "reducers": ["max"]
+            "reducers": [
+              "max"
+            ]
           }
         },
         {
           "id": "labelsToFields",
           "options": {
-            "keepLabels": ["cnxhostname", "hostname"],
+            "keepLabels": [
+              "cnxhostname",
+              "hostname"
+            ],
             "mode": "columns",
             "valueLabel": "hostname"
           }
@@ -3416,7 +3632,9 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "frameIndex": 0,
@@ -3446,13 +3664,19 @@
           "options": {
             "includeTimeField": false,
             "mode": "reduceFields",
-            "reducers": ["max"]
+            "reducers": [
+              "max"
+            ]
           }
         },
         {
           "id": "labelsToFields",
           "options": {
-            "keepLabels": ["cnxhostname", "hostname", "remotehostname"],
+            "keepLabels": [
+              "cnxhostname",
+              "hostname",
+              "remotehostname"
+            ],
             "mode": "columns",
             "valueLabel": "hostname"
           }
@@ -3555,7 +3779,9 @@
       "id": 64,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -3644,7 +3870,9 @@
       "id": 65,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -3733,7 +3961,9 @@
       "id": 66,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -3822,7 +4052,9 @@
       "id": 67,
       "options": {
         "legend": {
-          "calcs": ["sum"],
+          "calcs": [
+            "sum"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -3911,7 +4143,9 @@
       "id": 73,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -4001,7 +4235,9 @@
       "id": 74,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -4073,7 +4309,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -4133,7 +4371,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -4220,7 +4460,9 @@
       "id": 44,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "bottom"
         },
@@ -4281,7 +4523,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -4341,7 +4585,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -4371,7 +4617,10 @@
   "refresh": false,
   "schemaVersion": 34,
   "style": "dark",
-  "tags": ["voltdb", "overview"],
+  "tags": [
+    "voltdb",
+    "overview"
+  ],
   "templating": {
     "list": [
       {
@@ -4394,11 +4643,7 @@
         "type": "datasource"
       },
       {
-        "current": {
-          "selected": true,
-          "text": "tkowalcz3",
-          "value": "tkowalcz3"
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
@@ -4422,11 +4667,7 @@
       },
       {
         "allValue": ".*",
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
@@ -4451,13 +4692,13 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Cluster overview",
-  "uid": "DIHIuCynkA",
-  "version": 153,
+  "uid": "DIHIuCynk",
+  "version": 8,
   "weekStart": ""
 }
