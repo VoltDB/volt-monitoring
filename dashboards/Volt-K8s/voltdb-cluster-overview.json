@@ -947,9 +947,10 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "exemplar": true,
-          "expr": "max(voltdb_latency_tps{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "exemplar": false,
+          "expr": "sum(voltdb_latency_tps{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
+          "instant": true,
           "interval": "",
           "legendFormat": "{{hostname}}",
           "refId": "A"
@@ -997,6 +998,69 @@
         "x": 3,
         "y": 9
       },
+      "id": 75,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": false,
+          "expr": "sum(voltdb_import_successful_txns{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "{{hostname}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Import TPS",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 6,
+        "y": 9
+      },
       "id": 31,
       "options": {
         "colorMode": "background",
@@ -1018,84 +1082,14 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max(voltdb_procedure_aborts{namespace=\"$cluster\",hostname=~\"$host\"})+max(voltdb_procedure_failures{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(voltdb_procedure_invocations{namespace=\"$cluster\",hostname=~\"$host\"})",
           "format": "time_series",
+          "instant": true,
           "interval": "",
-          "legendFormat": "{{hostname}}",
           "refId": "A"
         }
       ],
-      "title": "Procedure errors",
-      "transformations": [],
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 30
-              },
-              {
-                "color": "red",
-                "value": 45
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 6,
-        "y": 9
-      },
-      "id": 8,
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": ["lastNotNull"],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "8.3.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "exemplar": true,
-          "expr": "max (voltdb_latency_99th_seconds{namespace=\"$cluster\",hostname=~\"$host\"})",
-          "format": "time_series",
-          "interval": "",
-          "legendFormat": "{{hostname}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Max Latency",
+      "title": "Procedure invocations",
       "transformations": [],
       "type": "stat"
     },
@@ -1137,6 +1131,76 @@
         "x": 9,
         "y": 9
       },
+      "id": 76,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": ["lastNotNull"],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "sum(voltdb_procedure_aborts{namespace=\"$cluster\",hostname=~\"$host\"})+sum(voltdb_procedure_failures{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "{{hostname}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Procedure errors",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 30
+              },
+              {
+                "color": "red",
+                "value": 45
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 12,
+        "y": 9
+      },
       "id": 32,
       "options": {
         "colorMode": "background",
@@ -1172,8 +1236,8 @@
     {
       "gridPos": {
         "h": 8,
-        "w": 12,
-        "x": 12,
+        "w": 9,
+        "x": 15,
         "y": 9
       },
       "id": 71,
@@ -1462,6 +1526,78 @@
         }
       ],
       "title": "Total GC time",
+      "transformations": [],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 30
+              },
+              {
+                "color": "red",
+                "value": 45
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 12,
+        "y": 13
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.3.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "exemplar": true,
+          "expr": "max (voltdb_latency_three_nines_seconds{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "{{hostname}}",
+          "refId": "A"
+        }
+      ],
+      "title": "Max Latency",
       "transformations": [],
       "type": "stat"
     },
@@ -2904,6 +3040,7 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
+      "description": "The number of transactions (that is, stored procedures) initiated on behalf of the client that have yet to be completed.\n",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4394,11 +4531,7 @@
         "type": "datasource"
       },
       {
-        "current": {
-          "selected": true,
-          "text": "tkowalcz3",
-          "value": "tkowalcz3"
-        },
+        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "${datasource}"
@@ -4458,6 +4591,6 @@
   "timezone": "",
   "title": "VoltDB Cluster overview",
   "uid": "DIHIuCynk",
-  "version": 153,
+  "version": 8,
   "weekStart": ""
 }
