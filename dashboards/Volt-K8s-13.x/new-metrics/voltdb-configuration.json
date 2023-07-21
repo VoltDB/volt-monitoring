@@ -2096,8 +2096,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "VoltDb Configuration",
+  "title": "VoltDb System information",
   "uid": "iQGr28yVz",
-  "version": 36,
+  "version": 35,
   "weekStart": ""
 }
