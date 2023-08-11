@@ -1056,7 +1056,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "voltdb_systeminformation_deployment{namespace=\"$cluster\",hostname=~\"$host\", property=\"sitesperhost\"}",
+          "expr": "voltdb_systeminformation_deployment{namespace=\"$cluster\",hostname=~\"$host\", property=\"kfactor\"}",
           "format": "time_series",
           "hide": false,
           "instant": true,
