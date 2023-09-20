@@ -1007,7 +1007,7 @@
             "properties": [
               {
                 "id": "unit",
-                "value": "ns"
+                "value": "s"
               }
             ]
           }
@@ -1612,9 +1612,10 @@
       },
       "id": 18,
       "options": {
+        "groupByField": "table_name",
         "labelFields": [],
         "sizeField": "Value #A",
-        "textField": "table_name",
+        "textField": "partition_id",
         "tiling": "treemapSquarify"
       },
       "targets": [
@@ -1802,6 +1803,6 @@
   "timezone": "",
   "title": "VoltDB Partitions",
   "uid": "fae27ae5-43a8-4dba-aadd-48e48ef0c03c",
-  "version": 73,
+  "version": 75,
   "weekStart": ""
 }
