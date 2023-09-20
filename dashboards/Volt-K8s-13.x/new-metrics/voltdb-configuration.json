@@ -160,7 +160,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "voltdb_systeminformation_overview_host_info{namespace=\"$cluster\", host_name=~\"$host\"}",
+          "expr": "voltdb_systeminformation_overview_host_info{namespace=\"$cluster\", host_name=~\"$host\",v2=\"1\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -673,10 +673,7 @@
           "fields": "",
           "values": false
         },
-        "text": {
-          "valueSize": 50
-        },
-        "textMode": "value"
+        "textMode": "auto"
       },
       "pluginVersion": "9.5.3",
       "targets": [
@@ -687,8 +684,9 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(voltdb_systeminformation_overview_cluster_info{namespace=\"$cluster\"})",
+          "expr": "sum(voltdb_systeminformation_overview_cluster_info{namespace=\"$cluster\",v2=\"1\"})",
           "format": "time_series",
+          "hide": false,
           "instant": true,
           "interval": "",
           "legendFormat": "__auto",
@@ -697,7 +695,12 @@
         }
       ],
       "title": "Current cluster size",
-      "transformations": [],
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {}
+        }
+      ],
       "type": "stat"
     },
     {
@@ -1044,6 +1047,10 @@
                   "index": 5,
                   "text": "heartbeat timeout setting in seconds"
                 },
+                "metrics": {
+                  "index": 9,
+                  "text": "metrics enabled"
+                },
                 "partitiondetection": {
                   "index": 6,
                   "text": "network partition detection enabled"
@@ -1113,7 +1120,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "max (voltdb_systeminformation_deployment_info{v2=\"1\", namespace=\"$cluster\", host_name=~\"$host\"}) by (drpriority,drrole, elasticduration, elasticthroughput, export, heartbeattimeout, partitiondetection, prioritiesenabled, temptablesmaxsize)",
+          "expr": "max (voltdb_systeminformation_deployment_info{v2=\"1\", namespace=\"$cluster\", host_name=~\"$host\"}) by (drpriority,drrole, elasticduration, elasticthroughput, export, heartbeattimeout, partitiondetection, prioritiesenabled, temptablesmaxsize, metrics)",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -2096,8 +2103,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "VoltDb System information",
+  "title": "VoltDb Configuration",
   "uid": "iQGr28yVz",
-  "version": 35,
+  "version": 38,
   "weekStart": ""
 }
