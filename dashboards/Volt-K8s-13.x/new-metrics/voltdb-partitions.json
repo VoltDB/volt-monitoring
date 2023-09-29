@@ -101,7 +101,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "Number of procedure invocation per 5 minute",
+      "description": "The number of procedure invocation per 5 minutes, also includes procedures being replicated into partition replicas, so it does not equal the number of transactions issued by clients",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -410,7 +410,6 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "based on 5m rate",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -453,28 +452,16 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
           },
           "unit": "short"
         },
         "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Total"
-            },
-            "properties": [
-              {
-                "id": "custom.fillOpacity",
-                "value": 6
-              },
-              {
-                "id": "custom.axisPlacement",
-                "value": "right"
-              }
-            ]
-          },
           {
             "matcher": {
               "id": "byName",
@@ -486,18 +473,6 @@
                 "value": "Multi partition"
               }
             ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "-1"
-            },
-            "properties": [
-              {
-                "id": "displayName",
-                "value": "No partition"
-              }
-            ]
           }
         ]
       },
@@ -507,18 +482,18 @@
         "x": 0,
         "y": 7
       },
-      "id": 8,
+      "id": 10,
       "options": {
         "legend": {
           "calcs": [
-            "max",
+            "lastNotNull",
             "sum"
           ],
           "displayMode": "table",
           "placement": "right",
           "showLegend": true,
           "sortBy": "Total",
-          "sortDesc": true
+          "sortDesc": false
         },
         "tooltip": {
           "mode": "single",
@@ -532,26 +507,13 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum by (partition_id)(rate(voltdb_procedure_invoked_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"}[$__rate_interval]))",
-          "hide": false,
+          "expr": "sum by(partition_id)(rate(voltdb_procedure_invoked_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"}[$__rate_interval]))",
           "legendFormat": "{{partition_id}}",
           "range": true,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "code",
-          "expr": "sum (rate(voltdb_procedure_invoked_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"}[$__rate_interval]))",
-          "hide": false,
-          "legendFormat": "Total",
-          "range": true,
-          "refId": "B"
         }
       ],
-      "title": "TPS ($partition)",
+      "title": "Procedure invocations per partition",
       "type": "timeseries"
     },
     {
@@ -660,37 +622,16 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
+            "align": "auto",
+            "cellOptions": {
+              "mode": "lcd",
+              "type": "gauge",
+              "valueDisplayMode": "text"
             },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -699,10 +640,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           },
@@ -712,12 +649,18 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "16383"
+              "options": "Field"
             },
             "properties": [
               {
                 "id": "displayName",
-                "value": "Multi partition"
+                "value": "Procedure"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "auto"
+                }
               }
             ]
           }
@@ -729,24 +672,26 @@
         "x": 0,
         "y": 15
       },
-      "id": 10,
+      "id": 12,
       "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
             "sum"
           ],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true,
-          "sortBy": "Total",
-          "sortDesc": false
+          "show": false
         },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Total"
+          }
+        ]
       },
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -754,14 +699,36 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum by(partition_id)(rate(voltdb_procedure_invoked_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"}[$__rate_interval]))",
+          "expr": "sum by(procedure_name)(increase(voltdb_procedure_invoked_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"}[$__range]))",
           "legendFormat": "{{partition_id}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Procedure invocations per partition",
-      "type": "timeseries"
+      "title": "Top executed procedures",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {
+            "reducers": [
+              "sum"
+            ]
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Total"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "table"
     },
     {
       "datasource": {
@@ -857,19 +824,11 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
-          },
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "mode": "lcd",
-              "type": "gauge",
-              "valueDisplayMode": "text"
-            },
-            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -886,17 +845,89 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Field"
+              "options": "+Inf"
             },
             "properties": [
               {
-                "id": "displayName",
-                "value": "Procedure"
-              },
-              {
-                "id": "custom.cellOptions",
+                "id": "color",
                 "value": {
-                  "type": "auto"
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "1"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "0.5"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "0.2"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "0.1"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "0.05"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "yellow",
+                  "mode": "fixed"
                 }
               }
             ]
@@ -909,24 +940,21 @@
         "x": 0,
         "y": 23
       },
-      "id": 12,
+      "id": 14,
       "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
+        "displayMode": "gradient",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
             "sum"
           ],
-          "show": false
+          "fields": "",
+          "values": false
         },
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Total"
-          }
-        ]
+        "showUnfilled": true,
+        "valueMode": "color"
       },
       "pluginVersion": "9.5.3",
       "targets": [
@@ -936,36 +964,18 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum by(procedure_name)(increase(voltdb_procedure_invoked_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"}[$__range]))",
-          "legendFormat": "{{partition_id}}",
+          "exemplar": false,
+          "expr": "sum by (le) (increase(voltdb_procedure_invoked_time_seconds_bucket{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"}[$__range]))",
+          "format": "heatmap",
+          "instant": false,
+          "legendFormat": "{{le}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Top executed procedures",
-      "transformations": [
-        {
-          "id": "reduce",
-          "options": {
-            "reducers": [
-              "sum"
-            ]
-          }
-        },
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "desc": true,
-                "field": "Total"
-              }
-            ]
-          }
-        }
-      ],
-      "type": "table"
+      "title": "Procedure invocations count by time buckets",
+      "transformations": [],
+      "type": "bargauge"
     },
     {
       "datasource": {
@@ -1104,115 +1114,58 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80.0005
               }
             ]
           },
           "unit": "short"
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "+Inf"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "red",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "1"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "red",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "0.5"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "red",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "0.2"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "yellow",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "0.1"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "yellow",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "0.05"
-            },
-            "properties": [
-              {
-                "id": "color",
-                "value": {
-                  "fixedColor": "yellow",
-                  "mode": "fixed"
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
@@ -1220,23 +1173,24 @@
         "x": 0,
         "y": 31
       },
-      "id": 14,
+      "id": 16,
       "options": {
-        "displayMode": "gradient",
-        "minVizHeight": 10,
-        "minVizWidth": 0,
-        "orientation": "auto",
-        "reduceOptions": {
+        "legend": {
           "calcs": [
-            "sum"
+            "lastNotNull",
+            "max"
           ],
-          "fields": "",
-          "values": false
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true,
+          "sortBy": "Max",
+          "sortDesc": true
         },
-        "showUnfilled": true,
-        "valueMode": "color"
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
       },
-      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -1244,18 +1198,14 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "exemplar": false,
-          "expr": "sum by (le) (increase(voltdb_procedure_invoked_time_seconds_bucket{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"}[$__range]))",
-          "format": "heatmap",
-          "instant": false,
-          "legendFormat": "{{le}}",
+          "expr": "voltdb_task_queue_depth_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\"}",
+          "legendFormat": "{{site_id}}",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Procedure invocations count by time buckets",
-      "transformations": [],
-      "type": "bargauge"
+      "title": "Command queue depth by site",
+      "type": "timeseries"
     },
     {
       "datasource": {
@@ -1345,52 +1295,18 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
+            "mode": "thresholds"
           },
           "mappings": [],
-          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
                 "color": "green"
-              },
-              {
-                "color": "red",
-                "value": 80.0005
               }
             ]
           },
@@ -1404,23 +1320,13 @@
         "x": 0,
         "y": 39
       },
-      "id": 16,
+      "id": 18,
       "options": {
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "max"
-          ],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true,
-          "sortBy": "Max",
-          "sortDesc": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
+        "groupByField": "table_name",
+        "labelFields": [],
+        "sizeField": "Value #A",
+        "textField": "partition_id",
+        "tiling": "treemapSquarify"
       },
       "targets": [
         {
@@ -1429,14 +1335,28 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "voltdb_task_queue_depth_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\"}",
-          "legendFormat": "{{site_id}}",
+          "expr": "sum by (table_name, partition_id)(voltdb_table_tuple_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"})",
+          "format": "table",
+          "legendFormat": "__auto",
           "range": true,
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "1",
+          "format": "table",
+          "hide": false,
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "DUMMY QUERY FOR DASHBOARDS COMPATIBILITY"
         }
       ],
-      "title": "Command queue depth by site",
-      "type": "timeseries"
+      "title": "Tuples in table by table and partition",
+      "type": "marcusolsson-treemap-panel"
     },
     {
       "datasource": {
@@ -1579,74 +1499,6 @@
       ],
       "title": "Command queue max wait times by site",
       "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green"
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 47
-      },
-      "id": 18,
-      "options": {
-        "groupByField": "table_name",
-        "labelFields": [],
-        "sizeField": "Value #A",
-        "textField": "partition_id",
-        "tiling": "treemapSquarify"
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "code",
-          "expr": "sum by (table_name, partition_id)(voltdb_table_tuple_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"})",
-          "format": "table",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "code",
-          "expr": "1",
-          "format": "table",
-          "hide": false,
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "DUMMY QUERY FOR DASHBOARDS COMPATIBILITY"
-        }
-      ],
-      "title": "Tuples in table by table and partition",
-      "type": "marcusolsson-treemap-panel"
     }
   ],
   "refresh": "",
@@ -1803,6 +1655,6 @@
   "timezone": "",
   "title": "VoltDB Partitions",
   "uid": "fae27ae5-43a8-4dba-aadd-48e48ef0c03c",
-  "version": 75,
+  "version": 76,
   "weekStart": ""
 }
