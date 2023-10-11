@@ -1318,7 +1318,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(cluster)",
+        "definition": "label_values(namespace)",
         "hide": 0,
         "includeAll": false,
         "label": "Active",
@@ -1326,7 +1326,7 @@
         "name": "active",
         "options": [],
         "query": {
-          "query": "label_values(cluster)",
+          "query": "label_values(namespace)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -1345,7 +1345,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(cluster)",
+        "definition": "label_values(namespace)",
         "hide": 0,
         "includeAll": false,
         "label": "Passive",
@@ -1353,7 +1353,7 @@
         "name": "passive",
         "options": [],
         "query": {
-          "query": "label_values(cluster)",
+          "query": "label_values(namespace)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -1373,7 +1373,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({cluster=\"$cluster\"},hostname)",
+        "definition": "label_values({namespace=\"$cluster\"},hostname)",
         "hide": 0,
         "includeAll": true,
         "label": "Host",
@@ -1381,7 +1381,7 @@
         "name": "host",
         "options": [],
         "query": {
-          "query": "label_values({cluster=\"$cluster\"},hostname)",
+          "query": "label_values({namespace=\"$cluster\"},hostname)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -1401,7 +1401,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({cluster=\"$cluster\", hostname=~\"$host\",partitionid=~\"$partition\"}, source)",
+        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\",partitionid=~\"$partition\"}, source)",
         "hide": 0,
         "includeAll": true,
         "label": "Source",
@@ -1409,7 +1409,7 @@
         "name": "source",
         "options": [],
         "query": {
-          "query": "label_values({cluster=\"$cluster\", hostname=~\"$host\",partitionid=~\"$partition\"}, source)",
+          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\",partitionid=~\"$partition\"}, source)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -1427,7 +1427,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB XDCR Active-Passive",
-  "uid": "bETM2_q7zA",
+  "uid": "bETM2_q7z",
   "version": 12,
   "weekStart": ""
 }

@@ -4,13 +4,17 @@ This repo provides Grafana dashboards for reporting on Volt Active Data metrics 
 
 ## Dashboards
 
-The dashboards are provided in Grafana JSON format and are divided into three categories based on the Volt version and operating environment you are using:
+The dashboards are provided in Grafana JSON format and are divided into categories:
 
-- **Volt** - Dashboards for the latest version of Volt Active Data in any environment, including bare metal and VMs. These dashboards require an additional label `cluster` added as part of the Prometheus scraping process. (See below.)
-- **Volt-K8s** - Dashboards for the latest version of Volt Active Data running in Kubernetes.
-- **Volt-K8s-V10.x** - Dashboards for the long-term support (LTS) version 10 of Volt Active Data, running in Kubernetes.
+- **Volt** - Dashboards for the latest version of Volt Active Data in any environment, including bare metal, Kubernetes and VMs.
+- **Volt-V9.x** - Dashboards for the long-term support (LTS) version 9 of Volt Active Data, running in Kubernetes.
+- **Volt-V10.x** - Dashboards for the long-term support (LTS) version 10 of Volt Active Data, running in Kubernetes.
+- **Volt-V12.3.x** - Dashboards for the long-term support (LTS) version 12 of Volt Active Data, running in Kubernetes.
+- **Volt-V13.x** - Dashboards for the long-term support (LTS) version 13 of Volt Active Data, running in Kubernetes.
 
 Within each subdirectory are multiple dashboards, each providing a different view of the database activity, performance, or status. Try the different dashboards to see which ones suit your monitoring needs.
+
+Dashboards will work without any additional configuration inside Kubernetes, if you want to use them for Volt running in other environment, you will need an additional label `namespace` in the Volt metrics. (See below.)
 
 ## Installing the Dashboards
 
@@ -29,9 +33,9 @@ There are several different methods you can use for importing dashboards into Gr
 
 For the dashboards to work properly, Grafana and Prometheus must agree on how frequently data is collected. Make sure the scrape interval setting in the Grafana configuration matches the scrape interval in Prometheus.
 
-## Applying the "cluster" Label
+## Applying the "namespace" Label
 
-In Kubernetes, the Operator adds the `cluster` label automatically. If you are running VoltDB in another environment (or on bare metal) you must add the label as part of the Prometheus configuration. For example:
+In Kubernetes, the Operator adds the `namespace` label automatically. If you are running VoltDB in another environment (or on bare metal) you must add the label as part of the Prometheus configuration. For example:
 
 ```
 global:
@@ -42,7 +46,7 @@ scrape_configs:
     static_configs:
     - targets: ["localhost:1234"]
       labels:
-        cluster: 'local-volt'
+        namespace: 'local-volt'
 ```
 
 
