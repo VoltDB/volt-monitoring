@@ -232,7 +232,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(voltdb_drproducer_total_queued_bytes{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(voltdb_drproducer_total_queued_bytes{namespace=\"$cluster\",hostname=~\"$host\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -291,7 +291,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(voltdb_drproducer_total_queued_in_memory_bytes{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(voltdb_drproducer_total_queued_in_memory_bytes{namespace=\"$cluster\",hostname=~\"$host\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -360,7 +360,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "avg(((10 * 1024 * 1024) -voltdb_drproducer_consumer_available_bytes{cluster=\"$cluster\",hostname=~\"$host\"}) / (10 * 1024 * 1024))",
+          "expr": "avg(((10 * 1024 * 1024) -voltdb_drproducer_consumer_available_bytes{namespace=\"$cluster\",hostname=~\"$host\"}) / (10 * 1024 * 1024))",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -421,7 +421,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "min(voltdb_drproducer_last_acked_timestamp_seconds{cluster=\"$cluster\",hostname=~\"$host\"}* 1000)",
+          "expr": "min(voltdb_drproducer_last_acked_timestamp_seconds{namespace=\"$cluster\",hostname=~\"$host\"}* 1000)",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -480,7 +480,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max(replication_rtt_5m_max{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max(replication_rtt_5m_max{namespace=\"$cluster\",hostname=~\"$host\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -545,7 +545,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max(voltdb_drproducer_missing_txn_count{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max(voltdb_drproducer_missing_txn_count{namespace=\"$cluster\",hostname=~\"$host\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -618,7 +618,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "avg(voltdb_drconsumer_1min_avg_replication_bytes_per_second{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "avg(voltdb_drconsumer_1min_avg_replication_bytes_per_second{namespace=\"$cluster\",hostname=~\"$host\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -699,7 +699,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "avg(((10 * 1024 * 1024) -voltdb_drconsumer_available_bytes{cluster=\"$cluster\",hostname=~\"$host\"}) / (10 * 1024 * 1024))",
+          "expr": "avg(((10 * 1024 * 1024) -voltdb_drconsumer_available_bytes{namespace=\"$cluster\",hostname=~\"$host\"}) / (10 * 1024 * 1024))",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -771,7 +771,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max(voltdb_drconsumer_last_received_timestamp_seconds{cluster=\"$cluster\",hostname=~\"$host\"}) * 1000",
+          "expr": "max(voltdb_drconsumer_last_received_timestamp_seconds{namespace=\"$cluster\",hostname=~\"$host\"}) * 1000",
           "instant": false,
           "interval": "",
           "legendFormat": "{{hostname}}",
@@ -831,7 +831,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "avg(voltdb_drconsumer_duplicate_buffers{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "avg(voltdb_drconsumer_duplicate_buffers{namespace=\"$cluster\",hostname=~\"$host\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -890,7 +890,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(voltdb_drconsumer_ignored_buffers{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(voltdb_drconsumer_ignored_buffers{namespace=\"$cluster\",hostname=~\"$host\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -949,7 +949,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max(voltdb_drproducer_last_acked_timestamp_seconds{cluster=\"$cluster\",hostname=~\"$host\"}-voltdb_drproducer_last_queued_timestamp_seconds{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max(voltdb_drproducer_last_acked_timestamp_seconds{namespace=\"$cluster\",hostname=~\"$host\"}-voltdb_drproducer_last_queued_timestamp_seconds{namespace=\"$cluster\",hostname=~\"$host\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -1033,7 +1033,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "max(voltdb_drconflicts_last_conflict_timestamp_seconds{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max(voltdb_drconflicts_last_conflict_timestamp_seconds{namespace=\"$cluster\",hostname=~\"$host\"})",
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -1096,7 +1096,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "sum(voltdb_drconflicts_total_conflict_count{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(voltdb_drconflicts_total_conflict_count{namespace=\"$cluster\",hostname=~\"$host\"})",
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -1163,7 +1163,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "sum(voltdb_drconflicts_divergence_count{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(voltdb_drconflicts_divergence_count{namespace=\"$cluster\",hostname=~\"$host\"})",
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -1226,7 +1226,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "sum(voltdb_drconflicts_constraint_violation_count{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(voltdb_drconflicts_constraint_violation_count{namespace=\"$cluster\",hostname=~\"$host\"})",
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -1289,7 +1289,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "sum(voltdb_drconflicts_missing_row_count{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(voltdb_drconflicts_missing_row_count{namespace=\"$cluster\",hostname=~\"$host\"})",
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -1356,7 +1356,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "sum(voltdb_drconflicts_timestamp_mismatch_count{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(voltdb_drconflicts_timestamp_mismatch_count{namespace=\"$cluster\",hostname=~\"$host\"})",
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -1486,7 +1486,7 @@
                 "uid": "${datasource}"
               },
               "exemplar": true,
-              "expr": "sum(voltdb_drconflicts_constraint_violation_count{cluster=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
+              "expr": "sum(voltdb_drconflicts_constraint_violation_count{namespace=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
               "interval": "",
               "legendFormat": "constraint violations",
               "refId": "A"
@@ -1497,7 +1497,7 @@
                 "uid": "${datasource}"
               },
               "exemplar": true,
-              "expr": "sum(voltdb_drconflicts_divergence_count{cluster=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
+              "expr": "sum(voltdb_drconflicts_divergence_count{namespace=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
               "hide": false,
               "interval": "",
               "legendFormat": "divergences",
@@ -1509,7 +1509,7 @@
                 "uid": "${datasource}"
               },
               "exemplar": true,
-              "expr": "sum(voltdb_drconflicts_missing_row_count{cluster=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
+              "expr": "sum(voltdb_drconflicts_missing_row_count{namespace=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
               "hide": false,
               "interval": "",
               "legendFormat": "missing rows",
@@ -1521,7 +1521,7 @@
                 "uid": "${datasource}"
               },
               "exemplar": true,
-              "expr": "sum(voltdb_drconflicts_timestamp_mismatch_count{cluster=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
+              "expr": "sum(voltdb_drconflicts_timestamp_mismatch_count{namespace=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
               "hide": false,
               "interval": "",
               "legendFormat": "mismatches",
@@ -1614,7 +1614,7 @@
                 "uid": "${datasource}"
               },
               "exemplar": true,
-              "expr": "sum by (hostname) ({__name__=~\"voltdb_drconflicts_constraint_violation_count|voltdb_drconflicts_missing_row_count|voltdb_drconflicts_timestamp_mismatch_count\", cluster=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
+              "expr": "sum by (hostname) ({__name__=~\"voltdb_drconflicts_constraint_violation_count|voltdb_drconflicts_missing_row_count|voltdb_drconflicts_timestamp_mismatch_count\", namespace=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
               "interval": "",
               "legendFormat": "{{hostname}}",
               "refId": "A"
@@ -1706,7 +1706,7 @@
                 "uid": "${datasource}"
               },
               "exemplar": true,
-              "expr": "sum by (hostname) (voltdb_drconflicts_divergence_count{cluster=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
+              "expr": "sum by (hostname) (voltdb_drconflicts_divergence_count{namespace=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
               "interval": "",
               "legendFormat": "{{hostname}}",
               "refId": "A"
@@ -1782,7 +1782,7 @@
                 "uid": "${datasource}"
               },
               "exemplar": true,
-              "expr": "sum by (__name__, tablename) ({__name__=~\"voltdb_drconflicts_constraint_violation_count|voltdb_drconflicts_divergence_count|voltdb_drconflicts_missing_row_count|voltdb_drconflicts_timestamp_mismatch_count\", cluster=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
+              "expr": "sum by (__name__, tablename) ({__name__=~\"voltdb_drconflicts_constraint_violation_count|voltdb_drconflicts_divergence_count|voltdb_drconflicts_missing_row_count|voltdb_drconflicts_timestamp_mismatch_count\", namespace=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
               "format": "table",
               "hide": false,
               "interval": "",
@@ -1892,7 +1892,7 @@
                 "uid": "${datasource}"
               },
               "exemplar": true,
-              "expr": "avg by (hostname) (voltdb_drconsumer_1min_avg_replication_bytes_per_second{cluster=\"$cluster\",hostname=~\"$host\"})",
+              "expr": "avg by (hostname) (voltdb_drconsumer_1min_avg_replication_bytes_per_second{namespace=\"$cluster\",hostname=~\"$host\"})",
               "interval": "",
               "legendFormat": "{{partitionid}}",
               "refId": "A"
@@ -1997,7 +1997,7 @@
                 "uid": "${datasource}"
               },
               "exemplar": true,
-              "expr": "sum by (partitionid) (voltdb_drproducer_total_buffer_count{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"})",
+              "expr": "sum by (partitionid) (voltdb_drproducer_total_buffer_count{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"})",
               "interval": "",
               "legendFormat": "{{partitionid}}",
               "refId": "A"
@@ -2069,7 +2069,7 @@
                 "uid": "${datasource}"
               },
               "exemplar": false,
-              "expr": "max by (hostname, partitionid) (voltdb_drproducer_last_queued_timestamp_seconds{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"} * 1000)",
+              "expr": "max by (hostname, partitionid) (voltdb_drproducer_last_queued_timestamp_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"} * 1000)",
               "format": "table",
               "instant": true,
               "interval": "",
@@ -2188,7 +2188,7 @@
                 "uid": "${datasource}"
               },
               "exemplar": false,
-              "expr": "max by (partitionid) (voltdb_drproducer_last_queued_timestamp_seconds{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"} * 1000 \u003e 1199145600000)",
+              "expr": "max by (partitionid) (voltdb_drproducer_last_queued_timestamp_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"} * 1000 \u003e 1199145600000)",
               "interval": "",
               "legendFormat": "{{partitionid}}",
               "refId": "A"
@@ -2220,7 +2220,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(cluster)",
+        "definition": "label_values(namespace)",
         "hide": 0,
         "includeAll": false,
         "label": "Clusters",
@@ -2228,7 +2228,7 @@
         "name": "cluster",
         "options": [],
         "query": {
-          "query": "label_values(cluster)",
+          "query": "label_values(namespace)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -2266,7 +2266,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({cluster=\"$cluster\"},hostname)",
+        "definition": "label_values({namespace=\"$cluster\"},hostname)",
         "hide": 0,
         "includeAll": true,
         "label": "Host",
@@ -2274,7 +2274,7 @@
         "name": "host",
         "options": [],
         "query": {
-          "query": "label_values({cluster=\"$cluster\"},hostname)",
+          "query": "label_values({namespace=\"$cluster\"},hostname)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -2294,7 +2294,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({cluster=\"$cluster\", hostname=~\"$host\"},partitionid)",
+        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},partitionid)",
         "hide": 0,
         "includeAll": true,
         "label": "Partition",
@@ -2302,7 +2302,7 @@
         "name": "partition",
         "options": [],
         "query": {
-          "query": "label_values({cluster=\"$cluster\", hostname=~\"$host\"},partitionid)",
+          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},partitionid)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -2320,7 +2320,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB XDCR Active-Active",
-  "uid": "chJfh_3nkA",
+  "uid": "chJfh_3nk",
   "version": 28,
   "weekStart": ""
 }

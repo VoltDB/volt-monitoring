@@ -91,7 +91,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max(voltdb_export_pending_tuples_count{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max(voltdb_export_pending_tuples_count{namespace=\"$cluster\",hostname=~\"$host\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -152,7 +152,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(increase(voltdb_export_total_queued_tuples_count{cluster=\"$cluster\",hostname=~\"$host\"}[$__interval]))",
+          "expr": "sum(increase(voltdb_export_total_queued_tuples_count{namespace=\"$cluster\",hostname=~\"$host\"}[$__interval]))",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -213,7 +213,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(voltdb_export_missing_tuples_count{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "sum(voltdb_export_missing_tuples_count{namespace=\"$cluster\",hostname=~\"$host\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -274,7 +274,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "max(voltdb_export_max_latency_seconds{cluster=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max(voltdb_export_max_latency_seconds{namespace=\"$cluster\",hostname=~\"$host\"})",
           "interval": "",
           "legendFormat": "",
           "refId": "A"
@@ -344,7 +344,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum by (source, partitionid) (voltdb_export_pending_tuples_count{cluster=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",source=~\"$source\"})",
+          "expr": "sum by (source, partitionid) (voltdb_export_pending_tuples_count{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",source=~\"$source\"})",
           "format": "table",
           "instant": false,
           "interval": "",
@@ -786,7 +786,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values(cluster)",
+        "definition": "label_values(namespace)",
         "hide": 0,
         "includeAll": false,
         "label": "Cluster",
@@ -794,7 +794,7 @@
         "name": "cluster",
         "options": [],
         "query": {
-          "query": "label_values(cluster)",
+          "query": "label_values(namespace)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -814,7 +814,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({cluster=\"$cluster\"},hostname)",
+        "definition": "label_values({namespace=\"$cluster\"},hostname)",
         "hide": 0,
         "includeAll": true,
         "label": "Host",
@@ -822,7 +822,7 @@
         "name": "host",
         "options": [],
         "query": {
-          "query": "label_values({cluster=\"$cluster\"},hostname)",
+          "query": "label_values({namespace=\"$cluster\"},hostname)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -842,7 +842,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({cluster=\"$cluster\", hostname=~\"$host\"},partitionid)",
+        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},partitionid)",
         "hide": 0,
         "includeAll": true,
         "label": "Partition",
@@ -850,7 +850,7 @@
         "name": "partition",
         "options": [],
         "query": {
-          "query": "label_values({cluster=\"$cluster\", hostname=~\"$host\"},partitionid)",
+          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},partitionid)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -870,7 +870,7 @@
           "type": "prometheus",
           "uid": "${datasource}"
         },
-        "definition": "label_values({cluster=\"$cluster\", hostname=~\"$host\",partitionid=~\"$partition\"}, source)",
+        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\",partitionid=~\"$partition\"}, source)",
         "hide": 0,
         "includeAll": true,
         "label": "Source",
@@ -878,7 +878,7 @@
         "name": "source",
         "options": [],
         "query": {
-          "query": "label_values({cluster=\"$cluster\", hostname=~\"$host\",partitionid=~\"$partition\"}, source)",
+          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\",partitionid=~\"$partition\"}, source)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -896,7 +896,7 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Export",
-  "uid": "7Hn1fAj7zA",
+  "uid": "7Hn1fAj7z",
   "version": 30,
   "weekStart": ""
 }
