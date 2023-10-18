@@ -4469,7 +4469,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "#EAB839",
@@ -4485,7 +4486,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 107
+            "y": 21
           },
           "id": 64,
           "options": {
@@ -4567,7 +4568,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -4583,7 +4585,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 107
+            "y": 21
           },
           "id": 65,
           "options": {
@@ -4664,7 +4666,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -4680,7 +4683,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 115
+            "y": 29
           },
           "id": 66,
           "options": {
@@ -4761,7 +4764,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -4777,7 +4781,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 115
+            "y": 29
           },
           "id": 67,
           "options": {
@@ -4864,23 +4868,7 @@
               },
               "unit": "short"
             },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Connections limit"
-                },
-                "properties": [
-                  {
-                    "id": "color",
-                    "value": {
-                      "fixedColor": "dark-red",
-                      "mode": "fixed"
-                    }
-                  }
-                ]
-              }
-            ]
+            "overrides": []
           },
           "gridPos": {
             "h": 4,
@@ -4888,7 +4876,7 @@
             "x": 0,
             "y": 22
           },
-          "id": 84,
+          "id": 85,
           "options": {
             "alignValue": "left",
             "legend": {
@@ -4896,11 +4884,11 @@
               "placement": "bottom",
               "showLegend": false
             },
-            "mergeValues": true,
+            "mergeValues": false,
             "rowHeight": 0.9,
-            "showValue": "auto",
+            "showValue": "never",
             "tooltip": {
-              "mode": "single",
+              "mode": "none",
               "sort": "none"
             }
           },
@@ -4931,6 +4919,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
+          "description": "Rebalance happens in segments. All metrics describing 'average' of some kind refer to the average across segments.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -4959,7 +4948,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "Estimated time remaining"
+                  "options": "Est. time remaining"
                 },
                 "properties": [
                   {
@@ -4971,7 +4960,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "Avg latency"
+                  "options": "Avg segment latency"
                 },
                 "properties": [
                   {
@@ -4983,7 +4972,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "Avg segments /s"
+                  "options": "Avg no. of segments/s"
                 },
                 "properties": [
                   {
@@ -5007,7 +4996,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "Avg transfer time"
+                  "options": "Avg txn transfer time"
                 },
                 "properties": [
                   {
@@ -5019,7 +5008,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "Avg rows moved / s"
+                  "options": "Avg rows moved/s"
                 },
                 "properties": [
                   {
@@ -5031,7 +5020,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "Avg volume of data moved"
+                  "options": "Avg data moved/s"
                 },
                 "properties": [
                   {
@@ -5043,7 +5032,7 @@
               {
                 "matcher": {
                   "id": "byName",
-                  "options": "Already moved segments"
+                  "options": "% of total segments moved"
                 },
                 "properties": [
                   {
@@ -5059,6 +5048,30 @@
                     "value": "percent"
                   }
                 ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Start time"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "none"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Rebalance duration"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  }
+                ]
               }
             ]
           },
@@ -5068,7 +5081,7 @@
             "x": 0,
             "y": 26
           },
-          "id": 83,
+          "id": 86,
           "options": {
             "cellHeight": "sm",
             "footer": {
@@ -5093,15 +5106,105 @@
               "exemplar": false,
               "expr": "voltdb_balance_partitions_info{namespace=\"$cluster\",host_name=~\"$host\"}",
               "format": "table",
-              "instant": true,
+              "instant": false,
               "interval": "",
               "legendFormat": "__auto",
-              "range": false,
+              "range": true,
               "refId": "A"
             }
           ],
           "title": "Recent rebalances",
           "transformations": [
+            {
+              "id": "groupBy",
+              "options": {
+                "fields": {
+                  "Time": {
+                    "aggregations": [
+                      "firstNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_calls_latency": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_calls_per_second": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_calls_time": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_calls_transfer_time": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_duration": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_estimated_remaining": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_id": {
+                    "aggregations": [],
+                    "operation": "groupby"
+                  },
+                  "balance_is_in_progress": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_megabytes_per_second": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_moved_rows": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_percentage_moved": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_rows_per_second": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_start_time": {
+                    "aggregations": [],
+                    "operation": "groupby"
+                  },
+                  "balance_time_id": {
+                    "aggregations": []
+                  }
+                }
+              }
+            },
             {
               "id": "organize",
               "options": {
@@ -5109,6 +5212,7 @@
                   "Time": false,
                   "Value": true,
                   "__name__": true,
+                  "balance_id": true,
                   "endpoint": true,
                   "host_id": true,
                   "host_name": true,
@@ -5119,39 +5223,44 @@
                   "service": true
                 },
                 "indexByName": {
-                  "Time": 0,
-                  "Value": 20,
-                  "__name__": 1,
-                  "balance_calls_latency": 6,
-                  "balance_calls_per_second": 7,
-                  "balance_calls_time": 8,
-                  "balance_calls_transfer_time": 9,
-                  "balance_estimated_remaining": 3,
-                  "balance_is_in_progress": 2,
-                  "balance_megabytes_per_second": 11,
-                  "balance_moved_rows": 4,
-                  "balance_percentage_moved": 5,
-                  "balance_rows_per_second": 10,
-                  "endpoint": 12,
-                  "host_id": 13,
-                  "host_name": 14,
-                  "instance": 15,
-                  "job": 16,
-                  "namespace": 17,
-                  "pod": 18,
-                  "service": 19
+                  "Time (firstNotNull)": 0,
+                  "balance_calls_latency (lastNotNull)": 8,
+                  "balance_calls_per_second (lastNotNull)": 9,
+                  "balance_calls_time (lastNotNull)": 10,
+                  "balance_calls_transfer_time (lastNotNull)": 11,
+                  "balance_duration (lastNotNull)": 2,
+                  "balance_estimated_remaining (lastNotNull)": 3,
+                  "balance_id": 12,
+                  "balance_is_in_progress (lastNotNull)": 1,
+                  "balance_megabytes_per_second (lastNotNull)": 7,
+                  "balance_moved_rows (lastNotNull)": 5,
+                  "balance_percentage_moved (lastNotNull)": 4,
+                  "balance_rows_per_second (lastNotNull)": 6
                 },
                 "renameByName": {
+                  "Time (firstNotNull)": "Start time",
                   "balance_calls_latency": "Avg latency",
+                  "balance_calls_latency (lastNotNull)": "Avg segment latency",
                   "balance_calls_per_second": "Avg segments /s",
+                  "balance_calls_per_second (lastNotNull)": "Avg no. of segments/s",
                   "balance_calls_time": "Avg execution time",
+                  "balance_calls_time (lastNotNull)": "Avg execution time",
                   "balance_calls_transfer_time": "Avg transfer time",
+                  "balance_calls_transfer_time (lastNotNull)": "Avg txn transfer time",
+                  "balance_duration (lastNotNull)": "Rebalance duration",
                   "balance_estimated_remaining": "Estimated time remaining",
+                  "balance_estimated_remaining (lastNotNull)": "Est. time remaining",
                   "balance_is_in_progress": "Is in progress",
+                  "balance_is_in_progress (lastNotNull)": "Is in progress",
                   "balance_megabytes_per_second": "Avg volume of data moved",
+                  "balance_megabytes_per_second (lastNotNull)": "Avg data moved/s",
                   "balance_moved_rows": "Number of already moved rows",
+                  "balance_moved_rows (lastNotNull)": "No. of rows moved",
                   "balance_percentage_moved": "Already moved segments",
+                  "balance_percentage_moved (lastNotNull)": "% of total segments moved",
                   "balance_rows_per_second": "Avg rows moved / s",
+                  "balance_rows_per_second (lastNotNull)": "Avg rows moved/s",
+                  "balance_start_time": "Start time",
                   "endpoint": ""
                 }
               }
@@ -5242,13 +5351,13 @@
     ]
   },
   "time": {
-    "from": "now-30m",
-    "to": "now"
+    "from": "2023-10-18T09:44:47.461Z",
+    "to": "2023-10-18T09:55:24.061Z"
   },
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Cluster overview",
   "uid": "DIHIuCynk",
-  "version": 87,
+  "version": 95,
   "weekStart": ""
 }
