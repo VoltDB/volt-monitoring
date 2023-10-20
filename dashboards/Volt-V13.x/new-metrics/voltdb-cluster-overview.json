@@ -43,6 +43,12 @@
     },
     {
       "type": "panel",
+      "id": "state-timeline",
+      "name": "State timeline",
+      "version": ""
+    },
+    {
+      "type": "panel",
       "id": "table",
       "name": "Table",
       "version": ""
@@ -1854,7 +1860,7 @@
             "h": 4,
             "w": 3,
             "x": 0,
-            "y": 18
+            "y": 26
           },
           "id": 69,
           "options": {
@@ -1971,7 +1977,7 @@
             "h": 4,
             "w": 3,
             "x": 3,
-            "y": 18
+            "y": 26
           },
           "id": 14,
           "options": {
@@ -2074,7 +2080,7 @@
             "h": 4,
             "w": 3,
             "x": 6,
-            "y": 18
+            "y": 26
           },
           "id": 15,
           "options": {
@@ -2164,7 +2170,7 @@
             "h": 4,
             "w": 3,
             "x": 9,
-            "y": 18
+            "y": 26
           },
           "id": 26,
           "options": {
@@ -2266,7 +2272,7 @@
             "h": 4,
             "w": 3,
             "x": 12,
-            "y": 18
+            "y": 26
           },
           "id": 16,
           "options": {
@@ -2368,7 +2374,7 @@
             "h": 4,
             "w": 3,
             "x": 15,
-            "y": 18
+            "y": 26
           },
           "id": 68,
           "options": {
@@ -2473,7 +2479,7 @@
             "h": 4,
             "w": 3,
             "x": 18,
-            "y": 18
+            "y": 26
           },
           "id": 17,
           "options": {
@@ -2555,7 +2561,7 @@
             "h": 4,
             "w": 3,
             "x": 21,
-            "y": 18
+            "y": 26
           },
           "id": 34,
           "options": {
@@ -2687,7 +2693,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 23
+            "y": 31
           },
           "id": 72,
           "options": {
@@ -2794,7 +2800,7 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 23
+            "y": 31
           },
           "id": 81,
           "options": {
@@ -2899,7 +2905,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 32
+            "y": 40
           },
           "id": 2,
           "options": {
@@ -3000,7 +3006,7 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 32
+            "y": 40
           },
           "id": 73,
           "options": {
@@ -3098,7 +3104,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 41
+            "y": 49
           },
           "id": 33,
           "options": {
@@ -3216,7 +3222,7 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 41
+            "y": 49
           },
           "id": 74,
           "options": {
@@ -3356,7 +3362,7 @@
             "h": 10,
             "w": 8,
             "x": 0,
-            "y": 51
+            "y": 20
           },
           "id": 9,
           "options": {
@@ -3466,7 +3472,7 @@
             "h": 10,
             "w": 8,
             "x": 8,
-            "y": 51
+            "y": 20
           },
           "id": 13,
           "options": {
@@ -3583,7 +3589,7 @@
             "h": 10,
             "w": 8,
             "x": 16,
-            "y": 51
+            "y": 20
           },
           "id": 45,
           "options": {
@@ -3682,7 +3688,7 @@
             "h": 10,
             "w": 8,
             "x": 0,
-            "y": 61
+            "y": 30
           },
           "id": 38,
           "options": {
@@ -3778,7 +3784,7 @@
             "h": 10,
             "w": 8,
             "x": 8,
-            "y": 61
+            "y": 30
           },
           "id": 39,
           "options": {
@@ -3893,7 +3899,7 @@
             "h": 10,
             "w": 8,
             "x": 16,
-            "y": 61
+            "y": 30
           },
           "id": 37,
           "options": {
@@ -3997,7 +4003,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 71
+            "y": 40
           },
           "id": 40,
           "options": {
@@ -4161,7 +4167,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 80
+            "y": 49
           },
           "id": 50,
           "options": {
@@ -4307,7 +4313,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 89
+            "y": 58
           },
           "id": 80,
           "options": {
@@ -4463,7 +4469,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "#EAB839",
@@ -4479,7 +4486,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 99
+            "y": 21
           },
           "id": 64,
           "options": {
@@ -4561,7 +4568,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -4577,7 +4585,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 99
+            "y": 21
           },
           "id": 65,
           "options": {
@@ -4658,7 +4666,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -4674,7 +4683,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 107
+            "y": 29
           },
           "id": 66,
           "options": {
@@ -4755,7 +4764,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -4771,7 +4781,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 107
+            "y": 29
           },
           "id": 67,
           "options": {
@@ -4822,17 +4832,13 @@
     },
     {
       "collapsed": true,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
         "y": 21
       },
-      "id": 36,
+      "id": 82,
       "panels": [
         {
           "datasource": {
@@ -4844,12 +4850,19 @@
               "color": {
                 "mode": "thresholds"
               },
+              "custom": {
+                "fillOpacity": 70,
+                "lineWidth": 0,
+                "spanNulls": false
+              },
               "mappings": [],
+              "min": 0,
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   }
                 ]
               },
@@ -4858,181 +4871,28 @@
             "overrides": []
           },
           "gridPos": {
-            "h": 5,
-            "w": 5,
+            "h": 4,
+            "w": 24,
             "x": 0,
             "y": 22
           },
-          "id": 47,
+          "id": 85,
           "options": {
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showThresholdLabels": false,
-            "showThresholdMarkers": true
-          },
-          "pluginVersion": "9.5.3",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "exemplar": true,
-              "expr": "rate(voltdb_rebalance_calls_per_seconds{namespace=\"$cluster\"}[$__interval])",
-              "format": "time_series",
-              "interval": "",
-              "legendFormat": "{{instance}}",
-              "refId": "A"
-            }
-          ],
-          "title": "Calls per second",
-          "transformations": [],
-          "type": "gauge"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  }
-                ]
-              },
-              "unit": "s"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 5,
-            "w": 5,
-            "x": 5,
-            "y": 22
-          },
-          "id": 46,
-          "options": {
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showThresholdLabels": false,
-            "showThresholdMarkers": true
-          },
-          "pluginVersion": "9.5.3",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "editorMode": "code",
-              "exemplar": true,
-              "expr": "voltdb_rebalance_remaining_time_seconds{namespace=\"$cluster\"}",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "",
-              "range": true,
-              "refId": "B"
-            }
-          ],
-          "title": "Estimated remaining time",
-          "transformations": [],
-          "type": "gauge"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  }
-                ]
-              },
-              "unit": "percent"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 10,
-            "w": 14,
-            "x": 10,
-            "y": 22
-          },
-          "id": 44,
-          "options": {
+            "alignValue": "left",
             "legend": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "displayMode": "table",
+              "displayMode": "list",
               "placement": "bottom",
-              "showLegend": true
+              "showLegend": false
             },
+            "mergeValues": false,
+            "rowHeight": 0.9,
+            "showValue": "never",
             "tooltip": {
-              "mode": "single",
+              "mode": "none",
               "sort": "none"
             }
           },
-          "pluginVersion": "8.3.3",
+          "pluginVersion": "9.5.3",
           "targets": [
             {
               "datasource": {
@@ -5040,60 +4900,200 @@
                 "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
-              "exemplar": true,
-              "expr": "voltdb_rebalance_moved_ratio{namespace=\"$cluster\"}",
+              "exemplar": false,
+              "expr": "sum (voltdb_balance_partitions_info{namespace=\"$cluster\",host_name=~\"$host\"})",
               "format": "time_series",
+              "instant": false,
               "interval": "",
-              "legendFormat": "{{instance}}",
+              "legendFormat": "Rebalance",
               "range": true,
               "refId": "A"
             }
           ],
-          "title": "Rebalance progress",
+          "title": "Rebalance history",
           "transformations": [],
-          "type": "timeseries"
+          "type": "state-timeline"
         },
         {
           "datasource": {
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
+          "description": "Rebalance happens in segments. All metrics describing 'average' of some kind refer to the average across segments.",
           "fieldConfig": {
             "defaults": {
               "color": {
                 "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "auto"
+                },
+                "inspect": false
               },
               "mappings": [],
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   }
                 ]
               },
-              "unit": "s"
+              "unit": "short"
             },
-            "overrides": []
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Est. time remaining"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Avg segment latency"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Avg no. of segments/s"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "seg/s"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Avg execution time"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Avg txn transfer time"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Avg rows moved/s"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "rows/s"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Avg data moved/s"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "MBs"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "% of total segments moved"
+                },
+                "properties": [
+                  {
+                    "id": "custom.cellOptions",
+                    "value": {
+                      "mode": "lcd",
+                      "type": "gauge",
+                      "valueDisplayMode": "text"
+                    }
+                  },
+                  {
+                    "id": "unit",
+                    "value": "percent"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Start time"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "none"
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Rebalance duration"
+                },
+                "properties": [
+                  {
+                    "id": "unit",
+                    "value": "ms"
+                  }
+                ]
+              }
+            ]
           },
           "gridPos": {
-            "h": 5,
-            "w": 5,
+            "h": 9,
+            "w": 24,
             "x": 0,
-            "y": 27
+            "y": 26
           },
-          "id": 48,
+          "id": 86,
           "options": {
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
               "fields": "",
-              "values": false
+              "reducer": [
+                "sum"
+              ],
+              "show": false
             },
-            "showThresholdLabels": false,
-            "showThresholdMarkers": true
+            "showHeader": true,
+            "sortBy": []
           },
           "pluginVersion": "9.5.3",
           "targets": [
@@ -5102,94 +5102,178 @@
                 "type": "prometheus",
                 "uid": "${DS_PROMETHEUS}"
               },
-              "exemplar": true,
-              "expr": "voltdb_rebalance_avg_data_transfer_time_seconds{namespace=\"$cluster\"}",
-              "format": "time_series",
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "voltdb_balance_partitions_info{namespace=\"$cluster\",host_name=~\"$host\"}",
+              "format": "table",
+              "instant": false,
               "interval": "",
-              "legendFormat": "{{instance}}",
+              "legendFormat": "__auto",
+              "range": true,
               "refId": "A"
             }
           ],
-          "title": "Average data transfer time",
-          "transformations": [],
-          "type": "gauge"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
+          "title": "Recent rebalances",
+          "transformations": [
+            {
+              "id": "groupBy",
+              "options": {
+                "fields": {
+                  "Time": {
+                    "aggregations": [
+                      "firstNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_calls_latency": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_calls_per_second": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_calls_time": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_calls_transfer_time": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_duration": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_estimated_remaining": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_id": {
+                    "aggregations": [],
+                    "operation": "groupby"
+                  },
+                  "balance_is_in_progress": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_megabytes_per_second": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_moved_rows": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_percentage_moved": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_rows_per_second": {
+                    "aggregations": [
+                      "lastNotNull"
+                    ],
+                    "operation": "aggregate"
+                  },
+                  "balance_start_time": {
+                    "aggregations": [],
+                    "operation": "groupby"
+                  },
+                  "balance_time_id": {
+                    "aggregations": []
                   }
-                ]
-              },
-              "unit": "s"
+                }
+              }
             },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 5,
-            "w": 5,
-            "x": 5,
-            "y": 27
-          },
-          "id": 49,
-          "options": {
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showThresholdLabels": false,
-            "showThresholdMarkers": true
-          },
-          "pluginVersion": "9.5.3",
-          "targets": [
             {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "exemplar": true,
-              "expr": "voltdb_rebalance_avg_execution_time_seconds{namespace=\"$cluster\"}",
-              "format": "time_series",
-              "interval": "",
-              "legendFormat": "{{instance}}",
-              "refId": "A"
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "Time": false,
+                  "Value": true,
+                  "__name__": true,
+                  "balance_id": true,
+                  "endpoint": true,
+                  "host_id": true,
+                  "host_name": true,
+                  "instance": true,
+                  "job": true,
+                  "namespace": true,
+                  "pod": true,
+                  "service": true
+                },
+                "indexByName": {
+                  "Time (firstNotNull)": 0,
+                  "balance_calls_latency (lastNotNull)": 8,
+                  "balance_calls_per_second (lastNotNull)": 9,
+                  "balance_calls_time (lastNotNull)": 10,
+                  "balance_calls_transfer_time (lastNotNull)": 11,
+                  "balance_duration (lastNotNull)": 2,
+                  "balance_estimated_remaining (lastNotNull)": 3,
+                  "balance_id": 12,
+                  "balance_is_in_progress (lastNotNull)": 1,
+                  "balance_megabytes_per_second (lastNotNull)": 7,
+                  "balance_moved_rows (lastNotNull)": 5,
+                  "balance_percentage_moved (lastNotNull)": 4,
+                  "balance_rows_per_second (lastNotNull)": 6
+                },
+                "renameByName": {
+                  "Time (firstNotNull)": "Start time",
+                  "balance_calls_latency": "Avg latency",
+                  "balance_calls_latency (lastNotNull)": "Avg segment latency",
+                  "balance_calls_per_second": "Avg segments /s",
+                  "balance_calls_per_second (lastNotNull)": "Avg no. of segments/s",
+                  "balance_calls_time": "Avg execution time",
+                  "balance_calls_time (lastNotNull)": "Avg execution time",
+                  "balance_calls_transfer_time": "Avg transfer time",
+                  "balance_calls_transfer_time (lastNotNull)": "Avg txn transfer time",
+                  "balance_duration (lastNotNull)": "Rebalance duration",
+                  "balance_estimated_remaining": "Estimated time remaining",
+                  "balance_estimated_remaining (lastNotNull)": "Est. time remaining",
+                  "balance_is_in_progress": "Is in progress",
+                  "balance_is_in_progress (lastNotNull)": "Is in progress",
+                  "balance_megabytes_per_second": "Avg volume of data moved",
+                  "balance_megabytes_per_second (lastNotNull)": "Avg data moved/s",
+                  "balance_moved_rows": "Number of already moved rows",
+                  "balance_moved_rows (lastNotNull)": "No. of rows moved",
+                  "balance_percentage_moved": "Already moved segments",
+                  "balance_percentage_moved (lastNotNull)": "% of total segments moved",
+                  "balance_rows_per_second": "Avg rows moved / s",
+                  "balance_rows_per_second (lastNotNull)": "Avg rows moved/s",
+                  "balance_start_time": "Start time",
+                  "endpoint": ""
+                }
+              }
             }
           ],
-          "title": "Average execution time",
-          "transformations": [],
-          "type": "gauge"
+          "type": "table"
         }
       ],
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "refId": "A"
-        }
-      ],
-      "title": "Rebalance",
+      "title": " Rebalance",
       "type": "row"
     }
   ],
-  "refresh": "",
+  "refresh": false,
   "schemaVersion": 38,
   "style": "dark",
   "tags": [
@@ -5267,13 +5351,13 @@
     ]
   },
   "time": {
-    "from": "now-30m",
-    "to": "now"
+    "from": "2023-10-18T09:44:47.461Z",
+    "to": "2023-10-18T09:55:24.061Z"
   },
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Cluster overview",
   "uid": "DIHIuCynk",
-  "version": 82,
+  "version": 95,
   "weekStart": ""
 }
