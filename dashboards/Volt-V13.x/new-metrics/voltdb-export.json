@@ -12,12 +12,6 @@
   "__elements": {},
   "__requires": [
     {
-      "type": "panel",
-      "id": "bargauge",
-      "name": "Bar gauge",
-      "version": ""
-    },
-    {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
@@ -45,6 +39,12 @@
       "type": "panel",
       "id": "state-timeline",
       "name": "State timeline",
+      "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "table",
+      "name": "Table",
       "version": ""
     },
     {
@@ -126,13 +126,10 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
-          }
+          },
+          "unit": "short"
         },
         "overrides": []
       },
@@ -194,13 +191,10 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
-          }
+          },
+          "unit": "short"
         },
         "overrides": []
       },
@@ -261,10 +255,6 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -396,7 +386,8 @@
                 "value": null
               }
             ]
-          }
+          },
+          "unit": "short"
         },
         "overrides": []
       },
@@ -430,7 +421,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(voltdb_export_info{namespace=\"$cluster\",host_name=~\"$host\",export_is_active=\"TRUE\"})",
+          "expr": "sum by (partition_id) (voltdb_export_info{namespace=\"$cluster\",host_name=~\"$host\",export_is_active=\"TRUE\"})",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -440,6 +431,12 @@
         }
       ],
       "title": "Active export streams",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {}
+        }
+      ],
       "type": "stat"
     },
     {
@@ -502,7 +499,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(voltdb_export_info{namespace=\"$cluster\",host_name=~\"$host\",export_is_active=\"FALSE\"})",
+          "expr": "sum by (partition_id) (voltdb_export_info{namespace=\"$cluster\",host_name=~\"$host\",export_is_active=\"FALSE\"})",
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -511,6 +508,12 @@
         }
       ],
       "title": "Inactive export streams",
+      "transformations": [
+        {
+          "id": "reduce",
+          "options": {}
+        }
+      ],
       "type": "stat"
     },
     {
@@ -571,7 +574,7 @@
       },
       "id": 13,
       "options": {
-        "groupByField": "table_name",
+        "groupByField": "export_source",
         "labelFields": [
           "Value"
         ],
@@ -587,7 +590,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "voltdb_export_tuple_pending_total{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"}",
+          "expr": "sum by (partition_id, export_source) (voltdb_export_tuple_pending_total{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",export_source=~\"$source\", export_target=~\"$target\"})",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -631,11 +634,12 @@
         "x": 12,
         "y": 7
       },
-      "id": 14,
+      "id": 21,
       "options": {
-        "colorByField": "Value #A",
         "groupByField": "export_target",
-        "sizeField": "Value",
+        "labelFields": [
+          "Value"
+        ],
         "textField": "partition_id",
         "tiling": "treemapSquarify"
       },
@@ -648,17 +652,17 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (partition_id, export_target)(voltdb_export_queue_gap_total{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"})",
+          "expr": "sum by (partition_id, export_target) (voltdb_export_tuple_pending_total{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",export_source=~\"$source\", export_target=~\"$target\"})",
           "format": "table",
           "hide": false,
           "instant": true,
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "__auto",
           "range": false,
           "refId": "A"
         }
       ],
-      "title": "Missing tuples count by source and partition",
+      "title": "Pending tuples count by partition and target",
       "transformations": [],
       "type": "marcusolsson-treemap-panel"
     },
@@ -672,9 +676,17 @@
           "color": {
             "mode": "continuous-GrYlRd"
           },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "mode": "lcd",
+              "type": "gauge",
+              "valueDisplayMode": "text"
+            },
+            "inspect": false
+          },
           "decimals": 0,
           "mappings": [],
-          "max": 360,
           "min": 0,
           "noValue": "0",
           "thresholds": {
@@ -688,7 +700,30 @@
           },
           "unit": "s"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "partition_id"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "auto"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 20
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 9,
@@ -698,19 +733,16 @@
       },
       "id": 5,
       "options": {
-        "displayMode": "gradient",
-        "minVizHeight": 10,
-        "minVizWidth": 0,
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
           "fields": "",
-          "values": false
+          "reducer": [
+            "sum"
+          ],
+          "show": false
         },
-        "showUnfilled": true,
-        "valueMode": "color"
+        "showHeader": false
       },
       "pluginVersion": "9.5.3",
       "targets": [
@@ -720,17 +752,47 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "exemplar": true,
-          "expr": "max by (partition_id) (time()* 1000-voltdb_export_last_acked_timestamp_seconds{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"})/1000",
+          "exemplar": false,
+          "expr": "max by (partition_id) \n  (\n    time() * 1000 \n    - (\n        voltdb_export_last_acked_timestamp_seconds{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",export_source=~\"$source\", export_target=~\"$target\"} > 0\n      )\n  )\n  /1000",
+          "format": "table",
+          "hide": false,
+          "instant": true,
           "interval": "",
-          "legendFormat": "{{partitionid}}",
-          "range": true,
+          "legendFormat": "__auto",
+          "range": false,
           "refId": "A"
         }
       ],
-      "title": "Acknowledgements lag (max across partitions)",
-      "transformations": [],
-      "type": "bargauge"
+      "title": "Last acknowledged tuple (max for each partition)",
+      "transformations": [
+        {
+          "id": "seriesToRows",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {},
+            "renameByName": {}
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Value"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "table"
     },
     {
       "datasource": {
@@ -742,8 +804,16 @@
           "color": {
             "mode": "continuous-GrYlRd"
           },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "mode": "lcd",
+              "type": "gauge",
+              "valueDisplayMode": "text"
+            },
+            "inspect": false
+          },
           "mappings": [],
-          "max": 360,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -755,7 +825,26 @@
           },
           "unit": "s"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "export_source"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "auto"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 200
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 9,
@@ -765,19 +854,17 @@
       },
       "id": 10,
       "options": {
-        "displayMode": "gradient",
-        "minVizHeight": 10,
-        "minVizWidth": 0,
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
           "fields": "",
-          "values": false
+          "reducer": [
+            "sum"
+          ],
+          "show": false
         },
-        "showUnfilled": true,
-        "valueMode": "color"
+        "frameIndex": 4,
+        "showHeader": false
       },
       "pluginVersion": "9.5.3",
       "targets": [
@@ -787,18 +874,49 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "exemplar": true,
-          "expr": "max by (table_name) (time()* 1000-voltdb_export_last_acked_timestamp_seconds{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"})/1000",
+          "exemplar": false,
+          "expr": "max by (export_source) \n  (\n    time() * 1000\n    - (\n        voltdb_export_last_acked_timestamp_seconds{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",export_source=~\"$source\", export_target=~\"$target\"} > 0\n      )\n  )\n  /1000",
+          "format": "table",
           "hide": false,
+          "instant": true,
           "interval": "",
-          "legendFormat": "{{source}}",
-          "range": true,
+          "legendFormat": "__auto",
+          "range": false,
           "refId": "B"
         }
       ],
-      "title": "Acknowledgements lag (max across servers and partitions)",
-      "transformations": [],
-      "type": "bargauge"
+      "title": "Last acknowledged tuple (max for each source)",
+      "transformations": [
+        {
+          "id": "seriesToRows",
+          "options": {}
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Value"
+              }
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Metric": false,
+              "Time": true,
+              "export_source": false
+            },
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "table"
     },
     {
       "datasource": {
@@ -886,9 +1004,9 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by (table_name) (voltdb_export_tuple_pending_total)",
+          "expr": "sum by (export_source) (voltdb_export_tuple_pending_total{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",export_source=~\"$source\", export_target=~\"$target\"})",
           "interval": "",
-          "legendFormat": "{{source}}",
+          "legendFormat": "{{export_source}}",
           "range": true,
           "refId": "A"
         }
@@ -983,9 +1101,9 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (table_name) (voltdb_export_queue_gap_total)",
+          "expr": "sum by (export_source) (voltdb_export_queue_gap_total{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",export_source=~\"$source\", export_target=~\"$target\"})",
           "interval": "",
-          "legendFormat": "{{source}}",
+          "legendFormat": "{{export_source}}",
           "range": true,
           "refId": "A"
         }
@@ -1101,7 +1219,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "group by (host_name, table_name, export_is_active, partition_id) (voltdb_export_info{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\", export_is_active=~\".+\"})",
+          "expr": "group by (host_name, export_is_active, export_target) (voltdb_export_info{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",export_source=~\"$source\", export_target=~\"$target\", export_is_active=~\".+\"})",
           "format": "table",
           "legendFormat": "__auto",
           "range": true,
@@ -1115,8 +1233,7 @@
           "options": {
             "fields": [
               "host_name",
-              "table_name",
-              "partition_id"
+              "export_target"
             ]
           }
         },
@@ -1135,8 +1252,8 @@
         {
           "id": "renameByRegex",
           "options": {
-            "regex": "export_is_active {host_name=\"(.*)\", partition_id=\"(.*)\", table_name=\"(.*)\"}",
-            "renamePattern": "$3 (host: $1, partition $2)"
+            "regex": "export_is_active {export_target=\"(.*)\", host_name=\"(.*)\"}",
+            "renamePattern": "$1 ($2)"
           }
         }
       ],
@@ -1264,6 +1381,54 @@
         "skipUrlSync": false,
         "sort": 0,
         "type": "query"
+      },
+      {
+        "allValue": ".*",
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "label_values({namespace=\"$cluster\", host_name=~\"$host\",partition_id=~\"$partition\", table_name=~\"$table\"},export_target)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Target",
+        "multi": true,
+        "name": "target",
+        "options": [],
+        "query": {
+          "query": "label_values({namespace=\"$cluster\", host_name=~\"$host\",partition_id=~\"$partition\", table_name=~\"$table\"},export_target)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": ".*",
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${DS_PROMETHEUS}"
+        },
+        "definition": "label_values({namespace=\"$cluster\", host_name=~\"$host\",partition_id=~\"$partition\", table_name=~\"$table\", export_target=~\"$target\"},export_source)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Source",
+        "multi": true,
+        "name": "source",
+        "options": [],
+        "query": {
+          "query": "label_values({namespace=\"$cluster\", host_name=~\"$host\",partition_id=~\"$partition\", table_name=~\"$table\", export_target=~\"$target\"},export_source)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
       }
     ]
   },
@@ -1275,6 +1440,6 @@
   "timezone": "",
   "title": "VoltDB Export",
   "uid": "7Hn1fAj7z",
-  "version": 39,
+  "version": 57,
   "weekStart": ""
 }
