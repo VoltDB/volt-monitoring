@@ -1629,7 +1629,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "avg by(host_name) (voltdb_idle_time_pauses_seconds{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "expr": "avg by(host_name) (voltdb_idle_time_pauses_seconds_sum{namespace=\"$cluster\",host_name=~\"$host\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "{{pod}}",
