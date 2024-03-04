@@ -382,7 +382,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "max(1 - rate(voltdb_idle_time_total_seconds{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"}[$__rate_interval]))",
+          "expr": "max(1 - rate(voltdb_idle_time_pauses_seconds_sum{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"}[$__rate_interval]))",
           "hide": false,
           "legendFormat": "{{host_name}}",
           "range": true,
@@ -604,7 +604,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "1 - rate(voltdb_idle_time_total_seconds{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\"}[$__rate_interval])",
+          "expr": "1 - rate(voltdb_idle_time_pauses_seconds_sum{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\"}[$__rate_interval])",
           "hide": false,
           "legendFormat": "{{site_id}}",
           "range": true,
