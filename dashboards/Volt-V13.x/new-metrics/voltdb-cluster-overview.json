@@ -1319,16 +1319,46 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(voltdb_procedure_aborted_total{namespace=\"$cluster\",host_name=~\"$host\"})+sum(voltdb_procedure_failed_total{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "expr": "sum(voltdb_procedure_aborted_total{namespace=\"$cluster\",host_name=~\"$host\"})",
           "format": "time_series",
+          "hide": false,
           "interval": "",
           "legendFormat": "{{host_name}}",
           "range": true,
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "exemplar": true,
+          "expr": "sum(voltdb_procedure_failed_total{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{host_name}}",
+          "range": true,
+          "refId": "B"
         }
       ],
       "title": "Procedure errors",
-      "transformations": [],
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [
+                "Value"
+              ],
+              "reducer": "sum"
+            },
+            "replaceFields": true
+          }
+        }
+      ],
       "type": "stat"
     },
     {
@@ -5361,6 +5391,6 @@
   "timezone": "",
   "title": "VoltDB Cluster overview",
   "uid": "DIHIuCynk",
-  "version": 6,
+  "version": 7,
   "weekStart": ""
 }
