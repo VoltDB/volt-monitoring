@@ -1319,7 +1319,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(voltdb_procedure_aborted_total{namespace=\"$cluster\",host_name=~\"$host\"})+sum(voltdb_procedure_failed_total{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "expr": "(sum(voltdb_procedure_aborted_total{namespace=\"$cluster\",host_name=~\"$host\"}) or vector(0))+(sum(voltdb_procedure_failed_total{namespace=\"$cluster\",host_name=~\"$host\"}) or vector(0))",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{host_name}}",
@@ -5361,6 +5361,6 @@
   "timezone": "",
   "title": "VoltDB Cluster overview",
   "uid": "DIHIuCynk",
-  "version": 6,
+  "version": 7,
   "weekStart": ""
 }
