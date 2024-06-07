@@ -15,7 +15,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "9.5.3"
+      "version": "10.1.5"
     },
     {
       "type": "panel",
@@ -146,7 +146,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -215,7 +215,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -283,7 +283,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -352,7 +352,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -424,7 +424,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -478,6 +478,7 @@
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -499,7 +500,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   }
                 ]
               },
@@ -571,6 +573,7 @@
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -592,7 +595,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   }
                 ]
               },
@@ -663,6 +667,7 @@
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -684,7 +689,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   }
                 ]
               },
@@ -756,6 +762,7 @@
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -777,7 +784,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   }
                 ]
               },
@@ -889,7 +897,7 @@
               "unit": "s"
             }
           },
-          "pluginVersion": "9.5.3",
+          "pluginVersion": "10.1.5",
           "targets": [
             {
               "datasource": {
@@ -931,6 +939,7 @@
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -952,7 +961,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "#EAB839",
@@ -1036,7 +1046,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "#EAB839",
@@ -1048,7 +1059,7 @@
                   }
                 ]
               },
-              "unit": "s"
+              "unit": "short"
             },
             "overrides": [
               {
@@ -1100,7 +1111,7 @@
               }
             ]
           },
-          "pluginVersion": "9.5.3",
+          "pluginVersion": "10.1.5",
           "targets": [
             {
               "datasource": {
@@ -1163,7 +1174,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "#EAB839",
@@ -1227,7 +1239,7 @@
               }
             ]
           },
-          "pluginVersion": "9.5.3",
+          "pluginVersion": "10.1.5",
           "targets": [
             {
               "datasource": {
@@ -1293,6 +1305,7 @@
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -1314,7 +1327,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -1392,6 +1406,7 @@
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -1413,7 +1428,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -1493,7 +1509,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "#EAB839",
@@ -1513,7 +1530,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 33
+            "y": 8
           },
           "id": 17,
           "options": {
@@ -1592,7 +1609,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "#EAB839",
@@ -1631,7 +1649,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 41
+            "y": 16
           },
           "id": 15,
           "options": {
@@ -1647,7 +1665,7 @@
             "frameIndex": 3,
             "showHeader": true
           },
-          "pluginVersion": "9.5.3",
+          "pluginVersion": "10.1.5",
           "targets": [
             {
               "datasource": {
@@ -1728,7 +1746,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "#EAB839",
@@ -1803,7 +1822,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 49
+            "y": 24
           },
           "id": 16,
           "options": {
@@ -1825,7 +1844,7 @@
               }
             ]
           },
-          "pluginVersion": "9.5.3",
+          "pluginVersion": "10.1.5",
           "targets": [
             {
               "datasource": {
@@ -1922,6 +1941,363 @@
       ],
       "title": "Execution time matrices",
       "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 26,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0.1
+                  }
+                ]
+              },
+              "unit": "s"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 8,
+            "x": 0,
+            "y": 9
+          },
+          "id": 27,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "/^Value$/",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "10.1.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "max(\n    voltdb_io_network_inbound_queue_time_seconds_max {\n        namespace=\"$cluster\",\n        host_name=~\"$host\"\n    }\n)",
+              "instant": false,
+              "legendFormat": "{{host_name}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Worst case time spent in inbound queue",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0.1
+                  }
+                ]
+              },
+              "unit": "s"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 8,
+            "x": 8,
+            "y": 9
+          },
+          "id": 28,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "/^Value$/",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "10.1.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "max (\n    voltdb_io_network_procedure_round_trip_time_seconds_max {\n        namespace=\"$cluster\",\n        host_name=~\"$host\"\n    }\n)",
+              "instant": false,
+              "legendFormat": "{{host_name}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Worst case task execution (RTT)",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "description": "",
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 0.1
+                  }
+                ]
+              },
+              "unit": "s"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 5,
+            "w": 8,
+            "x": 16,
+            "y": 9
+          },
+          "id": 29,
+          "options": {
+            "colorMode": "value",
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "/^Value$/",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "10.1.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "max (\n    voltdb_io_network_replication_round_trip_time_seconds_max {\n        namespace=\"$cluster\",\n        host_name=~\"$host\"\n    }\n)",
+              "instant": false,
+              "legendFormat": "{{host_name}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Worst case task replication (RTT)",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "auto",
+                "cellOptions": {
+                  "type": "color-background"
+                },
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 0.3
+                  },
+                  {
+                    "color": "red",
+                    "value": 0.5
+                  }
+                ]
+              },
+              "unit": "s"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "connection_hostname"
+                },
+                "properties": [
+                  {
+                    "id": "custom.cellOptions",
+                    "value": {
+                      "type": "auto"
+                    }
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 300
+                  },
+                  {
+                    "id": "displayName",
+                    "value": "Connected host"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 14
+          },
+          "id": 30,
+          "options": {
+            "cellHeight": "sm",
+            "footer": {
+              "countRows": false,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "showHeader": true
+          },
+          "pluginVersion": "10.1.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "expr": "sum (\n    voltdb_io_network_replication_round_trip_time_seconds_max {\n        namespace=\"$cluster\"\n    }\n) by (host_name, connection_hostname)",
+              "instant": false,
+              "legendFormat": "{{connection_hostname}}",
+              "range": true,
+              "refId": "A"
+            }
+          ],
+          "title": "Replication latency (RTT)",
+          "transformations": [
+            {
+              "id": "reduce",
+              "options": {
+                "includeTimeField": false,
+                "mode": "reduceFields",
+                "reducers": [
+                  "max"
+                ]
+              }
+            },
+            {
+              "id": "labelsToFields",
+              "options": {
+                "mode": "columns",
+                "valueLabel": "host_name"
+              }
+            },
+            {
+              "id": "merge",
+              "options": {}
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {},
+                "indexByName": {
+                  "Time": 0,
+                  "connection_hostname": 1,
+                  "volt1-voltdb-cluster-0": 4,
+                  "volt1-voltdb-cluster-1": 2,
+                  "volt1-voltdb-cluster-2": 3
+                },
+                "renameByName": {}
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "title": "Cluster internal latencies",
+      "type": "row"
     }
   ],
   "refresh": "",
@@ -1937,7 +2313,7 @@
         "current": {
           "selected": false,
           "text": "Prometheus",
-          "value": "Prometheus"
+          "value": "prometheus"
         },
         "hide": 2,
         "includeAll": false,
@@ -2072,7 +2448,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {
@@ -2081,6 +2457,6 @@
   "timezone": "",
   "title": "VoltDB Procedures",
   "uid": "d7baee9b-7049-4ec8-9143-5e539d125366",
-  "version": 138,
+  "version": 6,
   "weekStart": ""
 }

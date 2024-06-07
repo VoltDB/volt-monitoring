@@ -15,7 +15,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "9.5.3"
+      "version": "10.1.5"
     },
     {
       "type": "panel",
@@ -129,7 +129,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -137,7 +137,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum by (task_name, host_name) (voltdb_scheduled_action_status_info{namespace=\"$cluster\",host_name=~\"$host\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\",task_status!=\"CANCELED\" })",
+          "expr": "sum by (task_name, host_name) (voltdb_scheduler_action_status_info{namespace=\"$cluster\",host_name=~\"$host\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\",task_status!=\"CANCELED\" })",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -203,7 +203,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -211,7 +211,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum by (task_name) (voltdb_scheduled_action_status_info{namespace=\"$cluster\",host_name=~\"$host\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"})",
+          "expr": "sum by (task_name) (voltdb_scheduler_action_status_info{namespace=\"$cluster\",host_name=~\"$host\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -292,7 +292,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -300,7 +300,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum by (task_name) (voltdb_scheduled_action_status_info{namespace=\"$cluster\",host_name=~\"$host\", task_status!=\"RUNNING\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"})",
+          "expr": "sum by (task_name) (voltdb_scheduler_action_status_info{namespace=\"$cluster\",host_name=~\"$host\", task_status!=\"RUNNING\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -383,7 +383,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -580,7 +580,7 @@
           }
         ]
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -588,8 +588,9 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "voltdb_scheduled_action_status_info{namespace=\"$cluster\",host_name=~\"$host\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"}",
+          "expr": "voltdb_scheduler_action_status_info{namespace=\"$cluster\",host_name=~\"$host\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"}",
           "format": "table",
+          "hide": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -697,6 +698,7 @@
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -718,7 +720,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   }
                 ]
               }
@@ -907,7 +910,7 @@
               "reverse": false
             }
           },
-          "pluginVersion": "9.5.3",
+          "pluginVersion": "10.1.5",
           "targets": [
             {
               "datasource": {
@@ -986,7 +989,7 @@
               "reverse": false
             }
           },
-          "pluginVersion": "9.5.3",
+          "pluginVersion": "10.1.5",
           "targets": [
             {
               "datasource": {
@@ -1043,6 +1046,7 @@
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -1064,7 +1068,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   }
                 ]
               }
@@ -1216,6 +1221,7 @@
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -1248,7 +1254,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   }
                 ]
               }
@@ -1437,7 +1444,7 @@
               "reverse": false
             }
           },
-          "pluginVersion": "9.5.3",
+          "pluginVersion": "10.1.5",
           "targets": [
             {
               "datasource": {
@@ -1516,7 +1523,7 @@
               "reverse": false
             }
           },
-          "pluginVersion": "9.5.3",
+          "pluginVersion": "10.1.5",
           "targets": [
             {
               "datasource": {
@@ -1550,7 +1557,7 @@
         "current": {
           "selected": false,
           "text": "Prometheus",
-          "value": "Prometheus"
+          "value": "prometheus"
         },
         "hide": 2,
         "includeAll": false,
@@ -1753,6 +1760,6 @@
   "timezone": "",
   "title": "VoltDB Tasks",
   "uid": "b3aaa7ee-4972-4a70-a89e-7e2c8593cab3",
-  "version": 22,
+  "version": 4,
   "weekStart": ""
 }

@@ -15,7 +15,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "9.5.3"
+      "version": "10.1.5"
     },
     {
       "type": "datasource",
@@ -92,7 +92,7 @@
         "content": "# VoltDB configuration\n\nBelow's information comes from @SystemInformation call, for detailed description please go to [documentation](https://docs.voltdb.com/UsingVoltDB/sysprocsysteminfo.php#sysprocsysinforetvalovervw).",
         "mode": "markdown"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "type": "text"
     },
     {
@@ -151,7 +151,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -218,7 +218,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -350,7 +350,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -439,7 +439,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -517,7 +517,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -596,7 +596,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -675,7 +675,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -772,7 +772,7 @@
         },
         "showHeader": false
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -865,7 +865,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -944,7 +944,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -1111,7 +1111,7 @@
         },
         "showHeader": false
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -1223,7 +1223,7 @@
         },
         "showHeader": false
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -1300,7 +1300,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -1417,7 +1417,7 @@
         },
         "showHeader": false
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -1490,7 +1490,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -1564,7 +1564,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text"
+                "color": "text",
+                "value": null
               }
             ]
           },
@@ -1593,7 +1594,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -1660,7 +1661,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text"
+                "color": "text",
+                "value": null
               }
             ]
           },
@@ -1689,7 +1691,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -1760,7 +1762,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text"
+                "color": "text",
+                "value": null
               }
             ]
           },
@@ -1789,7 +1792,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -1861,7 +1864,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text"
+                "color": "text",
+                "value": null
               }
             ]
           },
@@ -1890,7 +1894,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -1923,7 +1927,7 @@
         "current": {
           "selected": false,
           "text": "Prometheus",
-          "value": "Prometheus"
+          "value": "prometheus"
         },
         "hide": 2,
         "includeAll": false,
@@ -1994,6 +1998,6 @@
   "timezone": "",
   "title": "VoltDb Configuration",
   "uid": "iQGr28yVz",
-  "version": 39,
+  "version": 3,
   "weekStart": ""
 }
