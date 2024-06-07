@@ -1884,8 +1884,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1980,8 +1979,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               }
@@ -2048,8 +2046,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               }
@@ -2172,8 +2169,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -2708,7 +2704,7 @@
             "h": 11,
             "w": 8,
             "x": 0,
-            "y": 39
+            "y": 21
           },
           "id": 42,
           "options": {
@@ -2787,7 +2783,6 @@
               "color": {
                 "mode": "thresholds"
               },
-              "custom": {},
               "mappings": [
                 {
                   "options": {
@@ -2823,7 +2818,7 @@
             "h": 11,
             "w": 8,
             "x": 8,
-            "y": 39
+            "y": 21
           },
           "id": 50,
           "options": {
@@ -2854,91 +2849,7 @@
             }
           ],
           "title": "Conflicts by table (host = $host, partition = $partition)",
-          "transformations": [
-            {
-              "disabled": true,
-              "id": "groupBy",
-              "options": {
-                "fields": {
-                  "Time": {
-                    "aggregations": []
-                  },
-                  "Value": {
-                    "aggregations": [
-                      "max"
-                    ],
-                    "operation": "aggregate"
-                  },
-                  "Value #A": {
-                    "aggregations": [
-                      "lastNotNull"
-                    ],
-                    "operation": "aggregate"
-                  },
-                  "Value #B": {
-                    "aggregations": [
-                      "lastNotNull"
-                    ],
-                    "operation": "aggregate"
-                  },
-                  "Value #C": {
-                    "aggregations": [
-                      "lastNotNull"
-                    ],
-                    "operation": "aggregate"
-                  },
-                  "Value #D": {
-                    "aggregations": [
-                      "lastNotNull"
-                    ],
-                    "operation": "aggregate"
-                  },
-                  "__name__": {
-                    "aggregations": [],
-                    "operation": "groupby"
-                  },
-                  "table_name": {
-                    "aggregations": [],
-                    "operation": "groupby"
-                  },
-                  "tablename": {
-                    "aggregations": [],
-                    "operation": "groupby"
-                  },
-                  "voltdb_dr_constraint_violation_count_total {__name__=\"voltdb_dr_constraint_violation_count_total\", table_name=\"CONFLICTS_DEMO\"}": {
-                    "aggregations": []
-                  },
-                  "voltdb_dr_divergence_count_total": {
-                    "aggregations": []
-                  },
-                  "voltdb_dr_missing_row_count_total": {
-                    "aggregations": []
-                  },
-                  "voltdb_dr_row_timestamp_mismatch_count_total": {
-                    "aggregations": []
-                  },
-                  "{__name__=\"voltdb_dr_divergence_count_total\", table_name=\"CONFLICTS_DEMO\"}": {
-                    "aggregations": []
-                  },
-                  "{__name__=\"voltdb_dr_missing_row_count_total\", table_name=\"CONFLICTS_DEMO\"}": {
-                    "aggregations": []
-                  },
-                  "{__name__=\"voltdb_dr_row_timestamp_mismatch_count_total\", table_name=\"CONFLICTS_DEMO\"}": {
-                    "aggregations": []
-                  },
-                  "{__name__=\"voltdb_drconflicts_divergence_count\", tablename=\"TESTOWO\"}": {
-                    "aggregations": []
-                  },
-                  "{__name__=\"voltdb_drconflicts_missing_row_count\", tablename=\"TESTOWO\"}": {
-                    "aggregations": []
-                  },
-                  "{__name__=\"voltdb_drconflicts_timestamp_mismatch_count\", tablename=\"TESTOWO\"}": {
-                    "aggregations": []
-                  }
-                }
-              }
-            }
-          ],
+          "transformations": [],
           "type": "marcusolsson-treemap-panel"
         },
         {
@@ -3003,7 +2914,7 @@
             "h": 11,
             "w": 8,
             "x": 16,
-            "y": 39
+            "y": 21
           },
           "id": 51,
           "options": {
@@ -3098,8 +3009,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -3245,7 +3155,7 @@
       "type": "row"
     }
   ],
-  "refresh": false,
+  "refresh": "",
   "schemaVersion": 38,
   "style": "dark",
   "tags": [
@@ -3367,13 +3277,13 @@
     ]
   },
   "time": {
-    "from": "2024-06-05T13:54:24.168Z",
-    "to": "2024-06-05T16:18:08.948Z"
+    "from": "now-7d",
+    "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB XDCR",
   "uid": "ce3e033c-148f-445a-b0ad-e83c8410024a",
-  "version": 17,
+  "version": 18,
   "weekStart": ""
 }
