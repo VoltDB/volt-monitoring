@@ -33,7 +33,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "9.5.3"
+      "version": "10.1.5"
     },
     {
       "type": "panel",
@@ -146,7 +146,7 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
+        "w": 2,
         "x": 0,
         "y": 1
       },
@@ -166,7 +166,7 @@
           "titleSize": 1
         }
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -210,8 +210,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
-        "x": 4,
+        "w": 2,
+        "x": 2,
         "y": 1
       },
       "id": 11,
@@ -227,7 +227,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -278,7 +278,7 @@
       "gridPos": {
         "h": 5,
         "w": 4,
-        "x": 8,
+        "x": 4,
         "y": 1
       },
       "id": 9,
@@ -297,7 +297,7 @@
         "showUnfilled": true,
         "valueMode": "color"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -328,7 +328,6 @@
         }
       ],
       "title": "Size of data queued for transmission to the customer",
-      "transparent": true,
       "type": "bargauge"
     },
     {
@@ -361,8 +360,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
-        "x": 12,
+        "w": 2,
+        "x": 8,
         "y": 1
       },
       "id": 12,
@@ -380,7 +379,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -397,7 +396,6 @@
         }
       ],
       "title": "Queue gap",
-      "transparent": true,
       "type": "stat"
     },
     {
@@ -441,7 +439,7 @@
       "gridPos": {
         "h": 5,
         "w": 4,
-        "x": 16,
+        "x": 10,
         "y": 1
       },
       "id": 6,
@@ -500,7 +498,6 @@
       ],
       "title": "Connection status to other clusters",
       "transformations": [],
-      "transparent": true,
       "type": "piechart"
     },
     {
@@ -532,7 +529,7 @@
       "gridPos": {
         "h": 5,
         "w": 4,
-        "x": 20,
+        "x": 14,
         "y": 1
       },
       "id": 13,
@@ -550,7 +547,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -569,7 +566,6 @@
       ],
       "title": "Last acknowledged transaction",
       "transformations": [],
-      "transparent": true,
       "type": "stat"
     },
     {
@@ -599,9 +595,9 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
-        "x": 0,
-        "y": 6
+        "w": 2,
+        "x": 18,
+        "y": 1
       },
       "id": 24,
       "options": {
@@ -618,7 +614,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -637,7 +633,6 @@
       ],
       "title": "Tasks queued for transmission to the replica(s)",
       "transformations": [],
-      "transparent": true,
       "type": "stat"
     },
     {
@@ -700,8 +695,8 @@
       "gridPos": {
         "h": 5,
         "w": 4,
-        "x": 4,
-        "y": 6
+        "x": 20,
+        "y": 1
       },
       "id": 46,
       "options": {
@@ -718,7 +713,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -917,7 +912,6 @@
           }
         }
       ],
-      "transparent": true,
       "type": "stat"
     },
     {
@@ -926,7 +920,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 11
+        "y": 6
       },
       "id": 20,
       "panels": [
@@ -957,7 +951,7 @@
             "h": 11,
             "w": 12,
             "x": 0,
-            "y": 2
+            "y": 7
           },
           "id": 22,
           "options": {
@@ -973,7 +967,7 @@
             "showUnfilled": true,
             "valueMode": "color"
           },
-          "pluginVersion": "9.5.3",
+          "pluginVersion": "10.1.5",
           "targets": [
             {
               "datasource": {
@@ -1008,7 +1002,6 @@
               }
             }
           ],
-          "transparent": true,
           "type": "bargauge"
         },
         {
@@ -1038,7 +1031,7 @@
             "h": 11,
             "w": 12,
             "x": 12,
-            "y": 2
+            "y": 7
           },
           "id": 21,
           "options": {
@@ -1087,7 +1080,6 @@
               }
             }
           ],
-          "transparent": true,
           "type": "marcusolsson-treemap-panel"
         },
         {
@@ -1123,10 +1115,10 @@
             "overrides": []
           },
           "gridPos": {
-            "h": 11,
-            "w": 12,
+            "h": 12,
+            "w": 24,
             "x": 0,
-            "y": 13
+            "y": 18
           },
           "id": 27,
           "options": {
@@ -1147,7 +1139,7 @@
               }
             ]
           },
-          "pluginVersion": "9.5.3",
+          "pluginVersion": "10.1.5",
           "targets": [
             {
               "datasource": {
@@ -1201,9 +1193,22 @@
               }
             }
           ],
-          "transparent": true,
           "type": "table"
-        },
+        }
+      ],
+      "title": "Producer details",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "id": 49,
+      "panels": [
         {
           "datasource": {
             "type": "prometheus",
@@ -1253,7 +1258,7 @@
             "h": 10,
             "w": 24,
             "x": 0,
-            "y": 24
+            "y": 8
           },
           "id": 25,
           "maxPerRow": 3,
@@ -1418,7 +1423,7 @@
           "type": "barchart"
         }
       ],
-      "title": "Producer details",
+      "title": "Producer queue occupation",
       "type": "row"
     },
     {
@@ -1427,7 +1432,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 12
+        "y": 8
       },
       "id": 7,
       "panels": [],
@@ -1462,7 +1467,7 @@
         "h": 5,
         "w": 4,
         "x": 0,
-        "y": 13
+        "y": 9
       },
       "id": 14,
       "options": {
@@ -1477,7 +1482,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -1524,7 +1529,7 @@
         "h": 5,
         "w": 4,
         "x": 4,
-        "y": 13
+        "y": 9
       },
       "id": 15,
       "options": {
@@ -1539,7 +1544,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -1588,7 +1593,7 @@
         "h": 5,
         "w": 4,
         "x": 8,
-        "y": 13
+        "y": 9
       },
       "id": 16,
       "options": {
@@ -1603,7 +1608,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -1655,7 +1660,7 @@
         "h": 5,
         "w": 4,
         "x": 12,
-        "y": 13
+        "y": 9
       },
       "id": 17,
       "options": {
@@ -1670,7 +1675,7 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -1717,7 +1722,7 @@
         "h": 5,
         "w": 4,
         "x": 16,
-        "y": 13
+        "y": 9
       },
       "id": 23,
       "options": {
@@ -1734,7 +1739,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -1758,7 +1763,6 @@
           "options": {}
         }
       ],
-      "transparent": true,
       "type": "stat"
     },
     {
@@ -1788,7 +1792,7 @@
         "h": 5,
         "w": 4,
         "x": 20,
-        "y": 13
+        "y": 9
       },
       "id": 19,
       "options": {
@@ -1805,7 +1809,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -1822,7 +1826,6 @@
         }
       ],
       "title": "Last received transaction",
-      "transparent": true,
       "type": "stat"
     },
     {
@@ -1831,7 +1834,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 14
       },
       "id": 28,
       "panels": [
@@ -1859,6 +1862,7 @@
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -1895,7 +1899,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 4
+            "y": 5
           },
           "id": 29,
           "options": {
@@ -1953,6 +1957,7 @@
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -1985,7 +1990,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 13
+            "y": 14
           },
           "id": 30,
           "options": {
@@ -2075,7 +2080,7 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 13
+            "y": 14
           },
           "id": 33,
           "options": {
@@ -2091,7 +2096,7 @@
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "9.5.3",
+          "pluginVersion": "10.1.5",
           "targets": [
             {
               "datasource": {
@@ -2149,7 +2154,6 @@
               }
             }
           ],
-          "transparent": true,
           "type": "table"
         },
         {
@@ -2181,7 +2185,7 @@
             "h": 10,
             "w": 24,
             "x": 0,
-            "y": 22
+            "y": 23
           },
           "id": 31,
           "options": {
@@ -2198,7 +2202,7 @@
             },
             "textMode": "auto"
           },
-          "pluginVersion": "9.5.3",
+          "pluginVersion": "10.1.5",
           "targets": [
             {
               "datasource": {
@@ -2225,7 +2229,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 15
       },
       "id": 34,
       "panels": [],
@@ -2247,7 +2251,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "orange",
@@ -2267,7 +2272,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 20
+        "y": 16
       },
       "id": 35,
       "options": {
@@ -2284,7 +2289,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -2317,7 +2322,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "orange",
@@ -2336,7 +2342,7 @@
         "h": 4,
         "w": 4,
         "x": 4,
-        "y": 20
+        "y": 16
       },
       "id": 36,
       "options": {
@@ -2353,7 +2359,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -2361,7 +2367,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum(voltdb_drconflicts_total_conflict_count{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "expr": "sum(voltdb_dr_conflicts_count_total{namespace=\"$cluster\",host_name=~\"$host\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -2387,7 +2393,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2402,7 +2409,7 @@
         "h": 4,
         "w": 4,
         "x": 8,
-        "y": 20
+        "y": 16
       },
       "id": 37,
       "options": {
@@ -2419,7 +2426,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -2427,7 +2434,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum(voltdb_drconflicts_divergence_count{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "expr": "sum(voltdb_dr_divergence_count_total{namespace=\"$cluster\",host_name=~\"$host\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -2453,7 +2460,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               }
             ]
           }
@@ -2464,7 +2472,7 @@
         "h": 4,
         "w": 4,
         "x": 12,
-        "y": 20
+        "y": 16
       },
       "id": 38,
       "options": {
@@ -2481,7 +2489,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -2489,7 +2497,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum(voltdb_drconflicts_constraint_violation_count{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "expr": "sum(voltdb_dr_constraint_violation_count_total{namespace=\"$cluster\",host_name=~\"$host\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -2515,7 +2523,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               }
             ]
           }
@@ -2526,7 +2535,7 @@
         "h": 4,
         "w": 4,
         "x": 16,
-        "y": 20
+        "y": 16
       },
       "id": 39,
       "options": {
@@ -2543,7 +2552,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -2551,7 +2560,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum(voltdb_drconflicts_missing_row_count{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "expr": "sum(voltdb_dr_missing_row_count_total{namespace=\"$cluster\",host_name=~\"$host\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -2577,7 +2586,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               }
             ]
           }
@@ -2588,7 +2598,7 @@
         "h": 4,
         "w": 4,
         "x": 20,
-        "y": 20
+        "y": 16
       },
       "id": 40,
       "options": {
@@ -2605,7 +2615,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "10.1.5",
       "targets": [
         {
           "datasource": {
@@ -2613,7 +2623,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "sum(voltdb_drconflicts_timestamp_mismatch_count{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "expr": "sum(voltdb_dr_row_timestamp_mismatch_count_total{namespace=\"$cluster\",host_name=~\"$host\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -2628,7 +2638,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 24
+        "y": 20
       },
       "id": 41,
       "panels": [
@@ -2656,6 +2666,7 @@
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -2677,7 +2688,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -2689,10 +2701,10 @@
             "overrides": []
           },
           "gridPos": {
-            "h": 8,
-            "w": 12,
+            "h": 11,
+            "w": 8,
             "x": 0,
-            "y": 6
+            "y": 21
           },
           "id": 42,
           "options": {
@@ -2716,7 +2728,7 @@
                 "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
-              "expr": "sum(voltdb_drconflicts_constraint_violation_count{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
+              "expr": "sum(voltdb_dr_constraint_violation_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
               "legendFormat": "constraint violations",
               "range": true,
               "refId": "A"
@@ -2727,7 +2739,7 @@
                 "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
-              "expr": "sum(voltdb_drconflicts_divergence_count{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
+              "expr": "sum(voltdb_dr_divergence_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
               "hide": false,
               "legendFormat": "divergences",
               "range": true,
@@ -2739,7 +2751,7 @@
                 "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
-              "expr": "sum(voltdb_drconflicts_missing_row_count{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
+              "expr": "sum(voltdb_dr_missing_row_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
               "hide": false,
               "legendFormat": "missing rows",
               "range": true,
@@ -2751,7 +2763,7 @@
                 "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
-              "expr": "sum(voltdb_drconflicts_timestamp_mismatch_count{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
+              "expr": "sum(voltdb_dr_row_timestamp_mismatch_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
               "hide": false,
               "legendFormat": "mismatches",
               "range": true,
@@ -2769,208 +2781,22 @@
           "fieldConfig": {
             "defaults": {
               "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 6
-          },
-          "id": 43,
-          "options": {
-            "legend": {
-              "calcs": [
-                "sum"
-              ],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "editorMode": "code",
-              "expr": "sum by (hostname) ({__name__=~\"voltdb_drconflicts_constraint_violation_count|voltdb_drconflicts_missing_row_count|voltdb_drconflicts_timestamp_mismatch_count\", namespace=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
-              "legendFormat": "{{host_name}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Conflicts by host (host = $host, partition = $partition)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 0,
-            "y": 14
-          },
-          "id": 44,
-          "options": {
-            "legend": {
-              "calcs": [
-                "sum"
-              ],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "editorMode": "code",
-              "expr": "sum by (hostname) (voltdb_drconflicts_divergence_count{namespace=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
-              "legendFormat": "{{host_name}}",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Divergences by host (host = $host, partition = $partition)",
-          "type": "timeseries"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
                 "mode": "thresholds"
               },
               "mappings": [
                 {
                   "options": {
-                    "voltdb_drconflicts_constraint_violation_count": {
-                      "index": 2,
+                    "voltdb_dr_constraint_violation_count_total": {
+                      "index": 0,
                       "text": "constraint violations"
                     },
-                    "voltdb_drconflicts_missing_row_count": {
+                    "voltdb_dr_missing_row_count_total": {
                       "index": 1,
                       "text": "missing rows"
                     },
-                    "voltdb_drconflicts_timestamp_mismatch_count": {
-                      "index": 0,
-                      "text": "mismatches"
+                    "voltdb_dr_row_timestamp_mismatch_count_total": {
+                      "index": 2,
+                      "text": " mismatches"
                     }
                   },
                   "type": "value"
@@ -2980,11 +2806,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 1
+                    "color": "green",
+                    "value": null
                   }
                 ]
               }
@@ -2992,17 +2815,121 @@
             "overrides": []
           },
           "gridPos": {
-            "h": 8,
-            "w": 12,
-            "x": 12,
-            "y": 14
+            "h": 11,
+            "w": 8,
+            "x": 8,
+            "y": 21
           },
-          "id": 45,
+          "id": 50,
           "options": {
-            "groupByField": "__name__",
-            "labelFields": [],
-            "textField": "tablename",
+            "groupByField": "table_name",
+            "labelFields": [
+              "__name__"
+            ],
+            "sizeField": "Value",
+            "textField": "__name__",
             "tiling": "treemapSquarify"
+          },
+          "pluginVersion": "10.1.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum by (table_name,__name__ ) ({__name__=~\"voltdb_dr_constraint_violation_count_total|voltdb_dr_missing_row_count_total|voltdb_dr_row_timestamp_mismatch_count_total\", namespace=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
+              "format": "table",
+              "hide": false,
+              "instant": false,
+              "legendFormat": "__auto",
+              "range": true,
+              "refId": "E"
+            }
+          ],
+          "title": "Conflicts by table (host = $host, partition = $partition)",
+          "transformations": [],
+          "type": "marcusolsson-treemap-panel"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "palette-classic"
+              },
+              "custom": {
+                "axisCenteredZero": false,
+                "axisColorMode": "text",
+                "axisLabel": "",
+                "axisPlacement": "auto",
+                "barAlignment": 0,
+                "drawStyle": "line",
+                "fillOpacity": 0,
+                "gradientMode": "none",
+                "hideFrom": {
+                  "legend": false,
+                  "tooltip": false,
+                  "viz": false
+                },
+                "insertNulls": false,
+                "lineInterpolation": "linear",
+                "lineWidth": 1,
+                "pointSize": 5,
+                "scaleDistribution": {
+                  "type": "linear"
+                },
+                "showPoints": "auto",
+                "spanNulls": false,
+                "stacking": {
+                  "group": "A",
+                  "mode": "none"
+                },
+                "thresholdsStyle": {
+                  "mode": "off"
+                }
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 11,
+            "w": 8,
+            "x": 16,
+            "y": 21
+          },
+          "id": 51,
+          "options": {
+            "legend": {
+              "calcs": [
+                "sum"
+              ],
+              "displayMode": "list",
+              "placement": "bottom",
+              "showLegend": true
+            },
+            "tooltip": {
+              "mode": "single",
+              "sort": "none"
+            }
           },
           "targets": [
             {
@@ -3011,87 +2938,15 @@
                 "uid": "${DS_PROMETHEUS}"
               },
               "editorMode": "code",
-              "expr": "sum(voltdb_drconflicts_constraint_violation_count{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\"}) by (__name__, tablename)",
-              "format": "table",
-              "legendFormat": "{{host_name}}",
-              "range": true,
-              "refId": "A"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "editorMode": "code",
-              "expr": "sum(voltdb_drconflicts_divergence_count{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\"}) by (__name__, tablename)",
+              "expr": "sum by (table_name) (voltdb_dr_divergence_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
               "hide": false,
-              "legendFormat": "__auto",
+              "legendFormat": "divergences - {{table_name}}",
               "range": true,
               "refId": "B"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "editorMode": "code",
-              "expr": "sum(voltdb_drconflicts_missing_row_count{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\"}) by (__name__, tablename)",
-              "hide": false,
-              "legendFormat": "__auto",
-              "range": true,
-              "refId": "C"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "editorMode": "code",
-              "expr": "sum(voltdb_drconflicts_timestamp_mismatch_count{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\"}) by (__name__, tablename)",
-              "hide": false,
-              "legendFormat": "__auto",
-              "range": true,
-              "refId": "D"
             }
           ],
-          "title": "Conflicts by table (host = $host, partition = $partition)",
-          "transformations": [
-            {
-              "id": "groupBy",
-              "options": {
-                "fields": {
-                  "Value": {
-                    "aggregations": [
-                      "lastNotNull"
-                    ],
-                    "operation": "aggregate"
-                  },
-                  "__name__": {
-                    "aggregations": [],
-                    "operation": "groupby"
-                  },
-                  "tablename": {
-                    "aggregations": [],
-                    "operation": "groupby"
-                  },
-                  "{__name__=\"voltdb_drconflicts_divergence_count\", tablename=\"TESTOWO\"}": {
-                    "aggregations": []
-                  },
-                  "{__name__=\"voltdb_drconflicts_missing_row_count\", tablename=\"TESTOWO\"}": {
-                    "aggregations": []
-                  },
-                  "{__name__=\"voltdb_drconflicts_timestamp_mismatch_count\", tablename=\"TESTOWO\"}": {
-                    "aggregations": []
-                  }
-                }
-              }
-            },
-            {
-              "id": "merge",
-              "options": {}
-            }
-          ],
-          "type": "marcusolsson-treemap-panel"
+          "title": "Divergences by table (host = $host, partition = $partition)",
+          "type": "timeseries"
         }
       ],
       "title": "Conflict details",
@@ -3103,7 +2958,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 25
+        "y": 21
       },
       "id": 1,
       "panels": [
@@ -3132,6 +2987,7 @@
                   "tooltip": false,
                   "viz": false
                 },
+                "insertNulls": false,
                 "lineInterpolation": "linear",
                 "lineWidth": 1,
                 "pointSize": 5,
@@ -3169,7 +3025,7 @@
             "h": 8,
             "w": 12,
             "x": 0,
-            "y": 7
+            "y": 22
           },
           "id": 2,
           "options": {
@@ -3237,7 +3093,7 @@
             "h": 8,
             "w": 12,
             "x": 12,
-            "y": 7
+            "y": 22
           },
           "id": 3,
           "options": {
@@ -3272,11 +3128,12 @@
               "yHistogram": false
             },
             "yAxis": {
+              "axisLabel": "partition",
               "axisPlacement": "left",
               "reverse": false
             }
           },
-          "pluginVersion": "9.5.3",
+          "pluginVersion": "10.1.5",
           "targets": [
             {
               "datasource": {
@@ -3292,100 +3149,9 @@
           ],
           "title": "RTT ($cluster)",
           "type": "heatmap"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisCenteredZero": false,
-                "axisColorMode": "text",
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false,
-                "stacking": {
-                  "group": "A",
-                  "mode": "none"
-                },
-                "thresholdsStyle": {
-                  "mode": "off"
-                }
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 7,
-            "w": 24,
-            "x": 0,
-            "y": 15
-          },
-          "id": 4,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            }
-          },
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
-              },
-              "editorMode": "code",
-              "expr": "sum(rate(voltdb_procedure_invocations{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"}[$__interval])) by (partition_id)",
-              "legendFormat": "TPS",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "TPS ($partition)",
-          "type": "timeseries"
         }
       ],
-      "title": "RTT",
+      "title": "Replication RTT",
       "type": "row"
     }
   ],
@@ -3403,7 +3169,7 @@
         "current": {
           "selected": false,
           "text": "Prometheus",
-          "value": "Prometheus"
+          "value": "prometheus"
         },
         "hide": 2,
         "includeAll": false,
@@ -3429,7 +3195,7 @@
         "hide": 0,
         "includeAll": false,
         "label": "Cluster",
-        "multi": true,
+        "multi": false,
         "name": "cluster",
         "options": [],
         "query": {
@@ -3511,13 +3277,13 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB XDCR",
   "uid": "ce3e033c-148f-445a-b0ad-e83c8410024a",
-  "version": 129,
+  "version": 18,
   "weekStart": ""
 }
