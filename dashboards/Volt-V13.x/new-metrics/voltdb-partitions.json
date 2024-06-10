@@ -382,8 +382,10 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "max(1 - rate(voltdb_idle_time_total_seconds{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"}[$__rate_interval]))",
+          "exemplar": false,
+          "expr": "max(1 - (voltdb_idle_time_pauses_seconds_sum{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"})/60)",
           "hide": false,
+          "instant": false,
           "legendFormat": "{{host_name}}",
           "range": true,
           "refId": "C"
@@ -606,7 +608,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "1 - rate(voltdb_idle_time_total_seconds{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\"}[$__rate_interval])",
+          "expr": "max by (site_id) (1- voltdb_idle_time_pauses_seconds_sum{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\"}/60)",
           "hide": false,
           "legendFormat": "{{site_id}}",
           "range": true,
@@ -1313,8 +1315,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               }
             ]
           },
@@ -1413,8 +1414,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1658,7 +1658,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
