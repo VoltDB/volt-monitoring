@@ -2297,7 +2297,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "max(voltdb_dr_last_conflict_timestamp_seconds{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "expr": "1000 * max(voltdb_dr_last_conflict_timestamp_seconds{namespace=\"$cluster\",host_name=~\"$host\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -2688,8 +2688,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -2806,8 +2805,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               }
@@ -2898,8 +2896,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
