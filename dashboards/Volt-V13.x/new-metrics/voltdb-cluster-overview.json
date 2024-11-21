@@ -27,7 +27,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "10.1.5"
+      "version": "9.5.3"
     },
     {
       "type": "datasource",
@@ -39,12 +39,6 @@
       "type": "panel",
       "id": "stat",
       "name": "Stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "state-timeline",
-      "name": "State timeline",
       "version": ""
     },
     {
@@ -158,9 +152,11 @@
           "fields": "/^version$/",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -178,7 +174,6 @@
         }
       ],
       "title": "Volt Version",
-      "transformations": [],
       "type": "stat"
     },
     {
@@ -224,10 +219,12 @@
           "fields": "",
           "values": false
         },
+        "showPercentChange": false,
         "text": {},
-        "textMode": "auto"
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -343,9 +340,11 @@
           "fields": "/^clustersafety$/",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -449,9 +448,11 @@
           "fields": "/^clusterstate$/",
           "values": false
         },
-        "textMode": "value"
+        "showPercentChange": false,
+        "textMode": "value",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -471,7 +472,6 @@
         }
       ],
       "title": "Cluster state",
-      "transformations": [],
       "type": "stat"
     },
     {
@@ -627,7 +627,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -798,12 +798,14 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^Max$/",
+          "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -832,13 +834,18 @@
           "id": "filterFieldsByName",
           "options": {
             "include": {
+              "names": [],
               "pattern": "kfactor"
             }
           }
         },
         {
           "id": "reduce",
-          "options": {}
+          "options": {
+            "reducers": [
+              "lastNotNull"
+            ]
+          }
         }
       ],
       "type": "stat"
@@ -885,9 +892,11 @@
           "fields": "/^sitesperhost$/",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -905,7 +914,6 @@
         }
       ],
       "title": "Sites Per Host",
-      "transformations": [],
       "type": "stat"
     },
     {
@@ -950,9 +958,11 @@
           "fields": "/^fullclustersize$/",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -970,7 +980,6 @@
         }
       ],
       "title": "Normal Cluster Size",
-      "transformations": [],
       "type": "stat"
     },
     {
@@ -1016,9 +1025,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -1036,7 +1047,6 @@
         }
       ],
       "title": "Current Cluster Size",
-      "transformations": [],
       "type": "stat"
     },
     {
@@ -1089,9 +1099,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -1111,7 +1123,6 @@
       ],
       "timeShift": "2m",
       "title": "Transactions/s",
-      "transformations": [],
       "type": "stat"
     },
     {
@@ -1158,9 +1169,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -1178,7 +1191,6 @@
         }
       ],
       "title": "Import TPS",
-      "transformations": [],
       "type": "stat"
     },
     {
@@ -1225,9 +1237,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -1257,7 +1271,6 @@
         }
       ],
       "title": "Procedure invocations",
-      "transformations": [],
       "type": "stat"
     },
     {
@@ -1308,9 +1321,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -1329,7 +1344,6 @@
         }
       ],
       "title": "Procedure errors",
-      "transformations": [],
       "type": "stat"
     },
     {
@@ -1379,9 +1393,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -1399,7 +1415,6 @@
         }
       ],
       "title": "Commandlog queue",
-      "transformations": [],
       "type": "stat"
     },
     {
@@ -1497,9 +1512,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -1518,7 +1535,6 @@
         }
       ],
       "title": "Max CPU Usage",
-      "transformations": [],
       "type": "stat"
     },
     {
@@ -1563,6 +1579,8 @@
       },
       "id": 24,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -1572,9 +1590,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -1592,7 +1611,6 @@
         }
       ],
       "title": "VoltDB RAM Usage",
-      "transformations": [],
       "type": "gauge"
     },
     {
@@ -1637,6 +1655,8 @@
       },
       "id": 25,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -1646,9 +1666,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -1667,7 +1688,6 @@
         }
       ],
       "title": "Java Heap Usage",
-      "transformations": [],
       "type": "gauge"
     },
     {
@@ -1713,9 +1733,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -1734,7 +1756,6 @@
         }
       ],
       "title": "Total GC time",
-      "transformations": [],
       "type": "stat"
     },
     {
@@ -1788,9 +1809,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "9.5.3",
       "targets": [
         {
           "datasource": {
@@ -1810,14 +1833,13 @@
         }
       ],
       "title": "Max Latency",
-      "transformations": [],
       "type": "stat"
     },
     {
       "collapsed": true,
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "${DS_PROMETHEUS}"
       },
       "gridPos": {
         "h": 1,
@@ -1893,7 +1915,7 @@
             "text": {},
             "textMode": "auto"
           },
-          "pluginVersion": "10.1.5",
+          "pluginVersion": "9.5.3",
           "targets": [
             {
               "datasource": {
@@ -2008,7 +2030,7 @@
             "text": {},
             "textMode": "auto"
           },
-          "pluginVersion": "10.1.5",
+          "pluginVersion": "9.5.3",
           "targets": [
             {
               "datasource": {
@@ -2110,7 +2132,7 @@
             },
             "textMode": "auto"
           },
-          "pluginVersion": "10.1.5",
+          "pluginVersion": "9.5.3",
           "targets": [
             {
               "datasource": {
@@ -2200,7 +2222,7 @@
             },
             "textMode": "auto"
           },
-          "pluginVersion": "10.1.5",
+          "pluginVersion": "9.5.3",
           "targets": [
             {
               "datasource": {
@@ -2303,7 +2325,7 @@
             "text": {},
             "textMode": "auto"
           },
-          "pluginVersion": "10.1.5",
+          "pluginVersion": "9.5.3",
           "targets": [
             {
               "datasource": {
@@ -2405,7 +2427,7 @@
             "text": {},
             "textMode": "auto"
           },
-          "pluginVersion": "10.1.5",
+          "pluginVersion": "9.5.3",
           "targets": [
             {
               "datasource": {
@@ -2510,7 +2532,7 @@
             "text": {},
             "textMode": "auto"
           },
-          "pluginVersion": "10.1.5",
+          "pluginVersion": "9.5.3",
           "targets": [
             {
               "datasource": {
@@ -2592,7 +2614,7 @@
             },
             "textMode": "auto"
           },
-          "pluginVersion": "10.1.5",
+          "pluginVersion": "9.5.3",
           "targets": [
             {
               "datasource": {
@@ -2620,7 +2642,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "${DS_PROMETHEUS}"
           },
           "refId": "A"
         }
@@ -2632,7 +2654,7 @@
       "collapsed": true,
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "${DS_PROMETHEUS}"
       },
       "gridPos": {
         "h": 1,
@@ -2899,6 +2921,7 @@
                 }
               },
               "mappings": [],
+              "min": 0,
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
@@ -3005,6 +3028,7 @@
                 }
               },
               "mappings": [],
+              "min": 0,
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
@@ -3138,7 +3162,7 @@
             },
             "showHeader": false
           },
-          "pluginVersion": "10.1.5",
+          "pluginVersion": "9.5.3",
           "targets": [
             {
               "datasource": {
@@ -3222,6 +3246,7 @@
                 }
               },
               "mappings": [],
+              "min": 0,
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
@@ -3283,7 +3308,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "${DS_PROMETHEUS}"
           },
           "refId": "A"
         }
@@ -3295,7 +3320,7 @@
       "collapsed": true,
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "${DS_PROMETHEUS}"
       },
       "gridPos": {
         "h": 1,
@@ -4051,7 +4076,7 @@
               }
             ]
           },
-          "pluginVersion": "10.1.5",
+          "pluginVersion": "9.5.3",
           "targets": [
             {
               "datasource": {
@@ -4210,7 +4235,7 @@
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "10.1.5",
+          "pluginVersion": "9.5.3",
           "targets": [
             {
               "datasource": {
@@ -4356,7 +4381,7 @@
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "10.1.5",
+          "pluginVersion": "9.5.3",
           "targets": [
             {
               "datasource": {
@@ -4428,7 +4453,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "${DS_PROMETHEUS}"
           },
           "refId": "A"
         }
@@ -4440,7 +4465,7 @@
       "collapsed": true,
       "datasource": {
         "type": "prometheus",
-        "uid": "prometheus"
+        "uid": "${DS_PROMETHEUS}"
       },
       "gridPos": {
         "h": 1,
@@ -4848,7 +4873,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "prometheus"
+            "uid": "${DS_PROMETHEUS}"
           },
           "refId": "A"
         }
@@ -5125,7 +5150,7 @@
             "showHeader": true,
             "sortBy": []
           },
-          "pluginVersion": "10.1.5",
+          "pluginVersion": "9.5.3",
           "targets": [
             {
               "datasource": {
@@ -5299,13 +5324,12 @@
           "type": "table"
         }
       ],
-      "title": " Rebalance",
+      "title": "Rebalance",
       "type": "row"
     }
   ],
   "refresh": "",
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [
     "voltdb",
     "overview"
@@ -5315,7 +5339,7 @@
       {
         "current": {
           "selected": false,
-          "text": "Prometheus",
+          "text": "prometheus",
           "value": "prometheus"
         },
         "hide": 2,
@@ -5332,7 +5356,6 @@
         "type": "datasource"
       },
       {
-        "current": {},
         "datasource": {
           "type": "prometheus",
           "uid": "${DS_PROMETHEUS}"
@@ -5356,7 +5379,11 @@
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "${DS_PROMETHEUS}"
@@ -5388,6 +5415,6 @@
   "timezone": "",
   "title": "VoltDB Cluster overview",
   "uid": "DIHIuCynk",
-  "version": 14,
+  "version": 1,
   "weekStart": ""
 }
