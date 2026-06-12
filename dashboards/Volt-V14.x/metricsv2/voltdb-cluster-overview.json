@@ -2917,7 +2917,8 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "s",
+          "min": 0
         },
         "overrides": []
       },
@@ -3022,7 +3023,8 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "decbytes",
+          "min": 0
         },
         "overrides": []
       },
@@ -3245,7 +3247,8 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "decbytes",
+          "min": 0
         },
         "overrides": []
       },

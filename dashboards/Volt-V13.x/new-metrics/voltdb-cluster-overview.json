@@ -800,7 +800,7 @@
           "calcs": [
             "lastNotNull"
           ],
-          "fields": "/^Max$/",
+          "fields": "/^kfactor$/",
           "values": false
         },
         "textMode": "auto"
@@ -822,27 +822,7 @@
           "refId": "A"
         }
       ],
-      "title": "KFactor",
-      "transformations": [
-        {
-          "id": "labelsToFields",
-          "options": {
-            "mode": "columns"
-          }
-        },
-        {
-          "id": "filterFieldsByName",
-          "options": {
-            "include": {
-              "pattern": "kfactor"
-            }
-          }
-        },
-        {
-          "id": "reduce",
-          "options": {}
-        }
-      ],
+      "title": "K Factor",
       "type": "stat"
     },
     {
@@ -2937,7 +2917,8 @@
                   }
                 ]
               },
-              "unit": "s"
+              "unit": "s",
+              "min": 0
             },
             "overrides": []
           },
@@ -3040,7 +3021,8 @@
                   }
                 ]
               },
-              "unit": "decbytes"
+              "unit": "decbytes",
+              "min": 0
             },
             "overrides": []
           },
@@ -3259,7 +3241,8 @@
                   }
                 ]
               },
-              "unit": "decbytes"
+              "unit": "decbytes",
+              "min": 0
             },
             "overrides": []
           },

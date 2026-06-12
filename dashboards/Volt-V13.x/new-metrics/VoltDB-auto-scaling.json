@@ -1688,7 +1688,8 @@
                   }
                 ]
               },
-              "unit": "decbytes"
+              "unit": "decbytes",
+              "min": 0
             },
             "overrides": []
           },
