@@ -173,7 +173,8 @@
       ],
       "title": "Volt Version",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "VoltDB software version (VERSION) reported by @SystemInformation OVERVIEW."
     },
     {
       "datasource": {
@@ -280,7 +281,8 @@
           }
         }
       ],
-      "type": "stat"
+      "type": "stat",
+      "description": "How long the cluster has been running, derived from the start timestamp (STARTTIME / HOSTSTARTTIME) reported by @SystemInformation OVERVIEW."
     },
     {
       "datasource": {
@@ -745,7 +747,8 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "The percentage of CPU used by the database server process. 0-100."
     },
     {
       "datasource": {
@@ -880,7 +883,8 @@
       ],
       "title": "Sites Per Host",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "Number of execution sites per host (sitesperhost) from @SystemInformation DEPLOYMENT."
     },
     {
       "datasource": {
@@ -945,7 +949,8 @@
       ],
       "title": "Normal Cluster Size",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "Initial (configured) cluster size from @SystemInformation OVERVIEW (FULLCLUSTERSIZE) — the number of nodes the cluster was started with."
     },
     {
       "datasource": {
@@ -1011,7 +1016,8 @@
       ],
       "title": "Current Cluster Size",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "Current number of nodes in the cluster, counted from the per-host @SystemInformation OVERVIEW rows."
     },
     {
       "datasource": {
@@ -1079,13 +1085,14 @@
           "format": "time_series",
           "instant": true,
           "interval": "",
-          "legendFormat": "{{hostname}}",
+          "legendFormat": "{{host_name}}",
           "refId": "A"
         }
       ],
       "title": "Transactions/s",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "Number of transactions executed by the connected clients"
     },
     {
       "datasource": {
@@ -1153,13 +1160,14 @@
           "format": "time_series",
           "instant": true,
           "interval": "",
-          "legendFormat": "{{hostname}}",
+          "legendFormat": "{{host_name}}",
           "refId": "A"
         }
       ],
       "title": "Import TPS",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "The number of import transactions that succeeded."
     },
     {
       "datasource": {
@@ -1237,7 +1245,8 @@
       ],
       "title": "Procedure invocations",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "The number of procedure invocation per 5 minutes, also includes procedures being replicated into partition replicas, so it does not equal the number of transactions issued by clients"
     },
     {
       "datasource": {
@@ -1307,7 +1316,8 @@
       ],
       "title": "Procedure errors",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "- `voltdb_procedure_aborted_total`: The number of times the procedure was aborted.\n- `voltdb_procedure_failed_total`: The number of times the procedure failed unexpectedly."
     },
     {
       "datasource": {
@@ -1381,7 +1391,8 @@
       ],
       "title": "Commandlog queue",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "The number of transactions that have been initiated for which the log has yet to be written to disk. For synchronous logging, this value is always zero."
     },
     {
       "datasource": {
@@ -1500,7 +1511,8 @@
       ],
       "title": "Max CPU Usage",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "The percentage of CPU used by the database server process. 0-100."
     },
     {
       "datasource": {
@@ -1567,13 +1579,14 @@
           "format": "time_series",
           "instant": true,
           "interval": "",
-          "legendFormat": "{{hostname}}",
+          "legendFormat": "{{host_name}}",
           "refId": "A"
         }
       ],
       "title": "VoltDB RAM Usage",
       "transformations": [],
-      "type": "gauge"
+      "type": "gauge",
+      "description": "- `voltdb_memory_rss_bytes`: The resident set size. That is, the total amount of memory allocated to the VoltDB processes on the server.\n- `voltdb_memory_physicalmemory_bytes`: The total size of physical memory on the server."
     },
     {
       "datasource": {
@@ -1642,13 +1655,14 @@
           "hide": false,
           "instant": true,
           "interval": "",
-          "legendFormat": "{{hostname}}",
+          "legendFormat": "{{host_name}}",
           "refId": "B"
         }
       ],
       "title": "Java Heap Usage",
       "transformations": [],
-      "type": "gauge"
+      "type": "gauge",
+      "description": "- `voltdb_memory_javaused_bytes`: The amount of memory allocated by Java and in use by VoltDB.\n- `voltdb_memory_javamaxheap_bytes`: The maximum heap size of the Java runtime environment."
     },
     {
       "datasource": {
@@ -1723,7 +1737,8 @@
       ],
       "title": "Total GC time",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "Cumulative run time of garbage collection. Tags: GC_TYPE - (e.g. CMS, G1), example gc_type=\"G1 Young Generation\"."
     },
     {
       "datasource": {
@@ -1791,14 +1806,15 @@
           "format": "time_series",
           "hide": true,
           "interval": "",
-          "legendFormat": "{{hostname}}",
+          "legendFormat": "{{host_name}}",
           "range": true,
           "refId": "A"
         }
       ],
       "title": "Max Latency",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "The distribution of length of time it took to execute the stored procedure."
     },
     {
       "collapsed": false,
@@ -2025,7 +2041,8 @@
       ],
       "title": "File descriptors limit",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "The maximum number of file descriptors allowed for the process running the server."
     },
     {
       "datasource": {
@@ -2130,7 +2147,8 @@
       ],
       "title": "Clock skew",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "The number of milliseconds difference between the system clock time of the current host and the remote host."
     },
     {
       "datasource": {
@@ -2219,7 +2237,8 @@
       ],
       "title": "Connections dropped",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "The total number of connections that were rejected because the connection limit had been reached."
     },
     {
       "datasource": {
@@ -2313,7 +2332,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "min(voltdb_client_connections_limit_total{namespace=\"$cluster\",hostname=~\"$host\"}) - max(voltdb_accepted_connections_total{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "min(voltdb_client_connections_limit_total{namespace=\"$cluster\",host_name=~\"$host\"}) - max(voltdb_accepted_connections_total{namespace=\"$cluster\",host_name=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "",
@@ -2323,7 +2342,8 @@
       ],
       "title": "Available connections",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "- `voltdb_client_connections_limit_total`: The maximum number of client connections allowed for the server.\n- `voltdb_accepted_connections_total`: The total number of client connections opened since the server started, including connections that are now closed."
     },
     {
       "datasource": {
@@ -2417,7 +2437,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "avg(sum by (hostname) (voltdb_gc_time_seconds{namespace=\"$cluster\",hostname=~\"$host\"}))",
+          "expr": "avg(sum by (host_name) (voltdb_gc_time_seconds{namespace=\"$cluster\",host_name=~\"$host\"}))",
           "format": "time_series",
           "interval": "",
           "legendFormat": "",
@@ -2427,7 +2447,8 @@
       ],
       "title": "GC",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "Cumulative run time of garbage collection. Tags: GC_TYPE - (e.g. CMS, G1), example gc_type=\"G1 Young Generation\"."
     },
     {
       "datasource": {
@@ -2532,7 +2553,8 @@
       ],
       "title": "Descriptor usage",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "- `voltdb_file_descriptors_limit_total`: The maximum number of file descriptors allowed for the process running the server.\n- `voltdb_file_descriptors_count_total`: The number of file descriptors open in the process."
     },
     {
       "datasource": {
@@ -2614,7 +2636,8 @@
       ],
       "title": "Rebalance",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "Reports the status of recent rebalancing operations. Informational metric. Tags: BALANCE_MOVED_ROWS - The number of rows of data that have been moved. BALANCE_PERCENTAGE_MOVED - The percentage of the total segments that have already been moved. BALANCE_ROWS_PER_SECOND - The average number of rows moved per second. BALANCE_ESTIMATED_REMAINING - The estimated time remaining until the rebalance is complete. BALANCE_MEGABYTES_PER_SECOND - The average volume of data moved per second, measured in megabytes. BALANCE_CALLS_PER_SECOND - The average number of rebalance work units, or transactions, executed per second. BALANCE_CALLS_LATENCY - The average total time between start and finish of rebalance operations. (TODO: in millis? should be in seconds) BALANCE_CALLS_TIME - The average execution time for rebalance transactions. (TODO: in millis? should be in seconds) BALANCE_CALLS_TRANSFER_TIME - The average time spent transferring data during rebalance transactions. (TODO: in millis? should be in seconds)"
     },
     {
       "collapsed": false,
@@ -2732,11 +2755,11 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "max by(hostname)(voltdb_latency_tps{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max by(host_name)(voltdb_latency_tps{namespace=\"$cluster\",host_name=~\"$host\"})",
           "format": "time_series",
           "hide": true,
           "interval": "",
-          "legendFormat": "{{hostname}}",
+          "legendFormat": "{{host_name}}",
           "range": true,
           "refId": "A"
         }
@@ -2851,7 +2874,8 @@
       ],
       "title": "CPU Usage",
       "transformations": [],
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The percentage of CPU used by the database server process. 0-100."
     },
     {
       "datasource": {
@@ -2943,11 +2967,11 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "max by(hostname)(voltdb_latency_max_seconds{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "max by(host_name)(voltdb_latency_max_seconds{namespace=\"$cluster\",host_name=~\"$host\"})",
           "format": "time_series",
           "hide": true,
           "interval": "",
-          "legendFormat": "{{hostname}}",
+          "legendFormat": "{{host_name}}",
           "range": true,
           "refId": "A"
         }
@@ -3052,7 +3076,8 @@
         }
       ],
       "title": "Java Heap Memory Usage",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The amount of memory allocated by Java and in use by VoltDB."
     },
     {
       "datasource": {
@@ -3172,7 +3197,8 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "The length of time it took to execute the stored procedure."
     },
     {
       "datasource": {
@@ -3270,7 +3296,8 @@
         }
       ],
       "title": "RSS size",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The resident set size. That is, the total amount of memory allocated to the VoltDB processes on the server."
     },
     {
       "collapsed": false,
@@ -3427,7 +3454,8 @@
       ],
       "title": "Client connections",
       "transformations": [],
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "- `voltdb_client_connections_limit_total`: The maximum number of client connections allowed for the server.\n- `voltdb_client_connections_open_total`: The number of client connections open on the server."
     },
     {
       "datasource": {
@@ -3525,7 +3553,8 @@
       ],
       "title": "Connections accepted",
       "transformations": [],
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The total number of client connections opened since the server started, including connections that are now closed."
     },
     {
       "datasource": {
@@ -3644,7 +3673,8 @@
       ],
       "title": "Connections dropped per second",
       "transformations": [],
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The total number of connections that were rejected because the connection limit had been reached."
     },
     {
       "datasource": {
@@ -3838,7 +3868,8 @@
       ],
       "title": "Finished Transactions VoltDB is about to send back to the client",
       "transformations": [],
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "Number of message scheduled to be sent to the client."
     },
     {
       "datasource": {
@@ -3978,7 +4009,8 @@
       ],
       "title": "Open file descriptors",
       "transformations": [],
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The number of file descriptors open in the process."
     },
     {
       "datasource": {
@@ -4148,7 +4180,8 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "The number of individual messages sent from the client to the host."
     },
     {
       "datasource": {
@@ -4294,7 +4327,8 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "The number of milliseconds difference between the system clock time of the current host and the remote host."
     },
     {
       "datasource": {
@@ -4441,7 +4475,8 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "The number of milliseconds difference between the system clock time of the current host and the remote host."
     },
     {
       "collapsed": false,
@@ -4566,7 +4601,8 @@
       ],
       "title": "New Gen GC Time",
       "transformations": [],
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "Cumulative run time of garbage collection. Tags: GC_TYPE - (e.g. CMS, G1), example gc_type=\"G1 Young Generation\"."
     },
     {
       "datasource": {
@@ -4664,7 +4700,8 @@
         }
       ],
       "title": "New Gen GC Count",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The number of times garbage collection was performed. Tags: GC_TYPE - (e.g. CMS, G1), example gc_type=\"G1 Young Generation\"."
     },
     {
       "datasource": {
@@ -4762,7 +4799,8 @@
         }
       ],
       "title": "Old Gen GC Time",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "Cumulative run time of garbage collection. Tags: GC_TYPE - (e.g. CMS, G1), example gc_type=\"G1 Young Generation\"."
     },
     {
       "datasource": {
@@ -4860,7 +4898,8 @@
         }
       ],
       "title": "Old Gen GC Count",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The number of times garbage collection was performed. Tags: GC_TYPE - (e.g. CMS, G1), example gc_type=\"G1 Young Generation\"."
     },
     {
       "collapsed": true,
@@ -5224,7 +5263,8 @@
         }
       ],
       "title": "Rebalance",
-      "type": "row"
+      "type": "row",
+      "description": "Reports the status of recent rebalancing operations. Informational metric. Tags: BALANCE_MOVED_ROWS - The number of rows of data that have been moved. BALANCE_PERCENTAGE_MOVED - The percentage of the total segments that have already been moved. BALANCE_ROWS_PER_SECOND - The average number of rows moved per second. BALANCE_ESTIMATED_REMAINING - The estimated time remaining until the rebalance is complete. BALANCE_MEGABYTES_PER_SECOND - The average volume of data moved per second, measured in megabytes. BALANCE_CALLS_PER_SECOND - The average number of rebalance work units, or transactions, executed per second. BALANCE_CALLS_LATENCY - The average total time between start and finish of rebalance operations. (TODO: in millis? should be in seconds) BALANCE_CALLS_TIME - The average execution time for rebalance transactions. (TODO: in millis? should be in seconds) BALANCE_CALLS_TRANSFER_TIME - The average time spent transferring data during rebalance transactions. (TODO: in millis? should be in seconds)"
     }
   ],
   "refresh": false,

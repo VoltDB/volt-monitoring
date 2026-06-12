@@ -2547,7 +2547,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (table_name,__name__ ) ({__name__=~\"voltdb_dr_constraint_violation_count_total|voltdb_dr_missing_row_count_total|voltdb_dr_row_timestamp_mismatch_count_total\", namespace=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
+          "expr": "sum by (table_name,__name__ ) ({__name__=~\"voltdb_dr_constraint_violation_count_total|voltdb_dr_missing_row_count_total|voltdb_dr_row_timestamp_mismatch_count_total\", namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
           "format": "table",
           "instant": false,
           "legendFormat": "__auto",
@@ -2826,7 +2826,7 @@
           "color": "rgba(255,0,255,0.7)"
         },
         "filterValues": {
-          "le": 1e-9
+          "le": 1e-09
         },
         "legend": {
           "show": true

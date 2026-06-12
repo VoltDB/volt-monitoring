@@ -170,7 +170,8 @@
       ],
       "title": "Volt Version",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "VoltDB software version (VERSION) reported by @SystemInformation OVERVIEW."
     },
     {
       "datasource": {
@@ -277,7 +278,8 @@
           }
         }
       ],
-      "type": "stat"
+      "type": "stat",
+      "description": "How long the cluster has been running, derived from the start timestamp (STARTTIME / HOSTSTARTTIME) reported by @SystemInformation OVERVIEW."
     },
     {
       "datasource": {
@@ -477,7 +479,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "DR cluster identifier (CLUSTERID) reported by @SystemInformation OVERVIEW.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -555,7 +557,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "Initial (configured) cluster size from @SystemInformation OVERVIEW (FULLCLUSTERSIZE) — the number of nodes the cluster was started with.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -634,7 +636,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "Current number of nodes in the cluster, counted from the per-host @SystemInformation OVERVIEW rows.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -791,7 +793,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "max by (buildstring) (voltdb_systeminformation_overview_host_info{namespace=\"$cluster\",hostname=~\"$host\"}) ",
+          "expr": "max by (buildstring) (voltdb_systeminformation_overview_host_info{namespace=\"$cluster\",host_name=~\"$host\"}) ",
           "hide": false,
           "legendFormat": "__auto",
           "range": true,
@@ -811,14 +813,15 @@
           "options": {}
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "Cluster configuration summary from @SystemInformation OVERVIEW: VoltDB build string (BUILDSTRING), DR replication role (REPLICATIONROLE), and whether the cluster is running on Kubernetes."
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "Number of CPU cores on the host (CPUCORES) reported by @SystemInformation OVERVIEW.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -900,7 +903,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "Number of processor threads on the host (CPUTHREADS) reported by @SystemInformation OVERVIEW.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1130,7 +1133,8 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "Database deployment settings from @SystemInformation DEPLOYMENT: DR role (drrole) and DR transaction priority (drpriority), elastic rebalance target duration (elasticduration, ms) and throughput (elasticthroughput, MB/s), whether export is enabled (export), heartbeat timeout (heartbeattimeout, seconds), and whether network partition detection is enabled (partitiondetection)."
     },
     {
       "datasource": {
@@ -1241,14 +1245,15 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "Command logging configuration from @SystemInformation DEPLOYMENT: whether command logging is enabled (commandlogenabled), the logging mode (commandlogmode, sync or async), and the flush frequency by time (commandlogfreqtime, ms) and by transaction count (commandlogfreqtxns)."
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "K-safety value (kfactor) from @SystemInformation DEPLOYMENT — the number of redundant copies kept of each partition.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1435,14 +1440,15 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "Automatic snapshot configuration from @SystemInformation DEPLOYMENT: whether automatic snapshots are enabled (snapshotenabled), their frequency (snapshotfrequency), system priority (snapshotpriority), and the number of snapshots retained (snapshotretain)."
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "Number of execution sites per host (sitesperhost) from @SystemInformation DEPLOYMENT.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1747,7 +1753,8 @@
           }
         }
       ],
-      "type": "stat"
+      "type": "stat",
+      "description": "Time remaining until the active license expires, derived from the license expiration date (EXPIRATION) reported by @SystemInformation LICENSE."
     },
     {
       "datasource": {
@@ -1837,7 +1844,8 @@
           }
         }
       ],
-      "type": "stat"
+      "type": "stat",
+      "description": "The date the active license expires (EXPIRATION) from @SystemInformation LICENSE."
     },
     {
       "datasource": {
@@ -1937,7 +1945,8 @@
           }
         }
       ],
-      "type": "stat"
+      "type": "stat",
+      "description": "Maximum number of hosts permitted by the active license (HOSTCOUNT_MAX) from @SystemInformation LICENSE."
     },
     {
       "datasource": {
@@ -2014,7 +2023,8 @@
       ],
       "title": "Cores count limit",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "Maximum number of processor cores permitted by the active license (CORECOUNT_MAX) from @SystemInformation LICENSE."
     }
   ],
   "refresh": "",

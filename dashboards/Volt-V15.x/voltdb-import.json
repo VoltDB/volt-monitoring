@@ -757,7 +757,7 @@
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum by (procedure_name) (rate(voltdb_importer_success_total{namespace=\"$cluster\",hostname=~\"$host\",importer_name=~\"$importer\"}[$__rate_interval]))",
+              "expr": "sum by (procedure_name) (rate(voltdb_importer_success_total{namespace=\"$cluster\",host_name=~\"$host\",importer_name=~\"$importer\"}[$__rate_interval]))",
               "interval": "",
               "legendFormat": "{{source}}",
               "range": true,
@@ -1155,7 +1155,7 @@
               "color": "rgba(255,0,255,0.7)"
             },
             "filterValues": {
-              "le": 1e-9
+              "le": 1e-09
             },
             "legend": {
               "show": true

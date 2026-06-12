@@ -319,7 +319,8 @@
           }
         }
       ],
-      "type": "stat"
+      "type": "stat",
+      "description": "Informational metric with scheduler metadata. Tags: PARTITION_ID - The numeric ID for the logical partition running the task procedure. Directed procedures run on each logical partition. Multi-partition procedures run on the multi-partition initiator. TASK_NAME - The name of the task. TASK_STATUS - The current status of the task. Possible values include: RUNNING - The task is enabled and running normally; DISABLED - The task is disabled and not running. ERROR - The task returned an error and was stopped due to the ON ERROR STOP attribute. PAUSED - The database is paused or is running on a DR replica, so the task is not currently running but will restart when the database resumes or is promoted. TASK_ORIGIN - \"System\" or \"User\". TASK_SCOPE - The execution scope of the task, which matches the RUN ON attribute. Possible values are \"Database\", \"Hosts\", or \"Partitions\"."
     },
     {
       "datasource": {
@@ -410,7 +411,8 @@
           }
         }
       ],
-      "type": "stat"
+      "type": "stat",
+      "description": "The number of times the procedure generated an error when run.Tags: same as above."
     },
     {
       "datasource": {
@@ -662,7 +664,8 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "Informational metric with scheduler metadata. Tags: PARTITION_ID - The numeric ID for the logical partition running the task procedure. Directed procedures run on each logical partition. Multi-partition procedures run on the multi-partition initiator. TASK_NAME - The name of the task. TASK_STATUS - The current status of the task. Possible values include: RUNNING - The task is enabled and running normally; DISABLED - The task is disabled and not running. ERROR - The task returned an error and was stopped due to the ON ERROR STOP attribute. PAUSED - The database is paused or is running on a DR replica, so the task is not currently running but will restart when the database resumes or is promoted. TASK_ORIGIN - \"System\" or \"User\". TASK_SCOPE - The execution scope of the task, which matches the RUN ON attribute. Possible values are \"Database\", \"Hosts\", or \"Partitions\"."
     },
     {
       "collapsed": true,
@@ -893,7 +896,7 @@
               "color": "rgba(255,0,255,0.7)"
             },
             "filterValues": {
-              "le": 1e-9
+              "le": 1e-09
             },
             "legend": {
               "show": true
@@ -927,7 +930,8 @@
           ],
           "title": "Scheduled task execution time",
           "transformations": [],
-          "type": "heatmap"
+          "type": "heatmap",
+          "description": "The distribution of the amount of time taken to schedule an instance of the task."
         },
         {
           "datasource": {
@@ -972,7 +976,7 @@
               "color": "rgba(255,0,255,0.7)"
             },
             "filterValues": {
-              "le": 1e-9
+              "le": 1e-09
             },
             "legend": {
               "show": true
@@ -1006,7 +1010,8 @@
           ],
           "title": "Scheduled task wait time",
           "transformations": [],
-          "type": "heatmap"
+          "type": "heatmap",
+          "description": "The distribution of the difference between when the task was scheduled to run and when the scheduler was invoked."
         }
       ],
       "title": "Tasks",
@@ -1382,7 +1387,8 @@
           ],
           "title": "Scheduled procedure invocation failing",
           "transformations": [],
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "The number of times the procedure generated an error when run.Tags: same as above."
         },
         {
           "datasource": {
@@ -1427,7 +1433,7 @@
               "color": "rgba(255,0,255,0.7)"
             },
             "filterValues": {
-              "le": 1e-9
+              "le": 1e-09
             },
             "legend": {
               "show": true
@@ -1461,7 +1467,8 @@
           ],
           "title": "Scheduled procedure execution time",
           "transformations": [],
-          "type": "heatmap"
+          "type": "heatmap",
+          "description": "The distribution of time the task took to execute."
         },
         {
           "datasource": {
@@ -1506,7 +1513,7 @@
               "color": "rgba(255,0,255,0.7)"
             },
             "filterValues": {
-              "le": 1e-9
+              "le": 1e-09
             },
             "legend": {
               "show": true
@@ -1540,7 +1547,8 @@
           ],
           "title": "Scheduled procedure wait time",
           "transformations": [],
-          "type": "heatmap"
+          "type": "heatmap",
+          "description": "The distribution of time between when the procedure was scheduled to run and when it was invoked."
         }
       ],
       "title": "Procedures",

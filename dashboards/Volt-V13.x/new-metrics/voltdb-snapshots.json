@@ -168,7 +168,8 @@
           }
         }
       ],
-      "type": "stat"
+      "type": "stat",
+      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. SNAPSHOT_TYPE - String value indicating how the snapshot was initiated. Possible values are: \"Auto\" - an automated snapshot as defined by the configuration file; \"Commandlog\" - a command log snapshot; \"Manual\" - a manual snapshot initiated by a user. SNAPSHOT_PATH - The directory path where the snapshot file resides. SNAPSHOT_START_TIME - The timestamp when the snapshot began (in milliseconds). SNAPSHOT_END_TIME - The timestamp when the snapshot was completed (in milliseconds). SNAPSHOT_BYTES_WRITTEN - Total number of bytes written to the file so far. SNAPSHOT_PROGRESS - For snapshots currently in progress, the percent complete at the time of the call (0-100). SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
     },
     {
       "datasource": {
@@ -300,7 +301,8 @@
           }
         }
       ],
-      "type": "stat"
+      "type": "stat",
+      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. SNAPSHOT_TYPE - String value indicating how the snapshot was initiated. Possible values are: \"Auto\" - an automated snapshot as defined by the configuration file; \"Commandlog\" - a command log snapshot; \"Manual\" - a manual snapshot initiated by a user. SNAPSHOT_PATH - The directory path where the snapshot file resides. SNAPSHOT_START_TIME - The timestamp when the snapshot began (in milliseconds). SNAPSHOT_END_TIME - The timestamp when the snapshot was completed (in milliseconds). SNAPSHOT_BYTES_WRITTEN - Total number of bytes written to the file so far. SNAPSHOT_PROGRESS - For snapshots currently in progress, the percent complete at the time of the call (0-100). SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
     },
     {
       "datasource": {
@@ -378,7 +380,8 @@
         }
       ],
       "title": "Failed snapshots",
-      "type": "stat"
+      "type": "stat",
+      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. SNAPSHOT_TYPE - String value indicating how the snapshot was initiated. Possible values are: \"Auto\" - an automated snapshot as defined by the configuration file; \"Commandlog\" - a command log snapshot; \"Manual\" - a manual snapshot initiated by a user. SNAPSHOT_PATH - The directory path where the snapshot file resides. SNAPSHOT_START_TIME - The timestamp when the snapshot began (in milliseconds). SNAPSHOT_END_TIME - The timestamp when the snapshot was completed (in milliseconds). SNAPSHOT_BYTES_WRITTEN - Total number of bytes written to the file so far. SNAPSHOT_PROGRESS - For snapshots currently in progress, the percent complete at the time of the call (0-100). SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
     },
     {
       "datasource": {
@@ -599,7 +602,8 @@
           }
         }
       ],
-      "type": "stat"
+      "type": "stat",
+      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. TABLE_NAME - The name of the database table whose data the file contains. TABLE_FILENAME - The file name. SNAPSHOT_BYTES_WRITTEN - The total size, in bytes, of the file. SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
     },
     {
       "datasource": {
@@ -726,7 +730,8 @@
           }
         }
       ],
-      "type": "stat"
+      "type": "stat",
+      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. TABLE_NAME - The name of the database table whose data the file contains. TABLE_FILENAME - The file name. SNAPSHOT_BYTES_WRITTEN - The total size, in bytes, of the file. SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
     },
     {
       "datasource": {
@@ -808,7 +813,8 @@
       ],
       "title": "Failed table snapshots",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. TABLE_NAME - The name of the database table whose data the file contains. TABLE_FILENAME - The file name. SNAPSHOT_BYTES_WRITTEN - The total size, in bytes, of the file. SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
     },
     {
       "datasource": {
@@ -873,7 +879,8 @@
       ],
       "title": "Max table snapshot size",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. TABLE_NAME - The name of the database table whose data the file contains. TABLE_FILENAME - The file name. SNAPSHOT_BYTES_WRITTEN - The total size, in bytes, of the file. SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
     },
     {
       "datasource": {
@@ -982,7 +989,8 @@
           }
         }
       ],
-      "type": "bargauge"
+      "type": "bargauge",
+      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. TABLE_NAME - The name of the database table whose data the file contains. TABLE_FILENAME - The file name. SNAPSHOT_BYTES_WRITTEN - The total size, in bytes, of the file. SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
     },
     {
       "datasource": {
@@ -1919,7 +1927,8 @@
               }
             }
           ],
-          "type": "table"
+          "type": "table",
+          "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. SNAPSHOT_TYPE - String value indicating how the snapshot was initiated. Possible values are: \"Auto\" - an automated snapshot as defined by the configuration file; \"Commandlog\" - a command log snapshot; \"Manual\" - a manual snapshot initiated by a user. SNAPSHOT_PATH - The directory path where the snapshot file resides. SNAPSHOT_START_TIME - The timestamp when the snapshot began (in milliseconds). SNAPSHOT_END_TIME - The timestamp when the snapshot was completed (in milliseconds). SNAPSHOT_BYTES_WRITTEN - Total number of bytes written to the file so far. SNAPSHOT_PROGRESS - For snapshots currently in progress, the percent complete at the time of the call (0-100). SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
         }
       ],
       "title": "Snapshot list",
@@ -2178,7 +2187,8 @@
               }
             }
           ],
-          "type": "table"
+          "type": "table",
+          "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. TABLE_NAME - The name of the database table whose data the file contains. TABLE_FILENAME - The file name. SNAPSHOT_BYTES_WRITTEN - The total size, in bytes, of the file. SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
         }
       ],
       "title": "Table snapshot list",

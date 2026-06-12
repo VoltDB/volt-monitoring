@@ -178,7 +178,8 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "The timestamp when the last round of TTL processing occurred."
     },
     {
       "datasource": {
@@ -336,7 +337,8 @@
       ],
       "title": "Failing tasks",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "Total number of times TTL failed to be processed."
     },
     {
       "datasource": {
@@ -589,7 +591,8 @@
         }
       ],
       "title": "Failures by table name",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "Total number of times TTL failed to be processed."
     }
   ],
   "refresh": "30s",

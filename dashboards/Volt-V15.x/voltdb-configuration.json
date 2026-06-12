@@ -768,7 +768,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "max by (buildstring) (voltdb_systeminformation_overview_host_info{namespace=\"$cluster\",hostname=~\"$host\"}) ",
+          "expr": "max by (buildstring) (voltdb_systeminformation_overview_host_info{namespace=\"$cluster\",host_name=~\"$host\"}) ",
           "legendFormat": "__auto",
           "range": true,
           "refId": "B"

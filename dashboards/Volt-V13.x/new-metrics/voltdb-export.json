@@ -172,7 +172,8 @@
         }
       ],
       "title": "Total tuples sent",
-      "type": "stat"
+      "type": "stat",
+      "description": "The total number of records queued to the export target since the queue was created."
     },
     {
       "datasource": {
@@ -236,7 +237,8 @@
         }
       ],
       "title": "Total missing tuples",
-      "type": "stat"
+      "type": "stat",
+      "description": "The number of records missing from the queue for the current stream and partition."
     },
     {
       "datasource": {
@@ -299,7 +301,8 @@
         }
       ],
       "title": "Pending tuples",
-      "type": "stat"
+      "type": "stat",
+      "description": "The number of records still waiting to be written to or acknowledged by the target."
     },
     {
       "datasource": {
@@ -364,7 +367,8 @@
         }
       ],
       "title": "Max export latency",
-      "type": "stat"
+      "type": "stat",
+      "description": "The distribution of time between when records are inserted, and then acknowledged by the target."
     },
     {
       "datasource": {
@@ -437,7 +441,8 @@
           "options": {}
         }
       ],
-      "type": "stat"
+      "type": "stat",
+      "description": "Informational metric that contains metadata. Tags: EXPORT_IS_ACTIVE - \"True\" if is enabled and not blocked and is master. EXPORT_STATUS - The current status of the export connection. \"Active\" - Queue is currently exporting to the target; \"Blocked\" - There is a gap in the queue and export is waiting to see if the missing records become available when a missing node rejoins; \"Dropped\" - either the source stream has been dropped from the schema or the export configuration has been removed from the configuration and queue is draining any remaining records."
     },
     {
       "datasource": {
@@ -514,7 +519,8 @@
           "options": {}
         }
       ],
-      "type": "stat"
+      "type": "stat",
+      "description": "Informational metric that contains metadata. Tags: EXPORT_IS_ACTIVE - \"True\" if is enabled and not blocked and is master. EXPORT_STATUS - The current status of the export connection. \"Active\" - Queue is currently exporting to the target; \"Blocked\" - There is a gap in the queue and export is waiting to see if the missing records become available when a missing node rejoins; \"Dropped\" - either the source stream has been dropped from the schema or the export configuration has been removed from the configuration and queue is draining any remaining records."
     },
     {
       "collapsed": true,
@@ -590,7 +596,8 @@
           ],
           "title": "Pending tuples count by source and partition",
           "transformations": [],
-          "type": "marcusolsson-treemap-panel"
+          "type": "marcusolsson-treemap-panel",
+          "description": "The number of records still waiting to be written to or acknowledged by the target."
         },
         {
           "datasource": {
@@ -652,7 +659,8 @@
           ],
           "title": "Pending tuples count by partition and target",
           "transformations": [],
-          "type": "marcusolsson-treemap-panel"
+          "type": "marcusolsson-treemap-panel",
+          "description": "The number of records still waiting to be written to or acknowledged by the target."
         },
         {
           "datasource": {
@@ -780,7 +788,8 @@
               }
             }
           ],
-          "type": "table"
+          "type": "table",
+          "description": "The timestamp when the last tuple was acknowledged as received by the target."
         },
         {
           "datasource": {
@@ -904,7 +913,8 @@
               }
             }
           ],
-          "type": "table"
+          "type": "table",
+          "description": "The timestamp when the last tuple was acknowledged as received by the target."
         },
         {
           "datasource": {
@@ -1003,7 +1013,8 @@
           ],
           "title": "Pending tuples by source",
           "transformations": [],
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "The number of records still waiting to be written to or acknowledged by the target."
         },
         {
           "datasource": {
@@ -1102,7 +1113,8 @@
           ],
           "title": "Missing tuples by source",
           "transformations": [],
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "The number of records missing from the queue for the current stream and partition."
         }
       ],
       "targets": [
@@ -1266,7 +1278,8 @@
               }
             }
           ],
-          "type": "state-timeline"
+          "type": "state-timeline",
+          "description": "Informational metric that contains metadata. Tags: EXPORT_IS_ACTIVE - \"True\" if is enabled and not blocked and is master. EXPORT_STATUS - The current status of the export connection. \"Active\" - Queue is currently exporting to the target; \"Blocked\" - There is a gap in the queue and export is waiting to see if the missing records become available when a missing node rejoins; \"Dropped\" - either the source stream has been dropped from the schema or the export configuration has been removed from the configuration and queue is draining any remaining records."
         }
       ],
       "title": "Export activity timeline",

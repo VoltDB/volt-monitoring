@@ -231,14 +231,15 @@
         }
       ],
       "title": "Failure rate",
-      "type": "stat"
+      "type": "stat",
+      "description": "The number of times the procedure failed unexpectedly."
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "The number of times the procedure was aborted.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -372,7 +373,8 @@
         }
       ],
       "title": "Worst case time",
-      "type": "stat"
+      "type": "stat",
+      "description": "The length of time it took to execute the stored procedure."
     },
     {
       "collapsed": false,
@@ -485,7 +487,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "The total number of invocations of this procedure at this site.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -656,7 +658,7 @@
           "color": "rgba(255,0,255,0.7)"
         },
         "filterValues": {
-          "le": 1e-9
+          "le": 1e-09
         },
         "legend": {
           "show": true
@@ -691,7 +693,8 @@
         }
       ],
       "title": "Execution times distribution ($procedure)",
-      "type": "heatmap"
+      "type": "heatmap",
+      "description": "The length of time it took to execute the stored procedure."
     },
     {
       "datasource": {
@@ -795,7 +798,8 @@
         }
       ],
       "title": "Top procedure invocation times ($procedure)",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The length of time it took to execute the stored procedure."
     },
     {
       "datasource": {
@@ -924,14 +928,15 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "The length of time it took to execute the stored procedure."
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "The total number of invocations of this procedure at this site.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1030,7 +1035,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "The total size of the results returned by the procedure.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1222,7 +1227,8 @@
           }
         }
       ],
-      "type": "marcusolsson-treemap-panel"
+      "type": "marcusolsson-treemap-panel",
+      "description": "The length of time it took to execute the stored procedure."
     },
     {
       "datasource": {
@@ -1358,7 +1364,8 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "The length of time it took to execute the stored procedure."
     },
     {
       "datasource": {
@@ -1574,7 +1581,8 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "The length of time it took to execute the stored procedure."
     }
   ],
   "refresh": "",

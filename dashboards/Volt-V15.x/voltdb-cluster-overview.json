@@ -1041,7 +1041,7 @@
           "format": "time_series",
           "instant": false,
           "interval": "",
-          "legendFormat": "{{hostname}}",
+          "legendFormat": "{{host_name}}",
           "range": true,
           "refId": "A"
         }
@@ -1112,7 +1112,7 @@
           "format": "time_series",
           "instant": true,
           "interval": "",
-          "legendFormat": "{{hostname}}",
+          "legendFormat": "{{host_name}}",
           "refId": "A"
         }
       ],
@@ -1532,7 +1532,7 @@
           "format": "time_series",
           "instant": true,
           "interval": "",
-          "legendFormat": "{{hostname}}",
+          "legendFormat": "{{host_name}}",
           "refId": "A"
         }
       ],
@@ -1609,7 +1609,7 @@
           "format": "time_series",
           "instant": true,
           "interval": "",
-          "legendFormat": "{{hostname}}",
+          "legendFormat": "{{host_name}}",
           "refId": "B"
         }
       ],
@@ -2281,7 +2281,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "min(voltdb_client_connections_limit_total{namespace=\"$cluster\",hostname=~\"$host\"}) - max(voltdb_accepted_connections_total{namespace=\"$cluster\",hostname=~\"$host\"})",
+          "expr": "min(voltdb_client_connections_limit_total{namespace=\"$cluster\",host_name=~\"$host\"}) - max(voltdb_accepted_connections_total{namespace=\"$cluster\",host_name=~\"$host\"})",
           "format": "time_series",
           "interval": "",
           "legendFormat": "",
@@ -2387,7 +2387,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(rate(voltdb_gc_time_seconds{namespace=\"$cluster\",hostname=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum(rate(voltdb_gc_time_seconds{namespace=\"$cluster\",host_name=~\"$host\"}[$__rate_interval]))",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -2932,7 +2932,7 @@
           "expr": "histogram_quantile(0.999, sum(rate(voltdb_initiator_procedure_invoked_time_seconds_bucket{namespace=\"$cluster\",host_name=~\"$host\"}[$__rate_interval])) by (host_name, le))",
           "format": "time_series",
           "interval": "",
-          "legendFormat": "{{hostname}}",
+          "legendFormat": "{{host_name}}",
           "range": true,
           "refId": "A"
         }

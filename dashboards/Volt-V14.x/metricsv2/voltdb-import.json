@@ -236,7 +236,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(voltdb_import_outstanding_tuples{namespace=\"$cluster\",importername=~\"$importer\"})",
+          "expr": "sum(voltdb_importer_outstanding_requests_total{namespace=\"$cluster\",importer_name=~\"$importer\"})",
           "interval": "",
           "legendFormat": "",
           "range": true,
@@ -464,14 +464,15 @@
           ],
           "title": "All transactions by procedure name",
           "transformations": [],
-          "type": "bargauge"
+          "type": "bargauge",
+          "description": "The number of import transactions that succeeded."
         },
         {
           "datasource": {
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "description": "",
+          "description": "The number of import transactions that failed.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -635,7 +636,8 @@
           ],
           "title": "Successful transactions rate by host",
           "transformations": [],
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "The number of import transactions that succeeded."
         },
         {
           "datasource": {
@@ -737,7 +739,8 @@
           ],
           "title": "Failed transactions rate by host",
           "transformations": [],
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "The number of import transactions that failed."
         },
         {
           "datasource": {
@@ -826,7 +829,7 @@
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum by (procedure_name) (rate(voltdb_importer_success_total{namespace=\"$cluster\",hostname=~\"$host\",importer_name=~\"$importer\"}[$__rate_interval]))",
+              "expr": "sum by (procedure_name) (rate(voltdb_importer_success_total{namespace=\"$cluster\",host_name=~\"$host\",importer_name=~\"$importer\"}[$__rate_interval]))",
               "interval": "",
               "legendFormat": "{{source}}",
               "range": true,
@@ -835,14 +838,15 @@
           ],
           "title": "Successful transactions by procedure",
           "transformations": [],
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "The number of import transactions that succeeded."
         },
         {
           "datasource": {
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "description": "",
+          "description": "The number of import transactions that failed.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -968,7 +972,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "description": "",
+          "description": "The number of import transactions that succeeded.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1190,7 +1194,8 @@
           ],
           "title": "Top procedure invocation times ($procedure)",
           "transformations": [],
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "The length of time it took to execute the stored procedure."
         },
         {
           "datasource": {
@@ -1238,7 +1243,7 @@
               "color": "rgba(255,0,255,0.7)"
             },
             "filterValues": {
-              "le": 1e-9
+              "le": 1e-09
             },
             "legend": {
               "show": true
@@ -1273,7 +1278,8 @@
             }
           ],
           "title": "Execution times distribution ($procedure)",
-          "type": "heatmap"
+          "type": "heatmap",
+          "description": "The length of time it took to execute the stored procedure."
         }
       ],
       "title": "Procedures",

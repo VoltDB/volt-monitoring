@@ -498,7 +498,8 @@
       ],
       "title": "Connection status to other clusters",
       "transformations": [],
-      "type": "piechart"
+      "type": "piechart",
+      "description": "Informational metric. Tags: DR_STREAM_TYPE - The type of stream, which can either be \"Transactions\" or \"Snapshot\". DR_LAST_QUEUED_ID - The ID of the last transaction queued for transmission to the consumer. DR_LAST_ACK_ID - The ID of the last transaction acknowledged by the consumer. DR_IS_SYNCED - Indicates whether the database is currently being replicated. If replication has not started, or the overflow capacity has been exceeded (that is, replication has failed), the value of ISSYNCED is \"false\". If replication is currently in progress, the value is \"true\". DR_MODE - Indicates whether this particular partition is replicating data to the consumer (\"NOrmal\") or not (\"Paused\"). Only one copy of each logical partition actually sends data during replication. So for clusters with a K-safety value greater than zero, not all physical partitions will report \"Normal\" even when replication is in progress. DR_CONNECTION_STATUS - Indicates whether the connection to the consumer is operational (\"UP\") or not (\"DOWN\"). CONSUMER_LIMIT_TYPE - The type of limit on the DR queue. The response is either BYTES or BUFFERS. CURRENT_DR_PROTOCOL - The DR protocol version currently in use when sending data to consumers. SUPPORTED_DR_PROTOCOL - The highest version of DR protocol this cluster is capable of using to send data to consumers."
     },
     {
       "datasource": {
@@ -573,7 +574,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "The number of DR tasks waiting to be processed.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -929,7 +930,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "description": "",
+          "description": "The total number of buffers in this partition waiting for acknowledgement from the consumer.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1080,7 +1081,8 @@
               }
             }
           ],
-          "type": "marcusolsson-treemap-panel"
+          "type": "marcusolsson-treemap-panel",
+          "description": "The total number of bytes currently queued for transmission to the consumer."
         },
         {
           "datasource": {
@@ -1499,7 +1501,8 @@
         }
       ],
       "title": "Avarage replication speed",
-      "type": "gauge"
+      "type": "gauge",
+      "description": "Total number of bytes this consumer received."
     },
     {
       "datasource": {
@@ -1632,7 +1635,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "The number of buffers received but dropped because the queue was full.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1699,7 +1702,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "Tags: IS_COVERED - Boolean value indicating whether this partition is currently connected to and receiving data from a matching partition on the producer cluster. COVERING_HOST - The host name of the server in the producer cluster that is providing DR data to this partition. If IS_COVERED is \"false\", this label is empty. IS_PAUSED - Boolean indicating whether this partition is paused. A partition \"pauses\" when the schema of the DR tables on the producer change to no longer match the consumer and all binary logs prior to the change have been processed. CONSUMER_LIMIT_TYPE - The type of limit on the DR queue. The response is either BYTES or BUFFERS. LAST_APPLIED_DR_PROTOCOL - The current DR protocol version of binary logs being received and applied for this partition.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1826,7 +1829,8 @@
         }
       ],
       "title": "Last received transaction",
-      "type": "stat"
+      "type": "stat",
+      "description": "The timestamp of the last transaction received from the producer."
     },
     {
       "collapsed": true,
@@ -1930,7 +1934,8 @@
             }
           ],
           "title": "Rate of replication",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "Total number of bytes this consumer received."
         },
         {
           "datasource": {
@@ -2304,7 +2309,8 @@
         }
       ],
       "title": "Last conflict",
-      "type": "stat"
+      "type": "stat",
+      "description": "The timestamp of the last conflict."
     },
     {
       "datasource": {
@@ -2374,7 +2380,8 @@
         }
       ],
       "title": "All conflicts count",
-      "type": "stat"
+      "type": "stat",
+      "description": "The total number of conflicts that have been recorded for this table in this partition."
     },
     {
       "datasource": {
@@ -2770,7 +2777,8 @@
             }
           ],
           "title": "Conflicts by type (host = $host, partition = $partition)",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "- `voltdb_dr_constraint_violation_count_total`: The number of constraint violation conflicts that occurred.\n- `voltdb_dr_divergence_count_total`: The number of conflicts that may have resulted in divergence between the clusters, which is a subset of the total conflicts.\n- `voltdb_dr_missing_row_count_total`: The number of missing row conflicts that occurred.\n- `voltdb_dr_row_timestamp_mismatch_count_total`: The number of timestamp mismatch conflicts that occurred."
         },
         {
           "datasource": {
@@ -2837,7 +2845,7 @@
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "sum by (table_name,__name__ ) ({__name__=~\"voltdb_dr_constraint_violation_count_total|voltdb_dr_missing_row_count_total|voltdb_dr_row_timestamp_mismatch_count_total\", namespace=\"$cluster\",hostname=~\"$host\", partitionid=~\"$partition\"})",
+              "expr": "sum by (table_name,__name__ ) ({__name__=~\"voltdb_dr_constraint_violation_count_total|voltdb_dr_missing_row_count_total|voltdb_dr_row_timestamp_mismatch_count_total\", namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
               "format": "table",
               "hide": false,
               "instant": false,
@@ -2848,7 +2856,8 @@
           ],
           "title": "Conflicts by table (host = $host, partition = $partition)",
           "transformations": [],
-          "type": "marcusolsson-treemap-panel"
+          "type": "marcusolsson-treemap-panel",
+          "description": "- `voltdb_dr_constraint_violation_count_total`: The number of constraint violation conflicts that occurred.\n- `voltdb_dr_missing_row_count_total`: The number of missing row conflicts that occurred.\n- `voltdb_dr_row_timestamp_mismatch_count_total`: The number of timestamp mismatch conflicts that occurred."
         },
         {
           "datasource": {
@@ -2943,7 +2952,8 @@
             }
           ],
           "title": "Divergences by table (host = $host, partition = $partition)",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "The number of conflicts that may have resulted in divergence between the clusters, which is a subset of the total conflicts."
         }
       ],
       "title": "Conflict details",
@@ -2964,7 +2974,7 @@
             "type": "prometheus",
             "uid": "${DS_PROMETHEUS}"
           },
-          "description": "",
+          "description": "The distribution of time it took to receive acknowledgement from the consumer.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -3112,7 +3122,7 @@
               "color": "rgba(255,0,255,0.7)"
             },
             "filterValues": {
-              "le": 1e-9
+              "le": 1e-09
             },
             "legend": {
               "show": true
@@ -3145,7 +3155,8 @@
             }
           ],
           "title": "RTT ($cluster)",
-          "type": "heatmap"
+          "type": "heatmap",
+          "description": "The distribution of time it took to receive acknowledgement from the consumer."
         }
       ],
       "title": "Replication RTT",

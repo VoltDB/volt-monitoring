@@ -151,7 +151,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "Rows remaining for all TTL tables",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -399,7 +399,8 @@
           }
         }
       ],
-      "type": "stat"
+      "type": "stat",
+      "description": "Total number of times TTL failed to be processed."
     },
     {
       "datasource": {
@@ -487,7 +488,8 @@
         }
       ],
       "title": "Rows deleted by table name",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "Number of deletes per second"
     },
     {
       "datasource": {
@@ -586,7 +588,8 @@
         }
       ],
       "title": "Failures by table name",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "Total number of times TTL failed to be processed."
     }
   ],
   "refresh": "",

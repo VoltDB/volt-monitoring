@@ -168,7 +168,8 @@
       ],
       "title": "Volt Version",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "VoltDB software version (VERSION) reported by @SystemInformation OVERVIEW."
     },
     {
       "datasource": {
@@ -277,7 +278,8 @@
           }
         }
       ],
-      "type": "stat"
+      "type": "stat",
+      "description": "How long the cluster has been running, derived from the start timestamp (STARTTIME / HOSTSTARTTIME) reported by @SystemInformation OVERVIEW."
     },
     {
       "datasource": {
@@ -736,7 +738,8 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "The percentage of CPU used by the database server process. 0-100."
     },
     {
       "datasource": {
@@ -760,7 +763,7 @@
               },
               {
                 "color": "green",
-                "value": 0.000001
+                "value": 1e-06
               }
             ]
           },
@@ -804,7 +807,7 @@
           "format": "time_series",
           "instant": false,
           "interval": "",
-          "legendFormat": "{{hostname}}",
+          "legendFormat": "{{host_name}}",
           "range": true,
           "refId": "A"
         }
@@ -878,7 +881,8 @@
       ],
       "title": "Sites Per Host",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "Number of execution sites per host (sitesperhost) from @SystemInformation DEPLOYMENT."
     },
     {
       "datasource": {
@@ -945,7 +949,8 @@
       ],
       "title": "Normal Cluster Size",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "Initial (configured) cluster size from @SystemInformation OVERVIEW (FULLCLUSTERSIZE) — the number of nodes the cluster was started with."
     },
     {
       "datasource": {
@@ -1012,7 +1017,8 @@
       ],
       "title": "Current Cluster Size",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "Current number of nodes in the cluster, counted from the per-host @SystemInformation OVERVIEW rows."
     },
     {
       "datasource": {
@@ -1090,7 +1096,8 @@
       ],
       "title": "Max CPU Usage",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "The percentage of CPU used by the database server process. 0-100."
     },
     {
       "datasource": {
@@ -1161,13 +1168,14 @@
           "format": "time_series",
           "instant": true,
           "interval": "",
-          "legendFormat": "{{hostname}}",
+          "legendFormat": "{{host_name}}",
           "refId": "A"
         }
       ],
       "title": "VoltDB RAM Usage",
       "transformations": [],
-      "type": "gauge"
+      "type": "gauge",
+      "description": "- `voltdb_memory_rss_bytes`: The resident set size. That is, the total amount of memory allocated to the VoltDB processes on the server.\n- `voltdb_memory_physicalmemory_bytes`: The total size of physical memory on the server."
     },
     {
       "datasource": {
@@ -1239,13 +1247,14 @@
           "hide": false,
           "instant": true,
           "interval": "",
-          "legendFormat": "{{hostname}}",
+          "legendFormat": "{{host_name}}",
           "refId": "B"
         }
       ],
       "title": "Java Heap Usage",
       "transformations": [],
-      "type": "gauge"
+      "type": "gauge",
+      "description": "- `voltdb_memory_javaused_bytes`: The amount of memory allocated by Java and in use by VoltDB.\n- `voltdb_memory_javamaxheap_bytes`: The maximum heap size of the Java runtime environment."
     },
     {
       "datasource": {
@@ -1313,7 +1322,8 @@
       ],
       "title": "Total GC time",
       "transformations": [],
-      "type": "stat"
+      "type": "stat",
+      "description": "Cumulative run time of garbage collection. Tags: GC_TYPE - (e.g. CMS, G1), example gc_type=\"G1 Young Generation\"."
     },
     {
       "collapsed": true,
@@ -1427,7 +1437,8 @@
           ],
           "title": "Transaction rate",
           "transformations": [],
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "The number of times the stored procedure has been invoked by this connection on this host node."
         },
         {
           "datasource": {
@@ -1528,7 +1539,8 @@
           ],
           "title": "CPU Usage",
           "transformations": [],
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "The percentage of CPU used by the database server process. 0-100."
         },
         {
           "datasource": {
@@ -1623,7 +1635,8 @@
             }
           ],
           "title": "IdleTime",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "The distribution of the amount of time the execution site had to wait for a new task."
         },
         {
           "datasource": {
@@ -1718,7 +1731,8 @@
             }
           ],
           "title": "RSS size",
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "The resident set size. That is, the total amount of memory allocated to the VoltDB processes on the server."
         }
       ],
       "targets": [

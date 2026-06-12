@@ -743,7 +743,7 @@
           "format": "time_series",
           "instant": false,
           "interval": "",
-          "legendFormat": "{{hostname}}",
+          "legendFormat": "{{host_name}}",
           "range": true,
           "refId": "A"
         }
@@ -1107,7 +1107,7 @@
           "format": "time_series",
           "instant": true,
           "interval": "",
-          "legendFormat": "{{hostname}}",
+          "legendFormat": "{{host_name}}",
           "refId": "A"
         }
       ],
@@ -1184,7 +1184,7 @@
           "format": "time_series",
           "instant": true,
           "interval": "",
-          "legendFormat": "{{hostname}}",
+          "legendFormat": "{{host_name}}",
           "refId": "B"
         }
       ],

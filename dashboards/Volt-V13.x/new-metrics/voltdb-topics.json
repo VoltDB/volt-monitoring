@@ -174,7 +174,8 @@
           }
         }
       ],
-      "type": "stat"
+      "type": "stat",
+      "description": "Informational metric with topic metadata. Tags: TOPIC_STATUS - \"Stable\" - The queue is complete; \"Backfilling\" - records are missing but are being retrieved from other servers; \"Blocked\" - records are missing from all copies of the partition; \"Orphaned\" - the queue is no longer being served by this partition, but is saved in case other copies of the queue are blocked or backfilling and need the data. This is a transitional state and the queue is deleted as soon as no other copies need its records. TOPIC_RETENTION_POLICY - The retention policy for this topic. TOPIC_IS_MASTER - \"True\" or \"False\" indicating whether the current site is the master for the logical partition."
     },
     {
       "datasource": {
@@ -246,7 +247,8 @@
         }
       ],
       "title": "Latest message received",
-      "type": "stat"
+      "type": "stat",
+      "description": "The timestamp when the most recent message (the last offset) was inserted into the queue."
     },
     {
       "datasource": {
@@ -447,7 +449,8 @@
           "options": {}
         }
       ],
-      "type": "piechart"
+      "type": "piechart",
+      "description": "Informational metric with topic metadata. Tags: TOPIC_STATUS - \"Stable\" - The queue is complete; \"Backfilling\" - records are missing but are being retrieved from other servers; \"Blocked\" - records are missing from all copies of the partition; \"Orphaned\" - the queue is no longer being served by this partition, but is saved in case other copies of the queue are blocked or backfilling and need the data. This is a transitional state and the queue is deleted as soon as no other copies need its records. TOPIC_RETENTION_POLICY - The retention policy for this topic. TOPIC_IS_MASTER - \"True\" or \"False\" indicating whether the current site is the master for the logical partition."
     },
     {
       "datasource": {
@@ -509,7 +512,8 @@
         }
       ],
       "title": "Rate of bytes fetched",
-      "type": "stat"
+      "type": "stat",
+      "description": "The size of data sent to consumers for this partition and topic."
     },
     {
       "datasource": {
@@ -571,7 +575,8 @@
         }
       ],
       "title": "Occupied disk space",
-      "type": "stat"
+      "type": "stat",
+      "description": "The size of data stored on disk for this partition and topic."
     },
     {
       "datasource": {
@@ -633,7 +638,8 @@
         }
       ],
       "title": "Incoming messages rate",
-      "type": "stat"
+      "type": "stat",
+      "description": "The value of the last offset in the topic."
     },
     {
       "collapsed": false,
@@ -811,7 +817,8 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "Informational metric with topic metadata. Tags: TOPIC_STATUS - \"Stable\" - The queue is complete; \"Backfilling\" - records are missing but are being retrieved from other servers; \"Blocked\" - records are missing from all copies of the partition; \"Orphaned\" - the queue is no longer being served by this partition, but is saved in case other copies of the queue are blocked or backfilling and need the data. This is a transitional state and the queue is deleted as soon as no other copies need its records. TOPIC_RETENTION_POLICY - The retention policy for this topic. TOPIC_IS_MASTER - \"True\" or \"False\" indicating whether the current site is the master for the logical partition."
     },
     {
       "datasource": {
@@ -952,7 +959,8 @@
           }
         }
       ],
-      "type": "state-timeline"
+      "type": "state-timeline",
+      "description": "Informational metric with topic metadata. Tags: TOPIC_STATUS - \"Stable\" - The queue is complete; \"Backfilling\" - records are missing but are being retrieved from other servers; \"Blocked\" - records are missing from all copies of the partition; \"Orphaned\" - the queue is no longer being served by this partition, but is saved in case other copies of the queue are blocked or backfilling and need the data. This is a transitional state and the queue is deleted as soon as no other copies need its records. TOPIC_RETENTION_POLICY - The retention policy for this topic. TOPIC_IS_MASTER - \"True\" or \"False\" indicating whether the current site is the master for the logical partition."
     },
     {
       "collapsed": false,
@@ -1069,7 +1077,8 @@
         }
       ],
       "title": "Lastest write",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The timestamp when the most recent message (the last offset) was inserted into the queue."
     },
     {
       "datasource": {
@@ -1185,7 +1194,8 @@
         }
       ],
       "title": "Incoming messages rate",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The value of the last offset in the topic."
     },
     {
       "datasource": {
@@ -1306,7 +1316,8 @@
         }
       ],
       "title": "Last offset and timestamp",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "- `voltdb_topic_last_offset`: The value of the last offset in the topic.\n- `voltdb_topic_last_offset_timestamp_seconds`: The timestamp when the most recent message (the last offset) was inserted into the queue."
     },
     {
       "datasource": {
@@ -1428,7 +1439,8 @@
         }
       ],
       "title": "First offset and timestamp",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "- `voltdb_topic_first_offset`: The value of the first offset currently available in the topic.\n- `voltdb_topic_first_offset_timestamp_seconds`: The timestamp when the first offset was inserted into the queue."
     },
     {
       "collapsed": false,
@@ -1542,7 +1554,8 @@
         }
       ],
       "title": "Rate of bytes fetched from topic",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The size of data sent to consumers for this partition and topic."
     },
     {
       "datasource": {
@@ -1631,7 +1644,8 @@
         }
       ],
       "title": "Rate of skipped rows from topic-partition",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The number of skipped rows that otherwise would cause an error. Only applies if the topic's option consumer.skip.errors is true."
     },
     {
       "datasource": {
@@ -1721,7 +1735,8 @@
         }
       ],
       "title": "Rate of bytes fetched from topic-partition",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The size of data sent to consumers for this partition and topic."
     },
     {
       "datasource": {
@@ -1809,7 +1824,8 @@
         }
       ],
       "title": "Rate of skipped row from topic",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The number of skipped rows that otherwise would cause an error. Only applies if the topic's option consumer.skip.errors is true."
     },
     {
       "datasource": {
@@ -1899,7 +1915,8 @@
         }
       ],
       "title": "Offset on which a consumer error occured",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "If an error occurs while encoding a message for consumers, an error is returned to the consumer, the offset of the message is recoded here."
     },
     {
       "collapsed": false,
@@ -2018,7 +2035,8 @@
         }
       ],
       "title": "Bytes on disk per topic",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The size of data stored on disk for this partition and topic."
     },
     {
       "datasource": {
@@ -2076,7 +2094,8 @@
         }
       ],
       "title": "Bytes on disk per topic partition",
-      "type": "marcusolsson-treemap-panel"
+      "type": "marcusolsson-treemap-panel",
+      "description": "The size of data stored on disk for this partition and topic."
     }
   ],
   "refresh": "",
