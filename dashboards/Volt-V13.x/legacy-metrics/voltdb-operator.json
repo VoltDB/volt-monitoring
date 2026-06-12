@@ -7,7 +7,7 @@
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations \u0026 Alerts",
+        "name": "Annotations & Alerts",
         "type": "dashboard"
       }
     ]
@@ -16,8 +16,6 @@
   "editable": true,
   "gnetId": 10772,
   "graphTooltip": 0,
-  "id": 52,
-  "iteration": 1591357477980,
   "links": [],
   "panels": [
     {
@@ -35,7 +33,7 @@
       "type": "row"
     },
     {
-      "content": "![voltimage](https://avatars3.githubusercontent.com/u/703910?s=200\u0026v=4)",
+      "content": "![voltimage](https://avatars3.githubusercontent.com/u/703910?s=200&v=4)",
       "datasource": "$datasource",
       "gridPos": {
         "h": 4,
@@ -54,7 +52,11 @@
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": false,
-      "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
       "datasource": "$datasource",
       "format": "dtdurations",
       "gauge": {
@@ -132,7 +134,11 @@
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": false,
-      "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
       "datasource": "$datasource",
       "format": "none",
       "gauge": {
@@ -214,7 +220,11 @@
       "colorBackground": false,
       "colorPrefix": false,
       "colorValue": false,
-      "colors": ["#299c46", "rgba(237, 129, 40, 0.89)", "#d44a3a"],
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
       "datasource": "$datasource",
       "format": "none",
       "gauge": {
@@ -1218,7 +1228,10 @@
   "refresh": "1m",
   "schemaVersion": 22,
   "style": "dark",
-  "tags": ["voltdb", "voltdb-operator"],
+  "tags": [
+    "voltdb",
+    "voltdb-operator"
+  ],
   "templating": {
     "list": [
       {
@@ -1401,13 +1414,22 @@
       "2h",
       "1d"
     ],
-    "time_options": ["5m", "15m", "1h", "6h", "12h", "24h", "2d", "7d", "30d"]
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
   },
   "timezone": "",
   "title": "VoltDB Operator",
-  "uid": "n2t-MG87k",
+  "uid": "volt-v13x-legacy-operator",
   "variables": {
     "list": []
-  },
-  "version": 4
+  }
 }

@@ -2986,7 +2986,14 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "VoltDB XDCR",
-  "uid": "ce3e033c-148f-445a-b0ad-e83c8410024a",
-  "version": 1,
-  "weekStart": ""
+  "uid": "volt-v15x-xdcr",
+  "weekStart": "",
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "marcusolsson-treemap-panel",
+      "name": "Treemap",
+      "version": "2.0.0"
+    }
+  ]
 }

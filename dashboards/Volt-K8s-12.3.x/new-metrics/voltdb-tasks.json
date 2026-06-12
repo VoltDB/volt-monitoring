@@ -67,7 +67,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -1757,7 +1756,6 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Tasks",
-  "uid": "b3aaa7ee-4972-4a70-a89e-7e2c8593cab3",
-  "version": 19,
+  "uid": "volt-k8s-123x-tasks",
   "weekStart": ""
 }

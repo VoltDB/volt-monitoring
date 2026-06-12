@@ -7,7 +7,7 @@
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations \u0026 Alerts",
+        "name": "Annotations & Alerts",
         "target": {
           "limit": 100,
           "matchAny": false,
@@ -21,8 +21,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 54,
-  "iteration": 1658840839496,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -77,7 +75,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -148,7 +148,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -219,7 +221,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -290,7 +294,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -391,7 +397,9 @@
       "id": 38,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right",
           "sortBy": "Last *",
@@ -505,7 +513,9 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "showHeader": true,
@@ -538,7 +548,9 @@
           "options": {
             "includeTimeField": false,
             "mode": "seriesToRows",
-            "reducers": ["sum"]
+            "reducers": [
+              "sum"
+            ]
           }
         },
         {
@@ -619,7 +631,10 @@
       "id": 49,
       "options": {
         "legend": {
-          "calcs": ["max", "lastNotNull"],
+          "calcs": [
+            "max",
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "bottom",
           "sortBy": "Max",
@@ -712,7 +727,9 @@
               "id": "byNames",
               "options": {
                 "mode": "exclude",
-                "names": ["voter.Vote"],
+                "names": [
+                  "voter.Vote"
+                ],
                 "prefix": "All except:",
                 "readOnly": true
               }
@@ -739,7 +756,10 @@
       "id": 39,
       "options": {
         "legend": {
-          "calcs": ["max", "lastNotNull"],
+          "calcs": [
+            "max",
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "bottom",
           "sortBy": "Max",
@@ -837,7 +857,9 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "showHeader": true,
@@ -870,7 +892,12 @@
           "options": {
             "includeTimeField": false,
             "mode": "seriesToRows",
-            "reducers": ["min", "mean", "max", "lastNotNull"]
+            "reducers": [
+              "min",
+              "mean",
+              "max",
+              "lastNotNull"
+            ]
           }
         },
         {
@@ -1078,7 +1105,11 @@
       "options": {
         "colorByField": "Value #A",
         "groupByField": "hostname",
-        "labelFields": ["Value #A", "hostname", "procedure"],
+        "labelFields": [
+          "Value #A",
+          "hostname",
+          "procedure"
+        ],
         "sizeField": "Value #A",
         "textField": "procedure",
         "tiling": "treemapSquarify"
@@ -1177,7 +1208,9 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "frameIndex": 0,
@@ -1207,7 +1240,9 @@
             "includeTimeField": false,
             "labelsToFields": false,
             "mode": "reduceFields",
-            "reducers": ["max"]
+            "reducers": [
+              "max"
+            ]
           }
         },
         {
@@ -1321,7 +1356,9 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "frameIndex": 0,
@@ -1351,7 +1388,9 @@
             "includeTimeField": false,
             "labelsToFields": false,
             "mode": "reduceFields",
-            "reducers": ["max"]
+            "reducers": [
+              "max"
+            ]
           }
         },
         {
@@ -1395,7 +1434,10 @@
   "refresh": "",
   "schemaVersion": 34,
   "style": "dark",
-  "tags": ["voltdb", "procedures"],
+  "tags": [
+    "voltdb",
+    "procedures"
+  ],
   "templating": {
     "list": [
       {
@@ -1503,8 +1545,12 @@
         "allValue": ".*",
         "current": {
           "selected": true,
-          "text": ["All"],
-          "value": ["$__all"]
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": {
           "type": "prometheus",
@@ -1536,7 +1582,14 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Procedures",
-  "uid": "EyzUq4U7z",
-  "version": 50,
-  "weekStart": ""
+  "uid": "volt-v13x-legacy-procedures",
+  "weekStart": "",
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "marcusolsson-treemap-panel",
+      "name": "Treemap",
+      "version": "2.0.0"
+    }
+  ]
 }

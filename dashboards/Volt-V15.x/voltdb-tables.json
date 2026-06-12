@@ -872,7 +872,14 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "VoltDB Tables",
-  "uid": "f2e22fc1-d7b7-49bf-ac8e-40cb0dbf7b61",
-  "version": 2,
-  "weekStart": ""
+  "uid": "volt-v15x-tables",
+  "weekStart": "",
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "marcusolsson-treemap-panel",
+      "name": "Treemap",
+      "version": "2.0.0"
+    }
+  ]
 }

@@ -79,7 +79,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -2308,7 +2307,6 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Snapshots",
-  "uid": "eb0bf258-f406-43fd-a934-8b056442a903",
-  "version": 42,
+  "uid": "volt-k8s-13x-snapshots",
   "weekStart": ""
 }

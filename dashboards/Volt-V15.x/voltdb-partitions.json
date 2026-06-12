@@ -1329,7 +1329,7 @@
           "color": "orange"
         },
         "filterValues": {
-          "le": 1e-9
+          "le": 1e-09
         },
         "legend": {
           "show": true
@@ -1692,7 +1692,14 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "VoltDB Partitions",
-  "uid": "aa57889f-772c-48b1-a8f1-218b6226128b",
-  "version": 5,
-  "weekStart": ""
+  "uid": "volt-v15x-partitions",
+  "weekStart": "",
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "marcusolsson-treemap-panel",
+      "name": "Treemap",
+      "version": "2.0.0"
+    }
+  ]
 }

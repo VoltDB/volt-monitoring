@@ -7,7 +7,7 @@
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations \u0026 Alerts",
+        "name": "Annotations & Alerts",
         "target": {
           "limit": 100,
           "matchAny": false,
@@ -21,8 +21,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 658,
-  "iteration": 1658840691624,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -76,7 +74,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -139,7 +139,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -202,7 +204,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -264,7 +268,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -365,7 +371,9 @@
       "id": 38,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right",
           "sortBy": "Last *",
@@ -425,7 +433,12 @@
       "id": 33,
       "options": {
         "groupByField": "partitionid",
-        "labelFields": ["partitionid", "tablename", "Value #A", "Value #B"],
+        "labelFields": [
+          "partitionid",
+          "tablename",
+          "Value #A",
+          "Value #B"
+        ],
         "sizeField": "Value #A",
         "textField": "tablename",
         "tiling": "treemapSquarify"
@@ -497,7 +510,10 @@
       "options": {
         "colorByField": "Value #A",
         "groupByField": "partitionid",
-        "labelFields": ["Value #A", "hostname"],
+        "labelFields": [
+          "Value #A",
+          "hostname"
+        ],
         "sizeField": "Value #A",
         "textField": "hostname",
         "tiling": "treemapSquarify"
@@ -569,7 +585,9 @@
       "options": {
         "colorByField": "Value #B",
         "groupByField": "indexname",
-        "labelFields": ["Value #A"],
+        "labelFields": [
+          "Value #A"
+        ],
         "sizeField": "Value #A",
         "textField": "partitionid",
         "tiling": "treemapSquarify"
@@ -615,7 +633,10 @@
   "refresh": false,
   "schemaVersion": 34,
   "style": "dark",
-  "tags": ["voltdb", "tables"],
+  "tags": [
+    "voltdb",
+    "tables"
+  ],
   "templating": {
     "list": [
       {
@@ -695,8 +716,12 @@
         "allValue": ".*",
         "current": {
           "selected": true,
-          "text": ["All"],
-          "value": ["$__all"]
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": {
           "type": "prometheus",
@@ -756,7 +781,14 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Tables",
-  "uid": "Sb7KWIR4z",
-  "version": 3,
-  "weekStart": ""
+  "uid": "volt-v10x-tables",
+  "weekStart": "",
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "marcusolsson-treemap-panel",
+      "name": "Treemap",
+      "version": "2.0.0"
+    }
+  ]
 }

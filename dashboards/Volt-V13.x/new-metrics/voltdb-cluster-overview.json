@@ -85,7 +85,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -5427,7 +5426,6 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Cluster overview",
-  "uid": "DIHIuCynk",
-  "version": 14,
+  "uid": "volt-v13x-cluster-overview",
   "weekStart": ""
 }

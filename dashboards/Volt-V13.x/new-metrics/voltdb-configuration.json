@@ -67,7 +67,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -2007,7 +2006,6 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDb Configuration",
-  "uid": "iQGr28yVz",
-  "version": 3,
+  "uid": "volt-v13x-configuration",
   "weekStart": ""
 }

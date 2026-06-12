@@ -19,12 +19,6 @@
     },
     {
       "type": "panel",
-      "id": "marcusolsson-treemap-panel",
-      "name": "Treemap",
-      "version": "2.0.1"
-    },
-    {
-      "type": "panel",
       "id": "piechart",
       "name": "Pie chart",
       "version": ""
@@ -58,6 +52,12 @@
       "id": "timeseries",
       "name": "Time series",
       "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "marcusolsson-treemap-panel",
+      "name": "Treemap",
+      "version": "2.0.0"
     }
   ],
   "annotations": {
@@ -85,7 +85,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -2240,7 +2239,6 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Topics",
-  "uid": "ZZ1y5PRIz",
-  "version": 46,
+  "uid": "volt-v14x-topics",
   "weekStart": ""
 }

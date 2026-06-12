@@ -2109,7 +2109,6 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "VoltDB Cluster auto-scaling",
-  "uid": "e6a14519-99f2-4aa0-a0d2-67d38fd8c696",
-  "version": 1,
+  "uid": "volt-v15x-auto-scaling",
   "weekStart": ""
 }

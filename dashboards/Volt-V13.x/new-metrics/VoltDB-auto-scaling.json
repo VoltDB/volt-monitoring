@@ -73,7 +73,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -2197,7 +2196,6 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Cluster auto-scaling",
-  "uid": "e6a14519-99f2-4aa0-a0d2-67d38fd8c696",
-  "version": 3,
+  "uid": "volt-v13x-auto-scaling",
   "weekStart": ""
 }

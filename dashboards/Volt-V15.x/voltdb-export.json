@@ -1403,7 +1403,14 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "VoltDB Export",
-  "uid": "7Hn1fAj7z",
-  "version": 1,
-  "weekStart": ""
+  "uid": "volt-v15x-export",
+  "weekStart": "",
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "marcusolsson-treemap-panel",
+      "name": "Treemap",
+      "version": "2.0.0"
+    }
+  ]
 }

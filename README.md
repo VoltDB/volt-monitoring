@@ -6,11 +6,14 @@ This repo provides Grafana dashboards for reporting on Volt Active Data metrics 
 
 The dashboards are provided in Grafana JSON format and are divided into categories:
 
-- **Volt** - Dashboards for the latest version of Volt Active Data in any environment, including bare metal, Kubernetes and VMs.
-- **Volt-V9.x** - Dashboards for the long-term support (LTS) version 9 of Volt Active Data.
-- **Volt-V10.x** - Dashboards for the long-term support (LTS) version 10 of Volt Active Data.
+- **Volt** - Dashboards for the latest version of Volt Active Data in any environment, including bare metal, Kubernetes and VMs (currently a link to `Volt-V14.x/metricsv2`).
+- **Volt-V15.x** - Dashboards for Volt Active Data V15.x (work in progress).
+- **Volt-V14.x** - Dashboards for Volt Active Data V14.x (`metricsv2` uses the new metrics system).
+- **Volt-V13.x** - Dashboards for Volt Active Data V13.x (`new-metrics` for the new metrics system, `legacy-metrics` for the legacy exporter).
 - **Volt-V12.x** - Dashboards for the long-term support (LTS) version 12 of Volt Active Data.
-- **Volt-V13.x** - Dashboards for the latest major release (V13,x) of Volt Active Data.
+- **Volt-V10.x** - Dashboards for the long-term support (LTS) version 10 of Volt Active Data.
+- **Volt-V9.x** - Dashboards for the long-term support (LTS) version 9 of Volt Active Data.
+- **Volt-K8s-13.x / Volt-K8s-12.3.x** - Kubernetes-flavoured variants of the V13.x / V12.3.x dashboards.
 
 Within each subdirectory are multiple dashboards, each providing a different view of the database activity, performance, or status. Try the different dashboards to see which ones suit your monitoring needs.
 
@@ -24,6 +27,23 @@ The dashboards require a Grafana plugin, `Treemap`, that must be loaded into Gra
 2. Select the `Plugins` tab.
 3. Type "treemap" into the search box.
 4. Select and install the Treemap plugin.
+
+For unattended installs (containers, provisioning), install the plugin with the Grafana CLI instead:
+
+```
+grafana cli plugins install marcusolsson-treemap-panel
+```
+
+or bake it into a custom Grafana image:
+
+```dockerfile
+FROM grafana/grafana:12.4.0
+RUN grafana cli plugins install marcusolsson-treemap-panel
+```
+
+The dashboards declare the plugin in their `__requires` section, so Grafana warns at import
+time if it is missing; without it the treemap panels render as broken panels while the rest
+of the dashboard keeps working.
 
 Next, you need to select the dashboards appropriate to your Volt version and operating system. Only install dashboards from the subdirectory that matches your operating environment.
 
@@ -50,3 +70,24 @@ scrape_configs:
 ```
 
 
+
+## Alerting
+
+The dashboards only colour-code thresholds; no alerts fire out of the box. Example Prometheus
+alerting rules covering the most important conditions (reduced k-safety, memory near the
+configured limit, command log backpressure, XDCR not ready, failed snapshots, export stalls)
+are provided in [prometheus/voltdb-alerts.yml](prometheus/voltdb-alerts.yml). Review the
+thresholds against your workload before using them in production.
+
+## Contributing
+
+After re-exporting a dashboard from Grafana, run:
+
+```
+python3 tools/normalize-dashboards.py
+```
+
+It strips volatile export fields (`id`, `version`, `iteration`), assigns the stable
+per-version dashboard `uid` (so re-imports update dashboards in place and dashboard sets for
+different VoltDB versions can coexist in one Grafana), and declares required panel plugins in
+`__requires`. Commit the normalized JSON only.

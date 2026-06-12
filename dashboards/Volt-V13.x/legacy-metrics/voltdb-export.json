@@ -7,7 +7,7 @@
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations \u0026 Alerts",
+        "name": "Annotations & Alerts",
         "target": {
           "limit": 100,
           "matchAny": false,
@@ -21,8 +21,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 475,
-  "iteration": 1658840835850,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -76,7 +74,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -137,7 +137,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -198,7 +200,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -259,7 +263,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -480,7 +486,9 @@
         "displayMode": "gradient",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -542,7 +550,9 @@
         "displayMode": "gradient",
         "orientation": "horizontal",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -631,7 +641,9 @@
       "id": 12,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right",
           "sortBy": "Last *",
@@ -724,7 +736,9 @@
       "id": 11,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right",
           "sortBy": "Last *",
@@ -755,7 +769,10 @@
   ],
   "schemaVersion": 34,
   "style": "dark",
-  "tags": ["voltdb", "export"],
+  "tags": [
+    "voltdb",
+    "export"
+  ],
   "templating": {
     "list": [
       {
@@ -896,7 +913,14 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Export",
-  "uid": "7Hn1fAj7z",
-  "version": 30,
-  "weekStart": ""
+  "uid": "volt-v13x-legacy-export",
+  "weekStart": "",
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "marcusolsson-treemap-panel",
+      "name": "Treemap",
+      "version": "2.0.0"
+    }
+  ]
 }

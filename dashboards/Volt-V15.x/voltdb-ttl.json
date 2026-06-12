@@ -660,7 +660,6 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "VoltDB TTL",
-  "uid": "f637c19a-f7db-4a75-984d-1a77ee372b5a",
-  "version": 1,
+  "uid": "volt-v15x-ttl",
   "weekStart": ""
 }

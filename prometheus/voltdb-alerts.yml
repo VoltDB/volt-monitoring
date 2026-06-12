@@ -1,0 +1,130 @@
+# Example Prometheus alerting rules for VoltDB (new "v2" metrics, V13.x and later).
+#
+# These are starting points: review the thresholds and `for:` durations against
+# your workload and SLOs before using them in production. All rules assume the
+# `namespace` label identifies the cluster (added automatically by the Volt
+# Operator on Kubernetes; see the README for bare-metal setups) and that
+# Prometheus scrapes at most half the VoltDB metric interval.
+#
+# Load via prometheus.yml:
+#   rule_files:
+#     - voltdb-alerts.yml
+
+groups:
+  - name: voltdb-cluster
+    rules:
+      - alert: VoltClusterSafetyReduced
+        expr: voltdb_systeminformation_overview_cluster_info{clustersafety="REDUCED"} == 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Volt cluster {{ $labels.namespace }} is running with reduced safety"
+          description: "Host {{ $labels.host_name }} reports the cluster k-safety is REDUCED: one or more nodes are down and the cluster cannot survive another failure at the same k-factor."
+
+      - alert: VoltClusterPaused
+        expr: voltdb_systeminformation_overview_cluster_info{clusterstate="PAUSED"} == 1
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Volt cluster {{ $labels.namespace }} is paused"
+          description: "The cluster has been in admin/paused mode for 15 minutes. Note the database pauses itself when the resource monitor memory limit is exceeded."
+
+      - alert: VoltClockSkewHigh
+        expr: voltdb_clockskew_seconds > 0.1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Clock skew above 100ms on {{ $labels.host_name }}"
+          description: "Clock skew between cluster nodes is {{ $value | humanizeDuration }}. Large skew degrades transaction ordering and can prevent nodes from rejoining."
+
+  - name: voltdb-resources
+    rules:
+      - alert: VoltMemoryNearLimit
+        # voltdb_memory_limit_bytes requires a VoltDB release with ENG-29298;
+        # on older releases substitute voltdb_memory_physicalmemory_bytes.
+        expr: voltdb_memory_rss_bytes / voltdb_memory_limit_bytes > 0.8
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "RSS above 80% of the configured memory limit on {{ $labels.host_name }}"
+          description: "RSS is {{ $value | humanizePercentage }} of the resource monitor memory limit. The database pauses when the limit is reached."
+
+      - alert: VoltFileDescriptorsNearLimit
+        expr: voltdb_file_descriptors_count_total / voltdb_file_descriptors_limit_total > 0.8
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "File descriptor usage above 80% on {{ $labels.host_name }}"
+
+      - alert: VoltClientConnectionsNearLimit
+        expr: voltdb_client_connections_open_total / voltdb_client_connections_limit_total > 0.8
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Client connections above 80% of the limit on {{ $labels.host_name }}"
+
+  - name: voltdb-durability
+    rules:
+      - alert: VoltCommandLogBackpressure
+        # Requires a VoltDB release with ENG-29298.
+        expr: increase(voltdb_commandlog_backpressure_total[10m]) > 0
+        labels:
+          severity: warning
+        annotations:
+          summary: "Command logging is backpressuring transactions on {{ $labels.host_name }}"
+          description: "Command log writes are falling behind and have blocked transactions in the last 10 minutes. Check disk throughput on the command log volume."
+
+      - alert: VoltSnapshotFailed
+        expr: voltdb_snapshot_summary_info{snapshot_result="FAILURE"} == 1
+        labels:
+          severity: critical
+        annotations:
+          summary: "Snapshot {{ $labels.snapshot_nonce }} failed on {{ $labels.host_name }}"
+
+      - alert: VoltTtlFailures
+        expr: increase(voltdb_ttl_failed_total[15m]) > 0
+        labels:
+          severity: warning
+        annotations:
+          summary: "TTL processing failures on {{ $labels.host_name }}"
+
+  - name: voltdb-replication
+    rules:
+      - alert: VoltXdcrNotReady
+        expr: voltdb_xdcr_readiness_info{dr_is_ready="false"} == 1
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "XDCR replication is not ready on {{ $labels.host_name }}"
+          description: "Producer state: {{ $labels.dr_prod_state }} (connection {{ $labels.dr_prod_cnx_status }}), consumer state: {{ $labels.dr_cons_state }}. On releases with ENG-29298, voltdb_xdcr_readiness_since_timestamp_seconds tells since when."
+
+      - alert: VoltDrConflicts
+        expr: increase(voltdb_dr_conflicts_count_total[15m]) > 0
+        labels:
+          severity: warning
+        annotations:
+          summary: "XDCR conflicts detected on {{ $labels.host_name }}"
+          description: "Replication conflicts were recorded in the last 15 minutes. Inspect the conflict log / conflicts dashboard."
+
+  - name: voltdb-export
+    rules:
+      - alert: VoltExportFallingBehind
+        expr: voltdb_export_tuple_pending_total > 0 and increase(voltdb_export_tuple_count_total[15m]) == 0
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Export target {{ $labels.export_target }} is stalled on {{ $labels.host_name }}"
+          description: "Rows are pending for export source {{ $labels.export_source }} but nothing has been acknowledged for 15 minutes."
+
+# Not expressible with current metrics (license expiration is exposed only as a
+# label on voltdb_systeminformation_license_info, and Prometheus cannot compare
+# label values numerically): license expiry alerting. Track the expiration date
+# operationally, or request a numeric license-expiry gauge.

@@ -7,7 +7,7 @@
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations \u0026 Alerts",
+        "name": "Annotations & Alerts",
         "target": {
           "limit": 100,
           "matchAny": false,
@@ -21,8 +21,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 478,
-  "iteration": 1659096895005,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -92,7 +90,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "/^is_ready$/",
           "values": false
         },
@@ -121,7 +121,9 @@
           "disabled": true,
           "id": "labelsToFields",
           "options": {
-            "keepLabels": ["is_ready"],
+            "keepLabels": [
+              "is_ready"
+            ],
             "mode": "rows",
             "valueLabel": "is_ready"
           }
@@ -178,7 +180,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -247,7 +251,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -306,7 +312,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -365,7 +373,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -431,7 +441,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -492,7 +504,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -563,7 +577,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -644,7 +660,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -717,7 +735,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -776,7 +796,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -835,7 +857,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -919,7 +943,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -993,7 +1019,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -1059,7 +1087,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -1121,7 +1151,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -1183,7 +1215,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -1249,7 +1283,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -1367,7 +1403,9 @@
       "id": 62,
       "options": {
         "legend": {
-          "calcs": ["sum"],
+          "calcs": [
+            "sum"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -1496,7 +1534,9 @@
       "id": 64,
       "options": {
         "legend": {
-          "calcs": ["sum"],
+          "calcs": [
+            "sum"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -1589,7 +1629,9 @@
       "id": 65,
       "options": {
         "legend": {
-          "calcs": ["sum"],
+          "calcs": [
+            "sum"
+          ],
           "displayMode": "table",
           "placement": "bottom"
         },
@@ -1773,7 +1815,9 @@
       "id": 33,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -1944,7 +1988,9 @@
       "id": 37,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -2127,7 +2173,9 @@
       "id": 39,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right",
           "sortBy": "Last *",
@@ -2145,7 +2193,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "max by (partitionid) (voltdb_drproducer_last_queued_timestamp_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"} * 1000 \u003e 1199145600000)",
+          "expr": "max by (partitionid) (voltdb_drproducer_last_queued_timestamp_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\"} * 1000 > 1199145600000)",
           "interval": "",
           "legendFormat": "{{partitionid}}",
           "refId": "A"
@@ -2322,7 +2370,9 @@
       "id": 29,
       "options": {
         "legend": {
-          "calcs": ["last"],
+          "calcs": [
+            "last"
+          ],
           "displayMode": "table",
           "placement": "bottom"
         },
@@ -2413,7 +2463,10 @@
       "id": 45,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull", "sum"],
+          "calcs": [
+            "lastNotNull",
+            "sum"
+          ],
           "displayMode": "table",
           "placement": "bottom",
           "sortBy": "Total",
@@ -2506,7 +2559,10 @@
       "id": 46,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull", "sum"],
+          "calcs": [
+            "lastNotNull",
+            "sum"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -2607,7 +2663,9 @@
       "id": 43,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "bottom",
           "sortBy": "Last *",
@@ -2710,7 +2768,9 @@
       "id": 44,
       "options": {
         "legend": {
-          "calcs": ["last"],
+          "calcs": [
+            "last"
+          ],
           "displayMode": "table",
           "placement": "right",
           "sortBy": "Last",
@@ -2803,7 +2863,9 @@
       "id": 30,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right",
           "sortBy": "Last *",
@@ -2834,7 +2896,10 @@
   "refresh": false,
   "schemaVersion": 34,
   "style": "dark",
-  "tags": ["voltdb", "xdcr"],
+  "tags": [
+    "voltdb",
+    "xdcr"
+  ],
   "templating": {
     "list": [
       {
@@ -2975,7 +3040,14 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB XDCR",
-  "uid": "VBIZq0jnz",
-  "version": 116,
-  "weekStart": ""
+  "uid": "volt-v13x-legacy-xdcr",
+  "weekStart": "",
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "marcusolsson-treemap-panel",
+      "name": "Treemap",
+      "version": "2.0.0"
+    }
+  ]
 }

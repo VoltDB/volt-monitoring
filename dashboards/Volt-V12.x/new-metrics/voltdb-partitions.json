@@ -30,12 +30,6 @@
       "version": ""
     },
     {
-      "type": "panel",
-      "id": "marcusolsson-treemap-panel",
-      "name": "Treemap",
-      "version": "2.0.1"
-    },
-    {
       "type": "datasource",
       "id": "prometheus",
       "name": "Prometheus",
@@ -58,6 +52,12 @@
       "id": "timeseries",
       "name": "Time series",
       "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "marcusolsson-treemap-panel",
+      "name": "Treemap",
+      "version": "2.0.0"
     }
   ],
   "annotations": {
@@ -79,7 +79,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -1808,7 +1807,6 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Partitions",
-  "uid": "fae27ae5-43a8-4dba-aadd-48e48ef0c03c",
-  "version": 73,
+  "uid": "volt-v12x-partitions",
   "weekStart": ""
 }

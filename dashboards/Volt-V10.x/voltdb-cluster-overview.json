@@ -7,7 +7,7 @@
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations \u0026 Alerts",
+        "name": "Annotations & Alerts",
         "target": {
           "limit": 100,
           "matchAny": false,
@@ -21,8 +21,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 657,
-  "iteration": 1658840688814,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -84,7 +82,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -154,7 +154,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -224,7 +226,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -294,7 +298,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -385,7 +391,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -455,7 +463,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -525,7 +535,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -590,7 +602,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -702,7 +716,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -780,7 +796,9 @@
         "justifyMode": "center",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -978,7 +996,9 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "showHeader": true
@@ -1003,7 +1023,9 @@
         {
           "id": "reduce",
           "options": {
-            "reducers": ["max"]
+            "reducers": [
+              "max"
+            ]
           }
         },
         {
@@ -1191,7 +1213,9 @@
       "id": 38,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "bottom"
         },
@@ -1279,7 +1303,9 @@
       "id": 39,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "bottom"
         },
@@ -1369,7 +1395,9 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "frameIndex": 11,
@@ -1403,13 +1431,18 @@
           "options": {
             "includeTimeField": false,
             "mode": "reduceFields",
-            "reducers": ["max"]
+            "reducers": [
+              "max"
+            ]
           }
         },
         {
           "id": "labelsToFields",
           "options": {
-            "keepLabels": ["cnxhostname", "hostname"],
+            "keepLabels": [
+              "cnxhostname",
+              "hostname"
+            ],
             "mode": "columns",
             "valueLabel": "hostname"
           }
@@ -1532,7 +1565,9 @@
       "id": 64,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -1621,7 +1656,9 @@
       "id": 65,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -1710,7 +1747,9 @@
       "id": 66,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -1799,7 +1838,9 @@
       "id": 67,
       "options": {
         "legend": {
-          "calcs": ["sum"],
+          "calcs": [
+            "sum"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -1888,7 +1929,9 @@
       "id": 73,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -1978,7 +2021,9 @@
       "id": 74,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -2050,7 +2095,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -2110,7 +2157,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -2197,7 +2246,9 @@
       "id": 44,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "bottom"
         },
@@ -2258,7 +2309,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -2318,7 +2371,9 @@
       "options": {
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -2348,7 +2403,10 @@
   "refresh": false,
   "schemaVersion": 34,
   "style": "dark",
-  "tags": ["voltdb", "overview"],
+  "tags": [
+    "voltdb",
+    "overview"
+  ],
   "templating": {
     "list": [
       {
@@ -2434,7 +2492,6 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Cluster overview",
-  "uid": "4ug8kIgVk",
-  "version": 4,
+  "uid": "volt-v10x-cluster-overview",
   "weekStart": ""
 }

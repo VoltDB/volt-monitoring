@@ -79,7 +79,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -1414,7 +1413,6 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Import",
-  "uid": "lLU6SSBVz",
-  "version": 5,
+  "uid": "volt-v14x-import",
   "weekStart": ""
 }

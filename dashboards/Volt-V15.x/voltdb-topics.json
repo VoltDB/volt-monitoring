@@ -2138,7 +2138,14 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "VoltDB Topics",
-  "uid": "ZZ1y5PRIz",
-  "version": 1,
-  "weekStart": ""
+  "uid": "volt-v15x-topics",
+  "weekStart": "",
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "marcusolsson-treemap-panel",
+      "name": "Treemap",
+      "version": "2.0.0"
+    }
+  ]
 }

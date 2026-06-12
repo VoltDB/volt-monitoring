@@ -7,7 +7,7 @@
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations \u0026 Alerts",
+        "name": "Annotations & Alerts",
         "target": {
           "limit": 100,
           "matchAny": false,
@@ -21,8 +21,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 571,
-  "iteration": 1659101963361,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -98,7 +96,9 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "showHeader": true,
@@ -131,7 +131,9 @@
           "options": {
             "includeTimeField": false,
             "mode": "reduceFields",
-            "reducers": ["max"]
+            "reducers": [
+              "max"
+            ]
           }
         },
         {
@@ -213,7 +215,9 @@
           "options": {
             "orientation": "auto",
             "reduceOptions": {
-              "calcs": ["lastNotNull"],
+              "calcs": [
+                "lastNotNull"
+              ],
               "fields": "",
               "values": false
             },
@@ -272,7 +276,9 @@
           "options": {
             "orientation": "auto",
             "reduceOptions": {
-              "calcs": ["lastNotNull"],
+              "calcs": [
+                "lastNotNull"
+              ],
               "fields": "",
               "values": false
             },
@@ -341,7 +347,9 @@
           "options": {
             "orientation": "auto",
             "reduceOptions": {
-              "calcs": ["lastNotNull"],
+              "calcs": [
+                "lastNotNull"
+              ],
               "fields": "",
               "values": false
             },
@@ -403,7 +411,9 @@
             "justifyMode": "auto",
             "orientation": "auto",
             "reduceOptions": {
-              "calcs": ["lastNotNull"],
+              "calcs": [
+                "lastNotNull"
+              ],
               "fields": "",
               "values": false
             },
@@ -461,7 +471,9 @@
           "options": {
             "orientation": "auto",
             "reduceOptions": {
-              "calcs": ["lastNotNull"],
+              "calcs": [
+                "lastNotNull"
+              ],
               "fields": "",
               "values": false
             },
@@ -527,7 +539,9 @@
             "justifyMode": "auto",
             "orientation": "auto",
             "reduceOptions": {
-              "calcs": ["lastNotNull"],
+              "calcs": [
+                "lastNotNull"
+              ],
               "fields": "",
               "values": false
             },
@@ -599,7 +613,9 @@
           "options": {
             "orientation": "auto",
             "reduceOptions": {
-              "calcs": ["lastNotNull"],
+              "calcs": [
+                "lastNotNull"
+              ],
               "fields": "",
               "values": false
             },
@@ -680,7 +696,9 @@
           "options": {
             "orientation": "auto",
             "reduceOptions": {
-              "calcs": ["lastNotNull"],
+              "calcs": [
+                "lastNotNull"
+              ],
               "fields": "",
               "values": false
             },
@@ -753,7 +771,9 @@
             "justifyMode": "auto",
             "orientation": "auto",
             "reduceOptions": {
-              "calcs": ["lastNotNull"],
+              "calcs": [
+                "lastNotNull"
+              ],
               "fields": "",
               "values": false
             },
@@ -812,7 +832,9 @@
           "options": {
             "orientation": "auto",
             "reduceOptions": {
-              "calcs": ["lastNotNull"],
+              "calcs": [
+                "lastNotNull"
+              ],
               "fields": "",
               "values": false
             },
@@ -871,7 +893,9 @@
           "options": {
             "orientation": "auto",
             "reduceOptions": {
-              "calcs": ["lastNotNull"],
+              "calcs": [
+                "lastNotNull"
+              ],
               "fields": "",
               "values": false
             },
@@ -959,7 +983,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -1061,7 +1087,9 @@
       "id": 29,
       "options": {
         "legend": {
-          "calcs": ["last"],
+          "calcs": [
+            "last"
+          ],
           "displayMode": "table",
           "placement": "bottom"
         },
@@ -1164,7 +1192,9 @@
       "id": 39,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right",
           "sortBy": "Last *",
@@ -1182,7 +1212,7 @@
             "uid": "${datasource}"
           },
           "exemplar": false,
-          "expr": "max by (partitionid) (voltdb_drproducer_last_queued_timestamp_seconds{namespace=\"$active\",hostname=~\"$host\"} * 1000 \u003e 1199145600000)",
+          "expr": "max by (partitionid) (voltdb_drproducer_last_queued_timestamp_seconds{namespace=\"$active\",hostname=~\"$host\"} * 1000 > 1199145600000)",
           "interval": "",
           "legendFormat": "{{partitionid}}",
           "refId": "A"
@@ -1258,7 +1288,9 @@
       "id": 33,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -1287,7 +1319,10 @@
   "refresh": false,
   "schemaVersion": 34,
   "style": "dark",
-  "tags": ["voltdb", "xdcr"],
+  "tags": [
+    "voltdb",
+    "xdcr"
+  ],
   "templating": {
     "list": [
       {
@@ -1394,8 +1429,12 @@
         "allValue": ".*",
         "current": {
           "selected": true,
-          "text": ["All"],
-          "value": ["$__all"]
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": {
           "type": "prometheus",
@@ -1427,7 +1466,6 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB XDCR Active-Passive",
-  "uid": "bETM2_q7z",
-  "version": 12,
+  "uid": "volt-v13x-legacy-xdcr-active-passive",
   "weekStart": ""
 }

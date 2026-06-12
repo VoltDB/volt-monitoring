@@ -1329,7 +1329,6 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "VoltDB Import",
-  "uid": "lLU6SSBVz",
-  "version": 2,
+  "uid": "volt-v15x-import",
   "weekStart": ""
 }

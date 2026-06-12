@@ -849,7 +849,7 @@
               "color": "rgba(255,0,255,0.7)"
             },
             "filterValues": {
-              "le": 1e-9
+              "le": 1e-09
             },
             "legend": {
               "show": true
@@ -928,7 +928,7 @@
               "color": "rgba(255,0,255,0.7)"
             },
             "filterValues": {
-              "le": 1e-9
+              "le": 1e-09
             },
             "legend": {
               "show": true
@@ -1380,7 +1380,7 @@
               "color": "rgba(255,0,255,0.7)"
             },
             "filterValues": {
-              "le": 1e-9
+              "le": 1e-09
             },
             "legend": {
               "show": true
@@ -1459,7 +1459,7 @@
               "color": "rgba(255,0,255,0.7)"
             },
             "filterValues": {
-              "le": 1e-9
+              "le": 1e-09
             },
             "legend": {
               "show": true
@@ -1707,7 +1707,6 @@
   "timepicker": {},
   "timezone": "browser",
   "title": "VoltDB Tasks",
-  "uid": "b3aaa7ee-4972-4a70-a89e-7e2c8593cab3",
-  "version": 1,
+  "uid": "volt-v15x-tasks",
   "weekStart": ""
 }

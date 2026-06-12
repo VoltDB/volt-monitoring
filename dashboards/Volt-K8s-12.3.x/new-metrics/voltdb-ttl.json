@@ -55,7 +55,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -684,7 +683,6 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB TTL",
-  "uid": "f637c19a-f7db-4a75-984d-1a77ee372b5a",
-  "version": 6,
+  "uid": "volt-k8s-123x-ttl",
   "weekStart": ""
 }
