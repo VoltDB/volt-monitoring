@@ -1,0 +1,37 @@
+# Test deployment that deliberately exercises as many dashboard panels as
+# possible: command log, auto-snapshots, a resource-monitor memory limit and a
+# (discarding) export target, with a short metric interval for fast feedback.
+deployment:
+  cluster:
+    kfactor: 0
+    sitesperhost: 4
+  partitiondetection:
+    enabled: true
+  heartbeat:
+    timeout: 10000
+  snapshot:
+    enabled: true
+    frequency: 2m
+    prefix: autosnap
+    retain: 2
+  export:
+    configurations:
+      - target: archive
+        enabled: true
+        type: custom
+        exportconnectorclass: org.voltdb.exportclient.DiscardingExportClient
+  commandlog:
+    enabled: true
+    synchronous: false
+    logsize: 1024
+    frequency:
+      time: 200
+      transactions: 10000
+  systemsettings:
+    resourcemonitor:
+      frequency: 5
+      memorylimit:
+        size: "80%"
+  metrics:
+    enabled: true
+    interval: 6s
