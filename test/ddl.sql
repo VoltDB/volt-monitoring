@@ -26,6 +26,10 @@ CREATE TABLE sessions (
   PRIMARY KEY (session_id)
 ) USING TTL 1 MINUTES ON COLUMN created;
 PARTITION TABLE sessions ON COLUMN session_id;
+-- TTL requires an index whose first column is the TTL column, otherwise every
+-- delete round aborts ("Could not find index to support LowImpactDelete") and
+-- no rows are purged and no voltdb_ttl_* metrics are produced.
+CREATE INDEX sessions_created ON sessions (created);
 
 -- Export stream feeding the (discarding) "archive" target.
 CREATE STREAM events_archive

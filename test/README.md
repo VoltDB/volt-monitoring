@@ -56,10 +56,14 @@ here (not dashboard bugs — the queries are valid):
 - **Import / Topics** — no importer or topic configured
 - **Tasks** — no scheduled tasks created
 - **Table Compaction** — compaction only fires under memory pressure
-- **TTL** — the cluster runs TTL deletes (the TTL table empties) but emits **no
-  `voltdb_ttl_*` metrics at all**, confirmed on both a 14.x dev image and
-  `master--840`. The dashboard queries are correct, so this is a server-side gap
-  (TTL metrics not registered/emitted), not a dashboard bug — worth a ticket.
+- **TTL** — works once the schema is correct. TTL only purges rows (and only
+  then emits `voltdb_ttl_*`) when the TTL column has a supporting index whose
+  first column is the TTL column; without it every delete round aborts with
+  "Could not find index to support LowImpactDelete". `ddl.sql` includes the
+  index on `sessions(created)`, so the TTL dashboard populates. (Minor real
+  gap noticed: that missing-index abort comes back as a success-with-error
+  response, so it increments neither `voltdb_ttl_rows_deleted_total` nor
+  `voltdb_ttl_failed_total` — the failure is logged but not in metrics.)
 
 ## Testing the ENG-29298 metrics
 
