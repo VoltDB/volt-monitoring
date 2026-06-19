@@ -56,9 +56,10 @@ here (not dashboard bugs — the queries are valid):
 - **Import / Topics** — no importer or topic configured
 - **Tasks** — no scheduled tasks created
 - **Table Compaction** — compaction only fires under memory pressure
-- **TTL** — on the images tested so far the cluster ran TTL deletes but emitted
-  no `voltdb_ttl_*` metrics; the dashboard queries are correct, so this points
-  at the server/image, not the dashboard. Re-check on a current image.
+- **TTL** — the cluster runs TTL deletes (the TTL table empties) but emits **no
+  `voltdb_ttl_*` metrics at all**, confirmed on both a 14.x dev image and
+  `master--840`. The dashboard queries are correct, so this is a server-side gap
+  (TTL metrics not registered/emitted), not a dashboard bug — worth a ticket.
 
 ## Testing the ENG-29298 metrics
 
