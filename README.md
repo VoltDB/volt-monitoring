@@ -53,6 +53,32 @@ There are several different methods you can use for importing dashboards into Gr
 
 For the dashboards to work properly, Grafana and Prometheus must agree on how frequently data is collected. Make sure the scrape interval setting in the Grafana configuration matches the scrape interval in Prometheus.
 
+### Rate-based panels showing "No Data"
+
+Panels that use `rate()` / `increase()` (throughput, transactions/s, per-second
+counters) need **at least two samples of the same series within the query
+window**. Two things break that:
+
+- **Metric interval vs. query window.** VoltDB's metrics interval defaults to
+  **60s**, so a `rate(...[$__rate_interval])` panel needs a window of roughly
+  **2× the metrics interval** (≥ ~120s at the default) before it can compute
+  anything — otherwise the window contains one value and the panel reads "No
+  Data" even under load. Scrape at half the VoltDB metrics interval (e.g. 30s
+  scrape for a 60s interval) and make sure Grafana's `$__rate_interval`
+  (driven by the scrape interval and panel min-step) comfortably exceeds 2×
+  the metrics interval. Lowering the VoltDB metrics interval (e.g. to `6s` in a
+  test cluster) makes these panels responsive much sooner.
+- **Per-connection metrics + short-lived connections.** Connection-scoped
+  series such as `voltdb_initiator_procedure_invoked_total` (labelled by
+  `connection_id`) only accumulate while a client connection stays open. Load
+  driven through short-lived connections (a new connection per request) creates
+  a fresh series each time, so no single series lives long enough for `rate()`
+  to compute. Real applications that hold pooled connections are fine; for a
+  robust cluster-wide throughput panel, prefer the site-scoped
+  `voltdb_procedure_invoked_total` (stable regardless of connection churn — note
+  it counts per execution site, so multi-partition/replicated work reads higher
+  than client-observed transactions).
+
 ## Applying the "namespace" Label
 
 In Kubernetes, the Operator adds the `namespace` label automatically. If you are running VoltDB in another environment (or on bare metal) you must add the label as part of the Prometheus configuration. For example:
