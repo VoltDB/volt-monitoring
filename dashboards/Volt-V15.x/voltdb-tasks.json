@@ -802,7 +802,7 @@
               "refId": "A"
             }
           ],
-          "title": "Scheduled procedure invocation total",
+          "title": "Scheduled task invocation total",
           "type": "timeseries",
           "description": "The total number of invocations of the task's schedule."
         },

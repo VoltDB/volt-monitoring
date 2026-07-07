@@ -4,7 +4,7 @@
       {
         "builtIn": 1,
         "datasource": {
-          "type": "datasource",
+          "type": "grafana",
           "uid": "grafana"
         },
         "enable": true,
@@ -24,13 +24,9 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "links": [],
+  "liveNow": false,
   "panels": [
     {
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
       "gridPos": {
         "h": 3,
         "w": 24,
@@ -47,8 +43,10 @@
         "content": "# VoltDB configuration\n\nBelow's information comes from @SystemInformation call, for detailed description please go to [documentation](https://docs.voltdb.com/UsingVoltDB/sysprocsysteminfo.php#sysprocsysinforetvalovervw).",
         "mode": "markdown"
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.0.1",
+      "targets": [],
       "title": "",
+      "transparent": true,
       "type": "text"
     },
     {
@@ -60,7 +58,6 @@
         "y": 3
       },
       "id": 34,
-      "panels": [],
       "title": "Overview",
       "type": "row"
     },
@@ -69,12 +66,12 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "description": "VoltDB software version (VERSION) reported by @SystemInformation OVERVIEW.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -85,12 +82,11 @@
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 4,
-        "w": 3,
+        "w": 4,
         "x": 0,
         "y": 4
       },
@@ -112,7 +108,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -129,21 +125,20 @@
           "refId": "A"
         }
       ],
-      "title": "Volt Version",
-      "type": "stat",
-      "description": "VoltDB software version (VERSION) reported by @SystemInformation OVERVIEW."
+      "title": "Version",
+      "type": "stat"
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "description": "How long the cluster has been running, derived from the start timestamp (STARTTIME / HOSTSTARTTIME) reported by @SystemInformation OVERVIEW.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -154,13 +149,12 @@
             ]
           },
           "unit": "dtdurationms"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 4,
         "w": 4,
-        "x": 3,
+        "x": 4,
         "y": 4
       },
       "id": 10,
@@ -182,7 +176,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -241,8 +235,7 @@
           }
         }
       ],
-      "type": "stat",
-      "description": "How long the cluster has been running, derived from the start timestamp (STARTTIME / HOSTSTARTTIME) reported by @SystemInformation OVERVIEW."
+      "type": "stat"
     },
     {
       "datasource": {
@@ -291,13 +284,12 @@
               }
             ]
           }
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 4,
-        "w": 3,
-        "x": 7,
+        "w": 4,
+        "x": 8,
         "y": 4
       },
       "id": 12,
@@ -318,7 +310,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -383,13 +375,12 @@
               }
             ]
           }
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 4,
-        "w": 3,
-        "x": 10,
+        "w": 4,
+        "x": 12,
         "y": 4
       },
       "id": 13,
@@ -410,7 +401,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -448,93 +439,12 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "description": "Initial (configured) cluster size from @SystemInformation OVERVIEW (FULLCLUSTERSIZE) — the number of nodes the cluster was started with.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text",
-                "value": 0
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 13,
-        "y": 4
-      },
-      "id": 14,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "/^clusterid$/",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.4.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "voltdb_systeminformation_overview_cluster_info{v2=\"1\", namespace=\"$cluster\", host_name=~\"$host\"}",
-          "format": "table",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Cluster id",
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "Value": true
-            },
-            "indexByName": {},
-            "renameByName": {}
-          }
-        }
-      ],
-      "type": "stat",
-      "description": "DR cluster identifier (CLUSTERID) reported by @SystemInformation OVERVIEW."
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -545,8 +455,7 @@
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 4,
@@ -572,7 +481,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -603,20 +512,19 @@
           }
         }
       ],
-      "type": "stat",
-      "description": "Initial (configured) cluster size from @SystemInformation OVERVIEW (FULLCLUSTERSIZE) — the number of nodes the cluster was started with."
+      "type": "stat"
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "description": "Current number of nodes in the cluster, counted from the per-host @SystemInformation OVERVIEW rows.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -627,8 +535,7 @@
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 4,
@@ -654,7 +561,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -672,21 +579,21 @@
           "refId": "A"
         }
       ],
-      "title": "Current cluster size",
+      "title": "Current size",
       "transformations": [
         {
           "id": "labelsToFields",
           "options": {}
         }
       ],
-      "type": "stat",
-      "description": "Current number of nodes in the cluster, counted from the per-host @SystemInformation OVERVIEW rows."
+      "type": "stat"
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "description": "Cluster configuration summary from @SystemInformation OVERVIEW: VoltDB build string (BUILDSTRING), DR replication role (REPLICATIONROLE), and whether the cluster is running on Kubernetes.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -731,12 +638,11 @@
               }
             ]
           }
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
-        "h": 4,
-        "w": 16,
+        "h": 8,
+        "w": 12,
         "x": 0,
         "y": 8
       },
@@ -746,7 +652,7 @@
         "enablePagination": false,
         "showHeader": false
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -787,20 +693,103 @@
           "options": {}
         }
       ],
-      "type": "table",
-      "description": "Cluster configuration summary from @SystemInformation OVERVIEW: VoltDB build string (BUILDSTRING), DR replication role (REPLICATIONROLE), and whether the cluster is running on Kubernetes."
+      "type": "table"
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "description": "K-safety value (kfactor) from @SystemInformation DEPLOYMENT — the number of redundant copies kept of each partition.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 8
+      },
+      "id": 26,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^kfactor$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "13.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "voltdb_systeminformation_deployment_info{v2=\"1\", namespace=\"$cluster\", host_name=~\"$host\"}",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "kFactor",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Value": true
+            },
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Number of CPU cores on the host (CPUCORES) reported by @SystemInformation OVERVIEW.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -811,8 +800,7 @@
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 4,
@@ -841,7 +829,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -872,20 +860,19 @@
           }
         }
       ],
-      "type": "stat",
-      "description": "Number of CPU cores on the host (CPUCORES) reported by @SystemInformation OVERVIEW."
+      "type": "stat"
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "description": "Number of processor threads on the host (CPUTHREADS) reported by @SystemInformation OVERVIEW.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -896,8 +883,7 @@
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 4,
@@ -923,7 +909,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -954,8 +940,166 @@
           }
         }
       ],
-      "type": "stat",
-      "description": "Number of processor threads on the host (CPUTHREADS) reported by @SystemInformation OVERVIEW."
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "DR cluster identifier (CLUSTERID) reported by @SystemInformation OVERVIEW.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": 0
+              }
+            ]
+          }
+        }
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 12
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^clusterid$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "13.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "voltdb_systeminformation_overview_cluster_info{v2=\"1\", namespace=\"$cluster\", host_name=~\"$host\"}",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Cluster id",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Value": true
+            },
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Number of execution sites per host (sitesperhost) from @SystemInformation DEPLOYMENT.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "short"
+        }
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 16,
+        "y": 12
+      },
+      "id": 27,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^sitesperhost$/",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "13.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "voltdb_systeminformation_deployment_info{v2=\"1\", namespace=\"$cluster\", host_name=~\"$host\"}",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "sites per host",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Value": true
+            },
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "stat"
     },
     {
       "collapsed": false,
@@ -963,10 +1107,9 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 12
+        "y": 16
       },
-      "id": 6,
-      "panels": [],
+      "id": 35,
       "title": "Configuraiton",
       "type": "row"
     },
@@ -975,6 +1118,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "description": "Database deployment settings from @SystemInformation DEPLOYMENT: DR role (drrole) and DR transaction priority (drpriority), elastic rebalance target duration (elasticduration, ms) and throughput (elasticthroughput, MB/s), whether export is enabled (export), heartbeat timeout (heartbeattimeout, seconds), and whether network partition detection is enabled (partitiondetection).",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1063,17 +1207,17 @@
         ]
       },
       "gridPos": {
-        "h": 10,
-        "w": 9,
+        "h": 15,
+        "w": 12,
         "x": 0,
-        "y": 13
+        "y": 17
       },
       "id": 22,
       "options": {
         "cellHeight": "sm",
         "showHeader": false
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -1082,7 +1226,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "max (voltdb_systeminformation_deployment_info{v2=\"1\", namespace=\"$cluster\", host_name=~\"$host\"}) by (drpriority,drrole, elasticduration, elasticthroughput, export, heartbeattimeout, partitiondetection, prioritiesenabled, temptablesmaxsize, metrics)",
+          "expr": "max (voltdb_systeminformation_deployment_info{v2=\"1\", namespace=\"$cluster\", host_name=~\"$host\"}) by (drpriority,drrole, elasticduration, elasticthroughput, export, heartbeattimeout, partitiondetection, prioritiesenabled, temptablesmaxsize, metrics, memorylimit, drconsumermaxbuffers, drconsumermaxbytes)",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1099,14 +1243,14 @@
           }
         }
       ],
-      "type": "table",
-      "description": "Database deployment settings from @SystemInformation DEPLOYMENT: DR role (drrole) and DR transaction priority (drpriority), elastic rebalance target duration (elasticduration, ms) and throughput (elasticthroughput, MB/s), whether export is enabled (export), heartbeat timeout (heartbeattimeout, seconds), and whether network partition detection is enabled (partitiondetection)."
+      "type": "table"
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "description": "Command logging configuration from @SystemInformation DEPLOYMENT: whether command logging is enabled (commandlogenabled), the logging mode (commandlogmode, sync or async), and the flush frequency by time (commandlogfreqtime, ms) and by transaction count (commandlogfreqtxns).",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1171,17 +1315,17 @@
         ]
       },
       "gridPos": {
-        "h": 5,
-        "w": 11,
-        "x": 9,
-        "y": 13
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 17
       },
       "id": 24,
       "options": {
         "cellHeight": "sm",
         "showHeader": false
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -1190,7 +1334,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "max (voltdb_systeminformation_commandlog_info{v2=\"1\", namespace=\"$cluster\", host_name=~\"$host\"}) by (commandlogenabled, commandlogfreqtime, commandlogfreqtxns, commandlogmode)",
+          "expr": "max (voltdb_systeminformation_commandlog_info{v2=\"1\", namespace=\"$cluster\", host_name=~\"$host\"}) by (commandlogenabled, commandlogfreqtime, commandlogfreqtxns, commandlogmode, commandlogsize)",
           "instant": true,
           "interval": "",
           "legendFormat": "",
@@ -1206,100 +1350,14 @@
           }
         }
       ],
-      "type": "table",
-      "description": "Command logging configuration from @SystemInformation DEPLOYMENT: whether command logging is enabled (commandlogenabled), the logging mode (commandlogmode, sync or async), and the flush frequency by time (commandlogfreqtime, ms) and by transaction count (commandlogfreqtxns)."
+      "type": "table"
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": 0
-              },
-              {
-                "color": "green",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 4,
-        "x": 20,
-        "y": 13
-      },
-      "id": 26,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "/^kfactor$/",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.4.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "voltdb_systeminformation_deployment_info{v2=\"1\", namespace=\"$cluster\", host_name=~\"$host\"}",
-          "format": "table",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "kFactor",
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "Value": true
-            },
-            "indexByName": {},
-            "renameByName": {}
-          }
-        }
-      ],
-      "type": "stat",
-      "description": "K-safety value (kfactor) from @SystemInformation DEPLOYMENT — the number of redundant copies kept of each partition."
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
+      "description": "Automatic snapshot configuration from @SystemInformation DEPLOYMENT: whether automatic snapshots are enabled (snapshotenabled), their frequency (snapshotfrequency), system priority (snapshotpriority), and the number of snapshots retained (snapshotretain).",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1364,17 +1422,17 @@
         ]
       },
       "gridPos": {
-        "h": 5,
-        "w": 11,
-        "x": 9,
-        "y": 18
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 25
       },
       "id": 25,
       "options": {
         "cellHeight": "sm",
         "showHeader": false
       },
-      "pluginVersion": "12.4.0",
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -1399,20 +1457,31 @@
           }
         }
       ],
-      "type": "table",
-      "description": "Automatic snapshot configuration from @SystemInformation DEPLOYMENT: whether automatic snapshots are enabled (snapshotenabled), their frequency (snapshotfrequency), system priority (snapshotpriority), and the number of snapshots retained (snapshotretain)."
+      "type": "table"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 32
+      },
+      "id": 36,
+      "title": "License",
+      "type": "row"
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "description": "Time remaining until the active license expires, derived from the license expiration date (EXPIRATION) reported by @SystemInformation LICENSE.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1422,109 +1491,14 @@
               }
             ]
           },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 4,
-        "x": 20,
-        "y": 18
-      },
-      "id": 27,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "/^sitesperhost$/",
-          "values": false
-        },
-        "showPercentChange": false,
-        "textMode": "auto",
-        "wideLayout": true
-      },
-      "pluginVersion": "12.4.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "voltdb_systeminformation_deployment_info{v2=\"1\", namespace=\"$cluster\", host_name=~\"$host\"}",
-          "format": "table",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "sites per host",
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "Value": true
-            },
-            "indexByName": {},
-            "renameByName": {}
-          }
-        }
-      ],
-      "type": "stat",
-      "description": "Number of execution sites per host (sitesperhost) from @SystemInformation DEPLOYMENT."
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 23
-      },
-      "id": 4,
-      "panels": [],
-      "title": "License",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text"
-              }
-            ]
-          },
           "unit": "dtdurationms"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
+        "w": 6,
         "x": 0,
-        "y": 24
+        "y": 33
       },
       "id": 2,
       "options": {
@@ -1532,6 +1506,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1539,9 +1514,11 @@
           "fields": "/^expiration_from_now$/",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -1590,37 +1567,36 @@
           }
         }
       ],
-      "type": "stat",
-      "description": "Time remaining until the active license expires, derived from the license expiration date (EXPIRATION) reported by @SystemInformation LICENSE."
+      "type": "stat"
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "description": "The date the active license expires (EXPIRATION) from @SystemInformation LICENSE.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "text"
+                "color": "text",
+                "value": 0
               }
             ]
           },
           "unit": "time: YYYY-MM-DD"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
-        "x": 4,
-        "y": 24
+        "w": 6,
+        "x": 6,
+        "y": 33
       },
       "id": 28,
       "options": {
@@ -1628,6 +1604,7 @@
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1635,9 +1612,11 @@
           "fields": "/^expiration$/",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -1680,14 +1659,14 @@
           }
         }
       ],
-      "type": "stat",
-      "description": "The date the active license expires (EXPIRATION) from @SystemInformation LICENSE."
+      "type": "stat"
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "description": "Maximum number of hosts permitted by the active license (HOSTCOUNT_MAX) from @SystemInformation LICENSE.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1708,19 +1687,19 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text"
+                "color": "text",
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 5,
-        "w": 3,
-        "x": 8,
-        "y": 24
+        "w": 6,
+        "x": 12,
+        "y": 33
       },
       "id": 31,
       "options": {
@@ -1728,6 +1707,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1735,9 +1715,11 @@
           "fields": "/^hostcount_max$/",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -1780,14 +1762,14 @@
           }
         }
       ],
-      "type": "stat",
-      "description": "Maximum number of hosts permitted by the active license (HOSTCOUNT_MAX) from @SystemInformation LICENSE."
+      "type": "stat"
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
+      "description": "Maximum number of processor cores permitted by the active license (CORECOUNT_MAX) from @SystemInformation LICENSE.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1809,19 +1791,19 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "text"
+                "color": "text",
+                "value": 0
               }
             ]
           },
           "unit": "short"
-        },
-        "overrides": []
+        }
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
-        "x": 11,
-        "y": 24
+        "w": 6,
+        "x": 18,
+        "y": 33
       },
       "id": 32,
       "options": {
@@ -1829,6 +1811,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -1836,9 +1819,11 @@
           "fields": "corecount_max",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "13.0.1",
       "targets": [
         {
           "datasource": {
@@ -1856,31 +1841,33 @@
         }
       ],
       "title": "Cores count limit",
-      "type": "stat",
-      "description": "Maximum number of processor cores permitted by the active license (CORECOUNT_MAX) from @SystemInformation LICENSE."
+      "type": "stat"
     }
   ],
   "preload": false,
   "refresh": "",
   "schemaVersion": 42,
-  "tags": [],
   "templating": {
     "list": [
       {
+        "allowCustomValue": true,
         "current": {
           "text": "Prometheus",
           "value": "prometheus"
         },
         "hide": 2,
         "includeAll": false,
+        "multi": false,
         "name": "datasource",
         "options": [],
         "query": "prometheus",
         "refresh": 1,
         "regex": "",
+        "skipUrlSync": false,
         "type": "datasource"
       },
       {
+        "allowCustomValue": true,
         "current": {
           "text": "demo-a",
           "value": "demo-a"
@@ -1890,8 +1877,10 @@
           "uid": "prometheus"
         },
         "definition": "label_values(namespace)",
+        "hide": 0,
         "includeAll": false,
         "label": "Cluster",
+        "multi": false,
         "name": "cluster",
         "options": [],
         "query": {
@@ -1901,11 +1890,13 @@
         "refresh": 1,
         "regex": "",
         "regexApplyTo": "value",
+        "skipUrlSync": false,
         "sort": 1,
         "type": "query"
       },
       {
         "allValue": ".*",
+        "allowCustomValue": true,
         "current": {
           "text": "All",
           "value": "$__all"
@@ -1915,8 +1906,10 @@
           "uid": "prometheus"
         },
         "definition": "label_values({namespace=\"$cluster\"},host_name)",
+        "hide": 0,
         "includeAll": true,
         "label": "Host",
+        "multi": false,
         "name": "host",
         "options": [],
         "query": {
@@ -1926,6 +1919,7 @@
         "refresh": 2,
         "regex": "",
         "regexApplyTo": "value",
+        "skipUrlSync": false,
         "sort": 1,
         "type": "query"
       }
@@ -1935,9 +1929,21 @@
     "from": "now-5m",
     "to": "now"
   },
-  "timepicker": {},
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
   "timezone": "browser",
   "title": "VoltDb Configuration",
-  "uid": "volt-v15x-configuration",
-  "weekStart": ""
+  "uid": "volt-v15x-configuration"
 }

@@ -65,7 +65,7 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 2,
+        "w": 4,
         "x": 0,
         "y": 1
       },
@@ -132,8 +132,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 2,
-        "x": 2,
+        "w": 4,
+        "x": 4,
         "y": 1
       },
       "id": 11,
@@ -202,9 +202,9 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
-        "x": 4,
-        "y": 1
+        "w": 8,
+        "x": 0,
+        "y": 6
       },
       "id": 9,
       "options": {
@@ -293,7 +293,7 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 2,
+        "w": 4,
         "x": 8,
         "y": 1
       },
@@ -374,9 +374,9 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
-        "x": 10,
-        "y": 1
+        "w": 8,
+        "x": 8,
+        "y": 6
       },
       "id": 6,
       "options": {
@@ -464,9 +464,9 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
-        "x": 14,
-        "y": 1
+        "w": 8,
+        "x": 16,
+        "y": 6
       },
       "id": 13,
       "options": {
@@ -531,8 +531,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 2,
-        "x": 18,
+        "w": 4,
+        "x": 12,
         "y": 1
       },
       "id": 24,
@@ -580,7 +580,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 6
+        "y": 11
       },
       "id": 20,
       "panels": [],
@@ -614,7 +614,7 @@
         "h": 11,
         "w": 12,
         "x": 0,
-        "y": 7
+        "y": 12
       },
       "id": 22,
       "options": {
@@ -705,7 +705,7 @@
         "h": 11,
         "w": 12,
         "x": 12,
-        "y": 7
+        "y": 12
       },
       "id": 21,
       "options": {
@@ -798,7 +798,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 23
       },
       "id": 27,
       "options": {
@@ -872,7 +872,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 30
+        "y": 35
       },
       "id": 49,
       "panels": [
@@ -1097,7 +1097,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 31
+        "y": 36
       },
       "id": 7,
       "panels": [],
@@ -1131,7 +1131,7 @@
         "h": 5,
         "w": 4,
         "x": 0,
-        "y": 32
+        "y": 37
       },
       "id": 14,
       "options": {
@@ -1196,7 +1196,7 @@
         "h": 5,
         "w": 4,
         "x": 4,
-        "y": 32
+        "y": 37
       },
       "id": 15,
       "options": {
@@ -1263,7 +1263,7 @@
         "h": 5,
         "w": 4,
         "x": 8,
-        "y": 32
+        "y": 37
       },
       "id": 16,
       "options": {
@@ -1297,7 +1297,7 @@
           "refId": "A"
         }
       ],
-      "title": "Duplicated buffers",
+      "title": "Duplicated buffers (total)",
       "type": "gauge",
       "description": "The number of repeated buffers received after the initial packets were dropped because the queue was full."
     },
@@ -1332,7 +1332,7 @@
         "h": 5,
         "w": 4,
         "x": 12,
-        "y": 32
+        "y": 37
       },
       "id": 17,
       "options": {
@@ -1396,7 +1396,7 @@
         "h": 5,
         "w": 4,
         "x": 16,
-        "y": 32
+        "y": 37
       },
       "id": 23,
       "options": {
@@ -1469,7 +1469,7 @@
         "h": 5,
         "w": 4,
         "x": 20,
-        "y": 32
+        "y": 37
       },
       "id": 19,
       "options": {
@@ -1515,7 +1515,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 37
+        "y": 42
       },
       "id": 28,
       "panels": [],
@@ -1585,7 +1585,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 38
+        "y": 43
       },
       "id": 29,
       "options": {
@@ -1681,7 +1681,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 47
+        "y": 52
       },
       "id": 30,
       "options": {
@@ -1714,7 +1714,7 @@
           "refId": "A"
         }
       ],
-      "title": "Duplicated buffers",
+      "title": "Duplicated buffers rate",
       "type": "timeseries"
     },
     {
@@ -1773,7 +1773,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 47
+        "y": 52
       },
       "id": 33,
       "options": {
@@ -1877,7 +1877,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 56
+        "y": 61
       },
       "id": 31,
       "options": {
@@ -1911,7 +1911,7 @@
           "refId": "A"
         }
       ],
-      "title": "Duplicated buffers",
+      "title": "Duplicated buffers by host & partition",
       "type": "stat"
     },
     {
@@ -1920,7 +1920,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 66
+        "y": 71
       },
       "id": 34,
       "panels": [],
@@ -1962,7 +1962,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 67
+        "y": 72
       },
       "id": 35,
       "options": {
@@ -2035,7 +2035,7 @@
         "h": 4,
         "w": 4,
         "x": 4,
-        "y": 67
+        "y": 72
       },
       "id": 36,
       "options": {
@@ -2105,7 +2105,7 @@
         "h": 4,
         "w": 4,
         "x": 8,
-        "y": 67
+        "y": 72
       },
       "id": 37,
       "options": {
@@ -2170,7 +2170,7 @@
         "h": 4,
         "w": 4,
         "x": 12,
-        "y": 67
+        "y": 72
       },
       "id": 38,
       "options": {
@@ -2235,7 +2235,7 @@
         "h": 4,
         "w": 4,
         "x": 16,
-        "y": 67
+        "y": 72
       },
       "id": 39,
       "options": {
@@ -2300,7 +2300,7 @@
         "h": 4,
         "w": 4,
         "x": 20,
-        "y": 67
+        "y": 72
       },
       "id": 40,
       "options": {
@@ -2343,7 +2343,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 71
+        "y": 76
       },
       "id": 41,
       "panels": [],
@@ -2413,7 +2413,7 @@
         "h": 11,
         "w": 8,
         "x": 0,
-        "y": 72
+        "y": 77
       },
       "id": 42,
       "options": {
@@ -2526,7 +2526,7 @@
         "h": 11,
         "w": 8,
         "x": 8,
-        "y": 72
+        "y": 77
       },
       "id": 50,
       "options": {
@@ -2622,7 +2622,7 @@
         "h": 11,
         "w": 8,
         "x": 16,
-        "y": 72
+        "y": 77
       },
       "id": 51,
       "options": {
@@ -2664,7 +2664,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 83
+        "y": 88
       },
       "id": 1,
       "panels": [],
@@ -2735,7 +2735,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 84
+        "y": 89
       },
       "id": 2,
       "options": {
@@ -2804,7 +2804,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 84
+        "y": 89
       },
       "id": 3,
       "options": {
@@ -2862,6 +2862,142 @@
       "title": "RTT ($cluster)",
       "type": "heatmap",
       "description": "The distribution of time it took to receive acknowledgement from the consumer."
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "When XDCR readiness last changed on this host (voltdb_xdcr_readiness_since_timestamp). Shows how long replication has been ready/broken. Resets on node restart.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "dateTimeFromNow"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 16,
+        "y": 1
+      },
+      "id": 52,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "min(voltdb_xdcr_readiness_since_timestamp_seconds{namespace=\"$cluster\",host_name=~\"$host\"})*1000",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Replication ready since",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Percent of the DR sync snapshot acknowledged (rows_acked / rows_in_sync_snapshot). Only populated while a sync snapshot to a (re)initialized consumer is in progress.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 20,
+        "y": 1
+      },
+      "id": 53,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "100 * sum(voltdb_dr_producer_node_rows_acked_for_sync_snapshot_total{namespace=\"$cluster\"}) / sum(voltdb_dr_producer_node_rows_in_sync_snapshot_total{namespace=\"$cluster\"})",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Sync snapshot progress",
+      "type": "gauge"
     }
   ],
   "preload": false,
