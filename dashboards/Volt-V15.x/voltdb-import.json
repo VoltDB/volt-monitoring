@@ -65,7 +65,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -137,7 +138,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -208,7 +210,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -279,7 +282,8 @@
                 "value": 1
               }
             ]
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -354,7 +358,8 @@
                   }
                 ]
               },
-              "unit": "short"
+              "unit": "short",
+              "noValue": "0"
             },
             "overrides": []
           },
@@ -422,7 +427,8 @@
                   }
                 ]
               },
-              "unit": "short"
+              "unit": "short",
+              "noValue": "0"
             },
             "overrides": []
           },
@@ -660,7 +666,7 @@
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum by (host_name) (rate(voltdb_importer_failure_total{namespace=\"$cluster\",host_name=~\"$host\",importer_name=~\"$importer\"}[$__rate_interval]))",
+              "expr": "(sum by (host_name) (rate(voltdb_importer_failure_total{namespace=\"$cluster\",host_name=~\"$host\",importer_name=~\"$importer\"}[$__rate_interval])))\nor\n(vector(0) unless on() (sum by (host_name) (rate(voltdb_importer_failure_total{namespace=\"$cluster\",host_name=~\"$host\",importer_name=~\"$importer\"}[$__rate_interval]))))",
               "interval": "",
               "legendFormat": "{{source}}",
               "range": true,
@@ -858,7 +864,7 @@
               },
               "editorMode": "code",
               "exemplar": true,
-              "expr": "sum by (procedure_name) (rate(voltdb_importer_failure_total{namespace=\"$cluster\",host_name=~\"$host\",importer_name=~\"$importer\"}[$__rate_interval]))",
+              "expr": "(sum by (procedure_name) (rate(voltdb_importer_failure_total{namespace=\"$cluster\",host_name=~\"$host\",importer_name=~\"$importer\"}[$__rate_interval])))\nor\n(vector(0) unless on() (sum by (procedure_name) (rate(voltdb_importer_failure_total{namespace=\"$cluster\",host_name=~\"$host\",importer_name=~\"$importer\"}[$__rate_interval]))))",
               "interval": "",
               "legendFormat": "{{source}}",
               "range": true,

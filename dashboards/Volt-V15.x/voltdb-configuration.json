@@ -454,7 +454,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         }
       },
       "gridPos": {
@@ -534,7 +535,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         }
       },
       "gridPos": {
@@ -719,7 +721,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         }
       },
       "gridPos": {
@@ -799,7 +802,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         }
       },
       "gridPos": {
@@ -882,7 +886,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         }
       },
       "gridPos": {
@@ -961,7 +966,8 @@
                 "value": 0
               }
             ]
-          }
+          },
+          "noValue": "0"
         }
       },
       "gridPos": {
@@ -1041,7 +1047,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         }
       },
       "gridPos": {

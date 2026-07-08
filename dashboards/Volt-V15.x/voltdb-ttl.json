@@ -313,7 +313,8 @@
                 "value": 0
               }
             ]
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -548,7 +549,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "rate(voltdb_ttl_failed_total{namespace=\"$cluster\",host_name=~\"$host\", table_name=~\"$tableName\"}[$__rate_interval])",
+          "expr": "(rate(voltdb_ttl_failed_total{namespace=\"$cluster\",host_name=~\"$host\", table_name=~\"$tableName\"}[$__rate_interval]))\nor\n(vector(0) unless on() (rate(voltdb_ttl_failed_total{namespace=\"$cluster\",host_name=~\"$host\", table_name=~\"$tableName\"}[$__rate_interval])))",
           "legendFormat": "{{table_name}}",
           "range": true,
           "refId": "A"

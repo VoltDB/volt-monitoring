@@ -55,7 +55,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -131,7 +132,8 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "s",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -218,7 +220,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -292,7 +295,8 @@
               }
             ]
           },
-          "unit": "percentunit"
+          "unit": "percentunit",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -773,7 +777,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by(partition_id)(rate(voltdb_procedure_failed_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"}[$__rate_interval]))",
+          "expr": "(sum by(partition_id)(rate(voltdb_procedure_failed_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"}[$__rate_interval])))\nor\n(vector(0) unless on() (sum by(partition_id)(rate(voltdb_procedure_failed_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"}[$__rate_interval]))))",
           "legendFormat": "{{partition_id}}",
           "range": true,
           "refId": "A"
@@ -802,7 +806,8 @@
                 "value": 0
               }
             ]
-          }
+          },
+          "noValue": "0"
         },
         "overrides": [
           {

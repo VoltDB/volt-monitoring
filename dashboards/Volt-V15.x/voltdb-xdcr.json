@@ -126,7 +126,8 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "decbytes",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -196,7 +197,8 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "decbytes",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -287,7 +289,8 @@
                 "value": 1
               }
             ]
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -606,7 +609,8 @@
                 "value": 0
               }
             ]
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -1123,7 +1127,8 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "decbytes",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -1188,7 +1193,8 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "decbytes",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -1388,7 +1394,8 @@
                 "color": "green"
               }
             ]
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -1461,7 +1468,8 @@
                 "color": "green"
               }
             ]
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -1869,7 +1877,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -2439,7 +2448,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(voltdb_dr_constraint_violation_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
+          "expr": "(sum(voltdb_dr_constraint_violation_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"}))\nor\n(vector(0) unless on() (sum(voltdb_dr_constraint_violation_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})))",
           "legendFormat": "constraint violations",
           "range": true,
           "refId": "A"
@@ -2450,7 +2459,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(voltdb_dr_divergence_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
+          "expr": "(sum(voltdb_dr_divergence_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"}))\nor\n(vector(0) unless on() (sum(voltdb_dr_divergence_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})))",
           "legendFormat": "divergences",
           "range": true,
           "refId": "B"
@@ -2461,7 +2470,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(voltdb_dr_missing_row_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
+          "expr": "(sum(voltdb_dr_missing_row_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"}))\nor\n(vector(0) unless on() (sum(voltdb_dr_missing_row_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})))",
           "legendFormat": "missing rows",
           "range": true,
           "refId": "C"
@@ -2472,7 +2481,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(voltdb_dr_row_timestamp_mismatch_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
+          "expr": "(sum(voltdb_dr_row_timestamp_mismatch_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"}))\nor\n(vector(0) unless on() (sum(voltdb_dr_row_timestamp_mismatch_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})))",
           "legendFormat": "mismatches",
           "range": true,
           "refId": "D"
@@ -2648,7 +2657,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (table_name) (voltdb_dr_divergence_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
+          "expr": "(sum by (table_name) (voltdb_dr_divergence_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"}))\nor\n(vector(0) unless on() (sum by (table_name) (voltdb_dr_divergence_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})))",
           "legendFormat": "divergences - {{table_name}}",
           "range": true,
           "refId": "B"
@@ -2956,7 +2965,8 @@
           },
           "unit": "percent",
           "min": 0,
-          "max": 100
+          "max": 100,
+          "noValue": "0"
         },
         "overrides": []
       },

@@ -247,7 +247,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         }
       },
       "gridPos": {
@@ -313,7 +314,8 @@
                 "value": 0
               }
             ]
-          }
+          },
+          "noValue": "0"
         }
       },
       "gridPos": {
@@ -379,7 +381,8 @@
                 "value": 0
               }
             ]
-          }
+          },
+          "noValue": "0"
         }
       },
       "gridPos": {
@@ -445,7 +448,8 @@
                 "value": 0
               }
             ]
-          }
+          },
+          "noValue": "0"
         }
       },
       "gridPos": {
@@ -1865,7 +1869,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         }
       },
       "gridPos": {
@@ -1935,7 +1940,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         }
       },
       "gridPos": {
@@ -2093,7 +2099,8 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "s",
+          "noValue": "0"
         }
       },
       "gridPos": {
@@ -2233,7 +2240,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         }
       },
       "gridPos": {
@@ -2664,7 +2672,8 @@
               }
             ]
           },
-          "unit": "percent"
+          "unit": "percent",
+          "noValue": "0"
         }
       },
       "gridPos": {
@@ -2742,7 +2751,8 @@
               }
             ]
           },
-          "unit": "percentunit"
+          "unit": "percentunit",
+          "noValue": "0"
         }
       },
       "gridPos": {
@@ -2830,7 +2840,8 @@
               }
             ]
           },
-          "unit": "percentunit"
+          "unit": "percentunit",
+          "noValue": "0"
         }
       },
       "gridPos": {
@@ -4317,7 +4328,8 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "s",
+          "noValue": "0"
         }
       },
       "gridPos": {
@@ -5276,7 +5288,8 @@
             ]
           },
           "unit": "short",
-          "min": 0
+          "min": 0,
+          "noValue": "0"
         }
       },
       "gridPos": {

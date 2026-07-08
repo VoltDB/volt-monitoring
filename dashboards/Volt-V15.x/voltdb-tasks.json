@@ -53,7 +53,8 @@
                 "value": 0
               }
             ]
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -130,7 +131,8 @@
                 "value": 0
               }
             ]
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -1326,7 +1328,7 @@
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "rate(voltdb_scheduler_procedure_failure_total{\n            namespace=\"$cluster\",\n            host_name=~\"$host\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n        }[$__rate_interval])",
+              "expr": "(rate(voltdb_scheduler_procedure_failure_total{\n            namespace=\"$cluster\",\n            host_name=~\"$host\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n        }[$__rate_interval]))\nor\n(vector(0) unless on() (rate(voltdb_scheduler_procedure_failure_total{\n            namespace=\"$cluster\",\n            host_name=~\"$host\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n        }[$__rate_interval])))",
               "format": "time_series",
               "legendFormat": "{{host_name}}, partition({{partition_id}}): {{task_name}}",
               "range": true,

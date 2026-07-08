@@ -59,7 +59,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -127,7 +128,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -194,7 +196,8 @@
                 "value": 0
               }
             ]
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -1034,7 +1037,7 @@
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "sum by (export_source) (voltdb_export_queue_gap_total{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",export_source=~\"$source\", export_target=~\"$target\"})",
+              "expr": "(sum by (export_source) (voltdb_export_queue_gap_total{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",export_source=~\"$source\", export_target=~\"$target\"}))\nor\n(vector(0) unless on() (sum by (export_source) (voltdb_export_queue_gap_total{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",export_source=~\"$source\", export_target=~\"$target\"})))",
               "interval": "",
               "legendFormat": "{{export_source}}",
               "range": true,
