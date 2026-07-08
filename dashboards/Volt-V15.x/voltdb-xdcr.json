@@ -131,7 +131,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "When XDCR last became ready on this cluster (proxy for how long replication has been stable).",
+      "description": "When XDCR readiness last changed on this cluster (voltdb_xdcr_readiness_since_timestamp_seconds, updated on every transition). Read together with the XDCR status tile: when status is NOT READY this is when replication broke; when READY it is when replication last recovered.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -191,7 +191,7 @@
           "refId": "A"
         }
       ],
-      "title": "Ready since",
+      "title": "Since last readiness change",
       "type": "stat"
     },
     {
