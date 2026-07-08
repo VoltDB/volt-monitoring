@@ -4,3 +4,9 @@
 .idea/
 __pycache__/
 *.pyc
+
+# Never commit credentials or local env
+license.xml
+**/license.xml
+.env
+**/.env

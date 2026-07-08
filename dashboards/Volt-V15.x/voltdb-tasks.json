@@ -635,7 +635,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -792,7 +792,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "rate(voltdb_scheduler_task_invocation_total{\n            namespace=\"$cluster\",\n            host_name=~\"$host\", \n            task_name=~\"$taskName\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n        }[$__rate_interval])",
@@ -809,7 +809,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -871,7 +871,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "sum(rate(voltdb_scheduler_task_execution_time_seconds_bucket\n{\n    namespace=\"$cluster\",\n    host_name=~\"$host\", task_name=~\"$taskName\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n}[$__rate_interval])) by (le)",
@@ -888,7 +888,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -950,7 +950,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "sum(rate(voltdb_scheduler_task_wait_time_seconds_bucket\n{\n    namespace=\"$cluster\",\n    host_name=~\"$host\", task_name=~\"$taskName\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n}[$__rate_interval])) by (le)",
@@ -981,7 +981,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -1138,7 +1138,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "rate(voltdb_scheduler_procedure_invocation_total{\n            namespace=\"$cluster\",\n            host_name=~\"$host\", task_name=~\"$taskName\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n        }[$__rate_interval])",
@@ -1155,7 +1155,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -1323,7 +1323,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "rate(voltdb_scheduler_procedure_failure_total{\n            namespace=\"$cluster\",\n            host_name=~\"$host\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n        }[$__rate_interval])",
@@ -1340,7 +1340,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -1402,7 +1402,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "sum(rate(voltdb_scheduler_procedure_execution_time_seconds_bucket\n{\n    namespace=\"$cluster\",\n    host_name=~\"$host\", task_name=~\"$taskName\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n}[$__rate_interval])) by (le)",
@@ -1419,7 +1419,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -1481,7 +1481,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "sum(rate(voltdb_scheduler_procedure_wait_time_seconds_bucket\n{\n    namespace=\"$cluster\",\n    host_name=~\"$host\", task_name=~\"$taskName\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n}[$__rate_interval])) by (le)",

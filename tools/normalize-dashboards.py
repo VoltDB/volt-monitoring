@@ -16,6 +16,12 @@ For every dashboards/**/*.json it:
 - declares used non-core panel plugins in `__requires` (currently the
   Treemap panel) so Grafana warns at import time instead of rendering
   broken panels when the plugin is missing
+- resolves dangling datasource inputs: "Export for sharing externally" turns
+  datasource uids into ${DS_*} input placeholders and adds an __inputs block.
+  If the block is dropped (or a panel nested in a collapsed row is missed when
+  hand-editing), those panels fail at render with "Datasource ${DS_*} was not
+  found" even though the query is valid. We rewrite every ${DS_*} uid to the
+  dashboard's concrete Prometheus datasource uid and drop __inputs.
 - re-serializes with stable 2-space indentation
 
 The uid scheme is part of the repository contract: changing it breaks
@@ -51,6 +57,51 @@ def dashboard_uid(path: Path) -> str:
     return uid
 
 
+DS_INPUT_RE = re.compile(r"^\$\{DS_.*\}$")
+DEFAULT_DS_UID = "prometheus"
+
+
+def concrete_ds_uid(dashboard: dict) -> str:
+    """The dashboard's real Prometheus datasource uid (most common), so we can
+    substitute it for ${DS_*} placeholders. Falls back to "prometheus"."""
+    counts = {}
+
+    def walk(obj):
+        if isinstance(obj, dict):
+            ds = obj.get("datasource")
+            if isinstance(ds, dict) and ds.get("type") == "prometheus":
+                uid = ds.get("uid", "")
+                if uid and not DS_INPUT_RE.match(uid):
+                    counts[uid] = counts.get(uid, 0) + 1
+            for value in obj.values():
+                walk(value)
+        elif isinstance(obj, list):
+            for value in obj:
+                walk(value)
+
+    walk(dashboard)
+    return max(counts, key=counts.get) if counts else DEFAULT_DS_UID
+
+
+def resolve_datasource_inputs(dashboard: dict) -> None:
+    """Rewrite ${DS_*} datasource uids to a concrete uid and drop __inputs."""
+    dashboard.pop("__inputs", None)
+    uid = concrete_ds_uid(dashboard)
+
+    def walk(obj):
+        if isinstance(obj, dict):
+            ds = obj.get("datasource")
+            if isinstance(ds, dict) and DS_INPUT_RE.match(str(ds.get("uid", ""))):
+                ds["uid"] = uid
+            for value in obj.values():
+                walk(value)
+        elif isinstance(obj, list):
+            for value in obj:
+                walk(value)
+
+    walk(dashboard)
+
+
 def used_plugins(dashboard: dict) -> set:
     found = set()
 
@@ -76,6 +127,8 @@ def normalize(path: Path) -> bool:
     dashboard.pop("version", None)
     dashboard.pop("iteration", None)
     dashboard["uid"] = dashboard_uid(path)
+
+    resolve_datasource_inputs(dashboard)
 
     plugins = used_plugins(dashboard)
     if plugins:

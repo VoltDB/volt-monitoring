@@ -879,7 +879,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "description": "Comparison of the number of free bytes left in the DR queue and the number of bytes waiting to be sent to the consumer.",
           "fieldConfig": {
@@ -958,7 +958,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -972,7 +972,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "exemplar": false,

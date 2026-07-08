@@ -399,7 +399,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum by(table_name)(voltdb_table_allocated_memory_bytes{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"})",
@@ -498,7 +498,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "avg by(table_name)(voltdb_compaction_execution_seconds_max{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"})",
@@ -510,7 +510,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "avg by(table_name)(rate(voltdb_compaction_relocated_total_sum{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"}[5m]) / rate(voltdb_compaction_relocated_total_count{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"}[5m]))",
@@ -522,7 +522,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "histogram_quantile(0.50, sum(rate(voltdb_compaction_execution_seconds_bucket{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"}[5m])) by (le))",
@@ -533,7 +533,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "histogram_quantile(0.5, sum(rate(voltdb_compaction_relocated_total_bucket{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"}[5m])) by (le))",
@@ -544,7 +544,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "histogram_quantile(0.99, sum(rate(voltdb_compaction_execution_seconds_bucket{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"}[5m])) by (le))",
@@ -600,7 +600,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -662,7 +662,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -720,7 +720,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
