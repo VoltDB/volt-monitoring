@@ -2105,7 +2105,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "VoltDb Configuration",
+  "title": "VoltDB Configuration",
   "uid": "volt-v12x-configuration",
   "weekStart": ""
 }

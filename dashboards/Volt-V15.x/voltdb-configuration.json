@@ -1257,7 +1257,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Command logging configuration from @SystemInformation DEPLOYMENT: whether command logging is enabled (commandlogenabled), the logging mode (commandlogmode, sync or async), and the flush frequency by time (commandlogfreqtime, ms) and by transaction count (commandlogfreqtxns).",
+      "description": "Command logging configuration from @SystemInformation DEPLOYMENT: whether command logging is enabled (`commandlogenabled`), the logging mode (`commandlogmode`, sync or async), the allocated command-log disk space (`commandlogsize`, in **MB**; default 5120 MB ≈ 5 GB), and the flush frequency by time (`commandlogfreqtime`, ms) and by transaction count (`commandlogfreqtxns`).",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1291,6 +1291,10 @@
                 "commandlogmode": {
                   "index": 3,
                   "text": "cmd logging mode, sync or async"
+                },
+                "commandlogsize": {
+                  "index": 4,
+                  "text": "command log size in MB"
                 }
               },
               "type": "value"
@@ -1951,6 +1955,6 @@
     ]
   },
   "timezone": "browser",
-  "title": "VoltDb Configuration",
+  "title": "VoltDB Configuration",
   "uid": "volt-v15x-configuration"
 }
