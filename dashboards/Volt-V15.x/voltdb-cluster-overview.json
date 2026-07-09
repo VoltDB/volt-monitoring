@@ -955,6 +955,16 @@
               {
                 "id": "unit",
                 "value": "short"
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "sparkline"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 160
               }
             ]
           },
@@ -991,13 +1001,12 @@
               {
                 "id": "custom.cellOptions",
                 "value": {
-                  "type": "color-background",
-                  "mode": "basic"
+                  "type": "sparkline"
                 }
               },
               {
                 "id": "custom.width",
-                "value": 120
+                "value": 160
               }
             ]
           }
@@ -1097,11 +1106,12 @@
           "editorMode": "code",
           "exemplar": false,
           "expr": "sum by (host_name) (rate(voltdb_procedure_invoked_total{namespace=\"$cluster\"}[$__rate_interval]))",
-          "format": "table",
-          "instant": true,
+          "format": "time_series",
+          "instant": false,
           "interval": "",
           "legendFormat": "",
-          "refId": "tps"
+          "refId": "tps",
+          "range": true
         },
         {
           "datasource": {
@@ -1111,15 +1121,29 @@
           "editorMode": "code",
           "exemplar": false,
           "expr": "histogram_quantile(0.95, sum by (host_name, le) (rate(voltdb_initiator_procedure_invoked_time_seconds_bucket{namespace=\"$cluster\"}[$__rate_interval])))",
-          "format": "table",
-          "instant": true,
+          "format": "time_series",
+          "instant": false,
           "interval": "",
           "legendFormat": "",
-          "refId": "p95"
+          "refId": "p95",
+          "range": true
         }
       ],
       "title": "Nodes",
       "transformations": [
+        {
+          "id": "timeSeriesTable",
+          "options": {
+            "tps": {
+              "timeField": "Time",
+              "stat": "lastNotNull"
+            },
+            "p95": {
+              "timeField": "Time",
+              "stat": "lastNotNull"
+            }
+          }
+        },
         {
           "id": "joinByField",
           "options": {
@@ -1192,8 +1216,6 @@
               "Value #host_cpu": 1,
               "Value #rss": 2,
               "Value #heap": 3,
-              "Value #tps": 4,
-              "Value #p95": 5,
               "uptime": 6,
               "version": 7,
               "dr_is_ready": 8,
@@ -1205,7 +1227,9 @@
               "Time 4": 14,
               "Time 5": 15,
               "Time 6": 16,
-              "Time 7": 17
+              "Time 7": 17,
+              "Trend #tps": 4,
+              "Trend #p95": 5
             },
             "renameByName": {
               "Time 1": "",
@@ -1221,8 +1245,8 @@
               "version": "version",
               "Value #rss": "RSS % of RAM",
               "Value #heap": "Heap % of max",
-              "Value #tps": "TPS",
-              "Value #p95": "p95 latency"
+              "Trend #tps": "TPS",
+              "Trend #p95": "p95 latency"
             }
           }
         }
