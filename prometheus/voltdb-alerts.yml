@@ -293,6 +293,192 @@ groups:
           summary: "Export target {{ $labels.export_target }} stalled on {{ $labels.host_name }}"
           description: "Rows are pending for export source {{ $labels.export_source }} but nothing has been acknowledged for 15 minutes."
 
+  # =========================================================================
+  # Client experience: what applications actually see
+  # =========================================================================
+  # These use the initiator-side metrics, which count each transaction ONCE
+  # (per client request) and time the full request-to-response path - unlike
+  # the per-site voltdb_procedure_* metrics, which multiply work across
+  # partition copies in a K-safe cluster and time only the procedure body.
+  - name: voltdb-client-experience
+    rules:
+      - alert: VoltClientErrorRatioHigh
+        # Failed + aborted transactions as a fraction of all client requests.
+        # Ratio-based so one threshold works across workload sizes. The error
+        # counters are absent until the first error, hence the regex selector
+        # (a plain A+B sum would drop entries until BOTH counters exist).
+        expr: |
+          sum by (namespace) (
+            rate({__name__=~"voltdb_initiator_procedure_(failed|aborted)_total"}[5m])
+          )
+          /
+          sum by (namespace) (
+            rate(voltdb_initiator_procedure_invoked_total[5m])
+          ) > 0.01
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "More than 1% of client transactions failing in {{ $labels.namespace }}"
+          description: "{{ $value | humanizePercentage }} of client requests are failing or aborting, as seen by the clients themselves. Check the procedures dashboard's failure/abort panels and application logs."
+
+      - alert: VoltClientLatencyP99High
+        # Initiator latency: request arrives on the network -> response sent,
+        # including queueing, execution and the K-safety replication wait.
+        # 100ms is a generic default - set this to your SLO.
+        expr: |
+          histogram_quantile(0.99,
+            sum by (le, namespace) (
+              rate(voltdb_initiator_procedure_invoked_time_seconds_bucket[5m])
+            )
+          ) > 0.1
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "p99 client latency > 100ms in {{ $labels.namespace }}"
+          description: "p99 initiator latency is {{ $value | humanizeDuration }}. Decompose it with the performance dashboard's latency-anatomy row: inbound queue wait vs procedure execution vs replication round-trip."
+
+      - alert: VoltClientConnectionsNearLimit
+        expr: |
+          voltdb_client_connections_open_total
+          / voltdb_client_connections_limit_total > 0.9
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Client connections at {{ $value | humanizePercentage }} of limit on {{ $labels.host_name }} ({{ $labels.namespace }})"
+          description: "New client connections will be refused once the limit is reached. Raise the limit or reduce per-client connection counts."
+
+      - alert: VoltClientConnectionsRefused
+        # This counter increments ONLY when a connection is rejected at the
+        # limit - clients are actively being turned away right now.
+        expr: increase(voltdb_dropped_connections_total[5m]) > 0
+        labels:
+          severity: critical
+        annotations:
+          summary: "Clients being refused connections on {{ $labels.host_name }} ({{ $labels.namespace }})"
+          description: "{{ $value | humanize }} connection attempts were rejected in the last 5m because the server hit its connection limit."
+
+      - alert: VoltFileDescriptorsNearLimit
+        expr: |
+          voltdb_file_descriptors_count_total
+          / voltdb_file_descriptors_limit_total > 0.9
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "File descriptors at {{ $value | humanizePercentage }} of limit on {{ $labels.host_name }} ({{ $labels.namespace }})"
+          description: "Running out of file descriptors breaks connections and file operations. Raise the OS limit for the VoltDB process."
+
+  # =========================================================================
+  # Cluster health: coordination and intra-cluster overhead
+  # =========================================================================
+  - name: voltdb-cluster-health
+    rules:
+      - alert: VoltClockSkewHigh
+        # Metric is in seconds (base units): 0.05 = 50ms. Large skew disrupts
+        # coordination between nodes.
+        expr: max by (namespace) (voltdb_clockskew_seconds) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Clock skew > 50ms within cluster {{ $labels.namespace }}"
+          description: "Worst pairwise clock difference is {{ $value | humanizeDuration }}. Check the time service (NTP/chrony) on the drifting node - the overview dashboard's clock-skew matrix shows which one."
+
+      - alert: VoltGcPressureHigh
+        # Share of wall-clock time the JVM spends paused for GC, per node.
+        expr: |
+          sum by (namespace, host_name) (
+            rate(voltdb_gc_time_seconds[5m])
+          ) > 0.2
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $labels.host_name }} spending {{ $value | humanizePercentage }} of time in GC ({{ $labels.namespace }})"
+          description: "Sustained garbage-collection pressure adds latency to transactions and usually precedes heap exhaustion. Check heap usage on the memory dashboard."
+
+      - alert: VoltKsafetyReplicationRttHigh
+        # Intra-cluster replica acknowledgment time - the wait K-safety adds to
+        # every transaction. Only produces data when K > 0.
+        expr: |
+          histogram_quantile(0.99,
+            sum by (le, namespace) (
+              rate(voltdb_io_network_replication_round_trip_time_seconds_bucket[5m])
+            )
+          ) > 0.05
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "p99 intra-cluster replication RTT > 50ms in {{ $labels.namespace }}"
+          description: "Replica acknowledgments are taking {{ $value | humanizeDuration }} at p99; every transaction on the affected partitions waits this long. Check the internal network and whether a node is overloaded."
+
+      - alert: VoltForwardedTransactionsHigh
+        # Transactions landing on the wrong node pay an extra network hop.
+        # A sustained high ratio usually means clients are not topology-aware
+        # (fix on the client side) - or a server-side importer is routing rows
+        # to partitioned procedures, which cannot be topology-aware and is
+        # expected to forward (in that case, tune or silence this alert).
+        expr: |
+          sum by (namespace) (rate(voltdb_procedure_forwarded_total[10m]))
+          /
+          sum by (namespace) (rate(voltdb_procedure_invoked_total[10m])) > 0.1
+        for: 30m
+        labels:
+          severity: info
+        annotations:
+          summary: "{{ $value | humanizePercentage }} of transactions forwarded between nodes in {{ $labels.namespace }}"
+          description: "A large share of transactions arrive at a node that is not the leader for their partition and pay an extra hop. Enable topology awareness / client affinity in the client if this traffic comes from external clients."
+
+  # =========================================================================
+  # Workload plumbing: import, topics, scheduled tasks
+  # =========================================================================
+  - name: voltdb-workload
+    rules:
+      - alert: VoltImportFailures
+        expr: increase(voltdb_importer_failure_total[10m]) > 0
+        labels:
+          severity: warning
+        annotations:
+          summary: "Import transactions failing for {{ $labels.importer_name }} on {{ $labels.host_name }}"
+          description: "{{ $value | humanize }} import transactions failed in the last 10m - records are being rejected and not reaching the database."
+
+      - alert: VoltImportStalled
+        # Records have been read from the source but nothing is completing.
+        expr: |
+          voltdb_importer_outstanding_requests_total > 0
+          and
+          increase(voltdb_importer_success_total[15m]) == 0
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Importer {{ $labels.importer_name }} stalled on {{ $labels.host_name }} ({{ $labels.namespace }})"
+          description: "Records are outstanding but no import transaction has completed for 15 minutes."
+
+      - alert: VoltTopicNotStable
+        # Statuses other than STABLE (BLOCKED / BACKFILLING / ORPHANED) mean
+        # records are missing or being recovered for that topic partition.
+        expr: voltdb_topic_info{topic_status!="STABLE"} == 1
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Topic {{ $labels.topic_name }} is {{ $labels.topic_status }} on {{ $labels.host_name }} ({{ $labels.namespace }})"
+
+      - alert: VoltScheduledTaskError
+        # ERROR = the task hit an error and stopped (ON ERROR STOP). PAUSED and
+        # DISABLED are intentional/expected states and do not alert.
+        expr: voltdb_scheduler_action_status_info{task_status="ERROR"} == 1
+        labels:
+          severity: warning
+        annotations:
+          summary: "Scheduled task {{ $labels.task_name }} stopped with an error ({{ $labels.namespace }})"
+          description: "The task's procedure returned an error and the task is no longer running. Its scheduled work is not happening until it is re-enabled."
+
 # Not expressible with current metrics: license-expiry alerting. The expiration
 # is only a label on voltdb_systeminformation_license_info and Prometheus cannot
 # compare label values numerically. Track it operationally, or request a numeric
