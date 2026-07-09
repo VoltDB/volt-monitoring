@@ -1405,7 +1405,7 @@
           "refId": "A"
         }
       ],
-      "title": "Avarage replication speed",
+      "title": "Average replication speed",
       "type": "gauge",
       "description": "Average amount of data, in bytes, that each server in this consumer cluster has received from the producer since it started. Use it as a rough cumulative measure of how much has been replicated in."
     },
@@ -1821,7 +1821,8 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "Bps"
         },
         "overrides": []
       },

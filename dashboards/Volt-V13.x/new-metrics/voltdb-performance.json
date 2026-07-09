@@ -1156,7 +1156,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "How often transactions arrive at a node that is not the right one for their partition and must be forwarded on, per second per node. Each forward adds an extra network hop of latency; a sustained rate usually means clients are not topology-aware and can be fixed on the client side.",
+      "description": "How often transactions arrive at a node that is not the right one for their partition and must be forwarded on, per second per node - i.e. misrouted requests. Each misroute adds an extra network hop of latency; a sustained rate usually means clients are not topology-aware and can be fixed on the client side.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1254,7 +1254,7 @@
           "refId": "A"
         }
       ],
-      "title": "Forwarded transactions rate",
+      "title": "Misrouted transactions rate",
       "type": "timeseries"
     },
     {
