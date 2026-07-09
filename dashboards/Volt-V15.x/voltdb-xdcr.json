@@ -600,35 +600,21 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            }
+            "mode": "thresholds"
           },
           "mappings": [],
-          "min": 0
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "down"
-            },
-            "properties": [
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
               {
-                "id": "color",
-                "value": {
-                  "fixedColor": "red",
-                  "mode": "fixed"
-                }
+                "color": "green",
+                "value": 0
               }
             ]
-          }
-        ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
       },
       "gridPos": {
         "h": 5,
@@ -638,15 +624,11 @@
       },
       "id": 6,
       "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true,
-          "values": [
-            "percent"
-          ]
-        },
-        "pieType": "pie",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -654,12 +636,9 @@
           "fields": "",
           "values": false
         },
-        "sort": "desc",
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": true
       },
       "pluginVersion": "12.4.0",
       "targets": [
@@ -669,12 +648,11 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "exemplar": false,
-          "expr": "sum(voltdb_dr_producer_partition_info{namespace=\"$cluster\",dr_connection_status=\"UP\"})",
-          "instant": true,
+          "expr": "sum(voltdb_dr_producer_partition_info{namespace=\"$cluster\",dr_connection_status=\"UP\"}) or vector(0)",
           "legendFormat": "up",
+          "instant": true,
           "range": false,
-          "refId": "UP"
+          "refId": "A"
         },
         {
           "datasource": {
@@ -682,17 +660,16 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "exemplar": false,
-          "expr": "sum(voltdb_dr_producer_partition_info{namespace=\"$cluster\",dr_connection_status=\"DOWN\"})",
+          "expr": "sum(voltdb_dr_producer_partition_info{namespace=\"$cluster\",dr_connection_status=~\"UP|DOWN\"}) or vector(0)",
+          "legendFormat": "total",
           "instant": true,
-          "legendFormat": "down",
           "range": false,
-          "refId": "DOWN"
+          "refId": "B"
         }
       ],
-      "title": "Connection status to other clusters",
-      "type": "piechart",
-      "description": "Breakdown of partition replication streams by connection state to the remote cluster (up versus down). Only one copy of each partition actually ships data, so not every partition reports a connection even when replication is healthy; any 'down' streams mean data is not currently flowing for those partitions."
+      "title": "Replication connections up",
+      "type": "stat",
+      "description": "How many partition replication streams currently have their connection to the remote cluster up, out of all streams reporting a connection. Only one copy of each partition actually ships data, so not every partition reports a connection even when replication is healthy; anything less than all-up means part of the replication stream is disconnected."
     },
     {
       "datasource": {
@@ -1057,7 +1034,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Value"
+              "options": "Value (max)"
             },
             "properties": [
               {
@@ -1123,18 +1100,6 @@
                 "operation": "groupby"
               }
             }
-          }
-        },
-        {
-          "id": "convertFieldType",
-          "options": {
-            "conversions": [
-              {
-                "destinationType": "time",
-                "targetField": "Value (max)"
-              }
-            ],
-            "fields": {}
           }
         }
       ],
@@ -2050,7 +2015,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Value"
+              "options": "Value (max)"
             },
             "properties": [
               {
@@ -2119,22 +2084,6 @@
                 "operation": "groupby"
               }
             }
-          }
-        },
-        {
-          "id": "convertFieldType",
-          "options": {
-            "conversions": [
-              {
-                "destinationType": "time",
-                "targetField": "Value (max)"
-              },
-              {
-                "destinationType": "number",
-                "targetField": "partition_id"
-              }
-            ],
-            "fields": {}
           }
         }
       ],
