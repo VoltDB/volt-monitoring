@@ -51,6 +51,15 @@ application. Every panel description must:
 - **Titles must match the query**: don't say "5m" if the query uses `$__rate_interval`,
   don't say "max" if the panel shows percentiles, don't use present tense ("Failing") for
   cumulative have-ever-failed counters.
+- **Initiator vs per-site metrics** (`voltdb_initiator_procedure_*` vs `voltdb_procedure_*`):
+  initiator counters/latency count each transaction **once** and measure the full
+  request-to-response path ("initiator latency" — a term clients know; OK in titles).
+  Per-site metrics count the K-safety fan-out (once per partition copy) and time only the
+  procedure body. Use initiator metrics for client-experience panels (TPS as clients see it,
+  error rates, latency percentiles); per-site metrics for locating problems (hot partition,
+  slow procedure, failing site) — and say which one a panel shows in its description.
+  Some counters (e.g. `initiator_procedure_aborted_total`) are absent until the first event —
+  guard stat tiles with `or vector(0)`.
 
 ## Table-cell visuals (Nodes-style tables)
 
