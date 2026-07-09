@@ -861,52 +861,36 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "RSS"
+              "options": "RSS % of RAM"
             },
             "properties": [
               {
                 "id": "unit",
-                "value": "decbytes"
+                "value": "percent"
               },
               {
-                "id": "custom.cellOptions",
-                "value": {
-                  "type": "gauge",
-                  "mode": "lcd",
-                  "valueDisplayMode": "text"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Heap"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "decbytes"
+                "id": "max",
+                "value": 100
               },
               {
-                "id": "custom.cellOptions",
+                "id": "thresholds",
                 "value": {
-                  "type": "gauge",
-                  "mode": "lcd",
-                  "valueDisplayMode": "text"
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 70
+                    },
+                    {
+                      "color": "red",
+                      "value": 85
+                    }
+                  ]
                 }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "TPS"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "short"
               },
               {
                 "id": "custom.cellOptions",
@@ -921,19 +905,68 @@
           {
             "matcher": {
               "id": "byName",
+              "options": "Heap % of max"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              },
+              {
+                "id": "max",
+                "value": 100
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 70
+                    },
+                    {
+                      "color": "red",
+                      "value": 85
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "gauge",
+                  "mode": "gradient",
+                  "valueDisplayMode": "text"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TPS"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
               "options": "p95 latency"
             },
             "properties": [
               {
                 "id": "unit",
                 "value": "s"
-              },
-              {
-                "id": "custom.cellOptions",
-                "value": {
-                  "type": "color-background",
-                  "mode": "basic"
-                }
               },
               {
                 "id": "thresholds",
@@ -953,6 +986,13 @@
                       "value": 0.05
                     }
                   ]
+                }
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background",
+                  "mode": "basic"
                 }
               },
               {
@@ -1028,7 +1068,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (host_name) (voltdb_memory_rss_bytes{namespace=\"$cluster\"})",
+          "expr": "100 * sum by (host_name) (voltdb_memory_rss_bytes{namespace=\"$cluster\"}) / on(host_name) sum by (host_name) (voltdb_memory_physicalmemory_bytes{namespace=\"$cluster\"})",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -1042,7 +1082,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (host_name) (voltdb_memory_javaused_bytes{namespace=\"$cluster\"})",
+          "expr": "100 * sum by (host_name) (voltdb_memory_javaused_bytes{namespace=\"$cluster\"}) / on(host_name) sum by (host_name) (voltdb_memory_javamaxheap_bytes{namespace=\"$cluster\"})",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -1179,8 +1219,8 @@
               "host_name": "host",
               "hostid": "",
               "version": "version",
-              "Value #rss": "RSS",
-              "Value #heap": "Heap",
+              "Value #rss": "RSS % of RAM",
+              "Value #heap": "Heap % of max",
               "Value #tps": "TPS",
               "Value #p95": "p95 latency"
             }
