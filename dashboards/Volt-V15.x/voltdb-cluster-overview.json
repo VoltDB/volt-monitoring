@@ -857,6 +857,54 @@
                 "value": "string"
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RSS"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "decbytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Heap"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "decbytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TPS"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "p95 latency"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              }
+            ]
           }
         ]
       },
@@ -917,6 +965,62 @@
           "legendFormat": "__auto",
           "range": false,
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum by (host_name) (voltdb_memory_rss_bytes{namespace=\"$cluster\"})",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "rss"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum by (host_name) (voltdb_memory_javaused_bytes{namespace=\"$cluster\"})",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "heap"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum by (host_name) (rate(voltdb_procedure_invoked_total{namespace=\"$cluster\"}[$__rate_interval]))",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "tps"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "histogram_quantile(0.95, sum by (host_name, le) (rate(voltdb_initiator_procedure_invoked_time_seconds_bucket{namespace=\"$cluster\"}[$__rate_interval])))",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "p95"
         }
       ],
       "title": "Nodes",
@@ -979,18 +1083,34 @@
               "pod": true,
               "service": true,
               "uptime": false,
-              "v2": true
+              "v2": true,
+              "Time 2": true,
+              "Time 3": true,
+              "Time 4": true,
+              "Time 5": true,
+              "Time 6": true,
+              "Time 7": true
             },
             "includeByName": {},
             "indexByName": {
-              "Time 1": 4,
-              "Time 2": 5,
-              "Value #host_cpu": 1,
-              "Value #host_info": 3,
               "host_name": 0,
-              "hoststarttime": 2,
+              "Value #host_cpu": 1,
+              "Value #rss": 2,
+              "Value #heap": 3,
+              "Value #tps": 4,
+              "Value #p95": 5,
               "uptime": 6,
-              "version": 7
+              "version": 7,
+              "dr_is_ready": 8,
+              "hoststarttime": 9,
+              "Value #host_info": 10,
+              "Time 1": 11,
+              "Time 2": 12,
+              "Time 3": 13,
+              "Time 4": 14,
+              "Time 5": 15,
+              "Time 6": 16,
+              "Time 7": 17
             },
             "renameByName": {
               "Time 1": "",
@@ -1003,7 +1123,11 @@
               "dr_is_ready": "XDCR ready",
               "host_name": "host",
               "hostid": "",
-              "version": "version"
+              "version": "version",
+              "Value #rss": "RSS",
+              "Value #heap": "Heap",
+              "Value #tps": "TPS",
+              "Value #p95": "p95 latency"
             }
           }
         }
