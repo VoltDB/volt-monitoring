@@ -139,6 +139,10 @@ groups:
         # partitions (an old queued timestamp with nothing left to ack). The
         # `and rate(last_queued[5m]) > 0` clause keeps only partitions that are
         # actively producing, so the alarm reflects real backlog.
+        # UNIT BUG: despite the _seconds suffix, the DR producer/consumer and
+        # export last-*-timestamp gauges are exported in epoch MILLISECONDS
+        # (verified against 15.3; Jira pending). Hence the /1000. Re-check when
+        # upgrading - if the server fixes the units, remove the division.
         expr: |
           max by (namespace, remote_cluster_id) (
             (
@@ -147,7 +151,7 @@ groups:
             )
             and
             (rate(voltdb_dr_producer_partition_last_queued_timestamp_seconds[5m]) > 0)
-          ) > 10
+          ) / 1000 > 10
         for: 2m
         labels:
           severity: warning

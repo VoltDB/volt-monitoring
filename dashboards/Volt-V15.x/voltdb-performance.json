@@ -18,6 +18,19 @@
           "type": "dashboard"
         },
         "type": "dashboard"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "enable": true,
+        "expr": "ALERTS{alertstate=\"firing\", namespace=~\"$cluster\"}",
+        "hide": false,
+        "iconColor": "red",
+        "name": "Firing alerts",
+        "titleFormat": "{{alertname}}",
+        "useValueForTime": false
       }
     ]
   },

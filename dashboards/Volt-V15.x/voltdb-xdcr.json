@@ -12,6 +12,19 @@
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
         "type": "dashboard"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "enable": true,
+        "expr": "ALERTS{alertstate=\"firing\", namespace=~\"$cluster\"}",
+        "hide": false,
+        "iconColor": "red",
+        "name": "Firing alerts",
+        "titleFormat": "{{alertname}}",
+        "useValueForTime": false
       }
     ]
   },
@@ -703,7 +716,8 @@
                 "value": 0
               }
             ]
-          }
+          },
+          "unit": "dateTimeFromNow"
         },
         "overrides": []
       },
@@ -1036,9 +1050,23 @@
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "dateTimeFromNow"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "partition_id"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 12,
@@ -1711,7 +1739,8 @@
               }
             ]
           },
-          "noValue": "0"
+          "noValue": "0",
+          "unit": "dateTimeFromNow"
         },
         "overrides": []
       },
@@ -1992,7 +2021,8 @@
                 "color": "green"
               }
             ]
-          }
+          },
+          "unit": "dateTimeFromNow"
         },
         "overrides": [
           {
@@ -2014,6 +2044,18 @@
                     "type": "value"
                   }
                 ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "partition_id"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "short"
               }
             ]
           }
