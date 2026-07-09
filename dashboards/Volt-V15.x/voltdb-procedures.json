@@ -294,7 +294,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(\n    rate(\n        voltdb_procedure_failed_total\n        {\n            namespace=\"$cluster\",\n            host_name=~\"$host\"\n        }[$__rate_interval]\n    )\n)",
+          "expr": "sum(\n    rate(\n        voltdb_initiator_procedure_failed_total\n        {\n            namespace=\"$cluster\",\n            host_name=~\"$host\"\n        }[$__rate_interval]\n    )\n) or vector(0)",
           "instant": false,
           "legendFormat": "{{host_name}}",
           "range": true,
@@ -303,14 +303,14 @@
       ],
       "title": "Failure rate",
       "type": "stat",
-      "description": "How often stored procedures are failing unexpectedly instead of completing successfully, for example due to errors or constraint violations. A sustained non-zero rate warrants investigation."
+      "description": "How often transactions are failing unexpectedly, counted once per client request - this matches the errors your applications actually see, without multiplying failures across partition copies. A sustained non-zero rate warrants investigation."
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "How often stored procedures are being aborted and rolled back. Occasional aborts can be normal, but a rising rate often points to application logic problems or contention between transactions.",
+      "description": "How often transactions are being aborted and rolled back, counted once per client request as your applications experience it. Occasional aborts can be normal, but a rising rate often points to application logic problems or contention between transactions.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -365,7 +365,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(\n    rate(\n        voltdb_procedure_aborted_total\n        {\n            namespace=\"$cluster\",\n            host_name=~\"$host\"\n        }[$__rate_interval]\n    )\n)",
+          "expr": "sum(\n    rate(\n        voltdb_initiator_procedure_aborted_total\n        {\n            namespace=\"$cluster\",\n            host_name=~\"$host\"\n        }[$__rate_interval]\n    )\n) or vector(0)",
           "instant": false,
           "legendFormat": "{{host_name}}",
           "range": true,

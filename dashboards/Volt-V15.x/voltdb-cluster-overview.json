@@ -2247,7 +2247,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "The number of stored-procedure calls that were aborted or failed. Anything above zero points to application errors or problems the database hit while running transactions.",
+      "description": "The number of transactions that were aborted or failed, counted once per client request - the errors your applications actually saw. Anything above zero points to application errors or problems the database hit while running transactions.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2303,7 +2303,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "(sum(voltdb_procedure_aborted_total{namespace=\"$cluster\",host_name=~\"$host\"}) or vector(0))+(sum(voltdb_procedure_failed_total{namespace=\"$cluster\",host_name=~\"$host\"}) or vector(0))",
+          "expr": "(sum(voltdb_initiator_procedure_aborted_total{namespace=\"$cluster\",host_name=~\"$host\"}) or vector(0))+(sum(voltdb_initiator_procedure_failed_total{namespace=\"$cluster\",host_name=~\"$host\"}) or vector(0))",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{host_name}}",
