@@ -1259,14 +1259,14 @@
           "type": "prometheus",
           "uid": "prometheus"
         },
-        "definition": "label_values({namespace=\"$cluster\"},hostname)",
+        "definition": "label_values({namespace=\"$cluster\"},host_name)",
         "includeAll": true,
         "label": "Host",
         "multi": true,
         "name": "host",
         "options": [],
         "query": {
-          "query": "label_values({namespace=\"$cluster\"},hostname)",
+          "query": "label_values({namespace=\"$cluster\"},host_name)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -1285,14 +1285,14 @@
           "type": "prometheus",
           "uid": "prometheus"
         },
-        "definition": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},importer_name)",
+        "definition": "label_values({namespace=\"$cluster\", host_name=~\"$host\"},importer_name)",
         "includeAll": true,
         "label": "Importer",
         "multi": true,
         "name": "importer",
         "options": [],
         "query": {
-          "query": "label_values({namespace=\"$cluster\", hostname=~\"$host\"},importer_name)",
+          "query": "label_values({namespace=\"$cluster\", host_name=~\"$host\"},importer_name)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -1309,7 +1309,7 @@
           "type": "prometheus",
           "uid": "prometheus"
         },
-        "definition": "label_values(voltdb_importer_success_total{namespace=\"$cluster\", hostname=~\"$host\"},procedure_name)",
+        "definition": "label_values(voltdb_importer_success_total{namespace=\"$cluster\", host_name=~\"$host\"},procedure_name)",
         "description": "Hidden variable to get the list of all procedures that are run by importers.",
         "hide": 2,
         "includeAll": false,
@@ -1318,7 +1318,7 @@
         "name": "procedure",
         "options": [],
         "query": {
-          "query": "label_values(voltdb_importer_success_total{namespace=\"$cluster\", hostname=~\"$host\"},procedure_name)",
+          "query": "label_values(voltdb_importer_success_total{namespace=\"$cluster\", host_name=~\"$host\"},procedure_name)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,

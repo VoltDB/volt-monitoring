@@ -197,7 +197,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "min(voltdb_xdcr_readiness_since_timestamp_seconds{namespace=\"$cluster\"})*1000",
+          "expr": "max(voltdb_xdcr_readiness_since_timestamp_seconds{namespace=\"$cluster\"})*1000",
           "instant": true,
           "legendFormat": "",
           "range": false,
@@ -3172,7 +3172,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "min(voltdb_xdcr_readiness_since_timestamp_seconds{namespace=\"$cluster\",host_name=~\"$host\"})*1000",
+          "expr": "max(voltdb_xdcr_readiness_since_timestamp_seconds{namespace=\"$cluster\",host_name=~\"$host\"})*1000",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
