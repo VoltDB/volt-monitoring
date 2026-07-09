@@ -1051,18 +1051,18 @@
               }
             ]
           },
-          "unit": "dateTimeFromNow"
+          "unit": "string"
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "partition_id"
+              "options": "Value"
             },
             "properties": [
               {
                 "id": "unit",
-                "value": "short"
+                "value": "dateTimeFromNow"
               }
             ]
           }
@@ -2022,7 +2022,7 @@
               }
             ]
           },
-          "unit": "dateTimeFromNow"
+          "unit": "string"
         },
         "overrides": [
           {
@@ -2050,12 +2050,12 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "partition_id"
+              "options": "Value"
             },
             "properties": [
               {
                 "id": "unit",
-                "value": "short"
+                "value": "dateTimeFromNow"
               }
             ]
           }
