@@ -2188,7 +2188,17 @@
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "index": 0,
+                  "text": "No conflicts recorded"
+                }
+              }
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [

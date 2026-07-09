@@ -5357,7 +5357,18 @@
               }
             ]
           },
-          "unit": "dateTimeFromNow"
+          "unit": "dateTimeFromNow",
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "index": 0,
+                  "text": "No backpressure recorded"
+                }
+              }
+            }
+          ]
         }
       },
       "gridPos": {
