@@ -1,53 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_PROMETHEUS",
-      "label": "Prometheus",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "10.1.5"
-    },
-    {
-      "type": "panel",
-      "id": "heatmap",
-      "name": "Heatmap",
-      "version": ""
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "Stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -68,7 +19,6 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
@@ -86,9 +36,9 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "All non-cancelled scheduled tasks in cluster",
+      "description": "The number of scheduled tasks currently defined across the cluster, excluding any that have been cancelled. Tasks are procedures VoltDB runs automatically on a schedule, so this shows how much scheduled work the database is managing.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -100,10 +50,11 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -119,6 +70,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -126,14 +78,16 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum by (task_name, host_name) (voltdb_scheduler_action_status_info{namespace=\"$cluster\",host_name=~\"$host\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\",task_status!=\"CANCELED\" })",
@@ -160,9 +114,9 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "Unique tasks scheduled in cluster by name",
+      "description": "The number of distinct scheduled tasks by name, regardless of how many hosts or partitions each one runs on. Compare it with the total task count to see how widely each task is spread across the cluster.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -174,10 +128,11 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -193,6 +148,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -200,14 +156,16 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum by (task_name) (voltdb_scheduler_action_status_info{namespace=\"$cluster\",host_name=~\"$host\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"})",
@@ -234,7 +192,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -259,7 +217,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "#EAB839",
@@ -282,6 +240,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -289,14 +248,16 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum by (task_name) (voltdb_scheduler_action_status_info{namespace=\"$cluster\",host_name=~\"$host\", task_status!=\"RUNNING\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"})",
@@ -319,12 +280,12 @@
         }
       ],
       "type": "stat",
-      "description": "Informational metric with scheduler metadata. Tags: PARTITION_ID - The numeric ID for the logical partition running the task procedure. Directed procedures run on each logical partition. Multi-partition procedures run on the multi-partition initiator. TASK_NAME - The name of the task. TASK_STATUS - The current status of the task. Possible values include: RUNNING - The task is enabled and running normally; DISABLED - The task is disabled and not running. ERROR - The task returned an error and was stopped due to the ON ERROR STOP attribute. PAUSED - The database is paused or is running on a DR replica, so the task is not currently running but will restart when the database resumes or is promoted. TASK_ORIGIN - \"System\" or \"User\". TASK_SCOPE - The execution scope of the task, which matches the RUN ON attribute. Possible values are \"Database\", \"Hosts\", or \"Partitions\"."
+      "description": "How many scheduled tasks are not currently running. A task can be stopped because it was disabled, because it hit an error and was configured to stop on error, or because the database is paused or running on a passive DR replica (it resumes automatically once the database is active again). A non-zero value means some scheduled work is not happening, so check the status table below to see which tasks and why."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -350,7 +311,7 @@
             "steps": [
               {
                 "color": "orange",
-                "value": null
+                "value": 0
               },
               {
                 "color": "#EAB839",
@@ -374,6 +335,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -381,14 +343,16 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum by (task_name) (voltdb_scheduler_procedure_failure_total{namespace=\"$cluster\",host_name=~\"$host\", task_name=~\"$taskName\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"})",
@@ -397,7 +361,7 @@
           "refId": "A"
         }
       ],
-      "title": "Failing tasks",
+      "title": "Tasks with failures",
       "transformations": [
         {
           "id": "calculateField",
@@ -411,12 +375,12 @@
         }
       ],
       "type": "stat",
-      "description": "The number of times the procedure generated an error when run.Tags: same as above."
+      "description": "How many scheduled tasks have had their procedure return an error. A failing task means its scheduled work is not completing successfully; investigate the task's procedure and the database logs."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -428,6 +392,9 @@
             "cellOptions": {
               "type": "auto"
             },
+            "footer": {
+              "reducers": []
+            },
             "inspect": false
           },
           "mappings": [],
@@ -436,7 +403,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           }
@@ -565,14 +532,6 @@
       "id": 2,
       "options": {
         "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
         "showHeader": true,
         "sortBy": [
           {
@@ -581,17 +540,16 @@
           }
         ]
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "voltdb_scheduler_action_status_info{namespace=\"$cluster\",host_name=~\"$host\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"}",
           "format": "table",
-          "hide": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -664,7 +622,7 @@
         }
       ],
       "type": "table",
-      "description": "Informational metric with scheduler metadata. Tags: PARTITION_ID - The numeric ID for the logical partition running the task procedure. Directed procedures run on each logical partition. Multi-partition procedures run on the multi-partition initiator. TASK_NAME - The name of the task. TASK_STATUS - The current status of the task. Possible values include: RUNNING - The task is enabled and running normally; DISABLED - The task is disabled and not running. ERROR - The task returned an error and was stopped due to the ON ERROR STOP attribute. PAUSED - The database is paused or is running on a DR replica, so the task is not currently running but will restart when the database resumes or is promoted. TASK_ORIGIN - \"System\" or \"User\". TASK_SCOPE - The execution scope of the task, which matches the RUN ON attribute. Possible values are \"Database\", \"Hosts\", or \"Partitions\"."
+      "description": "Lists every scheduled task with the host it runs on, its current status, whether it was created by the system or by a user, and its scope (database-wide, per host, or per partition). Any status other than Running is highlighted so you can quickly spot tasks that are disabled, stopped on an error, or paused because the database is paused or running as a DR replica."
     },
     {
       "collapsed": true,
@@ -679,7 +637,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -722,8 +680,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               }
@@ -837,25 +794,24 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "rate(voltdb_scheduler_task_invocation_total{\n            namespace=\"$cluster\",\n            host_name=~\"$host\", \n            task_name=~\"$taskName\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n        }[$__rate_interval])",
               "format": "time_series",
-              "hide": false,
               "legendFormat": "{{host_name}}, partition({{partition_id}}): {{task_name}}",
               "range": true,
               "refId": "A"
             }
           ],
-          "title": "Scheduled procedure invocation total",
-          "transformations": [],
-          "type": "timeseries"
+          "title": "Scheduled task invocation total",
+          "type": "timeseries",
+          "description": "How often the scheduler fires for each task, per second. This reflects how frequently a task decides what to do next; a rate that unexpectedly drops to zero for a task that should be active means its schedule has stalled."
         },
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -917,7 +873,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "sum(rate(voltdb_scheduler_task_execution_time_seconds_bucket\n{\n    namespace=\"$cluster\",\n    host_name=~\"$host\", task_name=~\"$taskName\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n}[$__rate_interval])) by (le)",
@@ -928,14 +884,13 @@
             }
           ],
           "title": "Scheduled task execution time",
-          "transformations": [],
           "type": "heatmap",
-          "description": "The distribution of the amount of time taken to schedule an instance of the task."
+          "description": "The distribution of how long the scheduler takes to work out each task's next action. Consistently high values point to a slow or overloaded scheduler rather than to the task's procedure itself."
         },
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -997,7 +952,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "sum(rate(voltdb_scheduler_task_wait_time_seconds_bucket\n{\n    namespace=\"$cluster\",\n    host_name=~\"$host\", task_name=~\"$taskName\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n}[$__rate_interval])) by (le)",
@@ -1008,9 +963,8 @@
             }
           ],
           "title": "Scheduled task wait time",
-          "transformations": [],
           "type": "heatmap",
-          "description": "The distribution of the difference between when the task was scheduled to run and when the scheduler was invoked."
+          "description": "The distribution of how far behind schedule each task's firing is: the gap between when it was due to run and when the scheduler actually got to it. Growing wait times mean the scheduler is falling behind and tasks are running late."
         }
       ],
       "title": "Tasks",
@@ -1029,7 +983,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -1072,8 +1026,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               }
@@ -1187,7 +1140,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "rate(voltdb_scheduler_procedure_invocation_total{\n            namespace=\"$cluster\",\n            host_name=~\"$host\", task_name=~\"$taskName\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n        }[$__rate_interval])",
@@ -1198,13 +1151,13 @@
             }
           ],
           "title": "Scheduled procedure invocation total",
-          "transformations": [],
-          "type": "timeseries"
+          "type": "timeseries",
+          "description": "How often each task's stored procedure is actually called, per second. This is the real work a task performs; compare it with the task firing rate to confirm scheduled firings are turning into procedure calls."
         },
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -1258,8 +1211,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   }
                 ]
               }
@@ -1373,26 +1325,24 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "rate(voltdb_scheduler_procedure_failure_total{\n            namespace=\"$cluster\",\n            host_name=~\"$host\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n        }[$__rate_interval])",
+              "expr": "(rate(voltdb_scheduler_procedure_failure_total{\n            namespace=\"$cluster\",\n            host_name=~\"$host\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n        }[$__rate_interval]))\nor\n(vector(0) unless on() (rate(voltdb_scheduler_procedure_failure_total{\n            namespace=\"$cluster\",\n            host_name=~\"$host\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n        }[$__rate_interval])))",
               "format": "time_series",
-              "hide": false,
               "legendFormat": "{{host_name}}, partition({{partition_id}}): {{task_name}}",
               "range": true,
               "refId": "B"
             }
           ],
           "title": "Scheduled procedure invocation failing",
-          "transformations": [],
           "type": "timeseries",
-          "description": "The number of times the procedure generated an error when run.Tags: same as above."
+          "description": "The rate at which task procedures return errors, per second. Sustained errors mean a task's scheduled work is repeatedly failing; check the procedure logic and the database logs."
         },
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -1454,7 +1404,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "sum(rate(voltdb_scheduler_procedure_execution_time_seconds_bucket\n{\n    namespace=\"$cluster\",\n    host_name=~\"$host\", task_name=~\"$taskName\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n}[$__rate_interval])) by (le)",
@@ -1465,14 +1415,13 @@
             }
           ],
           "title": "Scheduled procedure execution time",
-          "transformations": [],
           "type": "heatmap",
-          "description": "The distribution of time the task took to execute."
+          "description": "The distribution of how long each task's stored procedure takes to run. Rising execution times can mean the procedure is doing more work or that the database is under load."
         },
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -1534,7 +1483,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "sum(rate(voltdb_scheduler_procedure_wait_time_seconds_bucket\n{\n    namespace=\"$cluster\",\n    host_name=~\"$host\", task_name=~\"$taskName\", task_scope=~\"$taskScope\", task_origin=~\"$taskOrigin\"\n}[$__rate_interval])) by (le)",
@@ -1545,51 +1494,47 @@
             }
           ],
           "title": "Scheduled procedure wait time",
-          "transformations": [],
           "type": "heatmap",
-          "description": "The distribution of time between when the procedure was scheduled to run and when it was invoked."
+          "description": "The distribution of how long each task's procedure waits between being scheduled and actually being invoked. Large waits mean procedure calls are queuing up rather than running promptly."
         }
       ],
       "title": "Procedures",
       "type": "row"
     }
   ],
+  "preload": false,
   "refresh": "",
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 42,
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": false,
           "text": "Prometheus",
           "value": "prometheus"
         },
         "hide": 2,
         "includeAll": false,
         "label": "datasource",
-        "multi": false,
         "name": "datasource",
         "options": [],
         "query": "prometheus",
-        "queryValue": "",
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
         "type": "datasource"
       },
       {
-        "current": {},
+        "current": {
+          "text": "demo-a",
+          "value": "demo-a"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values(namespace)",
-        "hide": 0,
         "includeAll": false,
         "label": "Cluster",
-        "multi": false,
         "name": "cluster",
         "options": [],
         "query": {
@@ -1598,22 +1543,22 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values(host_name)",
-        "hide": 0,
         "includeAll": true,
         "label": "Host",
-        "multi": false,
         "name": "host",
         "options": [],
         "query": {
@@ -1622,22 +1567,22 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values(partition_id)",
-        "hide": 0,
         "includeAll": true,
         "label": "Partition",
-        "multi": false,
         "name": "partition",
         "options": [],
         "query": {
@@ -1646,22 +1591,22 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values(task_name)",
-        "hide": 0,
         "includeAll": true,
         "label": "Task Name",
-        "multi": false,
         "name": "taskName",
         "options": [],
         "query": {
@@ -1670,22 +1615,22 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values(task_origin)",
-        "hide": 0,
         "includeAll": true,
         "label": "Task Origin",
-        "multi": false,
         "name": "taskOrigin",
         "options": [],
         "query": {
@@ -1694,22 +1639,22 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values(task_scope)",
-        "hide": 0,
         "includeAll": true,
         "label": "Task Scope",
-        "multi": false,
         "name": "taskScope",
         "options": [],
         "query": {
@@ -1718,22 +1663,22 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values(task_status)",
-        "hide": 0,
         "includeAll": true,
         "label": "Task Status",
-        "multi": false,
         "name": "taskStatus",
         "options": [],
         "query": {
@@ -1742,19 +1687,17 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
+        "baseFilters": [],
         "datasource": {
           "type": "prometheus",
           "uid": "prometheus"
         },
         "filters": [],
-        "hide": 0,
         "name": "Filters",
-        "skipUrlSync": false,
         "type": "adhoc"
       }
     ]
@@ -1764,7 +1707,7 @@
     "to": "now"
   },
   "timepicker": {},
-  "timezone": "",
+  "timezone": "browser",
   "title": "VoltDB Tasks",
   "uid": "volt-v13x-tasks",
   "weekStart": ""

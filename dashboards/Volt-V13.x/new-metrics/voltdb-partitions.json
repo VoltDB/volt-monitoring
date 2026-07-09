@@ -1,65 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_PROMETHEUS",
-      "label": "Prometheus",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "panel",
-      "id": "bargauge",
-      "name": "Bar gauge",
-      "version": ""
-    },
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "10.1.5"
-    },
-    {
-      "type": "panel",
-      "id": "heatmap",
-      "name": "Heatmap",
-      "version": ""
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "Stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "marcusolsson-treemap-panel",
-      "name": "Treemap",
-      "version": "2.0.0"
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -80,7 +19,6 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
@@ -98,9 +36,9 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The number of procedure invocation per 5 minutes, also includes procedures being replicated into partition replicas, so it does not equal the number of transactions issued by clients",
+      "description": "Rate of stored-procedure invocations across the selected hosts. In a K-safe cluster each transaction fans out and runs on every copy of its partition, so this counts each transaction once per copy and is higher than the number of transactions your clients actually issued; watch it for overall load and sudden shifts in traffic.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -113,11 +51,12 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -133,6 +72,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -140,14 +80,16 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -158,15 +100,14 @@
           "refId": "A"
         }
       ],
-      "title": "Invocation rate 5m",
+      "title": "Invocation rate",
       "type": "stat"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The distribution of time tasks were waiting in the queue.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -179,7 +120,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "#EAB839",
@@ -191,7 +132,8 @@
               }
             ]
           },
-          "unit": "ns"
+          "unit": "s",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -207,6 +149,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -214,18 +157,19 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "max(voltdb_task_queue_wait_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"})",
-          "hide": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "B"
@@ -233,7 +177,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "histogram_quantile(0.99, sum(rate(voltdb_task_queue_wait_time_seconds_bucket{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"}[5m])) by (le))",
@@ -244,14 +188,14 @@
         }
       ],
       "title": "Command execution max wait time",
-      "type": "stat"
+      "type": "stat",
+      "description": "The longest time any task sat in an execution queue before a partition's execution engine picked it up. Rising wait times mean sites are saturated and transactions are backing up; use it to catch an overloaded partition or host."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The number of tasks in the queue.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -264,7 +208,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "#EAB839",
@@ -276,7 +220,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -292,6 +237,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -299,32 +245,33 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "max(voltdb_task_queue_depth_total{namespace=\"$cluster\",host_name=~\"$host\"})",
-          "hide": false,
           "legendFormat": "{{host_name}}",
           "range": true,
           "refId": "B"
         }
       ],
       "title": "Max queue depth",
-      "type": "stat"
+      "type": "stat",
+      "description": "The largest number of tasks backed up in any single execution queue, waiting to run. A persistently high backlog points to an overloaded execution site or a hot partition that cannot keep up with incoming work."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The distribution of the amount of time the execution site had to wait for a new task.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -336,7 +283,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "#EAB839",
@@ -348,7 +295,8 @@
               }
             ]
           },
-          "unit": "percentunit"
+          "unit": "percentunit",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -364,6 +312,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -371,19 +320,20 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "max(1 - (voltdb_idle_time_pauses_seconds_sum{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"})/60)",
-          "hide": false,
+          "expr": "max(1 - (voltdb_idle_time_pauses_seconds_sum{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\"})/60)",
           "instant": false,
           "legendFormat": "{{host_name}}",
           "range": true,
@@ -391,7 +341,8 @@
         }
       ],
       "title": "Max percent busy",
-      "type": "stat"
+      "type": "stat",
+      "description": "The fraction of time the busiest execution site spent actively processing work rather than sitting idle. Values approaching 100% mean that site is saturated and likely a bottleneck; one hot value among otherwise idle sites indicates a skewed or hot partition."
     },
     {
       "collapsed": false,
@@ -409,7 +360,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -417,11 +368,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -438,6 +391,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -453,7 +407,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -498,15 +452,17 @@
           "sortDesc": false
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum by(partition_id)(rate(voltdb_procedure_invoked_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"}[$__rate_interval]))",
@@ -517,12 +473,12 @@
       ],
       "title": "Procedure invocations per partition",
       "type": "timeseries",
-      "description": "The total number of invocations of this procedure at this site."
+      "description": "Rate of stored-procedure calls handled by each partition, counting every copy of the partition in a K-safe cluster. Compare the lines to spot a hot or skewed partition doing far more work than the others, which can bottleneck the whole cluster."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -530,11 +486,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -551,6 +509,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -567,7 +526,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -597,19 +556,20 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "max by (site_id) (1- voltdb_idle_time_pauses_seconds_sum{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\"}/60)",
-          "hide": false,
           "legendFormat": "{{site_id}}",
           "range": true,
           "refId": "B"
@@ -617,12 +577,12 @@
       ],
       "title": "Busiest sites (percent of the time)",
       "type": "timeseries",
-      "description": "The distribution of the amount of time the execution site had to wait for a new task."
+      "description": "For each execution site, the fraction of time it was actively working rather than idle. Sites pinned near 100% are saturated; an uneven spread points to a hot partition or an unbalanced workload."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -636,6 +596,9 @@
               "type": "gauge",
               "valueDisplayMode": "text"
             },
+            "footer": {
+              "reducers": []
+            },
             "inspect": false
           },
           "mappings": [],
@@ -644,7 +607,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
@@ -680,14 +643,6 @@
       "id": 12,
       "options": {
         "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
         "showHeader": true,
         "sortBy": [
           {
@@ -696,12 +651,12 @@
           }
         ]
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum by(procedure_name)(increase(voltdb_procedure_invoked_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"}[$__range]))",
@@ -734,12 +689,12 @@
         }
       ],
       "type": "table",
-      "description": "The total number of invocations of this procedure at this site."
+      "description": "Stored procedures ranked by how many times they ran over the selected time range, including the K-safety fan-out (each run on every partition copy counts). Use it to see which procedures drive the workload and where tuning effort will pay off most."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -747,11 +702,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -768,6 +725,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -783,7 +741,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
@@ -806,18 +764,20 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by(partition_id)(rate(voltdb_procedure_failed_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"}[$__rate_interval]))",
+          "expr": "(sum by(partition_id)(rate(voltdb_procedure_failed_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"}[$__rate_interval])))\nor\n(vector(0) unless on() (sum by(partition_id)(rate(voltdb_procedure_failed_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"}[$__rate_interval]))))",
           "legendFormat": "{{partition_id}}",
           "range": true,
           "refId": "A"
@@ -825,14 +785,13 @@
       ],
       "title": "Procedure failures per partition",
       "type": "timeseries",
-      "description": "The number of times the procedure failed unexpectedly."
+      "description": "Rate of stored-procedure calls that failed, broken out by partition. Any sustained non-zero value warrants investigation; failures concentrated on one partition often signal a data or hotspot problem there."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The length of time it took to execute the stored procedure.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -844,11 +803,11 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
-          "unit": "short"
+          "noValue": "0"
         },
         "overrides": [
           {
@@ -863,6 +822,10 @@
                   "fixedColor": "red",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "1s+"
               }
             ]
           },
@@ -878,6 +841,10 @@
                   "fixedColor": "red",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "<1s"
               }
             ]
           },
@@ -893,6 +860,10 @@
                   "fixedColor": "red",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "<500ms"
               }
             ]
           },
@@ -908,6 +879,10 @@
                   "fixedColor": "yellow",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "<200ms"
               }
             ]
           },
@@ -923,6 +898,10 @@
                   "fixedColor": "yellow",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "<100ms"
               }
             ]
           },
@@ -938,6 +917,82 @@
                   "fixedColor": "yellow",
                   "mode": "fixed"
                 }
+              },
+              {
+                "id": "displayName",
+                "value": "<50ms"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "0.01"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "<10ms"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "0.005"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "<5ms"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "0.001"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "<1ms"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "0.0005"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "<500µs"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "0.0001"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "<100µs"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "0.00001"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "<10µs"
               }
             ]
           }
@@ -952,8 +1007,16 @@
       "id": 14,
       "options": {
         "displayMode": "gradient",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 300,
         "minVizHeight": 10,
         "minVizWidth": 0,
+        "namePlacement": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -963,14 +1026,15 @@
           "values": false
         },
         "showUnfilled": true,
+        "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -983,13 +1047,13 @@
         }
       ],
       "title": "Procedure invocations count by time buckets",
-      "transformations": [],
-      "type": "bargauge"
+      "type": "bargauge",
+      "description": "How stored-procedure execution times were distributed over the selected range, grouped into latency buckets. This measures the procedure body only - queueing and the wait for partition replicas are not included. Weight in the higher buckets means some calls are slow; use it to judge execution latency and catch outliers."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1004,7 +1068,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "#EAB839",
@@ -1050,18 +1114,17 @@
         "textField": "partition_id",
         "tiling": "treemapSquarify"
       },
-      "pluginVersion": "9.5.3",
+      "pluginVersion": "2.1.1",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
           "expr": "max by(procedure_name, partition_id) (voltdb_procedure_invoked_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"})",
           "format": "table",
-          "hide": false,
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -1070,13 +1133,12 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
           "expr": "sum by(procedure_name, partition_id) (increase(voltdb_procedure_invoked_total{namespace=\"$cluster\", host_name=~\"$host\", site_id=~\"$site\", partition_id=~\"$partition\"}[$__range]))",
           "format": "table",
-          "hide": false,
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -1118,12 +1180,12 @@
         }
       ],
       "type": "marcusolsson-treemap-panel",
-      "description": "- `voltdb_procedure_invoked_time_seconds`: The length of time it took to execute the stored procedure.\n- `voltdb_procedure_invoked_total`: The total number of invocations of this procedure at this site."
+      "description": "Each block is one stored procedure on one partition, sized by how often it ran and labelled with its slowest execution time (procedure body only, excluding queueing and the replica wait). Use it to find the procedure-and-partition combinations that dominate the workload or run unusually slowly, pinpointing a hot pair."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1131,11 +1193,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1152,6 +1216,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1168,7 +1233,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               },
               {
                 "color": "red",
@@ -1200,15 +1265,17 @@
           "sortDesc": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "voltdb_task_queue_depth_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\"}",
@@ -1219,12 +1286,12 @@
       ],
       "title": "Command queue depth by site",
       "type": "timeseries",
-      "description": "The number of tasks in the queue."
+      "description": "Number of tasks waiting to run in each execution site's queue over time. Queues that keep growing on a particular site reveal an overloaded execution engine or a hot partition that is falling behind."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1277,21 +1344,22 @@
           "value": "Count"
         },
         "tooltip": {
-          "show": true,
+          "mode": "single",
+          "showColorScale": false,
           "yHistogram": false
         },
         "yAxis": {
           "axisPlacement": "left",
           "reverse": false,
-          "unit": "short"
+          "unit": "s"
         }
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum(rate(voltdb_procedure_invoked_time_seconds_bucket{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"}[$__rate_interval])) by (le) ",
@@ -1303,14 +1371,13 @@
       ],
       "title": "Cumulative Procedure Invocation Distribution",
       "type": "heatmap",
-      "description": "The length of time it took to execute the stored procedure."
+      "description": "Distribution of stored-procedure execution times over the selected range, shown as a heatmap so you can watch how latency shifts. This times the procedure body only, excluding queueing and the K-safety replication wait; bands drifting toward higher execution times indicate procedures slowing down."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The number of rows stored for this table in the current partition. For streams, the cumulative total number of rows inserted into the stream.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1321,7 +1388,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               }
             ]
           },
@@ -1343,11 +1411,12 @@
         "textField": "partition_id",
         "tiling": "treemapSquarify"
       },
+      "pluginVersion": "2.1.1",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum by (table_name, partition_id)(voltdb_table_tuple_total{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"})",
@@ -1359,37 +1428,39 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "1",
           "format": "table",
-          "hide": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "DUMMY QUERY FOR DASHBOARDS COMPATIBILITY"
         }
       ],
       "title": "Tuples in table by table and partition",
-      "type": "marcusolsson-treemap-panel"
+      "type": "marcusolsson-treemap-panel",
+      "description": "Row counts for each table broken down by partition (for streams, the cumulative number of rows inserted). Compare partitions within a table to spot data skew, where one partition holds far more rows than the others."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "Cumulative queue wait time. Choose site to drill down",
+      "description": "Median, 90th- and 99th-percentile time that tasks wait in the execution queues before running. Rising percentiles mean transactions are queuing behind a busy site; pick a site to drill into a specific execution engine.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -1406,6 +1477,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -1420,7 +1492,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -1430,32 +1503,7 @@
           },
           "unit": "s"
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "Value"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
@@ -1472,15 +1520,17 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "histogram_quantile(0.99, sum(rate(voltdb_task_queue_wait_time_seconds_bucket{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\"}[$__rate_interval])) by (le))",
@@ -1491,11 +1541,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "histogram_quantile(0.50, sum(rate(voltdb_task_queue_wait_time_seconds_bucket{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\"}[$__rate_interval])) by (le))",
-          "hide": false,
           "legendFormat": "p50",
           "range": true,
           "refId": "B"
@@ -1503,56 +1552,52 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "histogram_quantile(0.90, sum(rate(voltdb_task_queue_wait_time_seconds_bucket{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\"}[$__rate_interval])) by (le))",
-          "hide": false,
           "legendFormat": "p90",
           "range": true,
           "refId": "C"
         }
       ],
-      "title": "Command queue max wait times by site",
+      "title": "Command queue wait time percentiles by site",
       "type": "timeseries"
     }
   ],
+  "preload": false,
   "refresh": "",
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 42,
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": false,
           "text": "Prometheus",
           "value": "prometheus"
         },
         "hide": 2,
         "includeAll": false,
         "label": "datasource",
-        "multi": false,
         "name": "datasource",
         "options": [],
         "query": "prometheus",
-        "queryValue": "",
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
         "type": "datasource"
       },
       {
-        "current": {},
+        "current": {
+          "text": "demo-a",
+          "value": "demo-a"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values(namespace)",
-        "hide": 0,
         "includeAll": false,
         "label": "Cluster",
-        "multi": false,
         "name": "cluster",
         "options": [],
         "query": {
@@ -1561,22 +1606,23 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
+        "regexApplyTo": "value",
         "sort": 1,
         "type": "query"
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values({namespace=\"$cluster\"},host_name)",
-        "hide": 0,
         "includeAll": true,
         "label": "Host",
-        "multi": false,
         "name": "host",
         "options": [],
         "query": {
@@ -1585,70 +1631,52 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
+        "regexApplyTo": "value",
         "sort": 1,
         "type": "query"
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
-        "definition": "label_values({namespace=\"$cluster\", host_name=~\"$host\"},table_name)",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Table",
-        "multi": true,
-        "name": "table",
-        "options": [],
-        "query": {
-          "query": "label_values({namespace=\"$cluster\", host_name=~\"$host\"},table_name)",
-          "refId": "PrometheusVariableQueryEditor-VariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "type": "query"
-      },
-      {
-        "allValue": ".*",
-        "current": {},
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
-        },
-        "definition": "label_values({namespace=\"$cluster\", host_name=~\"$host\", table_name=~\"$table\"},partition_id)",
-        "hide": 0,
+        "definition": "label_values({namespace=\"$cluster\", host_name=~\"$host\"},partition_id)",
         "includeAll": true,
         "label": "Partition",
         "multi": true,
         "name": "partition",
         "options": [],
         "query": {
-          "query": "label_values({namespace=\"$cluster\", host_name=~\"$host\", table_name=~\"$table\"},partition_id)",
+          "qryType": 1,
+          "query": "label_values({namespace=\"$cluster\", host_name=~\"$host\"},partition_id)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
+        "regexApplyTo": "value",
         "sort": 1,
         "type": "query"
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values({namespace=\"$cluster\", host_name=~\"$host\"},site_id)",
-        "hide": 0,
         "includeAll": true,
         "label": "Site",
-        "multi": false,
         "name": "site",
         "options": [],
         "query": {
@@ -1657,8 +1685,7 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
+        "regexApplyTo": "value",
         "type": "query"
       }
     ]
@@ -1668,8 +1695,16 @@
     "to": "now"
   },
   "timepicker": {},
-  "timezone": "",
+  "timezone": "browser",
   "title": "VoltDB Partitions",
   "uid": "volt-v13x-partitions",
-  "weekStart": ""
+  "weekStart": "",
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "marcusolsson-treemap-panel",
+      "name": "Treemap",
+      "version": "2.0.0"
+    }
+  ]
 }

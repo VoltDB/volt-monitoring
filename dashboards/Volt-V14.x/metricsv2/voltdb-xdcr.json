@@ -1,83 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_PROMETHEUS",
-      "label": "Prometheus",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "panel",
-      "id": "barchart",
-      "name": "Bar chart",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "bargauge",
-      "name": "Bar gauge",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "gauge",
-      "name": "Gauge",
-      "version": ""
-    },
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "12.0.2"
-    },
-    {
-      "type": "panel",
-      "id": "heatmap",
-      "name": "Heatmap",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "piechart",
-      "name": "Pie chart",
-      "version": ""
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "Stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "marcusolsson-treemap-panel",
-      "name": "Treemap",
-      "version": "2.0.0"
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -91,6 +12,19 @@
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
         "type": "dashboard"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "prometheus"
+        },
+        "enable": true,
+        "expr": "ALERTS{alertstate=\"firing\", namespace=~\"$cluster\"}",
+        "hide": false,
+        "iconColor": "red",
+        "name": "Firing alerts",
+        "titleFormat": "{{alertname}}",
+        "useValueForTime": false
       }
     ]
   },
@@ -107,6 +41,248 @@
         "x": 0,
         "y": 0
       },
+      "id": 54,
+      "panels": [],
+      "title": "XDCR status",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Overall cross-datacenter replication readiness for this cluster. Shows READY only when every server reports it is ready to replicate, and NOT READY if any server is not — a quick go/no-go for whether XDCR is currently healthy.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "text"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "short",
+          "noValue": "0",
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "text": "READY",
+                  "color": "green",
+                  "index": 0
+                }
+              }
+            },
+            {
+              "type": "range",
+              "options": {
+                "from": -1000000,
+                "to": -0.5,
+                "result": {
+                  "text": "NOT READY",
+                  "color": "red",
+                  "index": 1
+                }
+              }
+            }
+          ]
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 0,
+        "y": 1
+      },
+      "id": 55,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "13.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(count(voltdb_xdcr_readiness_info{namespace=\"$cluster\",dr_is_ready=\"true\"}) OR on() vector(0)) - count(voltdb_xdcr_readiness_info{namespace=\"$cluster\"})",
+          "instant": true,
+          "legendFormat": "",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "XDCR status",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "When cross-datacenter replication (XDCR) last changed state on this cluster. Read it together with the XDCR status tile: if the status is NOT READY this is when replication broke; if READY, when it last recovered.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "dateTimeFromNow",
+          "noValue": "0"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 8,
+        "y": 1
+      },
+      "id": 56,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "13.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "max(voltdb_xdcr_readiness_since_timestamp_seconds{namespace=\"$cluster\"})*1000",
+          "instant": true,
+          "legendFormat": "",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Since last readiness change",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "How many servers in this cluster currently report that they are ready to replicate. If this is below your server count, replication is degraded or still coming up on some nodes.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "short",
+          "noValue": "0"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 16,
+        "y": 1
+      },
+      "id": 57,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "13.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "count(voltdb_xdcr_readiness_info{namespace=\"$cluster\",dr_is_ready=\"true\"})",
+          "instant": true,
+          "legendFormat": "",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Hosts ready",
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
       "id": 8,
       "panels": [],
       "title": "Producer overview",
@@ -115,9 +291,9 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "Time it took to receive acknowledgement from the consumer.",
+      "description": "Longest round-trip time for the producer to get an acknowledgement back from the remote consumer cluster. Higher values mean data is taking longer to be confirmed as replicated; watch it for replication slowdowns or network problems between the clusters.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -129,7 +305,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -143,9 +320,9 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 2,
+        "w": 4,
         "x": 0,
-        "y": 1
+        "y": 6
       },
       "id": 10,
       "options": {
@@ -166,15 +343,15 @@
           "titleSize": 1
         }
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "max(voltdb_dr_producer_round_trip_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "expr": "max(voltdb_dr_producer_partition_round_trip_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -186,9 +363,9 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "Average number of bytes waiting to be sent to the consumer",
+      "description": "Average amount of data, in bytes, still waiting on the producer side to be sent to the remote consumer cluster. A steadily rising value means this cluster is producing changes faster than they can be shipped out.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -199,19 +376,21 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "decbytes",
+          "noValue": "0"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 5,
-        "w": 2,
-        "x": 2,
-        "y": 1
+        "w": 4,
+        "x": 4,
+        "y": 6
       },
       "id": 11,
       "options": {
@@ -229,12 +408,12 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -251,9 +430,9 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The total number of bytes currently queued for transmission to the consumer vs. currently held in memory.",
+      "description": "How much change data is currently queued on the producer waiting to be sent to the remote cluster: the amount held in memory versus the total (memory plus anything that has overflowed to disk). A large or growing backlog points to a replication bottleneck.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -264,7 +443,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -272,15 +452,16 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "decbytes",
+          "noValue": "0"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
-        "x": 4,
-        "y": 1
+        "w": 8,
+        "x": 0,
+        "y": 11
       },
       "id": 9,
       "options": {
@@ -307,12 +488,12 @@
         "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -325,12 +506,11 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
           "expr": "sum(voltdb_dr_producer_partition_queued_total_bytes{namespace=\"$cluster\",host_name=~\"$host\"})",
-          "hide": false,
           "instant": true,
           "legendFormat": "Memory+disk",
           "range": false,
@@ -343,9 +523,9 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The number of missing transactions between those already acknowledged by the consumer and the next available for transmission.",
+      "description": "Number of transactions the consumer is missing — the gap between what it has already acknowledged and the next data ready to send. Anything above zero means transactions have been lost or skipped and replication cannot proceed cleanly.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -356,22 +536,24 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
                 "value": 1
               }
             ]
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 5,
-        "w": 2,
+        "w": 4,
         "x": 8,
-        "y": 1
+        "y": 6
       },
       "id": 12,
       "options": {
@@ -391,12 +573,12 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -413,58 +595,40 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            }
+            "mode": "thresholds"
           },
           "mappings": [],
-          "min": 0
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "down"
-            },
-            "properties": [
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
               {
-                "id": "color",
-                "value": {
-                  "fixedColor": "red",
-                  "mode": "fixed"
-                }
+                "color": "green",
+                "value": 0
               }
             ]
-          }
-        ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
-        "x": 10,
-        "y": 1
+        "w": 8,
+        "x": 8,
+        "y": 11
       },
       "id": 6,
       "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true,
-          "values": [
-            "percent"
-          ]
-        },
-        "pieType": "pie",
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -472,53 +636,47 @@
           "fields": "",
           "values": false
         },
-        "tooltip": {
-          "hideZeros": false,
-          "mode": "single",
-          "sort": "none"
-        }
+        "showPercentChange": false,
+        "textMode": "value_and_name",
+        "wideLayout": true
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
-          "exemplar": false,
-          "expr": "sum(voltdb_dr_producer_partition_info{namespace=\"$cluster\",dr_connection_status=\"UP\"})",
-          "hide": false,
-          "instant": true,
+          "expr": "sum(voltdb_dr_producer_partition_info{namespace=\"$cluster\",dr_connection_status=\"UP\"}) or vector(0)",
           "legendFormat": "up",
+          "instant": true,
           "range": false,
-          "refId": "UP"
+          "refId": "A"
         },
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
-          "exemplar": false,
-          "expr": "sum(voltdb_dr_producer_partition_info{namespace=\"$cluster\",dr_connection_status=\"DOWN\"})",
-          "hide": false,
+          "expr": "sum(voltdb_dr_producer_partition_info{namespace=\"$cluster\",dr_connection_status=~\"UP|DOWN\"}) or vector(0)",
+          "legendFormat": "total",
           "instant": true,
-          "legendFormat": "down",
           "range": false,
-          "refId": "DOWN"
+          "refId": "B"
         }
       ],
-      "title": "Connection status to other clusters",
-      "type": "piechart",
-      "description": "Informational metric. Tags: DR_STREAM_TYPE - The type of stream, which can either be \"Transactions\" or \"Snapshot\". DR_LAST_QUEUED_ID - The ID of the last transaction queued for transmission to the consumer. DR_LAST_ACK_ID - The ID of the last transaction acknowledged by the consumer. DR_IS_SYNCED - Indicates whether the database is currently being replicated. If replication has not started, or the overflow capacity has been exceeded (that is, replication has failed), the value of ISSYNCED is \"false\". If replication is currently in progress, the value is \"true\". DR_MODE - Indicates whether this particular partition is replicating data to the consumer (\"NOrmal\") or not (\"Paused\"). Only one copy of each logical partition actually sends data during replication. So for clusters with a K-safety value greater than zero, not all physical partitions will report \"Normal\" even when replication is in progress. DR_CONNECTION_STATUS - Indicates whether the connection to the consumer is operational (\"UP\") or not (\"DOWN\"). CONSUMER_LIMIT_TYPE - The type of limit on the DR queue. The response is either BYTES or BUFFERS. CURRENT_DR_PROTOCOL - The DR protocol version currently in use when sending data to consumers. SUPPORTED_DR_PROTOCOL - The highest version of DR protocol this cluster is capable of using to send data to consumers."
+      "title": "Replication connections up",
+      "type": "stat",
+      "description": "How many partition replication streams currently have their connection to the remote cluster up, out of all streams reporting a connection. Only one copy of each partition actually ships data, so not every partition reports a connection even when replication is healthy; anything less than all-up means part of the replication stream is disconnected."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The timestamp of the last transaction acknowledged by the consumer.",
+      "description": "Time of the most recent transaction the remote consumer has confirmed receiving. If this timestamp falls well behind the present, the consumer is lagging or replication has stalled.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -531,18 +689,20 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               }
             ]
-          }
+          },
+          "unit": "dateTimeFromNow"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 5,
-        "w": 4,
-        "x": 14,
-        "y": 1
+        "w": 8,
+        "x": 16,
+        "y": 11
       },
       "id": 13,
       "options": {
@@ -562,17 +722,16 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
           "expr": "min(voltdb_dr_producer_partition_last_ack_timestamp_seconds{namespace=\"$cluster\",host_name=~\"$host\"})",
-          "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
@@ -585,9 +744,8 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The number of DR tasks waiting to be processed.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -599,7 +757,8 @@
             "mode": "percentage",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               }
             ]
           }
@@ -608,9 +767,9 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 2,
-        "x": 18,
-        "y": 1
+        "w": 4,
+        "x": 12,
+        "y": 6
       },
       "id": 24,
       "options": {
@@ -630,12 +789,12 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -648,7 +807,8 @@
         }
       ],
       "title": "Tasks queued for transmission to the replica(s)",
-      "type": "stat"
+      "type": "stat",
+      "description": "Number of replication tasks queued on this cluster waiting to be sent to the remote cluster(s). A persistently high value indicates the producer is backing up."
     },
     {
       "collapsed": false,
@@ -656,7 +816,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 6
+        "y": 16
       },
       "id": 20,
       "panels": [],
@@ -666,9 +826,8 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The total number of buffers in this partition waiting for acknowledgement from the consumer.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -679,10 +838,12 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               }
             ]
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -690,7 +851,7 @@
         "h": 11,
         "w": 12,
         "x": 0,
-        "y": 7
+        "y": 17
       },
       "id": 22,
       "options": {
@@ -715,12 +876,12 @@
         "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum(voltdb_dr_producer_partition_buffers_waiting_for_ack_total{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\"}) by (partition_id)",
@@ -750,12 +911,13 @@
           }
         }
       ],
-      "type": "bargauge"
+      "type": "bargauge",
+      "description": "Number of data buffers, per partition, that have been sent to the remote cluster but not yet acknowledged. Large counts on a partition suggest that partition's data is being confirmed slowly."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -767,7 +929,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               }
             ]
           },
@@ -779,7 +942,7 @@
         "h": 11,
         "w": 12,
         "x": 12,
-        "y": 7
+        "y": 17
       },
       "id": 21,
       "options": {
@@ -795,7 +958,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum by (host_name, partition_id) (voltdb_dr_producer_partition_queued_total_bytes{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\"})",
@@ -830,14 +993,14 @@
         }
       ],
       "type": "marcusolsson-treemap-panel",
-      "description": "The total number of bytes currently queued for transmission to the consumer."
+      "description": "Amount of change data, in bytes, still queued to be sent to the remote cluster, broken down by server and partition. Use it to see which servers or partitions are accumulating the largest replication backlog."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The timestamp of the last transaction queued for transmission to the consumer.",
+      "description": "Time of the most recent transaction placed on the send queue for the remote cluster, shown per server and partition. Compare it against the last acknowledged time to spot partitions where sending is falling behind.",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -846,6 +1009,9 @@
               "type": "auto"
             },
             "filterable": true,
+            "footer": {
+              "reducers": []
+            },
             "inspect": false
           },
           "mappings": [],
@@ -853,34 +1019,41 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
                 "value": 80
               }
             ]
-          }
+          },
+          "unit": "string"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value (max)"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dateTimeFromNow"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 28
       },
       "id": 27,
       "options": {
         "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
         "showHeader": true,
         "sortBy": [
           {
@@ -889,18 +1062,17 @@
           }
         ]
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
           "expr": "max by (host_name, partition_id) (voltdb_dr_producer_partition_last_queued_timestamp_seconds{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\"})",
           "format": "table",
-          "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
@@ -929,18 +1101,6 @@
               }
             }
           }
-        },
-        {
-          "id": "convertFieldType",
-          "options": {
-            "conversions": [
-              {
-                "destinationType": "time",
-                "targetField": "Value (max)"
-              }
-            ],
-            "fields": {}
-          }
         }
       ],
       "type": "table"
@@ -951,16 +1111,16 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 30
+        "y": 40
       },
       "id": 49,
       "panels": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
-          "description": "Comparison of the number of free bytes left in the DR queue and the number of bytes waiting to be sent to the consumer.",
+          "description": "Per partition, compares how much free space remains in the consumer's incoming queue against how much data the producer still has waiting to send. It helps you tell whether a backlog is caused by the sender or by the receiver running out of room.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1004,7 +1164,7 @@
             "h": 10,
             "w": 24,
             "x": 0,
-            "y": 31
+            "y": 36
           },
           "id": 25,
           "maxPerRow": 3,
@@ -1037,13 +1197,12 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "exemplar": false,
               "expr": "sum(voltdb_dr_consumer_partition_available_buffer_bytes_bytes{namespace=\"$cluster\",host_name=~\"$host\"}) by (host_id, partition_id)",
               "format": "table",
-              "hide": false,
               "instant": true,
               "legendFormat": "__auto",
               "range": false,
@@ -1052,13 +1211,12 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "exemplar": false,
               "expr": "sum(voltdb_dr_producer_partition_available_to_send_total_bytes{namespace=\"$cluster\",host_name=~\"$host\"}) by (host_id, partition_id)",
               "format": "table",
-              "hide": false,
               "instant": true,
               "legendFormat": "__auto",
               "range": false,
@@ -1178,7 +1336,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 31
+        "y": 41
       },
       "id": 7,
       "panels": [],
@@ -1188,7 +1346,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1204,7 +1362,8 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "decbytes",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -1212,7 +1371,7 @@
         "h": 5,
         "w": 4,
         "x": 0,
-        "y": 32
+        "y": 42
       },
       "id": 14,
       "options": {
@@ -1235,7 +1394,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1248,12 +1407,12 @@
       ],
       "title": "Avarage replication speed",
       "type": "gauge",
-      "description": "Total number of bytes this consumer received."
+      "description": "Average amount of data, in bytes, that each server in this consumer cluster has received from the producer since it started. Use it as a rough cumulative measure of how much has been replicated in."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1269,7 +1428,8 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "decbytes",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -1277,7 +1437,7 @@
         "h": 5,
         "w": 4,
         "x": 4,
-        "y": 32
+        "y": 42
       },
       "id": 15,
       "options": {
@@ -1300,7 +1460,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum(voltdb_dr_consumer_partition_available_buffer_bytes_bytes{namespace=\"$cluster\",host_name=~\"$host\"})",
@@ -1310,12 +1470,13 @@
         }
       ],
       "title": "Buffers usage",
-      "type": "gauge"
+      "type": "gauge",
+      "description": "Amount of free space, in bytes, left in this consumer's incoming replication queue. If it drops toward zero the consumer can no longer accept data and the producer will start backing up."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1343,7 +1504,7 @@
         "h": 5,
         "w": 4,
         "x": 8,
-        "y": 32
+        "y": 42
       },
       "id": 16,
       "options": {
@@ -1366,7 +1527,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1377,15 +1538,15 @@
           "refId": "A"
         }
       ],
-      "title": "Duplicated buffers",
-      "type": "gauge"
+      "title": "Duplicated buffers (total)",
+      "type": "gauge",
+      "description": "Number of duplicate data buffers the consumer has received — resends that arrive after earlier data was dropped because its queue was full. A rising count is a sign the consumer has been overwhelmed and data had to be retransmitted."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The number of buffers received but dropped because the queue was full.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1412,7 +1573,7 @@
         "h": 5,
         "w": 4,
         "x": 12,
-        "y": 32
+        "y": 42
       },
       "id": 17,
       "options": {
@@ -1435,7 +1596,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1447,14 +1608,14 @@
         }
       ],
       "title": "Ignored buffers",
-      "type": "gauge"
+      "type": "gauge",
+      "description": "Number of incoming data buffers the consumer had to drop because its replication queue was full. Any nonzero value means the consumer could not keep up and that data had to be resent."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "Tags: IS_COVERED - Boolean value indicating whether this partition is currently connected to and receiving data from a matching partition on the producer cluster. COVERING_HOST - The host name of the server in the producer cluster that is providing DR data to this partition. If IS_COVERED is \"false\", this label is empty. IS_PAUSED - Boolean indicating whether this partition is paused. A partition \"pauses\" when the schema of the DR tables on the producer change to no longer match the consumer and all binary logs prior to the change have been processed. CONSUMER_LIMIT_TYPE - The type of limit on the DR queue. The response is either BYTES or BUFFERS. LAST_APPLIED_DR_PROTOCOL - The current DR protocol version of binary logs being received and applied for this partition.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1468,7 +1629,8 @@
                 "color": "green"
               }
             ]
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -1476,7 +1638,7 @@
         "h": 5,
         "w": 4,
         "x": 16,
-        "y": 32
+        "y": 42
       },
       "id": 23,
       "options": {
@@ -1501,7 +1663,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1520,12 +1682,13 @@
           "options": {}
         }
       ],
-      "type": "stat"
+      "type": "stat",
+      "description": "What caps this consumer's incoming replication queue — whether the limit is enforced by total bytes or by number of buffers. Useful for understanding which limit a backed-up consumer is hitting."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1540,7 +1703,9 @@
                 "color": "green"
               }
             ]
-          }
+          },
+          "noValue": "0",
+          "unit": "dateTimeFromNow"
         },
         "overrides": []
       },
@@ -1548,7 +1713,7 @@
         "h": 5,
         "w": 4,
         "x": 20,
-        "y": 32
+        "y": 42
       },
       "id": 19,
       "options": {
@@ -1573,7 +1738,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1586,7 +1751,7 @@
       ],
       "title": "Last received transaction",
       "type": "stat",
-      "description": "The timestamp of the last transaction received from the producer."
+      "description": "Time of the most recent transaction this consumer received from the producer. If it lags well behind now, incoming replication has slowed or stopped."
     },
     {
       "collapsed": false,
@@ -1594,7 +1759,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 37
+        "y": 47
       },
       "id": 28,
       "panels": [],
@@ -1604,7 +1769,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1664,7 +1829,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 38
+        "y": 48
       },
       "id": 29,
       "options": {
@@ -1687,7 +1852,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum(rate(voltdb_dr_consumer_bytes_replicated_bytes{namespace=\"$cluster\",host_name=~\"$host\"}[$__rate_interval])) by (host_name)",
@@ -1698,14 +1863,14 @@
       ],
       "title": "Rate of replication",
       "type": "timeseries",
-      "description": "Total number of bytes this consumer received."
+      "description": "Rate, in bytes per second, at which each server in this consumer cluster is receiving replicated data over time. Use it to watch replication throughput and spot drops or stalls per server."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "Exponentially weighted moving average rate of replication over the past minute.",
+      "description": "Rate at which each server is receiving duplicate data buffers — resends that follow data dropped from a full queue. Sustained activity here means the consumer keeps getting overwhelmed and data is being retransmitted.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1760,7 +1925,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 47
+        "y": 57
       },
       "id": 30,
       "options": {
@@ -1784,7 +1949,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum(rate(voltdb_dr_consumer_partition_duplicate_buffers_total{namespace=\"$cluster\",host_name=~\"$host\"}[$__rate_interval])) by (host_name)",
@@ -1793,15 +1958,15 @@
           "refId": "A"
         }
       ],
-      "title": "Duplicated buffers",
+      "title": "Duplicated buffers rate",
       "type": "timeseries"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The timestamp of the last received transaction.",
+      "description": "Time of the last transaction received, per server and partition. Partitions whose time trails the others, or that show no timestamp, are lagging or not currently receiving data.",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -1821,7 +1986,8 @@
                 "color": "green"
               }
             ]
-          }
+          },
+          "unit": "string"
         },
         "overrides": [
           {
@@ -1845,6 +2011,18 @@
                 ]
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value (max)"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dateTimeFromNow"
+              }
+            ]
           }
         ]
       },
@@ -1852,7 +2030,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 47
+        "y": 57
       },
       "id": 33,
       "options": {
@@ -1873,13 +2051,12 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
           "expr": "max by (host_name, partition_id) (voltdb_dr_consumer_partition_last_received_timestamp_seconds{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\"})",
           "format": "table",
-          "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
@@ -1908,22 +2085,6 @@
               }
             }
           }
-        },
-        {
-          "id": "convertFieldType",
-          "options": {
-            "conversions": [
-              {
-                "destinationType": "time",
-                "targetField": "Value (max)"
-              },
-              {
-                "destinationType": "number",
-                "targetField": "partition_id"
-              }
-            ],
-            "fields": {}
-          }
         }
       ],
       "type": "table"
@@ -1931,9 +2092,9 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "Exponentially weighted moving average rate of replication over the past minute.",
+      "description": "Count of duplicate data buffers received, broken down by server and partition. It pinpoints exactly where resends are happening after data was dropped from a full queue.",
       "fieldConfig": {
         "defaults": {
           "mappings": [],
@@ -1949,7 +2110,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -1957,7 +2119,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 56
+        "y": 66
       },
       "id": 31,
       "options": {
@@ -1982,7 +2144,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum(voltdb_dr_consumer_partition_duplicate_buffers_total{namespace=\"$cluster\",host_name=~\"$host\"}) by (host_name, partition_id)",
@@ -1991,7 +2153,7 @@
           "refId": "A"
         }
       ],
-      "title": "Duplicated buffers",
+      "title": "Duplicated buffers by host & partition",
       "type": "stat"
     },
     {
@@ -2000,7 +2162,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 66
+        "y": 76
       },
       "id": 34,
       "panels": [],
@@ -2010,14 +2172,24 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "thresholds"
           },
-          "mappings": [],
+          "mappings": [
+            {
+              "type": "value",
+              "options": {
+                "0": {
+                  "index": 0,
+                  "text": "No conflicts recorded"
+                }
+              }
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -2034,7 +2206,7 @@
               }
             ]
           },
-          "unit": "dateTimeAsIso"
+          "unit": "dateTimeFromNow"
         },
         "overrides": []
       },
@@ -2042,7 +2214,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 67
+        "y": 77
       },
       "id": 35,
       "options": {
@@ -2067,7 +2239,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "1000 * max(voltdb_dr_last_conflict_timestamp_seconds{namespace=\"$cluster\",host_name=~\"$host\"})",
@@ -2078,12 +2250,12 @@
       ],
       "title": "Last conflict",
       "type": "stat",
-      "description": "The timestamp of the last conflict."
+      "description": "Time the most recent replication conflict was recorded. In XDCR both clusters can accept writes, so conflicts happen when the same data is changed on both sides; use this to see how recently that last occurred."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -2115,7 +2287,7 @@
         "h": 4,
         "w": 4,
         "x": 4,
-        "y": 67
+        "y": 77
       },
       "id": 36,
       "options": {
@@ -2140,7 +2312,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum(voltdb_dr_conflicts_count_total{namespace=\"$cluster\",host_name=~\"$host\"})",
@@ -2151,14 +2323,14 @@
       ],
       "title": "All conflicts count",
       "type": "stat",
-      "description": "The total number of conflicts that have been recorded for this table in this partition."
+      "description": "Total number of replication conflicts recorded across this cluster. Conflicts arise when the same row is changed on both clusters; a growing total is worth investigating in the conflict details below."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The number of conflicts that may have resulted in divergence between the clusters, which is a subset of the total conflicts.",
+      "description": "Number of conflicts that may have left the two clusters holding different data — a subset of all conflicts, and the ones that matter most. Any nonzero value means the clusters could be out of sync and should be investigated.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2185,7 +2357,7 @@
         "h": 4,
         "w": 4,
         "x": 8,
-        "y": 67
+        "y": 77
       },
       "id": 37,
       "options": {
@@ -2210,7 +2382,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum(voltdb_dr_divergence_count_total{namespace=\"$cluster\",host_name=~\"$host\"})",
@@ -2225,9 +2397,9 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The number of constraint violation conflicts that occurred.",
+      "description": "Number of conflicts caused by a replicated change violating a table constraint (such as a duplicate primary key) on the receiving cluster. These indicate the same keys are being written on both sides.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2250,7 +2422,7 @@
         "h": 4,
         "w": 4,
         "x": 12,
-        "y": 67
+        "y": 77
       },
       "id": 38,
       "options": {
@@ -2275,7 +2447,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum(voltdb_dr_constraint_violation_count_total{namespace=\"$cluster\",host_name=~\"$host\"})",
@@ -2290,9 +2462,9 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The number of missing row conflicts that occurred.",
+      "description": "Number of conflicts where a replicated update or delete could not find the row it expected on the receiving cluster. This usually means that row was already changed or removed independently on the other cluster.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2315,7 +2487,7 @@
         "h": 4,
         "w": 4,
         "x": 16,
-        "y": 67
+        "y": 77
       },
       "id": 39,
       "options": {
@@ -2340,7 +2512,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum(voltdb_dr_missing_row_count_total{namespace=\"$cluster\",host_name=~\"$host\"})",
@@ -2355,9 +2527,9 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The number of missing row conflicts that occurred.",
+      "description": "Number of conflicts where a row existed on both clusters but had been changed at different times, so the incoming change did not match the local version. These flag concurrent edits to the same rows on both clusters.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2380,7 +2552,7 @@
         "h": 4,
         "w": 4,
         "x": 20,
-        "y": 67
+        "y": 77
       },
       "id": 40,
       "options": {
@@ -2405,7 +2577,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum(voltdb_dr_row_timestamp_mismatch_count_total{namespace=\"$cluster\",host_name=~\"$host\"})",
@@ -2423,7 +2595,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 71
+        "y": 81
       },
       "id": 41,
       "panels": [],
@@ -2433,7 +2605,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -2493,7 +2665,7 @@
         "h": 11,
         "w": 8,
         "x": 0,
-        "y": 72
+        "y": 82
       },
       "id": 42,
       "options": {
@@ -2516,10 +2688,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(voltdb_dr_constraint_violation_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
+          "expr": "(sum(voltdb_dr_constraint_violation_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"}))\nor\n(vector(0) unless on() (sum(voltdb_dr_constraint_violation_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})))",
           "legendFormat": "constraint violations",
           "range": true,
           "refId": "A"
@@ -2527,11 +2699,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(voltdb_dr_divergence_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
-          "hide": false,
+          "expr": "(sum(voltdb_dr_divergence_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"}))\nor\n(vector(0) unless on() (sum(voltdb_dr_divergence_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})))",
           "legendFormat": "divergences",
           "range": true,
           "refId": "B"
@@ -2539,11 +2710,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(voltdb_dr_missing_row_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
-          "hide": false,
+          "expr": "(sum(voltdb_dr_missing_row_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"}))\nor\n(vector(0) unless on() (sum(voltdb_dr_missing_row_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})))",
           "legendFormat": "missing rows",
           "range": true,
           "refId": "C"
@@ -2551,11 +2721,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum(voltdb_dr_row_timestamp_mismatch_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
-          "hide": false,
+          "expr": "(sum(voltdb_dr_row_timestamp_mismatch_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"}))\nor\n(vector(0) unless on() (sum(voltdb_dr_row_timestamp_mismatch_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})))",
           "legendFormat": "mismatches",
           "range": true,
           "refId": "D"
@@ -2563,12 +2732,12 @@
       ],
       "title": "Conflicts by type (host = $host, partition = $partition)",
       "type": "timeseries",
-      "description": "- `voltdb_dr_constraint_violation_count_total`: The number of constraint violation conflicts that occurred.\n- `voltdb_dr_divergence_count_total`: The number of conflicts that may have resulted in divergence between the clusters, which is a subset of the total conflicts.\n- `voltdb_dr_missing_row_count_total`: The number of missing row conflicts that occurred.\n- `voltdb_dr_row_timestamp_mismatch_count_total`: The number of timestamp mismatch conflicts that occurred."
+      "description": "Replication conflicts over time for the selected server and partition, broken down by kind: constraint violations, potential divergences, missing rows, and timestamp mismatches. Use it to see which type of conflict is occurring and when."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -2609,7 +2778,7 @@
         "h": 11,
         "w": 8,
         "x": 8,
-        "y": 72
+        "y": 82
       },
       "id": 50,
       "options": {
@@ -2626,13 +2795,12 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
           "expr": "sum by (table_name,__name__ ) ({__name__=~\"voltdb_dr_constraint_violation_count_total|voltdb_dr_missing_row_count_total|voltdb_dr_row_timestamp_mismatch_count_total\", namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
           "format": "table",
-          "hide": false,
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -2641,12 +2809,12 @@
       ],
       "title": "Conflicts by table (host = $host, partition = $partition)",
       "type": "marcusolsson-treemap-panel",
-      "description": "- `voltdb_dr_constraint_violation_count_total`: The number of constraint violation conflicts that occurred.\n- `voltdb_dr_missing_row_count_total`: The number of missing row conflicts that occurred.\n- `voltdb_dr_row_timestamp_mismatch_count_total`: The number of timestamp mismatch conflicts that occurred."
+      "description": "Replication conflicts broken down by table for the selected server and partition, sized by count and split into constraint violations, missing rows, and timestamp mismatches. Use it to find which tables are generating the most conflicts."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -2706,7 +2874,7 @@
         "h": 11,
         "w": 8,
         "x": 16,
-        "y": 72
+        "y": 82
       },
       "id": 51,
       "options": {
@@ -2729,11 +2897,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "sum by (table_name) (voltdb_dr_divergence_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})",
-          "hide": false,
+          "expr": "(sum by (table_name) (voltdb_dr_divergence_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"}))\nor\n(vector(0) unless on() (sum by (table_name) (voltdb_dr_divergence_count_total{namespace=\"$cluster\",host_name=~\"$host\", partition_id=~\"$partition\"})))",
           "legendFormat": "divergences - {{table_name}}",
           "range": true,
           "refId": "B"
@@ -2741,7 +2908,7 @@
       ],
       "title": "Divergences by table (host = $host, partition = $partition)",
       "type": "timeseries",
-      "description": "The number of conflicts that may have resulted in divergence between the clusters, which is a subset of the total conflicts."
+      "description": "Number of conflicts that may have left the clusters out of sync, broken down by table, for the selected server and partition. Use it to pinpoint which tables are most likely diverging."
     },
     {
       "collapsed": false,
@@ -2749,7 +2916,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 83
+        "y": 93
       },
       "id": 1,
       "panels": [],
@@ -2759,9 +2926,8 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The distribution of time it took to receive acknowledgement from the consumer.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2821,7 +2987,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 84
+        "y": 94
       },
       "id": 2,
       "options": {
@@ -2842,11 +3008,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "rate(voltdb_dr_producer_partition_round_trip_time_seconds_sum{namespace=\"$cluster\"}[$__rate_interval])",
-          "hide": false,
           "legendFormat": "{{host_name}}[{{partition_id}}]",
           "range": true,
           "refId": "A"
@@ -2854,23 +3019,23 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "max(voltdb_dr_producer_partition_round_trip_time_seconds_max{namespace=\"$cluster\"})",
-          "hide": false,
           "legendFormat": "max",
           "range": true,
           "refId": "B"
         }
       ],
       "title": "RTT ($cluster)",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "Producer-to-consumer round-trip time over time, per server and partition, plus the overall maximum. Rising round-trip times mean acknowledgements from the remote cluster are taking longer, a sign of network latency or a slow consumer."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -2891,7 +3056,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 84
+        "y": 94
       },
       "id": 3,
       "options": {
@@ -2937,7 +3102,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "avg (voltdb_dr_producer_partition_round_trip_time_seconds_bucket{namespace=\"$cluster\"}) by (partition_id, host_id)",
@@ -2948,11 +3113,906 @@
       ],
       "title": "RTT ($cluster)",
       "type": "heatmap",
-      "description": "The distribution of time it took to receive acknowledgement from the consumer."
+      "description": "Distribution of producer-to-consumer round-trip times across partitions over time. Darker or higher bands highlight partitions where acknowledgements from the remote cluster are consistently slow."
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "When cross-datacenter replication last became ready on this host - i.e. how long replication has been stable.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "dateTimeFromNow"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 16,
+        "y": 6
+      },
+      "id": 52,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "max(voltdb_xdcr_readiness_since_timestamp_seconds{namespace=\"$cluster\",host_name=~\"$host\"})*1000",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Replication ready since",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Percentage of the initial synchronization snapshot that the remote consumer has acknowledged. It only shows progress while a fresh or re-initialized consumer is being brought up to date, and reaches 100% once the snapshot is fully received.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "percent",
+          "min": 0,
+          "max": 100,
+          "noValue": "0"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 20,
+        "y": 6
+      },
+      "id": 53,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "100 * sum(voltdb_dr_producer_node_rows_acked_for_sync_snapshot_total{namespace=\"$cluster\"}) / sum(voltdb_dr_producer_node_rows_in_sync_snapshot_total{namespace=\"$cluster\"})",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Sync snapshot progress",
+      "type": "gauge"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 102
+      },
+      "id": 58,
+      "panels": [],
+      "title": "Replication round-trip & queue detail",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Average producer round-trip time over the last 1 minute.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "ms",
+          "noValue": "0"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 103
+      },
+      "id": 59,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "13.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "1000*sum(rate(voltdb_dr_producer_partition_round_trip_time_seconds_sum{namespace=\"$cluster\",host_name=~\"$host\"}[1m]))/sum(rate(voltdb_dr_producer_partition_round_trip_time_seconds_count{namespace=\"$cluster\",host_name=~\"$host\"}[1m]))",
+          "instant": true,
+          "legendFormat": "",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "DR RTT avg (1m)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Max producer round-trip time observed in the last 1 minute.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "ms",
+          "noValue": "0"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 103
+      },
+      "id": 60,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "13.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "1000*max(max_over_time(voltdb_dr_producer_partition_round_trip_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"}[1m]))",
+          "instant": true,
+          "legendFormat": "",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "DR RTT max (1m)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Average producer round-trip time over the last 5 minutes.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "ms",
+          "noValue": "0"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 103
+      },
+      "id": 61,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "13.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "1000*sum(rate(voltdb_dr_producer_partition_round_trip_time_seconds_sum{namespace=\"$cluster\",host_name=~\"$host\"}[5m]))/sum(rate(voltdb_dr_producer_partition_round_trip_time_seconds_count{namespace=\"$cluster\",host_name=~\"$host\"}[5m]))",
+          "instant": true,
+          "legendFormat": "",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "DR RTT avg (5m)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Max producer round-trip time observed in the last 5 minutes.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "ms",
+          "noValue": "0"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 103
+      },
+      "id": 62,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "13.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "1000*max(max_over_time(voltdb_dr_producer_partition_round_trip_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"}[5m]))",
+          "instant": true,
+          "legendFormat": "",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "DR RTT max (5m)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Average bytes/sec applied by the consumer over the last 1 minute.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "Bps",
+          "noValue": "0"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 107
+      },
+      "id": 63,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "13.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(rate(voltdb_dr_consumer_bytes_replicated_bytes{namespace=\"$cluster\",host_name=~\"$host\"}[1m]))",
+          "instant": true,
+          "legendFormat": "",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Replication rate (1m avg)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Average bytes/sec applied by the consumer over the last 5 minutes.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "Bps",
+          "noValue": "0"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 107
+      },
+      "id": 64,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "13.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(rate(voltdb_dr_consumer_bytes_replicated_bytes{namespace=\"$cluster\",host_name=~\"$host\"}[5m]))",
+          "instant": true,
+          "legendFormat": "",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Replication rate (5m avg)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Bytes queued for transmission held in memory vs total (total - in memory = overflowed to disk).",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 111
+      },
+      "id": 65,
+      "options": {
+        "annotations": {
+          "clustering": -1,
+          "multiLane": false
+        },
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "13.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by(host_name)(voltdb_dr_producer_partition_queued_in_memory_total_bytes{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "legendFormat": "{{host_name}} in memory",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by(host_name)(voltdb_dr_producer_partition_queued_total_bytes{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "legendFormat": "{{host_name}} total",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by(host_name)(voltdb_dr_producer_partition_queued_total_bytes{namespace=\"$cluster\",host_name=~\"$host\"} - voltdb_dr_producer_partition_queued_in_memory_total_bytes{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "legendFormat": "{{host_name}} on disk",
+          "range": true,
+          "refId": "C"
+        }
+      ],
+      "title": "Producer queue: in memory vs total (per node)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Remaining DR consumer queue capacity in buffers per node.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 119
+      },
+      "id": 66,
+      "options": {
+        "annotations": {
+          "clustering": -1,
+          "multiLane": false
+        },
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "13.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by(host_name)(voltdb_dr_consumer_partition_available_buffers_total{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "legendFormat": "{{host_name}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Consumer queue available (buffers, per node)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "description": "Remaining DR consumer queue capacity in bytes per node.",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisBorderShow": false,
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "barWidthFactor": 0.6,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "showValues": false,
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 119
+      },
+      "id": 67,
+      "options": {
+        "annotations": {
+          "clustering": -1,
+          "multiLane": false
+        },
+        "legend": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "displayMode": "table",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "hideZeros": false,
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "13.0.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum by(host_name)(voltdb_dr_consumer_partition_available_buffer_bytes_bytes{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "legendFormat": "{{host_name}}",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Consumer queue available (bytes, per node)",
+      "type": "timeseries"
     }
   ],
+  "preload": false,
   "refresh": "",
-  "schemaVersion": 41,
+  "schemaVersion": 42,
   "tags": [
     "voltdb",
     "xdcr",
@@ -2961,7 +4021,10 @@
   "templating": {
     "list": [
       {
-        "current": {},
+        "current": {
+          "text": "Prometheus",
+          "value": "prometheus"
+        },
         "hide": 2,
         "includeAll": false,
         "label": "datasource",
@@ -2973,10 +4036,13 @@
         "type": "datasource"
       },
       {
-        "current": {},
+        "current": {
+          "text": "demo-a",
+          "value": "demo-a"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values(namespace)",
         "description": "",
@@ -2990,14 +4056,18 @@
         },
         "refresh": 1,
         "regex": "",
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values({namespace=\"$cluster\"},host_name)",
         "includeAll": true,
@@ -3010,15 +4080,23 @@
         },
         "refresh": 1,
         "regex": "",
+        "regexApplyTo": "value",
         "sort": 1,
         "type": "query"
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values({namespace=\"$cluster\", host_name=~\"$host\"},partition_id)",
         "includeAll": true,
@@ -3032,6 +4110,7 @@
         },
         "refresh": 1,
         "regex": "",
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
@@ -3051,8 +4130,16 @@
     "to": "now"
   },
   "timepicker": {},
-  "timezone": "",
+  "timezone": "browser",
   "title": "VoltDB XDCR",
   "uid": "volt-v14x-xdcr",
-  "weekStart": ""
+  "weekStart": "",
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "marcusolsson-treemap-panel",
+      "name": "Treemap",
+      "version": "2.0.0"
+    }
+  ]
 }

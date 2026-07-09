@@ -1,47 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_PROMETHEUS",
-      "label": "Prometheus",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "10.1.5"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "Stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -62,7 +19,6 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
@@ -80,7 +36,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -92,6 +48,9 @@
             "cellOptions": {
               "type": "auto"
             },
+            "footer": {
+              "reducers": []
+            },
             "inspect": false
           },
           "mappings": [],
@@ -100,7 +59,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
@@ -130,23 +89,15 @@
       "id": 18,
       "options": {
         "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
         "frameIndex": 2,
         "showHeader": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -178,14 +129,14 @@
         }
       ],
       "type": "table",
-      "description": "The timestamp when the last round of TTL processing occurred."
+      "description": "For each table with automatic row expiry (TTL), when Volt last ran a cleanup pass to delete aged-out rows. A timestamp that keeps falling further behind the current time means expiry has stalled for that table and old data will pile up."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "Rows deleted for all TTL tables",
+      "description": "Total rows removed by automatic expiry (TTL) across all tables over the selected time range. This is normal housekeeping activity; watch for it dropping to zero when you expect deletions, which suggests expiry has stopped.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -209,7 +160,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           }
@@ -228,6 +179,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "range"
@@ -235,19 +187,20 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
           "expr": "sum(increase(voltdb_ttl_rows_deleted_total{namespace=~\"$cluster\", host_name=~\"$host\"}[$__range]))",
-          "hide": false,
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -255,13 +208,12 @@
         }
       ],
       "title": "All Rows Deleted",
-      "transformations": [],
       "type": "stat"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -287,7 +239,7 @@
             "steps": [
               {
                 "color": "orange",
-                "value": null
+                "value": 0
               },
               {
                 "color": "#EAB839",
@@ -311,6 +263,7 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -318,14 +271,16 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum by (table_name) (voltdb_ttl_failed_total{namespace=\"$cluster\",host_name=~\"$host\"})",
@@ -334,17 +289,16 @@
           "refId": "A"
         }
       ],
-      "title": "Failing tasks",
-      "transformations": [],
+      "title": "Tables with failed deletes",
       "type": "stat",
-      "description": "Total number of times TTL failed to be processed."
+      "description": "How many automatic-expiry (TTL) runs have failed. Any non-zero value means aged-out rows are not being deleted, so the affected tables keep growing; a common cause is a missing index on the column TTL expires by. Investigate the specific tables in the failures chart below."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "Rows remaining for all TTL tables",
+      "description": "How many aged-out rows are still waiting to be deleted across all tables with automatic expiry (TTL). A small number is normal, but a value that keeps climbing means expiry can't keep up with incoming data and the tables will grow.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -356,10 +310,11 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -375,49 +330,52 @@
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
+        "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [],
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "10.1.5",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "sum (voltdb_ttl_rows_remaining_total{namespace=\"$cluster\",host_name=~\"$host\"})",
-          "hide": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "B"
         }
       ],
       "title": "Remaining rows",
-      "transformations": [],
       "type": "stat"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "Number of deletes per second",
+      "description": "Rate of rows deleted per second by automatic expiry (TTL), broken out per table. Use it to see which tables are actively being cleaned up and to spot a table whose deletion rate has dropped off unexpectedly.",
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -434,6 +392,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -449,7 +408,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           },
@@ -472,15 +431,17 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "rate(voltdb_ttl_rows_deleted_total{namespace=\"$cluster\",host_name=~\"$host\", table_name=~\"$tableName\"}[$__rate_interval])",
@@ -495,7 +456,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -503,11 +464,13 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 0,
             "gradientMode": "none",
@@ -524,6 +487,7 @@
               "type": "linear"
             },
             "showPoints": "auto",
+            "showValues": false,
             "spanNulls": false,
             "stacking": {
               "group": "A",
@@ -550,7 +514,7 @@
             "steps": [
               {
                 "color": "green",
-                "value": null
+                "value": 0
               }
             ]
           }
@@ -572,18 +536,20 @@
           "showLegend": true
         },
         "tooltip": {
+          "hideZeros": false,
           "mode": "single",
           "sort": "none"
         }
       },
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "rate(voltdb_ttl_failed_total{namespace=\"$cluster\",host_name=~\"$host\", table_name=~\"$tableName\"}[$__rate_interval])",
+          "expr": "(rate(voltdb_ttl_failed_total{namespace=\"$cluster\",host_name=~\"$host\", table_name=~\"$tableName\"}[$__rate_interval]))\nor\n(vector(0) unless on() (rate(voltdb_ttl_failed_total{namespace=\"$cluster\",host_name=~\"$host\", table_name=~\"$tableName\"}[$__rate_interval])))",
           "legendFormat": "{{table_name}}",
           "range": true,
           "refId": "A"
@@ -591,45 +557,42 @@
       ],
       "title": "Failures by table name",
       "type": "timeseries",
-      "description": "Total number of times TTL failed to be processed."
+      "description": "Rate of failed automatic-expiry (TTL) runs, broken out per table, so you can pinpoint which table isn't being cleaned up. Sustained failures mean aged rows aren't deleted and the table keeps growing; a missing index on the expiry column is a frequent cause."
     }
   ],
+  "preload": false,
   "refresh": "30s",
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 42,
   "tags": [],
   "templating": {
     "list": [
       {
         "current": {
-          "selected": false,
           "text": "Prometheus",
           "value": "prometheus"
         },
         "hide": 2,
         "includeAll": false,
         "label": "datasource",
-        "multi": false,
         "name": "datasource",
         "options": [],
         "query": "prometheus",
-        "queryValue": "",
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
         "type": "datasource"
       },
       {
-        "current": {},
+        "current": {
+          "text": "demo-a",
+          "value": "demo-a"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values(namespace)",
-        "hide": 0,
         "includeAll": false,
         "label": "Cluster",
-        "multi": false,
         "name": "cluster",
         "options": [],
         "query": {
@@ -638,22 +601,22 @@
         },
         "refresh": 1,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values({namespace=\"$cluster\"},host_name)",
-        "hide": 0,
         "includeAll": true,
         "label": "Host",
-        "multi": false,
         "name": "host",
         "options": [],
         "query": {
@@ -662,22 +625,22 @@
         },
         "refresh": 2,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values({namespace=\"$cluster\", host_name=~\"$host\"},table_name)",
-        "hide": 0,
         "includeAll": true,
         "label": "Table name",
-        "multi": false,
         "name": "tableName",
         "options": [],
         "query": {
@@ -686,8 +649,7 @@
         },
         "refresh": 2,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
+        "regexApplyTo": "value",
         "type": "query"
       }
     ]
@@ -697,7 +659,7 @@
     "to": "now"
   },
   "timepicker": {},
-  "timezone": "",
+  "timezone": "browser",
   "title": "VoltDB TTL",
   "uid": "volt-v14x-ttl",
   "weekStart": ""

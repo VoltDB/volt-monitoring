@@ -60,7 +60,7 @@
         "builtIn": 1,
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "enable": true,
         "hide": true,
@@ -98,9 +98,9 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The number of procedure invocation per 5 minutes, also includes procedures being replicated into partition replicas, so it does not equal the number of transactions issued by clients",
+      "description": "The rate at which stored procedures are being executed across the cluster. In a K-safe cluster every transaction fans out and executes on each copy of its partition, so this counts more executions than the number of transactions clients actually submit; use it to gauge total execution load.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -120,7 +120,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -150,7 +151,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -167,9 +168,9 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "Number of transactions executed by the connected clients",
+      "description": "The rate at which transactions are being coordinated across the cluster. Unlike the overall invocation rate, this counts each transaction once rather than also counting the copies run on partition replicas, so it reflects the real transaction load.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -189,7 +190,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -219,7 +221,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -236,7 +238,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -257,7 +259,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -287,11 +290,11 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(\n    rate(\n        voltdb_procedure_failed_total\n        {\n            namespace=\"$cluster\",\n            host_name=~\"$host\"\n        }[$__rate_interval]\n    )\n)",
+          "expr": "sum(\n    rate(\n        voltdb_initiator_procedure_failed_total\n        {\n            namespace=\"$cluster\",\n            host_name=~\"$host\"\n        }[$__rate_interval]\n    )\n) or vector(0)",
           "instant": false,
           "legendFormat": "{{host_name}}",
           "range": true,
@@ -300,14 +303,14 @@
       ],
       "title": "Failure rate",
       "type": "stat",
-      "description": "The number of times the procedure failed unexpectedly."
+      "description": "How often transactions are failing unexpectedly, counted once per client request - this matches the errors your applications actually see, without multiplying failures across partition copies. A sustained non-zero rate warrants investigation."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "The number of times the procedure was aborted.",
+      "description": "How often transactions are being aborted and rolled back, counted once per client request as your applications experience it. Occasional aborts can be normal, but a rising rate often points to application logic problems or contention between transactions.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -327,7 +330,8 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "short",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -357,11 +361,11 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(\n    rate(\n        voltdb_procedure_aborted_total\n        {\n            namespace=\"$cluster\",\n            host_name=~\"$host\"\n        }[$__rate_interval]\n    )\n)",
+          "expr": "sum(\n    rate(\n        voltdb_initiator_procedure_aborted_total\n        {\n            namespace=\"$cluster\",\n            host_name=~\"$host\"\n        }[$__rate_interval]\n    )\n) or vector(0)",
           "instant": false,
           "legendFormat": "{{host_name}}",
           "range": true,
@@ -374,7 +378,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -399,7 +403,8 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "s",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -429,7 +434,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -442,7 +447,7 @@
       ],
       "title": "Worst case time",
       "type": "stat",
-      "description": "The length of time it took to execute the stored procedure."
+      "description": "The longest time any single stored procedure has taken to execute recently across the selected hosts - the procedure body only, excluding queueing and the wait for partition replicas. A high value flags a slow procedure that can hold up the partition it runs on."
     },
     {
       "collapsed": true,
@@ -457,9 +462,9 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
-          "description": "The number of procedure invocation per 5 minutes, also includes procedures being replicated into partition replicas, so it does not equal the number of transactions issued by clients",
+          "description": "The overall rate of stored-procedure executions across the cluster over time. In a K-safe cluster each transaction fans out to every copy of its partition, so this exceeds the number of transactions clients submit; watch it for total execution load and trends.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -535,7 +540,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "sum(\n    rate(\n        voltdb_procedure_invoked_total\n        {\n            namespace=\"$cluster\",\n            host_name=~\"$host\",\n            partition_id=~\"$partition\",\n            procedure_name=~\"$procedure\"\n        }[$__rate_interval]\n    )\n)",
@@ -552,9 +557,9 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
-          "description": "Number of transactions executed by the connected clients",
+          "description": "The rate of transactions submitted by connected client applications over time, counted once per client request. Use it to track real application-driven load, separate from replica work.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -630,7 +635,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "sum(\n    rate(\n        voltdb_initiator_procedure_invoked_total\n        {\n            namespace=\"$cluster\",\n            host_name=~\"$host\",\n            procedure_name=~\"$procedure\",\n            connection_origin=\"EXTERNAL\"\n        }[$__rate_interval]\n))",
@@ -647,7 +652,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -724,7 +729,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "sum by (procedure_name) (\n    rate(\n        voltdb_procedure_invoked_total\n        {\n            namespace=\"$cluster\",\n            host_name=~\"$host\",\n            partition_id=~\"$partition\",\n            procedure_name=~\"$procedure\"\n        }[$__rate_interval]\n    )\n)",
@@ -737,14 +742,14 @@
           ],
           "title": "Procedures invocation rate ($procedure)",
           "type": "timeseries",
-          "description": "The total number of invocations of this procedure at this site."
+          "description": "The execution rate broken down per stored procedure, so you can see which procedures dominate the workload. Includes work run on partition replicas, so the totals run higher than the number of client transactions."
         },
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
-          "description": "The number of times the stored procedure has been invoked by this connection on this host node.",
+          "description": "The rate of client-submitted transactions broken down per stored procedure, counting only requests arriving from external client connections. Shows which procedures your applications call most.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -820,7 +825,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "sum by (procedure_name) (rate(\n        voltdb_initiator_procedure_invoked_total\n        {\n            namespace=\"$cluster\",\n            host_name=~\"$host\",\n            procedure_name=~\"$procedure\",\n            connection_origin=\"EXTERNAL\"\n        }[$__rate_interval]\n))",
@@ -837,7 +842,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -904,7 +909,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "sum(rate(voltdb_procedure_invoked_time_seconds_bucket\n{\n    namespace=\"$cluster\",\n    host_name=~\"$host\",\n    partition_id=~\"$partition\",\n    procedure_name=~\"$procedure\"\n}[$__rate_interval])) by (le)",
@@ -916,12 +921,12 @@
           ],
           "title": "Execution times distribution ($procedure)",
           "type": "heatmap",
-          "description": "The length of time it took to execute the stored procedure."
+          "description": "A heatmap of how stored-procedure execution times are distributed over time - the procedure body only, excluding queueing and the K-safety replication wait. Use it to spot latency spikes and to see whether slowness is widespread or limited to occasional outliers."
         },
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -1009,7 +1014,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -1022,14 +1027,14 @@
           ],
           "title": "Top procedure invocation times ($procedure)",
           "type": "timeseries",
-          "description": "The length of time it took to execute the stored procedure."
+          "description": "The slowest procedures over time, plotting each procedure's peak execution time (procedure body only, excluding queueing and the replica wait). Use it to identify which procedures are driving high latency."
         },
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
-          "description": "The total number of invocations of this procedure at this site.",
+          "description": "Ranks stored procedures by how many times they were invoked over the selected time range, including the K-safety fan-out to partition copies. Use it to see which procedures carry the most traffic.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1120,7 +1125,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "sum by (procedure_name)\n(\n    increase(voltdb_procedure_invoked_total\n    {\n        namespace=\"$cluster\",\n        host_name=~\"$host\",\n        partition_id=~\"$partition\",\n        procedure_name=~\"$procedure\"\n    }[$__range])\n)",
@@ -1157,7 +1162,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -1248,7 +1253,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "sum by (procedure_name)\n(\n    voltdb_procedure_invoked_time_seconds_max\n    {\n        namespace=\"$cluster\",\n        host_name=~\"$host\",\n        partition_id=~\"$partition\",\n        procedure_name=~\"$procedure\"\n    }\n)",
@@ -1283,14 +1288,14 @@
             }
           ],
           "type": "table",
-          "description": "The length of time it took to execute the stored procedure."
+          "description": "Ranks stored procedures by their peak execution time - the procedure body only, excluding queueing and the replica wait - highlighting which take longest to run and are the best candidates for tuning."
         },
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
-          "description": "The total number of invocations of this procedure at this site.",
+          "description": "The procedures with the highest execution rate over time, including the K-safety fan-out to partition copies, so you can see which are being called most frequently and how that changes.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1372,7 +1377,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -1389,9 +1394,9 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
-          "description": "The total size of the results returned by the procedure.",
+          "description": "The rate at which stored procedures are returning result data to clients, in bytes per second. A high or rising value means procedures are shipping large result sets, adding network and memory pressure - worth checking for procedures returning more data than expected.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1469,7 +1474,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -1500,7 +1505,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -1552,7 +1557,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "sum by (procedure_name, host_name)\n(\n    voltdb_procedure_invoked_time_seconds_max\n    {\n        namespace=\"$cluster\",\n        host_name=~\"$host\",\n        partition_id=~\"$partition\",\n        procedure_name=~\"$procedure\"\n    }\n)",
@@ -1588,12 +1593,12 @@
             }
           ],
           "type": "marcusolsson-treemap-panel",
-          "description": "The length of time it took to execute the stored procedure."
+          "description": "Peak execution time for each procedure on each host, drawn so larger, hotter tiles are the slowest procedure-and-host combinations. Use it to quickly spot a procedure that is slow on a particular node."
         },
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -1676,7 +1681,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "max by (procedure_name, host_name)\n(\n    voltdb_procedure_invoked_time_seconds_max\n    {\n        namespace=\"$cluster\",\n        host_name=~\"$host\",\n        partition_id=~\"$partition\",\n        procedure_name=~\"$procedure\"\n    }\n)",
@@ -1726,12 +1731,12 @@
             }
           ],
           "type": "table",
-          "description": "The length of time it took to execute the stored procedure."
+          "description": "Each procedure's peak execution time broken down per host, so you can tell whether a slow procedure is slow everywhere or only on specific nodes, which can point to an unbalanced or unhealthy host."
         },
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -1856,7 +1861,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -1944,7 +1949,7 @@
             }
           ],
           "type": "table",
-          "description": "The length of time it took to execute the stored procedure."
+          "description": "Each procedure's peak execution time broken down per partition, so you can tell whether slowness is spread evenly or concentrated on particular partitions, a sign of data skew or a hot partition."
         }
       ],
       "title": "Execution time matrices",
@@ -1963,9 +1968,9 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
-          "description": "The distribution of the time tasks were waiting in the queue for the execution on the remote node, initiated by this connection.",
+          "description": "The longest a request has waited in the inbound network queue before the cluster began processing it. Rising values mean the cluster is receiving work faster than it can start executing it.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1985,7 +1990,8 @@
                   }
                 ]
               },
-              "unit": "s"
+              "unit": "s",
+              "noValue": "0"
             },
             "overrides": []
           },
@@ -2015,7 +2021,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -2032,9 +2038,9 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
-          "description": "The distribution of the time taken to receive acknowledgment of the execution of the stored procedures on the leader node, initiated by this connection.",
+          "description": "The longest round-trip time from sending a request to a partition leader until its execution is acknowledged. High values point to slow procedure execution or a busy leader node.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -2054,7 +2060,8 @@
                   }
                 ]
               },
-              "unit": "s"
+              "unit": "s",
+              "noValue": "0"
             },
             "overrides": []
           },
@@ -2084,7 +2091,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -2101,9 +2108,9 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
-          "description": "The distribution of the time it took to receive acknowledgment from the replica.",
+          "description": "The longest round-trip time to receive acknowledgment that work was replicated to a partition replica - the extra wait K-safety adds to each transaction (only meaningful when K > 0). High values suggest replication is lagging and stretching transaction latency.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -2123,7 +2130,8 @@
                   }
                 ]
               },
-              "unit": "s"
+              "unit": "s",
+              "noValue": "0"
             },
             "overrides": []
           },
@@ -2153,7 +2161,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "exemplar": false,
@@ -2170,7 +2178,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "fieldConfig": {
             "defaults": {
@@ -2253,7 +2261,7 @@
             {
               "datasource": {
                 "type": "prometheus",
-                "uid": "${DS_PROMETHEUS}"
+                "uid": "prometheus"
               },
               "editorMode": "code",
               "expr": "sum (\n    voltdb_io_network_replication_round_trip_time_seconds_max {\n        namespace=\"$cluster\"\n    }\n) by (host_name, connection_hostname)",
@@ -2302,7 +2310,7 @@
             }
           ],
           "type": "table",
-          "description": "The distribution of the time it took to receive acknowledgment from the replica."
+          "description": "The replication acknowledgment round-trip time between each host and the hosts it connects to, shown as a matrix. This is the wait the K-safety fan-out adds to transactions (only present when K > 0); use it to pinpoint which pair of nodes is seeing slow replication."
         }
       ],
       "title": "Cluster internal latencies",
@@ -2340,7 +2348,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values(namespace)",
         "hide": 0,
@@ -2364,7 +2372,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values({namespace=\"$cluster\"},host_name)",
         "hide": 0,
@@ -2388,7 +2396,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values({namespace=\"$cluster\",host_name=~\"$host\"},site_id)",
         "hide": 0,
@@ -2412,7 +2420,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values({namespace=\"$cluster\", host_name=~\"$host\"},partition_id)",
         "hide": 0,
@@ -2435,7 +2443,7 @@
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values({namespace=\"$cluster\", host_name=~\"$host\"},procedure_name)",
         "hide": 0,

@@ -1,60 +1,11 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_PROMETHEUS",
-      "label": "Prometheus",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "panel",
-      "id": "bargauge",
-      "name": "Bar gauge",
-      "version": ""
-    },
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "12.0.2"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "Stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "text",
-      "name": "Text",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
         "builtIn": 1,
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "enable": true,
         "hide": true,
@@ -78,7 +29,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -101,7 +52,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               }
             ]
           }
@@ -132,17 +84,16 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "group by (snapshot_txn_id) (voltdb_snapshot_summary_info{namespace=\"$cluster\",host_name=~\"$host\", snapshot_result=\"SUCCESS\"})",
           "format": "table",
-          "hide": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "B"
@@ -163,12 +114,12 @@
         }
       ],
       "type": "stat",
-      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. SNAPSHOT_TYPE - String value indicating how the snapshot was initiated. Possible values are: \"Auto\" - an automated snapshot as defined by the configuration file; \"Commandlog\" - a command log snapshot; \"Manual\" - a manual snapshot initiated by a user. SNAPSHOT_PATH - The directory path where the snapshot file resides. SNAPSHOT_START_TIME - The timestamp when the snapshot began (in milliseconds). SNAPSHOT_END_TIME - The timestamp when the snapshot was completed (in milliseconds). SNAPSHOT_BYTES_WRITTEN - Total number of bytes written to the file so far. SNAPSHOT_PROGRESS - For snapshots currently in progress, the percent complete at the time of the call (0-100). SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
+      "description": "Number of snapshots that finished successfully in recent history. Each snapshot is a complete point-in-time backup of the database, so a steady count here confirms backups are being taken as expected."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -191,7 +142,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "yellow",
@@ -226,18 +178,17 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
           "expr": "group by (snapshot_txn_id, snapshot_result) (voltdb_snapshot_summary_info{namespace=\"$cluster\",host_name=~\"$host\"})",
           "format": "time_series",
-          "hide": false,
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -298,12 +249,92 @@
         }
       ],
       "type": "stat",
-      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. SNAPSHOT_TYPE - String value indicating how the snapshot was initiated. Possible values are: \"Auto\" - an automated snapshot as defined by the configuration file; \"Commandlog\" - a command log snapshot; \"Manual\" - a manual snapshot initiated by a user. SNAPSHOT_PATH - The directory path where the snapshot file resides. SNAPSHOT_START_TIME - The timestamp when the snapshot began (in milliseconds). SNAPSHOT_END_TIME - The timestamp when the snapshot was completed (in milliseconds). SNAPSHOT_BYTES_WRITTEN - Total number of bytes written to the file so far. SNAPSHOT_PROGRESS - For snapshots currently in progress, the percent complete at the time of the call (0-100). SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
+      "description": "How many snapshots are still being written and have not yet completed. This should drop back to zero shortly after each backup finishes; a value that stays high means a snapshot is taking a long time or is stuck."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [
+            {
+              "options": {
+                "match": "null",
+                "result": {
+                  "index": 0,
+                  "text": "0"
+                }
+              },
+              "type": "special"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": 0
+              },
+              {
+                "color": "yellow",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 4
+      },
+      "id": 110,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "percentChangeColorMode": "standard",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
+      },
+      "pluginVersion": "12.4.0",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "editorMode": "code",
+          "expr": "sum(voltdb_snapshot_in_progress_total{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Sites snapshotting now",
+      "type": "stat",
+      "description": "How many parts of the database are writing a snapshot right now. Any value above zero means a snapshot is in progress."
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -327,7 +358,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -362,18 +394,17 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
           "expr": "count(group by (snapshot_txn_id) (voltdb_snapshot_table_summary_info{namespace=\"$cluster\",host_name=~\"$host\", snapshot_result=\"FAILURE\"}))\n",
           "format": "time_series",
-          "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
@@ -382,12 +413,12 @@
       ],
       "title": "Failed table snapshots",
       "type": "stat",
-      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. TABLE_NAME - The name of the database table whose data the file contains. TABLE_FILENAME - The file name. SNAPSHOT_BYTES_WRITTEN - The total size, in bytes, of the file. SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
+      "description": "Number of recent snapshots in which one or more table backup files failed to write. A snapshot is only a usable backup if every table is saved, so any value above zero means those backups are incomplete and should be investigated."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -399,11 +430,13 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "decbytes",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -431,12 +464,12 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "voltdb_snapshot_summary_info{namespace=\"$cluster\",host_name=~\"$host\",snapshot_nonce=~\".*SNAP.*\"}",
@@ -448,12 +481,12 @@
       ],
       "title": "Last snapshot size",
       "type": "stat",
-      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. SNAPSHOT_TYPE - String value indicating how the snapshot was initiated. Possible values are: \"Auto\" - an automated snapshot as defined by the configuration file; \"Commandlog\" - a command log snapshot; \"Manual\" - a manual snapshot initiated by a user. SNAPSHOT_PATH - The directory path where the snapshot file resides. SNAPSHOT_START_TIME - The timestamp when the snapshot began (in milliseconds). SNAPSHOT_END_TIME - The timestamp when the snapshot was completed (in milliseconds). SNAPSHOT_BYTES_WRITTEN - Total number of bytes written to the file so far. SNAPSHOT_PROGRESS - For snapshots currently in progress, the percent complete at the time of the call (0-100). SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
+      "description": "Size on disk of the most recent snapshot. Useful for tracking how large your backups are and how much storage space they need."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -465,11 +498,13 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               }
             ]
           },
-          "unit": "ms"
+          "unit": "ms",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -497,12 +532,12 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "voltdb_snapshot_summary_info{namespace=\"$cluster\",host_name=~\"$host\",snapshot_type=\"AUTO\"}",
@@ -533,12 +568,12 @@
         }
       ],
       "type": "stat",
-      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. SNAPSHOT_TYPE - String value indicating how the snapshot was initiated. Possible values are: \"Auto\" - an automated snapshot as defined by the configuration file; \"Commandlog\" - a command log snapshot; \"Manual\" - a manual snapshot initiated by a user. SNAPSHOT_PATH - The directory path where the snapshot file resides. SNAPSHOT_START_TIME - The timestamp when the snapshot began (in milliseconds). SNAPSHOT_END_TIME - The timestamp when the snapshot was completed (in milliseconds). SNAPSHOT_BYTES_WRITTEN - Total number of bytes written to the file so far. SNAPSHOT_PROGRESS - For snapshots currently in progress, the percent complete at the time of the call (0-100). SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
+      "description": "Longest time any automatic (scheduled) snapshot took to complete in the selected period. Automatic snapshots run on a schedule, so a growing duration can signal that backups are taking longer as your data grows or the system is under load."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -550,11 +585,13 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               }
             ]
           },
-          "unit": "ms"
+          "unit": "ms",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -582,12 +619,12 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "voltdb_snapshot_summary_info{namespace=\"$cluster\",host_name=~\"$host\",snapshot_type=\"COMMANDLOG\"}",
@@ -618,12 +655,12 @@
         }
       ],
       "type": "stat",
-      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. SNAPSHOT_TYPE - String value indicating how the snapshot was initiated. Possible values are: \"Auto\" - an automated snapshot as defined by the configuration file; \"Commandlog\" - a command log snapshot; \"Manual\" - a manual snapshot initiated by a user. SNAPSHOT_PATH - The directory path where the snapshot file resides. SNAPSHOT_START_TIME - The timestamp when the snapshot began (in milliseconds). SNAPSHOT_END_TIME - The timestamp when the snapshot was completed (in milliseconds). SNAPSHOT_BYTES_WRITTEN - Total number of bytes written to the file so far. SNAPSHOT_PROGRESS - For snapshots currently in progress, the percent complete at the time of the call (0-100). SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
+      "description": "Longest time any command-log snapshot took to complete. These snapshots are taken as part of command logging, which VoltDB uses for durability and recovery; long durations can slow recovery and point to disk or load pressure."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -635,10 +672,12 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               }
             ]
-          }
+          },
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -666,12 +705,12 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "group by (snapshot_txn_id) (voltdb_snapshot_table_summary_info{namespace=\"$cluster\",host_name=~\"$host\"})",
@@ -696,12 +735,12 @@
         }
       ],
       "type": "stat",
-      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. TABLE_NAME - The name of the database table whose data the file contains. TABLE_FILENAME - The file name. SNAPSHOT_BYTES_WRITTEN - The total size, in bytes, of the file. SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
+      "description": "Number of recent snapshots that produced table backup files. Confirms that recent snapshots actually wrote out their per-table data."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -714,7 +753,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "#EAB839",
@@ -750,12 +790,12 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "group by (snapshot_txn_id, snapshot_result) (voltdb_snapshot_table_summary_info{namespace=\"$cluster\",host_name=~\"$host\"})",
@@ -826,12 +866,12 @@
         }
       ],
       "type": "stat",
-      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. TABLE_NAME - The name of the database table whose data the file contains. TABLE_FILENAME - The file name. SNAPSHOT_BYTES_WRITTEN - The total size, in bytes, of the file. SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
+      "description": "Number of snapshots whose per-table backup files are still being written. Should return to zero once each snapshot completes; a persistently non-zero value points to a slow or stuck backup."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -854,7 +894,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               },
               {
                 "color": "red",
@@ -889,12 +930,12 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -907,12 +948,12 @@
       ],
       "title": "Failed snapshots",
       "type": "stat",
-      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. SNAPSHOT_TYPE - String value indicating how the snapshot was initiated. Possible values are: \"Auto\" - an automated snapshot as defined by the configuration file; \"Commandlog\" - a command log snapshot; \"Manual\" - a manual snapshot initiated by a user. SNAPSHOT_PATH - The directory path where the snapshot file resides. SNAPSHOT_START_TIME - The timestamp when the snapshot began (in milliseconds). SNAPSHOT_END_TIME - The timestamp when the snapshot was completed (in milliseconds). SNAPSHOT_BYTES_WRITTEN - Total number of bytes written to the file so far. SNAPSHOT_PROGRESS - For snapshots currently in progress, the percent complete at the time of the call (0-100). SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
+      "description": "Number of snapshots that failed to complete in recent history. Snapshots are your point-in-time backups, so any failure means you may not have a usable recovery point and should be looked into promptly."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -925,7 +966,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               }
             ]
           },
@@ -957,12 +999,12 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "voltdb_snapshot_table_summary_info{namespace=\"$cluster\",host_name=~\"$host\"}",
@@ -974,12 +1016,12 @@
       ],
       "title": "Max table snapshot size",
       "type": "stat",
-      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. TABLE_NAME - The name of the database table whose data the file contains. TABLE_FILENAME - The file name. SNAPSHOT_BYTES_WRITTEN - The total size, in bytes, of the file. SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
+      "description": "Size of the largest single table backup file across recent snapshots. Helps you spot which tables dominate backup size and storage use."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -991,11 +1033,13 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               }
             ]
           },
-          "unit": "ms"
+          "unit": "ms",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -1023,12 +1067,12 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "voltdb_snapshot_summary_info{namespace=\"$cluster\",host_name=~\"$host\",snapshot_type=\"REJOIN\"}",
@@ -1059,12 +1103,12 @@
         }
       ],
       "type": "stat",
-      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. SNAPSHOT_TYPE - String value indicating how the snapshot was initiated. Possible values are: \"Auto\" - an automated snapshot as defined by the configuration file; \"Commandlog\" - a command log snapshot; \"Manual\" - a manual snapshot initiated by a user. SNAPSHOT_PATH - The directory path where the snapshot file resides. SNAPSHOT_START_TIME - The timestamp when the snapshot began (in milliseconds). SNAPSHOT_END_TIME - The timestamp when the snapshot was completed (in milliseconds). SNAPSHOT_BYTES_WRITTEN - Total number of bytes written to the file so far. SNAPSHOT_PROGRESS - For snapshots currently in progress, the percent complete at the time of the call (0-100). SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
+      "description": "Longest time a rejoin snapshot took. These snapshots are created to bring a restarting or newly added server back into the cluster, so a long duration lengthens how long node recovery or cluster expansion takes."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -1076,11 +1120,13 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": 0
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "decbytes",
+          "noValue": "0"
         },
         "overrides": []
       },
@@ -1115,12 +1161,12 @@
         "sizing": "auto",
         "valueMode": "color"
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -1177,9 +1223,13 @@
         }
       ],
       "type": "bargauge",
-      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. TABLE_NAME - The name of the database table whose data the file contains. TABLE_FILENAME - The file name. SNAPSHOT_BYTES_WRITTEN - The total size, in bytes, of the file. SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
+      "description": "Total backup size contributed by each table in recent snapshots, broken down per table. Use it to see which tables make up most of your backup footprint and storage consumption."
     },
     {
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "gridPos": {
         "h": 5,
         "w": 24,
@@ -1196,7 +1246,8 @@
         "content": "# Note on snapshot lists\n\nThese panels are designed to display the most recent snapshots. \nTo ensure optimal performance for both Prometheus and Grafana (server-side and in your browser), we've limited the data display to the last hour. Displaying data from extended time periods can place undue stress on these systems.\n\n**_NOTE: In case of performance issues keep these rows collapsed so they will not be computed._**\n",
         "mode": "markdown"
       },
-      "pluginVersion": "12.0.2",
+      "pluginVersion": "12.4.0",
+      "title": "",
       "type": "text"
     },
     {
@@ -1215,9 +1266,8 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. SNAPSHOT_TYPE - String value indicating how the snapshot was initiated. Possible values are: \"Auto\" - an automated snapshot as defined by the configuration file; \"Commandlog\" - a command log snapshot; \"Manual\" - a manual snapshot initiated by a user. SNAPSHOT_PATH - The directory path where the snapshot file resides. SNAPSHOT_START_TIME - The timestamp when the snapshot began (in milliseconds). SNAPSHOT_END_TIME - The timestamp when the snapshot was completed (in milliseconds). SNAPSHOT_BYTES_WRITTEN - Total number of bytes written to the file so far. SNAPSHOT_PROGRESS - For snapshots currently in progress, the percent complete at the time of the call (0-100). SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\").",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1468,7 +1518,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "voltdb_snapshot_summary_info{namespace=\"$cluster\",host_name=~\"$host\",snapshot_type=\"AUTO\"}",
@@ -1610,14 +1660,14 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "Recent automatic (scheduled) snapshots that have completed, with the start time, duration, size and result for each. Use it to confirm scheduled backups are running on time and succeeding; a Failed result means that backup is not usable."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
-      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. SNAPSHOT_TYPE - String value indicating how the snapshot was initiated. Possible values are: \"Auto\" - an automated snapshot as defined by the configuration file; \"Commandlog\" - a command log snapshot; \"Manual\" - a manual snapshot initiated by a user. SNAPSHOT_PATH - The directory path where the snapshot file resides. SNAPSHOT_START_TIME - The timestamp when the snapshot began (in milliseconds). SNAPSHOT_END_TIME - The timestamp when the snapshot was completed (in milliseconds). SNAPSHOT_BYTES_WRITTEN - Total number of bytes written to the file so far. SNAPSHOT_PROGRESS - For snapshots currently in progress, the percent complete at the time of the call (0-100). SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\").",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1868,7 +1918,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "voltdb_snapshot_summary_info{namespace=\"$cluster\",host_name=~\"$host\", snapshot_type=\"COMMANDLOG\"}",
@@ -2010,12 +2060,13 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "Recent command-log snapshots that have completed, with the start time, duration, size and result for each. These snapshots support durability and recovery, so check here that they are finishing successfully and not taking excessively long."
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -2223,7 +2274,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "voltdb_snapshot_summary_info{namespace=\"$cluster\",host_name=~\"$host\"}",
@@ -2342,7 +2393,7 @@
         }
       ],
       "type": "table",
-      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. SNAPSHOT_TYPE - String value indicating how the snapshot was initiated. Possible values are: \"Auto\" - an automated snapshot as defined by the configuration file; \"Commandlog\" - a command log snapshot; \"Manual\" - a manual snapshot initiated by a user. SNAPSHOT_PATH - The directory path where the snapshot file resides. SNAPSHOT_START_TIME - The timestamp when the snapshot began (in milliseconds). SNAPSHOT_END_TIME - The timestamp when the snapshot was completed (in milliseconds). SNAPSHOT_BYTES_WRITTEN - Total number of bytes written to the file so far. SNAPSHOT_PROGRESS - For snapshots currently in progress, the percent complete at the time of the call (0-100). SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
+      "description": "Snapshots currently being written, showing how far along each one is, its size so far and how long it has been running. Use it to watch active backups and catch any that are running unusually long."
     },
     {
       "collapsed": false,
@@ -2360,7 +2411,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "prometheus"
       },
       "fieldConfig": {
         "defaults": {
@@ -2541,7 +2592,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "prometheus"
           },
           "editorMode": "code",
           "expr": "voltdb_snapshot_table_summary_info{namespace=\"$cluster\",host_name=~\"$host\", table_name=~\"$table\"}",
@@ -2601,16 +2652,20 @@
         }
       ],
       "type": "table",
-      "description": "Informational metric. One for every snapshot file in the recent snapshots performed on the cluster. Tags: SNAPSHOT_NONCE - The unique identifier for the snapshot. SNAPSHOT_TXN_ID - The transaction ID of the snapshot. TABLE_NAME - The name of the database table whose data the file contains. TABLE_FILENAME - The file name. SNAPSHOT_BYTES_WRITTEN - The total size, in bytes, of the file. SNAPSHOT_RESULT - Value indicating whether the writing of the snapshot file was successful (\"Success\") or not (\"Failure\")."
+      "description": "Per-table detail of recent snapshots for the selected tables, showing each table's backup file, size and result. Use it to confirm individual tables were backed up successfully and to compare their sizes."
     }
   ],
+  "preload": false,
   "refresh": "",
-  "schemaVersion": 41,
+  "schemaVersion": 42,
   "tags": [],
   "templating": {
     "list": [
       {
-        "current": {},
+        "current": {
+          "text": "Prometheus",
+          "value": "prometheus"
+        },
         "hide": 2,
         "includeAll": false,
         "label": "datasource",
@@ -2622,10 +2677,13 @@
         "type": "datasource"
       },
       {
-        "current": {},
+        "current": {
+          "text": "demo-a",
+          "value": "demo-a"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values(namespace)",
         "includeAll": false,
@@ -2638,15 +2696,19 @@
         },
         "refresh": 1,
         "regex": "",
+        "regexApplyTo": "value",
         "sort": 1,
         "type": "query"
       },
       {
         "allValue": ".*",
-        "current": {},
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values({namespace=\"$cluster\"},host_name)",
         "includeAll": true,
@@ -2659,14 +2721,22 @@
         },
         "refresh": 2,
         "regex": "",
+        "regexApplyTo": "value",
         "sort": 1,
         "type": "query"
       },
       {
-        "current": {},
+        "current": {
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "prometheus"
         },
         "definition": "label_values({namespace=\"$cluster\", host_name=~\"$host\"},table_name)",
         "includeAll": true,
@@ -2680,6 +2750,7 @@
         },
         "refresh": 2,
         "regex": "",
+        "regexApplyTo": "value",
         "type": "query"
       },
       {
@@ -2699,7 +2770,7 @@
     "to": "now"
   },
   "timepicker": {},
-  "timezone": "",
+  "timezone": "browser",
   "title": "VoltDB Snapshots",
   "uid": "volt-v14x-snapshots",
   "weekStart": ""
