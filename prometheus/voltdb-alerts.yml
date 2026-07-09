@@ -16,9 +16,21 @@
 # ---------------------------------------------------------------------------
 # "Volt storage exceeds N% of available storage" for voltdbroot, command logs,
 # command-log snapshots, manual/scheduled snapshots and the DR overflow dir are
-# filesystem measurements. VoltDB exposes essentially no disk-usage metrics, so
-# these belong to the infrastructure layer, not to Volt metrics. Alert on the
-# volume the data lives on:
+# filesystem measurements. VoltDB does NOT export disk usage into the
+# Prometheus metric stream, so no rule here can see it. Two complementary
+# options instead:
+#
+# 1. VoltDB's built-in Resource Monitor (deployment: systemsettings >
+#    resourcemonitor > disklimit) watches the disk holding each feature
+#    directory - SNAPSHOTS, COMMANDLOG, COMMANDLOGSNAPSHOT, EXPORTOVERFLOW,
+#    DROVERFLOW, TOPICSDATA - with percent or absolute thresholds per feature.
+#    Each feature takes two levels: `alert` raises an SNMP trap (+ log
+#    warning), `size` makes the database PAUSE itself to protect data. If your
+#    alarming is SNMP-based, this is the native path and needs no external
+#    agent. See MonitorSysResource in the Administrator's Guide.
+#
+# 2. For Prometheus/Grafana (trends, dashboards, Alertmanager), alert on the
+#    volume the data lives on:
 #
 #   # Kubernetes (kubelet / PVC):
 #   (kubelet_volume_stats_used_bytes / kubelet_volume_stats_capacity_bytes) > 0.85
