@@ -66,7 +66,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "VoltDB software version (VERSION) reported by @SystemInformation OVERVIEW.",
+      "description": "The VoltDB software version this cluster is running. Check it when confirming an upgrade took effect or when matching observed behavior to a specific release.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -133,7 +133,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "How long the cluster has been running, derived from the start timestamp (STARTTIME / HOSTSTARTTIME) reported by @SystemInformation OVERVIEW.",
+      "description": "How long the cluster has been running since it last started. A sudden drop back toward zero means the cluster was restarted.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -242,7 +242,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "One of INITIALIZING, RUNNING, PAUSED, SHUTTINGDOWN",
+      "description": "The cluster's current operating state. RUNNING is normal; PAUSED means client transactions are blocked (typically during maintenance); INITIALIZING and SHUTTINGDOWN appear briefly during startup and shutdown.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -348,7 +348,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "One of REDUCED, FULL",
+      "description": "Whether the cluster currently holds all its redundant copies of data. FULL means every partition has its full set of copies available; REDUCED means one or more copies are missing (usually a node is down), leaving less headroom before further failures put data at risk.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -439,7 +439,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Initial (configured) cluster size from @SystemInformation OVERVIEW (FULLCLUSTERSIZE) — the number of nodes the cluster was started with.",
+      "description": "The number of nodes the cluster is configured to run with. Compare it against the current node count to see whether any nodes are missing.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -520,7 +520,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Current number of nodes in the cluster, counted from the per-host @SystemInformation OVERVIEW rows.",
+      "description": "The number of nodes currently active in the cluster. If this is below the configured (full) cluster size, one or more nodes are down.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -595,7 +595,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Cluster configuration summary from @SystemInformation OVERVIEW: VoltDB build string (BUILDSTRING), DR replication role (REPLICATIONROLE), and whether the cluster is running on Kubernetes.",
+      "description": "Key identity settings for the cluster: the exact software build it is running, its cross-datacenter replication role, and whether it is deployed on Kubernetes.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -702,7 +702,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "K-safety value (kfactor) from @SystemInformation DEPLOYMENT — the number of redundant copies kept of each partition.",
+      "description": "The number of redundant copies kept of each partition (K-safety). A value of 0 means no redundancy, so losing a single node halts the cluster; a higher value lets the cluster survive that many simultaneous node failures.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -787,7 +787,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Number of CPU cores on the host (CPUCORES) reported by @SystemInformation OVERVIEW.",
+      "description": "The number of physical CPU cores on the host. Useful for capacity planning and for confirming nodes are running on the expected hardware.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -871,7 +871,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Number of processor threads on the host (CPUTHREADS) reported by @SystemInformation OVERVIEW.",
+      "description": "The number of hardware processor threads on the host. Useful for capacity planning and for confirming nodes match their expected hardware.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -952,7 +952,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "DR cluster identifier (CLUSTERID) reported by @SystemInformation OVERVIEW.",
+      "description": "The identifier assigned to this cluster for cross-datacenter replication (DR). Use it to tell paired clusters apart when replication is configured.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1032,7 +1032,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Number of execution sites per host (sitesperhost) from @SystemInformation DEPLOYMENT.",
+      "description": "The number of execution sites (partitions) each node runs. Together with the node count and K-safety, this determines how the workload is spread across the cluster.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1125,7 +1125,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Database deployment settings from @SystemInformation DEPLOYMENT: DR role (drrole) and DR transaction priority (drpriority), elastic rebalance target duration (elasticduration, ms) and throughput (elasticthroughput, MB/s), whether export is enabled (export), heartbeat timeout (heartbeattimeout, seconds), and whether network partition detection is enabled (partitiondetection).",
+      "description": "The cluster's main deployment settings in one place: its replication role and priority, whether export, network partition detection, and metrics collection are turned on, the heartbeat timeout, the pace allowed for elastic rebalancing when nodes are added or removed, and the memory, temp-table, and replication buffer limits. Review these to confirm the running configuration matches what was intended.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1368,7 +1368,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Automatic snapshot configuration from @SystemInformation DEPLOYMENT: whether automatic snapshots are enabled (snapshotenabled), their frequency (snapshotfrequency), system priority (snapshotpriority), and the number of snapshots retained (snapshotretain).",
+      "description": "Automatic snapshot settings: whether periodic snapshots are enabled, how often they are taken, how many are kept, and the priority given to snapshot work. Use this to confirm the cluster is taking regular on-disk backups.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1487,7 +1487,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Time remaining until the active license expires, derived from the license expiration date (EXPIRATION) reported by @SystemInformation LICENSE.",
+      "description": "Time left before the current license expires. Plan a renewal well before this reaches zero to avoid running on an expired license.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1585,7 +1585,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "The date the active license expires (EXPIRATION) from @SystemInformation LICENSE.",
+      "description": "The calendar date on which the current license expires.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1677,7 +1677,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Maximum number of hosts permitted by the active license (HOSTCOUNT_MAX) from @SystemInformation LICENSE.",
+      "description": "The maximum number of nodes the current license permits. \"Limit not relevant\" means the license does not cap the node count.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1780,7 +1780,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Maximum number of processor cores permitted by the active license (CORECOUNT_MAX) from @SystemInformation LICENSE.",
+      "description": "The maximum number of processor cores the current license permits. \"Limit not relevant\" means the license does not cap the core count.",
       "fieldConfig": {
         "defaults": {
           "color": {

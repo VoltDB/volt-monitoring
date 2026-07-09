@@ -38,7 +38,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "The number of procedure invocation per 5 minutes, also includes procedures being replicated into partition replicas, so it does not equal the number of transactions issued by clients",
+      "description": "Rate of stored-procedure invocations across the selected hosts. This counts work run on partition replicas as well as on the primary copy, so it is higher than the number of transactions your clients actually issued; watch it for overall load and sudden shifts in traffic.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -100,7 +100,7 @@
           "refId": "A"
         }
       ],
-      "title": "Invocation rate 5m",
+      "title": "Invocation rate",
       "type": "stat"
     },
     {
@@ -189,7 +189,7 @@
       ],
       "title": "Command execution max wait time",
       "type": "stat",
-      "description": "The distribution of time tasks were waiting in the queue."
+      "description": "The longest time any task sat in an execution queue before a partition's execution engine picked it up. Rising wait times mean sites are saturated and transactions are backing up; use it to catch an overloaded partition or host."
     },
     {
       "datasource": {
@@ -265,7 +265,7 @@
       ],
       "title": "Max queue depth",
       "type": "stat",
-      "description": "The number of tasks in the queue."
+      "description": "The largest number of tasks backed up in any single execution queue, waiting to run. A persistently high backlog points to an overloaded execution site or a hot partition that cannot keep up with incoming work."
     },
     {
       "datasource": {
@@ -342,7 +342,7 @@
       ],
       "title": "Max percent busy",
       "type": "stat",
-      "description": "The distribution of the amount of time the execution site had to wait for a new task."
+      "description": "The fraction of time the busiest execution site spent actively processing work rather than sitting idle. Values approaching 100% mean that site is saturated and likely a bottleneck; one hot value among otherwise idle sites indicates a skewed or hot partition."
     },
     {
       "collapsed": false,
@@ -473,7 +473,7 @@
       ],
       "title": "Procedure invocations per partition",
       "type": "timeseries",
-      "description": "The total number of invocations of this procedure at this site."
+      "description": "Rate of stored-procedure calls handled by each partition. Compare the lines to spot a hot or skewed partition doing far more work than the others, which can bottleneck the whole cluster."
     },
     {
       "datasource": {
@@ -577,7 +577,7 @@
       ],
       "title": "Busiest sites (percent of the time)",
       "type": "timeseries",
-      "description": "The distribution of the amount of time the execution site had to wait for a new task."
+      "description": "For each execution site, the fraction of time it was actively working rather than idle. Sites pinned near 100% are saturated; an uneven spread points to a hot partition or an unbalanced workload."
     },
     {
       "datasource": {
@@ -689,7 +689,7 @@
         }
       ],
       "type": "table",
-      "description": "The total number of invocations of this procedure at this site."
+      "description": "Stored procedures ranked by how many times they ran over the selected time range. Use it to see which procedures drive the workload and where tuning effort will pay off most."
     },
     {
       "datasource": {
@@ -785,7 +785,7 @@
       ],
       "title": "Procedure failures per partition",
       "type": "timeseries",
-      "description": "The number of times the procedure failed unexpectedly."
+      "description": "Rate of stored-procedure calls that failed, broken out by partition. Any sustained non-zero value warrants investigation; failures concentrated on one partition often signal a data or hotspot problem there."
     },
     {
       "datasource": {
@@ -1048,7 +1048,7 @@
       ],
       "title": "Procedure invocations count by time buckets",
       "type": "bargauge",
-      "description": "The length of time it took to execute the stored procedure."
+      "description": "How stored-procedure execution times were distributed over the selected range, grouped into latency buckets. Weight in the higher buckets means some calls are slow; use it to judge overall latency and catch outliers."
     },
     {
       "datasource": {
@@ -1180,7 +1180,7 @@
         }
       ],
       "type": "marcusolsson-treemap-panel",
-      "description": "- `voltdb_procedure_invoked_time_seconds`: The length of time it took to execute the stored procedure.\n- `voltdb_procedure_invoked_total`: The total number of invocations of this procedure at this site."
+      "description": "Each block is one stored procedure on one partition, sized by how often it ran and labelled with its slowest execution time. Use it to find the procedure-and-partition combinations that dominate the workload or run unusually slowly, pinpointing a hot pair."
     },
     {
       "datasource": {
@@ -1286,7 +1286,7 @@
       ],
       "title": "Command queue depth by site",
       "type": "timeseries",
-      "description": "The number of tasks in the queue."
+      "description": "Number of tasks waiting to run in each execution site's queue over time. Queues that keep growing on a particular site reveal an overloaded execution engine or a hot partition that is falling behind."
     },
     {
       "datasource": {
@@ -1371,7 +1371,7 @@
       ],
       "title": "Cumulative Procedure Invocation Distribution",
       "type": "heatmap",
-      "description": "The length of time it took to execute the stored procedure."
+      "description": "Distribution of stored-procedure execution times over the selected range, shown as a heatmap so you can watch how latency shifts. Bands drifting toward higher execution times indicate procedures slowing down."
     },
     {
       "datasource": {
@@ -1440,14 +1440,14 @@
       ],
       "title": "Tuples in table by table and partition",
       "type": "marcusolsson-treemap-panel",
-      "description": "The number of rows stored for this table in the current partition. For streams, the cumulative total number of rows inserted into the stream."
+      "description": "Row counts for each table broken down by partition (for streams, the cumulative number of rows inserted). Compare partitions within a table to spot data skew, where one partition holds far more rows than the others."
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Cumulative queue wait time. Choose site to drill down",
+      "description": "Median, 90th- and 99th-percentile time that tasks wait in the execution queues before running. Rising percentiles mean transactions are queuing behind a busy site; pick a site to drill into a specific execution engine.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1561,7 +1561,7 @@
           "refId": "C"
         }
       ],
-      "title": "Command queue max wait times by site",
+      "title": "Command queue wait time percentiles by site",
       "type": "timeseries"
     }
   ],

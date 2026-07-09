@@ -106,7 +106,7 @@
       ],
       "title": "Total tuples sent",
       "type": "stat",
-      "description": "The total number of records queued to the export target since the queue was created."
+      "description": "The number of records collected for export during the selected time range. Watch it to confirm export is flowing and to compare throughput across time periods."
     },
     {
       "datasource": {
@@ -175,7 +175,7 @@
       ],
       "title": "Total missing tuples",
       "type": "stat",
-      "description": "The number of records missing from the queue for the current stream and partition."
+      "description": "The number of records that are missing from the export queue, summed across all streams and partitions. Records usually go missing because a node holding them is down, and they fill back in once that node rejoins; a value that stays non-zero is a gap that may never be filled, meaning that data will not be exported."
     },
     {
       "datasource": {
@@ -243,7 +243,7 @@
       ],
       "title": "Pending tuples",
       "type": "stat",
-      "description": "The number of records still waiting to be written to or acknowledged by the target."
+      "description": "The number of records queued for export but not yet written to or acknowledged by their target, summed across all streams and partitions. This is the export backlog: a steadily rising value means a target cannot keep up with incoming data or is unreachable."
     },
     {
       "datasource": {
@@ -312,7 +312,7 @@
       ],
       "title": "Max export latency",
       "type": "stat",
-      "description": "The distribution of time between when records are inserted, and then acknowledged by the target."
+      "description": "The longest time any stream is currently taking between a record being inserted and the target acknowledging it. Rising latency points to a slow or struggling export target."
     },
     {
       "datasource": {
@@ -389,7 +389,7 @@
         }
       ],
       "type": "stat",
-      "description": "Informational metric that contains metadata. Tags: EXPORT_IS_ACTIVE - \"True\" if is enabled and not blocked and is master. EXPORT_STATUS - The current status of the export connection. \"Active\" - Queue is currently exporting to the target; \"Blocked\" - There is a gap in the queue and export is waiting to see if the missing records become available when a missing node rejoins; \"Dropped\" - either the source stream has been dropped from the schema or the export configuration has been removed from the configuration and queue is draining any remaining records."
+      "description": "The number of export streams that are currently up and delivering to their target. A stream is not counted here if it is blocked (waiting on a gap in the data, for example until a rejoining node fills it in) or has been dropped and is draining its remaining records. Compare with the inactive count to spot streams that have stopped exporting."
     },
     {
       "datasource": {
@@ -470,7 +470,7 @@
         }
       ],
       "type": "stat",
-      "description": "Informational metric that contains metadata. Tags: EXPORT_IS_ACTIVE - \"True\" if is enabled and not blocked and is master. EXPORT_STATUS - The current status of the export connection. \"Active\" - Queue is currently exporting to the target; \"Blocked\" - There is a gap in the queue and export is waiting to see if the missing records become available when a missing node rejoins; \"Dropped\" - either the source stream has been dropped from the schema or the export configuration has been removed from the configuration and queue is draining any remaining records."
+      "description": "The number of export streams that are enabled but not currently delivering to their target. A stream shows as inactive when it is blocked by a gap in the data (waiting to see if missing records arrive once a down node rejoins) or when it has been dropped from the schema or configuration and is draining its remaining records. Any non-zero value is worth investigating, since data is not flowing to that target."
     },
     {
       "collapsed": true,
@@ -540,7 +540,7 @@
           ],
           "title": "Pending tuples count by source and partition",
           "type": "marcusolsson-treemap-panel",
-          "description": "The number of records still waiting to be written to or acknowledged by the target."
+          "description": "The export backlog broken down by source stream and partition, so you can see which stream and partition is accumulating undelivered records. Larger tiles are the biggest backlogs and the first place to look when the overall pending count climbs."
         },
         {
           "datasource": {
@@ -600,7 +600,7 @@
           ],
           "title": "Pending tuples count by partition and target",
           "type": "marcusolsson-treemap-panel",
-          "description": "The number of records still waiting to be written to or acknowledged by the target."
+          "description": "The export backlog broken down by partition and destination target, so you can see which target is falling behind and which partitions feed it. Larger tiles are the biggest backlogs and the first place to look when the overall pending count climbs."
         },
         {
           "datasource": {
@@ -727,7 +727,7 @@
             }
           ],
           "type": "table",
-          "description": "The timestamp when the last tuple was acknowledged as received by the target."
+          "description": "How long ago the target last acknowledged a record, shown as the worst (oldest) value per partition. A large or growing value means that partition's export has stalled, since the target has not confirmed receiving anything recently."
         },
         {
           "datasource": {
@@ -850,7 +850,7 @@
             }
           ],
           "type": "table",
-          "description": "The timestamp when the last tuple was acknowledged as received by the target."
+          "description": "How long ago each source stream's target last acknowledged a record, shown as the worst (oldest) value per stream. A large or growing value means that stream's export has stalled, since the target has not confirmed receiving anything recently."
         },
         {
           "datasource": {
@@ -948,7 +948,7 @@
           ],
           "title": "Pending tuples by source",
           "type": "timeseries",
-          "description": "The number of records still waiting to be written to or acknowledged by the target."
+          "description": "The export backlog over time, one line per source stream. A line that keeps climbing points to a target that is falling behind or is unreachable for that stream."
         },
         {
           "datasource": {
@@ -1046,7 +1046,7 @@
           ],
           "title": "Missing tuples by source",
           "type": "timeseries",
-          "description": "The number of records missing from the queue for the current stream and partition."
+          "description": "The number of missing records over time, one line per source stream. Records go missing when a node holding them is down and usually recover when it rejoins; a line that stays elevated is a gap that may never be filled."
         }
       ],
       "title": "Details",
@@ -1201,7 +1201,7 @@
             }
           ],
           "type": "state-timeline",
-          "description": "Informational metric that contains metadata. Tags: EXPORT_IS_ACTIVE - \"True\" if is enabled and not blocked and is master. EXPORT_STATUS - The current status of the export connection. \"Active\" - Queue is currently exporting to the target; \"Blocked\" - There is a gap in the queue and export is waiting to see if the missing records become available when a missing node rejoins; \"Dropped\" - either the source stream has been dropped from the schema or the export configuration has been removed from the configuration and queue is draining any remaining records."
+          "description": "A timeline showing, for each target on each node, when export was active (delivering) versus not active over the selected period. Use it to see when and where exports stopped and started, for example a target that repeatedly drops out or one that went inactive and never recovered."
         }
       ],
       "title": "Export activity timeline",

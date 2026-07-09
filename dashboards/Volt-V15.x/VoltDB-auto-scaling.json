@@ -44,7 +44,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "One of INITIALIZING, RUNNING, PAUSED, SHUTTINGDOWN",
+      "description": "The overall cluster state — normally RUNNING. INITIALIZING means it is still starting up, PAUSED means it has stopped accepting most client work, and SHUTTINGDOWN means it is stopping. Watch this to confirm the cluster is healthy and available.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -142,7 +142,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "One of REDUCED, FULL",
+      "description": "Whether the cluster still has its full data redundancy. FULL means every partition has all of its configured copies; REDUCED means one or more copies are missing (for example after a node failure), so the cluster is running with less resilience until it recovers.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -297,7 +297,7 @@
       ],
       "title": "Current size",
       "type": "stat",
-      "description": "Current number of nodes in the cluster, counted from the per-host @SystemInformation OVERVIEW rows."
+      "description": "The number of nodes currently live in the cluster. Compare it with the normal (configured) size to see whether nodes have been lost or added."
     },
     {
       "datasource": {
@@ -367,7 +367,7 @@
       ],
       "title": "Normal size",
       "type": "stat",
-      "description": "Initial (configured) cluster size from @SystemInformation OVERVIEW (FULLCLUSTERSIZE) — the number of nodes the cluster was started with."
+      "description": "The number of nodes the cluster is configured to run with. If the current size is below this, the cluster is missing nodes."
     },
     {
       "datasource": {
@@ -436,7 +436,7 @@
       ],
       "title": "Sites/host",
       "type": "stat",
-      "description": "Number of execution sites per host (sitesperhost) from @SystemInformation DEPLOYMENT."
+      "description": "The number of parallel execution sites configured on each node. Together with the node count, this determines how much work the cluster can run in parallel."
     },
     {
       "datasource": {
@@ -548,7 +548,7 @@
         }
       ],
       "type": "stat",
-      "description": "How long the cluster has been running, derived from the start timestamp (STARTTIME / HOSTSTARTTIME) reported by @SystemInformation OVERVIEW."
+      "description": "How long the cluster has been running since it last started. An unexpected reset here indicates a restart."
     },
     {
       "datasource": {
@@ -813,7 +813,7 @@
         }
       ],
       "type": "table",
-      "description": "The percentage of CPU used by the database server process. 0-100."
+      "description": "A per-node summary of the cluster: each node's host name, VoltDB version, current CPU load, uptime, and whether it is ready for cross-datacenter replication (XDCR). Use it to spot nodes that are overloaded, on the wrong version, or recently restarted."
     },
     {
       "collapsed": false,
@@ -907,7 +907,7 @@
       ],
       "title": "Max CPU",
       "type": "stat",
-      "description": "The percentage of CPU used by the database server process. 0-100."
+      "description": "The CPU usage of the busiest node, as a percentage. This measures the VoltDB server process only, not everything else running on the machine. A sustained high value is a signal that the cluster may need to scale out."
     },
     {
       "datasource": {
@@ -985,7 +985,7 @@
       ],
       "title": "RAM usage",
       "type": "gauge",
-      "description": "- `voltdb_memory_rss_bytes`: The resident set size. That is, the total amount of memory allocated to the VoltDB processes on the server.\n- `voltdb_memory_physicalmemory_bytes`: The total size of physical memory on the server."
+      "description": "The share of physical memory used by the VoltDB process on the busiest node, from 0 to 1. Rising memory is a signal that the cluster may be approaching its capacity."
     },
     {
       "datasource": {
@@ -1063,14 +1063,14 @@
       ],
       "title": "Java heap",
       "type": "gauge",
-      "description": "- `voltdb_memory_javaused_bytes`: The amount of memory allocated by Java and in use by VoltDB.\n- `voltdb_memory_javamaxheap_bytes`: The maximum heap size of the Java runtime environment."
+      "description": "The share of the configured maximum Java heap in use on the busiest node, from 0 to 1. A value close to 1 means the heap is nearly full, which can cause pauses or instability."
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Number of transactions executed by the connected clients",
+      "description": "The rate of stored-procedure calls the cluster is currently executing per second. This counts every invocation, including internal replicated work, so it can be higher than the number of transactions your clients submit. It is the main measure of how much load the cluster is handling.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1212,7 +1212,7 @@
       ],
       "title": "GC time",
       "type": "stat",
-      "description": "Cumulative run time of garbage collection. Tags: GC_TYPE - (e.g. CMS, G1), example gc_type=\"G1 Young Generation\"."
+      "description": "Total time the Java garbage collector spent pausing work over the selected time range. Large or growing values point to memory pressure that can slow the cluster down."
     },
     {
       "datasource": {
@@ -1281,7 +1281,7 @@
       ],
       "title": "Volt Version",
       "type": "stat",
-      "description": "VoltDB software version (VERSION) reported by @SystemInformation OVERVIEW."
+      "description": "The VoltDB software version the cluster is running. Use it to confirm the expected version and to catch a node left behind during an upgrade."
     },
     {
       "datasource": {
@@ -1381,7 +1381,7 @@
       ],
       "title": "CPU Usage",
       "type": "timeseries",
-      "description": "The percentage of CPU used by the database server process. 0-100."
+      "description": "CPU usage of each node over time, as a percentage. This reflects the VoltDB server process only, not the whole machine. Use it to see how load is spread across nodes and whether any node is running hot."
     },
     {
       "datasource": {
@@ -1479,7 +1479,7 @@
       ],
       "title": "Transaction rate",
       "type": "timeseries",
-      "description": "The number of times the stored procedure has been invoked by this connection on this host node."
+      "description": "The rate of transactions each node is processing per second over time. Use it to watch throughput trends and see whether work is balanced evenly across nodes."
     },
     {
       "datasource": {
@@ -1574,7 +1574,7 @@
       ],
       "title": "RSS size",
       "type": "timeseries",
-      "description": "The resident set size. That is, the total amount of memory allocated to the VoltDB processes on the server."
+      "description": "The total memory held by the VoltDB process on each node over time. Watch for steady growth, which can indicate the cluster is filling up its available memory."
     },
     {
       "datasource": {
@@ -1668,7 +1668,7 @@
       ],
       "title": "IdleTime",
       "type": "timeseries",
-      "description": "The distribution of the amount of time the execution site had to wait for a new task."
+      "description": "Accumulated time each node's execution sites have spent waiting for new work. The faster this line rises, the more idle the node is: a steep climb suggests the cluster is underused and could scale down, while a nearly flat line means the sites are kept busy and the cluster is near capacity."
     },
     {
       "collapsed": false,
@@ -1688,7 +1688,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Rebalance happens in segments. All metrics describing 'average' of some kind refer to the average across segments.",
+      "description": "A history of recent partition-rebalancing operations, which run when the cluster changes size and data is redistributed across nodes. Rebalancing proceeds in segments, so the 'average' columns are averages across those segments. Use it to track progress and how long a resize is taking.",
       "fieldConfig": {
         "defaults": {
           "color": {

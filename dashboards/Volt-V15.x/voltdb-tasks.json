@@ -38,7 +38,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "All non-cancelled scheduled tasks in cluster",
+      "description": "The number of scheduled tasks currently defined across the cluster, excluding any that have been cancelled. Tasks are procedures VoltDB runs automatically on a schedule, so this shows how much scheduled work the database is managing.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -116,7 +116,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Unique tasks scheduled in cluster by name",
+      "description": "The number of distinct scheduled tasks by name, regardless of how many hosts or partitions each one runs on. Compare it with the total task count to see how widely each task is spread across the cluster.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -280,7 +280,7 @@
         }
       ],
       "type": "stat",
-      "description": "Informational metric with scheduler metadata. Tags: PARTITION_ID - The numeric ID for the logical partition running the task procedure. Directed procedures run on each logical partition. Multi-partition procedures run on the multi-partition initiator. TASK_NAME - The name of the task. TASK_STATUS - The current status of the task. Possible values include: RUNNING - The task is enabled and running normally; DISABLED - The task is disabled and not running. ERROR - The task returned an error and was stopped due to the ON ERROR STOP attribute. PAUSED - The database is paused or is running on a DR replica, so the task is not currently running but will restart when the database resumes or is promoted. TASK_ORIGIN - \"System\" or \"User\". TASK_SCOPE - The execution scope of the task, which matches the RUN ON attribute. Possible values are \"Database\", \"Hosts\", or \"Partitions\"."
+      "description": "How many scheduled tasks are not currently running. A task can be stopped because it was disabled, because it hit an error and was configured to stop on error, or because the database is paused or running on a passive DR replica (it resumes automatically once the database is active again). A non-zero value means some scheduled work is not happening, so check the status table below to see which tasks and why."
     },
     {
       "datasource": {
@@ -361,7 +361,7 @@
           "refId": "A"
         }
       ],
-      "title": "Failing tasks",
+      "title": "Tasks with failures",
       "transformations": [
         {
           "id": "calculateField",
@@ -375,7 +375,7 @@
         }
       ],
       "type": "stat",
-      "description": "The number of times the procedure generated an error when run.Tags: same as above."
+      "description": "How many scheduled tasks have had their procedure return an error. A failing task means its scheduled work is not completing successfully; investigate the task's procedure and the database logs."
     },
     {
       "datasource": {
@@ -622,7 +622,7 @@
         }
       ],
       "type": "table",
-      "description": "Informational metric with scheduler metadata. Tags: PARTITION_ID - The numeric ID for the logical partition running the task procedure. Directed procedures run on each logical partition. Multi-partition procedures run on the multi-partition initiator. TASK_NAME - The name of the task. TASK_STATUS - The current status of the task. Possible values include: RUNNING - The task is enabled and running normally; DISABLED - The task is disabled and not running. ERROR - The task returned an error and was stopped due to the ON ERROR STOP attribute. PAUSED - The database is paused or is running on a DR replica, so the task is not currently running but will restart when the database resumes or is promoted. TASK_ORIGIN - \"System\" or \"User\". TASK_SCOPE - The execution scope of the task, which matches the RUN ON attribute. Possible values are \"Database\", \"Hosts\", or \"Partitions\"."
+      "description": "Lists every scheduled task with the host it runs on, its current status, whether it was created by the system or by a user, and its scope (database-wide, per host, or per partition). Any status other than Running is highlighted so you can quickly spot tasks that are disabled, stopped on an error, or paused because the database is paused or running as a DR replica."
     },
     {
       "collapsed": true,
@@ -806,7 +806,7 @@
           ],
           "title": "Scheduled task invocation total",
           "type": "timeseries",
-          "description": "The total number of invocations of the task's schedule."
+          "description": "How often the scheduler fires for each task, per second. This reflects how frequently a task decides what to do next; a rate that unexpectedly drops to zero for a task that should be active means its schedule has stalled."
         },
         {
           "datasource": {
@@ -885,7 +885,7 @@
           ],
           "title": "Scheduled task execution time",
           "type": "heatmap",
-          "description": "The distribution of the amount of time taken to schedule an instance of the task."
+          "description": "The distribution of how long the scheduler takes to work out each task's next action. Consistently high values point to a slow or overloaded scheduler rather than to the task's procedure itself."
         },
         {
           "datasource": {
@@ -964,7 +964,7 @@
           ],
           "title": "Scheduled task wait time",
           "type": "heatmap",
-          "description": "The distribution of the difference between when the task was scheduled to run and when the scheduler was invoked."
+          "description": "The distribution of how far behind schedule each task's firing is: the gap between when it was due to run and when the scheduler actually got to it. Growing wait times mean the scheduler is falling behind and tasks are running late."
         }
       ],
       "title": "Tasks",
@@ -1152,7 +1152,7 @@
           ],
           "title": "Scheduled procedure invocation total",
           "type": "timeseries",
-          "description": "The total number of invocations of the task's procedure."
+          "description": "How often each task's stored procedure is actually called, per second. This is the real work a task performs; compare it with the task firing rate to confirm scheduled firings are turning into procedure calls."
         },
         {
           "datasource": {
@@ -1337,7 +1337,7 @@
           ],
           "title": "Scheduled procedure invocation failing",
           "type": "timeseries",
-          "description": "The number of times the procedure generated an error when run.Tags: same as above."
+          "description": "The rate at which task procedures return errors, per second. Sustained errors mean a task's scheduled work is repeatedly failing; check the procedure logic and the database logs."
         },
         {
           "datasource": {
@@ -1416,7 +1416,7 @@
           ],
           "title": "Scheduled procedure execution time",
           "type": "heatmap",
-          "description": "The distribution of time the task took to execute."
+          "description": "The distribution of how long each task's stored procedure takes to run. Rising execution times can mean the procedure is doing more work or that the database is under load."
         },
         {
           "datasource": {
@@ -1495,7 +1495,7 @@
           ],
           "title": "Scheduled procedure wait time",
           "type": "heatmap",
-          "description": "The distribution of time between when the procedure was scheduled to run and when it was invoked."
+          "description": "The distribution of how long each task's procedure waits between being scheduled and actually being invoked. Large waits mean procedure calls are queuing up rather than running promptly."
         }
       ],
       "title": "Procedures",

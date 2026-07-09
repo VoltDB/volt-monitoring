@@ -151,7 +151,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Total client connections currently open across the cluster. May briefly show 0 right after startup while connection counts settle.",
+      "description": "The number of client connections currently open across the whole cluster. Watch this to gauge overall client load and to see whether connections are climbing toward the configured limit.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -355,7 +355,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "- `voltdb_client_connections_limit_total`: The maximum number of client connections allowed for the server.\n- `voltdb_client_connections_open_total`: The number of client connections open on the server.",
+      "description": "Open client connections on each node over time, plotted against the configured per-server connection limit (the red line). Use it to see how close each node is to its limit and to spot connections building up unevenly across the cluster.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -493,7 +493,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "The total number of client connections opened since the server started, including connections that are now closed.",
+      "description": "The rate at which new client connections are being accepted on each node. Spikes point to bursts of clients connecting; a steady high rate can mean clients keep reconnecting instead of holding a connection open.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -598,7 +598,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "The total number of connections that were rejected because the connection limit had been reached.",
+      "description": "The rate at which new client connections are being rejected on each node because the server has hit its maximum connection limit. Any sustained nonzero rate means clients are being turned away; raise the connection limit or reduce how many connections clients open.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -724,7 +724,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Open client connections per node (clamped at 0; see the overview tile note on the startup accounting quirk).",
+      "description": "Open client connections on each node over time. Use it to compare connection load across the cluster and to spot a single node carrying an unbalanced share of clients.",
       "fieldConfig": {
         "defaults": {
           "color": {

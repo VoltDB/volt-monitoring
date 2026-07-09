@@ -342,7 +342,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Procedure executions per second per node (per-site metric; MP/replicated work counts on each site).",
+      "description": "Procedure invocations completed per second on each node. Because replicated and multi-partition work runs on every partition, this counts internal execution volume rather than client request rate, so it can exceed the rate of requests your application actually sends.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1458,14 +1458,14 @@
       ],
       "title": "Command queue depth by site",
       "type": "timeseries",
-      "description": "The number of tasks in the queue."
+      "description": "Number of tasks waiting to run at each execution site. A queue that stays deep or keeps growing means that site is falling behind its incoming work - a hot partition or an overloaded node - and shows up as rising latency."
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Cumulative queue wait time. Choose site to drill down",
+      "description": "How long tasks wait in the queue before they start executing, shown as median, 90th, and 99th percentiles. Rising wait times mean queued work is adding delay before execution and are an early warning of overload on a partition or node.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1579,7 +1579,7 @@
           "refId": "C"
         }
       ],
-      "title": "Command queue max wait times by site",
+      "title": "Command queue wait time percentiles by site",
       "type": "timeseries"
     },
     {
@@ -1600,7 +1600,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Rate of compaction executions per node. Empty when no compaction is running.",
+      "description": "How often memory compaction runs on each node. Compaction reclaims unused memory from tables and indexes; frequent runs consume CPU and can coincide with brief latency increases.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2058,7 +2058,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Rate of command-log backpressure events per node.",
+      "description": "How often the command log applies backpressure on each node. Backpressure happens when transactions are being committed faster than they can be written to disk, which throttles new work; sustained events mean disk write speed is limiting throughput.",
       "fieldConfig": {
         "defaults": {
           "color": {

@@ -151,7 +151,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Total resident memory across all nodes.",
+      "description": "Combined physical memory held by the VoltDB processes across all nodes. Watch it grow with your data so you can add capacity before nodes approach their limits.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -436,7 +436,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Resident set size per node.",
+      "description": "Physical memory held by the VoltDB process on each node. Compare nodes to spot one growing faster than the rest or approaching its memory limit.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -765,7 +765,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "JAVAUSED vs JAVAMAX per node (JAVAUNUSED = max - used).",
+      "description": "How much of the Java heap each node is using against the maximum it is allowed to grow to. A node whose used heap stays close to its max is under memory pressure and may see longer pauses or run out of heap.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -895,7 +895,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "TUPLEDATA (in use) vs TUPLEALLOCATED (incl. free space) per node.",
+      "description": "Memory each node holds for table rows: the data line is what the rows actually occupy, while allocated also includes free space reserved for growth and left behind by deletes. A widening gap between the two indicates fragmentation that compaction can reclaim.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1012,7 +1012,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "STRINGMEMORY: non-inline string/binary/geo data.",
+      "description": "Memory each node uses for larger text, binary, and geospatial column values that are stored outside the main row storage. It grows as you store more or longer values of these types.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1118,7 +1118,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "INDEXMEMORY per node.",
+      "description": "Memory each node uses to hold table indexes. It grows with row count and with the number and width of your indexes, adding to a node's footprint separately from the row data itself.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1224,7 +1224,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "POOLEDMEMORY: memory for tasks other than records/indexes/strings.",
+      "description": "Memory each node uses for internal work other than table rows, indexes, and large string values, such as query execution and temporary results. Useful for explaining the part of a node's footprint not accounted for by stored data.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1330,7 +1330,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "TUPLECOUNT: database records in memory per node.",
+      "description": "Number of table rows held in memory on each node. Compare nodes to confirm data is spread evenly and to watch overall growth over time.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1555,7 +1555,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Cumulative run time of garbage collection. Tags: GC_TYPE - (e.g. CMS, G1), example gc_type=\"G1 Young Generation\".",
+      "description": "Time each node spends in the short, frequent garbage collections that reclaim recently allocated Java memory. Occasional small values are normal; sustained high values mean the node is pausing often to free memory.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1662,7 +1662,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "The number of times garbage collection was performed. Tags: GC_TYPE - (e.g. CMS, G1), example gc_type=\"G1 Young Generation\".",
+      "description": "How often each node runs the short garbage collections that reclaim recently allocated Java memory. A rising rate points to heavy memory churn that can add latency.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1769,7 +1769,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Cumulative run time of garbage collection. Tags: GC_TYPE - (e.g. CMS, G1), example gc_type=\"G1 Young Generation\".",
+      "description": "Time each node spends in the heavier garbage collections that reclaim long-lived Java memory. These can cause longer pauses, so sustained or rising values are worth investigating as a sign of memory pressure.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1876,7 +1876,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "The number of times garbage collection was performed. Tags: GC_TYPE - (e.g. CMS, G1), example gc_type=\"G1 Young Generation\".",
+      "description": "How often each node runs the heavier garbage collections that reclaim long-lived Java memory. Frequent runs usually indicate the heap is filling up and the node is under memory pressure.",
       "fieldConfig": {
         "defaults": {
           "color": {

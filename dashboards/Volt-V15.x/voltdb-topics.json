@@ -116,7 +116,7 @@
         }
       ],
       "type": "stat",
-      "description": "Informational metric with topic metadata. Tags: TOPIC_STATUS - \"Stable\" - The queue is complete; \"Backfilling\" - records are missing but are being retrieved from other servers; \"Blocked\" - records are missing from all copies of the partition; \"Orphaned\" - the queue is no longer being served by this partition, but is saved in case other copies of the queue are blocked or backfilling and need the data. This is a transitional state and the queue is deleted as soon as no other copies need its records. TOPIC_RETENTION_POLICY - The retention policy for this topic. TOPIC_IS_MASTER - \"True\" or \"False\" indicating whether the current site is the master for the logical partition."
+      "description": "Total number of topics currently defined across the selected cluster and hosts. Use it to confirm all expected topics exist and to quickly spot topics that unexpectedly appear or disappear."
     },
     {
       "datasource": {
@@ -192,7 +192,7 @@
       ],
       "title": "Latest message received",
       "type": "stat",
-      "description": "The timestamp when the most recent message (the last offset) was inserted into the queue."
+      "description": "The time the most recent message was written to any topic. Shows how long ago the newest data arrived across the cluster."
     },
     {
       "datasource": {
@@ -393,7 +393,7 @@
         }
       ],
       "type": "piechart",
-      "description": "Informational metric with topic metadata. Tags: TOPIC_STATUS - \"Stable\" - The queue is complete; \"Backfilling\" - records are missing but are being retrieved from other servers; \"Blocked\" - records are missing from all copies of the partition; \"Orphaned\" - the queue is no longer being served by this partition, but is saved in case other copies of the queue are blocked or backfilling and need the data. This is a transitional state and the queue is deleted as soon as no other copies need its records. TOPIC_RETENTION_POLICY - The retention policy for this topic. TOPIC_IS_MASTER - \"True\" or \"False\" indicating whether the current site is the master for the logical partition."
+      "description": "Breakdown of topic partitions by health status. Ideally every partition is Stable; any Backfilling, Blocked, or Orphaned slice means some records are missing or being recovered, so investigate whenever the chart shows anything other than all-Stable."
     },
     {
       "datasource": {
@@ -460,7 +460,7 @@
       ],
       "title": "Rate of bytes fetched",
       "type": "stat",
-      "description": "The size of data sent to consumers for this partition and topic."
+      "description": "How fast data is being delivered to consumers reading from topics, in bytes per second. Watch it to gauge overall read load and to confirm consumers are actively pulling data."
     },
     {
       "datasource": {
@@ -527,7 +527,7 @@
       ],
       "title": "Occupied disk space",
       "type": "stat",
-      "description": "The size of data stored on disk for this partition and topic."
+      "description": "Total disk space used to store retained topic data across the selected hosts. Track it to anticipate disk pressure and to see how retention settings translate into actual storage use."
     },
     {
       "datasource": {
@@ -594,7 +594,7 @@
       ],
       "title": "Incoming messages rate",
       "type": "stat",
-      "description": "The value of the last offset in the topic."
+      "description": "How fast new messages are being written into topics, in messages per second. Use it to see producer throughput and to spot stalls or spikes in incoming traffic."
     },
     {
       "collapsed": false,
@@ -754,7 +754,7 @@
         }
       ],
       "type": "table",
-      "description": "Informational metric with topic metadata. Tags: TOPIC_STATUS - \"Stable\" - The queue is complete; \"Backfilling\" - records are missing but are being retrieved from other servers; \"Blocked\" - records are missing from all copies of the partition; \"Orphaned\" - the queue is no longer being served by this partition, but is saved in case other copies of the queue are blocked or backfilling and need the data. This is a transitional state and the queue is deleted as soon as no other copies need its records. TOPIC_RETENTION_POLICY - The retention policy for this topic. TOPIC_IS_MASTER - \"True\" or \"False\" indicating whether the current site is the master for the logical partition."
+      "description": "One row per topic partition showing its host, partition, retention policy, whether this copy is the partition leader, and health status. Use it to review how topics are laid out across the cluster and to find any partition that is not Stable."
     },
     {
       "datasource": {
@@ -903,7 +903,7 @@
         }
       ],
       "type": "state-timeline",
-      "description": "Informational metric with topic metadata. Tags: TOPIC_STATUS - \"Stable\" - The queue is complete; \"Backfilling\" - records are missing but are being retrieved from other servers; \"Blocked\" - records are missing from all copies of the partition; \"Orphaned\" - the queue is no longer being served by this partition, but is saved in case other copies of the queue are blocked or backfilling and need the data. This is a transitional state and the queue is deleted as soon as no other copies need its records. TOPIC_RETENTION_POLICY - The retention policy for this topic. TOPIC_IS_MASTER - \"True\" or \"False\" indicating whether the current site is the master for the logical partition."
+      "description": "Health status of each topic partition over time. A continuous Stable band is healthy; stretches of Backfilling, Blocked, or Orphaned mark periods when records were missing or being recovered, which helps you correlate problems with cluster events."
     },
     {
       "collapsed": false,
@@ -1007,7 +1007,7 @@
       ],
       "title": "Lastest write",
       "type": "timeseries",
-      "description": "The timestamp when the most recent message (the last offset) was inserted into the queue."
+      "description": "When the most recent message was written to each topic, tracked over time. If a topic's latest-write time stops advancing, producers may have stopped sending to it."
     },
     {
       "datasource": {
@@ -1123,7 +1123,7 @@
       ],
       "title": "Incoming messages rate",
       "type": "timeseries",
-      "description": "The value of the last offset in the topic."
+      "description": "How fast new messages are being written into each topic over time, in messages per second. Compare topics to see where producers are active and to spot ones that have gone quiet or suddenly spiked."
     },
     {
       "datasource": {
@@ -1243,7 +1243,7 @@
       ],
       "title": "Last offset and timestamp",
       "type": "timeseries",
-      "description": "- `voltdb_topic_last_offset`: The value of the last offset in the topic.\n- `voltdb_topic_last_offset_timestamp_seconds`: The timestamp when the most recent message (the last offset) was inserted into the queue."
+      "description": "The position and write time of the newest retained message in each topic partition. Read alongside the oldest-message panel, it shows how much history is currently kept and confirms new data is still arriving."
     },
     {
       "datasource": {
@@ -1364,7 +1364,7 @@
       ],
       "title": "First offset and timestamp",
       "type": "timeseries",
-      "description": "- `voltdb_topic_first_offset`: The value of the first offset currently available in the topic.\n- `voltdb_topic_first_offset_timestamp_seconds`: The timestamp when the first offset was inserted into the queue."
+      "description": "The position and write time of the oldest retained message still available in each topic partition. As retention expires old data this advances; comparing it with the newest-message panel shows how much history consumers can still read."
     },
     {
       "collapsed": false,
@@ -1466,7 +1466,7 @@
       ],
       "title": "Rate of bytes fetched from topic",
       "type": "timeseries",
-      "description": "The size of data sent to consumers for this partition and topic."
+      "description": "How fast data is being delivered to consumers, in bytes per second, broken out per topic. Use it to compare read load across topics and confirm consumers are keeping up."
     },
     {
       "datasource": {
@@ -1555,7 +1555,7 @@
       ],
       "title": "Rate of skipped rows from topic-partition",
       "type": "timeseries",
-      "description": "The number of skipped rows that otherwise would cause an error. Only applies if the topic's option consumer.skip.errors is true."
+      "description": "How often records are being skipped that would otherwise cause an error, per topic partition. This is only non-zero when skip-on-error is enabled for the topic; a rising rate means data is being silently dropped and should be investigated."
     },
     {
       "datasource": {
@@ -1646,7 +1646,7 @@
       ],
       "title": "Rate of bytes fetched from topic-partition",
       "type": "timeseries",
-      "description": "The size of data sent to consumers for this partition and topic."
+      "description": "How fast data is being delivered to consumers, in bytes per second, broken out per topic partition. Use it to find hot or idle partitions behind a topic's overall read load."
     },
     {
       "datasource": {
@@ -1735,7 +1735,7 @@
       ],
       "title": "Rate of skipped row from topic",
       "type": "timeseries",
-      "description": "The number of skipped rows that otherwise would cause an error. Only applies if the topic's option consumer.skip.errors is true."
+      "description": "How often records are being skipped that would otherwise cause an error, summed per topic. This is only non-zero when skip-on-error is enabled; a rising rate means data is being silently dropped and warrants investigation."
     },
     {
       "datasource": {
@@ -1825,7 +1825,7 @@
       ],
       "title": "Offset on which a consumer error occured",
       "type": "timeseries",
-      "description": "If an error occurs while encoding a message for consumers, an error is returned to the consumer, the offset of the message is recoded here."
+      "description": "Marks the most recent message that could not be delivered to a consumer, for example one that failed to encode. When this line moves, consumers are hitting errors on specific records; a flat line means no recent delivery failures."
     },
     {
       "collapsed": false,
@@ -1931,7 +1931,7 @@
       ],
       "title": "Bytes on disk per topic",
       "type": "timeseries",
-      "description": "The size of data stored on disk for this partition and topic."
+      "description": "Disk space used by retained data for each topic over time. Use it to see which topics consume the most storage and how usage grows against retention limits."
     },
     {
       "datasource": {
@@ -1989,7 +1989,7 @@
       ],
       "title": "Bytes on disk per topic partition",
       "type": "marcusolsson-treemap-panel",
-      "description": "The size of data stored on disk for this partition and topic."
+      "description": "Disk space used by retained data, broken down by topic and partition. Use it to spot uneven storage across partitions and pinpoint which partition is driving a topic's disk usage."
     }
   ],
   "preload": false,

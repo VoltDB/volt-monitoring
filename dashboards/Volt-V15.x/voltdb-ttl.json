@@ -129,14 +129,14 @@
         }
       ],
       "type": "table",
-      "description": "The timestamp when the last round of TTL processing occurred."
+      "description": "For each table with automatic row expiry (TTL), when Volt last ran a cleanup pass to delete aged-out rows. A timestamp that keeps falling further behind the current time means expiry has stalled for that table and old data will pile up."
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Rows deleted for all TTL tables",
+      "description": "Total rows removed by automatic expiry (TTL) across all tables over the selected time range. This is normal housekeeping activity; watch for it dropping to zero when you expect deletions, which suggests expiry has stopped.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -289,16 +289,16 @@
           "refId": "A"
         }
       ],
-      "title": "Failing tasks",
+      "title": "Tables with failed deletes",
       "type": "stat",
-      "description": "Total number of times TTL failed to be processed."
+      "description": "How many automatic-expiry (TTL) runs have failed. Any non-zero value means aged-out rows are not being deleted, so the affected tables keep growing; a common cause is a missing index on the column TTL expires by. Investigate the specific tables in the failures chart below."
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Rows remaining for all TTL tables",
+      "description": "How many aged-out rows are still waiting to be deleted across all tables with automatic expiry (TTL). A small number is normal, but a value that keeps climbing means expiry can't keep up with incoming data and the tables will grow.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -362,7 +362,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Number of deletes per second",
+      "description": "Rate of rows deleted per second by automatic expiry (TTL), broken out per table. Use it to see which tables are actively being cleaned up and to spot a table whose deletion rate has dropped off unexpectedly.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -557,7 +557,7 @@
       ],
       "title": "Failures by table name",
       "type": "timeseries",
-      "description": "Total number of times TTL failed to be processed."
+      "description": "Rate of failed automatic-expiry (TTL) runs, broken out per table, so you can pinpoint which table isn't being cleaned up. Sustained failures mean aged rows aren't deleted and the table keeps growing; a missing index on the expiry column is a frequent cause."
     }
   ],
   "preload": false,
