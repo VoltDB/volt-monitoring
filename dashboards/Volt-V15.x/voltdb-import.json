@@ -1113,7 +1113,7 @@
           ],
           "title": "Top procedure invocation times ($procedure)",
           "type": "timeseries",
-          "description": "The longest time taken to execute each selected procedure, in seconds. Rising execution times are an early warning that procedures are becoming a bottleneck and can slow the overall import rate."
+          "description": "The longest time taken to execute each selected procedure, in seconds - the procedure body only, excluding queueing and replication overhead. Rising execution times are an early warning that procedures are becoming a bottleneck and can slow the overall import rate."
         },
         {
           "datasource": {
@@ -1197,7 +1197,7 @@
           ],
           "title": "Execution times distribution ($procedure)",
           "type": "heatmap",
-          "description": "Distribution of how long the selected procedures take to execute, with color showing how many executions fell into each time band. Use it to see whether most executions are fast with only a few slow outliers, or whether execution times are broadly creeping up."
+          "description": "Distribution of how long the selected procedures take to execute (procedure body only, excluding queueing and the replica wait), with color showing how many executions fell into each time band. Use it to see whether most executions are fast with only a few slow outliers, or whether execution times are broadly creeping up."
         }
       ],
       "title": "Procedures",

@@ -726,7 +726,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "A per-node summary of the cluster: each node's current load, memory and heap usage against their limits, throughput and 95th-percentile latency trends, uptime, version, and whether it is ready for cross-datacenter replication (XDCR). Use it to spot nodes that are overloaded, on the wrong version, or recently restarted.",
+      "description": "A per-node summary of the cluster: each node's current load, memory and heap usage against their limits, throughput (including the fan-out to partition replicas), 95th-percentile initiator latency (full request-to-response time), uptime, version, and whether it is ready for cross-datacenter replication (XDCR). Use it to spot nodes that are overloaded, on the wrong version, or recently restarted.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2092,7 +2092,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "The rate of stored-procedure executions the cluster is running per second - the headline measure of how busy the database is. It includes procedures re-run on partition replicas, so it is somewhat higher than the number of transactions clients actually issue.",
+      "description": "The rate of stored-procedure executions the cluster is running per second - the headline measure of how busy the database is. In a K-safe cluster each transaction fans out to every copy of its partition, so this counts each transaction once per copy and runs higher than the client transaction rate.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2168,7 +2168,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "The rate of stored-procedure executions across the cluster. This count also includes procedures re-run on partition replicas, so it is higher than the number of transactions actually issued by clients.",
+      "description": "The rate of stored-procedure executions across the cluster. In a K-safe cluster each transaction also runs on every replica of its partition, so this fan-out makes the count higher than the number of transactions actually issued by clients.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2319,7 +2319,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "The slowest single transaction time seen recently, covering the whole request-to-response path. A high value flags an occasional slow transaction even when typical latency looks fine.",
+      "description": "The slowest single transaction seen recently, measured as initiator latency: from the moment the request arrives on the network to the moment the response is sent back, including queueing, execution and, in a K-safe cluster, the wait for every copy of the partition to confirm. A high value flags an occasional slow transaction even when typical latency looks fine.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2536,7 +2536,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Transaction throughput over time, broken out per server. Use it to see the overall workload trend and whether load is spread evenly across the cluster.",
+      "description": "Transaction throughput over time, broken out per server. Counts procedure executions including the fan-out to partition replicas in a K-safe cluster, so totals run above the client-issued transaction rate. Use it to see the workload trend and whether load is spread evenly across the cluster.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2649,7 +2649,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "The 99.9th-percentile transaction time per server, covering the whole path from request to response. It shows the worst latency all but the slowest 0.1% of transactions stay under, so it surfaces occasional stalls.",
+      "description": "The 99.9th-percentile initiator latency per server: the full request-to-response time, including queueing, execution and, in a K-safe cluster, the wait for all partition copies to confirm. It shows the worst latency all but the slowest 0.1% of transactions stay under, so it surfaces occasional stalls.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2762,7 +2762,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "The slowest execution time recorded for each stored procedure, timing only the procedure's own work and not queuing or network. Use it to find which procedures are the most expensive.",
+      "description": "The slowest execution time recorded for each stored procedure, timing only the procedure's own work - queueing, network, and the wait for partition replicas are not included. Use it to find which procedures are the most expensive; compare with the initiator-latency panels to see how much overhead the full transaction path adds.",
       "fieldConfig": {
         "defaults": {
           "color": {

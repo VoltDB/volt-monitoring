@@ -1070,7 +1070,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "The rate of stored-procedure calls the cluster is currently executing per second. This counts every invocation, including internal replicated work, so it can be higher than the number of transactions your clients submit. It is the main measure of how much load the cluster is handling.",
+      "description": "The rate of transactions the cluster is executing per second, counted once per client request - the fan-out to partition replicas in a K-safe cluster is not double-counted. It is the main measure of how much load the cluster is handling.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1479,7 +1479,7 @@
       ],
       "title": "Transaction rate",
       "type": "timeseries",
-      "description": "The rate of transactions each node is processing per second over time. Use it to watch throughput trends and see whether work is balanced evenly across nodes."
+      "description": "The rate of client transactions each node is handling per second, counted once per request without the replica fan-out. Use it to watch throughput trends and see whether work is balanced evenly across nodes."
     },
     {
       "datasource": {

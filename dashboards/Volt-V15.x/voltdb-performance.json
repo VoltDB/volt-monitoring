@@ -342,7 +342,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Procedure invocations completed per second on each node. Because replicated and multi-partition work runs on every partition, this counts internal execution volume rather than client request rate, so it can exceed the rate of requests your application actually sends.",
+      "description": "Procedure invocations completed per second on each node. In a K-safe cluster each transaction executes on every copy of its partition, and multi-partition work runs on all partitions, so this counts that fan-out and can exceed the rate of requests your application actually sends.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -461,7 +461,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Median end-to-end request time per node.",
+      "description": "Median initiator latency per node: the time from a request arriving on the network to the response being sent back, including queueing, execution and, in a K-safe cluster, the wait for all partition copies to confirm.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -567,7 +567,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "",
+      "description": "95th-percentile initiator latency per node - the full request-to-response time, including queueing, execution, and the K-safety replication wait. A good headline for what your slower requests experience.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -673,7 +673,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "",
+      "description": "99th-percentile initiator latency per node - the full request-to-response time, including queueing, execution, and the K-safety replication wait. Use it to track tail latency.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -779,7 +779,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "P99.9 and observed max end-to-end request time per node.",
+      "description": "99.9th-percentile and observed maximum initiator latency per node - the full request-to-response time, including queueing, execution, and the K-safety replication wait. Surfaces the rare worst-case stalls.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -909,7 +909,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Average procedure execution time (procedure body only), per node, averaged across that node's sites.",
+      "description": "Average procedure execution time per node - the procedure body only, excluding queueing, network, and the wait for partition replicas. Compare with the round-trip panels below to see how much the transaction path adds on top of the procedure itself.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1015,7 +1015,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "",
+      "description": "Peak procedure execution time per node - the procedure body only, excluding queueing, network, and the wait for partition replicas.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1134,7 +1134,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Average whole-transaction round-trip time as seen by the initiator, per node per procedure.",
+      "description": "Average initiator latency per node per procedure: the whole transaction from request received to response sent, including queueing, execution and, in a K-safe cluster, the wait for every partition copy to confirm.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1240,7 +1240,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "",
+      "description": "Peak initiator latency per node per procedure - the whole request-to-response transaction time, including queueing, execution, and the K-safety replication wait.",
       "fieldConfig": {
         "defaults": {
           "color": {

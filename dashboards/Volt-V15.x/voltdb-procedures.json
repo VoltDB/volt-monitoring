@@ -100,7 +100,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "The rate at which stored procedures are being executed across the cluster. Because partitioned work is also run on partition replicas for durability, this counts more executions than the number of transactions clients actually submit; use it to gauge total execution load.",
+      "description": "The rate at which stored procedures are being executed across the cluster. In a K-safe cluster every transaction fans out and executes on each copy of its partition, so this counts more executions than the number of transactions clients actually submit; use it to gauge total execution load.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -447,7 +447,7 @@
       ],
       "title": "Worst case time",
       "type": "stat",
-      "description": "The longest time any single stored procedure has taken to execute recently across the selected hosts. A high value flags a slow procedure that can hold up the partition it runs on."
+      "description": "The longest time any single stored procedure has taken to execute recently across the selected hosts - the procedure body only, excluding queueing and the wait for partition replicas. A high value flags a slow procedure that can hold up the partition it runs on."
     },
     {
       "collapsed": true,
@@ -464,7 +464,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "The overall rate of stored-procedure executions across the cluster over time. Because partitioned work also runs on partition replicas, this exceeds the number of transactions clients submit; watch it for total execution load and trends.",
+          "description": "The overall rate of stored-procedure executions across the cluster over time. In a K-safe cluster each transaction fans out to every copy of its partition, so this exceeds the number of transactions clients submit; watch it for total execution load and trends.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -921,7 +921,7 @@
           ],
           "title": "Execution times distribution ($procedure)",
           "type": "heatmap",
-          "description": "A heatmap of how stored-procedure execution times are distributed over time. Use it to spot latency spikes and to see whether slowness is widespread or limited to occasional outliers."
+          "description": "A heatmap of how stored-procedure execution times are distributed over time - the procedure body only, excluding queueing and the K-safety replication wait. Use it to spot latency spikes and to see whether slowness is widespread or limited to occasional outliers."
         },
         {
           "datasource": {
@@ -1027,14 +1027,14 @@
           ],
           "title": "Top procedure invocation times ($procedure)",
           "type": "timeseries",
-          "description": "The slowest procedures over time, plotting each procedure's peak execution time. Use it to identify which procedures are driving high latency."
+          "description": "The slowest procedures over time, plotting each procedure's peak execution time (procedure body only, excluding queueing and the replica wait). Use it to identify which procedures are driving high latency."
         },
         {
           "datasource": {
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "Ranks stored procedures by how many times they were invoked over the selected time range, so you can see which procedures carry the most traffic.",
+          "description": "Ranks stored procedures by how many times they were invoked over the selected time range, including the K-safety fan-out to partition copies. Use it to see which procedures carry the most traffic.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1288,14 +1288,14 @@
             }
           ],
           "type": "table",
-          "description": "Ranks stored procedures by their peak execution time, highlighting which take longest to run and are the best candidates for tuning."
+          "description": "Ranks stored procedures by their peak execution time - the procedure body only, excluding queueing and the replica wait - highlighting which take longest to run and are the best candidates for tuning."
         },
         {
           "datasource": {
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "The procedures with the highest execution rate over time, so you can see which are being called most frequently and how that changes.",
+          "description": "The procedures with the highest execution rate over time, including the K-safety fan-out to partition copies, so you can see which are being called most frequently and how that changes.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -2110,7 +2110,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "description": "The longest round-trip time to receive acknowledgment that work was replicated to a partition replica. High values suggest replication is lagging, which can slow down transactions.",
+          "description": "The longest round-trip time to receive acknowledgment that work was replicated to a partition replica - the extra wait K-safety adds to each transaction (only meaningful when K > 0). High values suggest replication is lagging and stretching transaction latency.",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -2310,7 +2310,7 @@
             }
           ],
           "type": "table",
-          "description": "The replication acknowledgment round-trip time between each host and the hosts it connects to, shown as a matrix. Use it to pinpoint which pair of nodes is seeing slow replication."
+          "description": "The replication acknowledgment round-trip time between each host and the hosts it connects to, shown as a matrix. This is the wait the K-safety fan-out adds to transactions (only present when K > 0); use it to pinpoint which pair of nodes is seeing slow replication."
         }
       ],
       "title": "Cluster internal latencies",

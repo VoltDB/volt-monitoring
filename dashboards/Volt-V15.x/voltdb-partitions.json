@@ -38,7 +38,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Rate of stored-procedure invocations across the selected hosts. This counts work run on partition replicas as well as on the primary copy, so it is higher than the number of transactions your clients actually issued; watch it for overall load and sudden shifts in traffic.",
+      "description": "Rate of stored-procedure invocations across the selected hosts. In a K-safe cluster each transaction fans out and runs on every copy of its partition, so this counts each transaction once per copy and is higher than the number of transactions your clients actually issued; watch it for overall load and sudden shifts in traffic.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -473,7 +473,7 @@
       ],
       "title": "Procedure invocations per partition",
       "type": "timeseries",
-      "description": "Rate of stored-procedure calls handled by each partition. Compare the lines to spot a hot or skewed partition doing far more work than the others, which can bottleneck the whole cluster."
+      "description": "Rate of stored-procedure calls handled by each partition, counting every copy of the partition in a K-safe cluster. Compare the lines to spot a hot or skewed partition doing far more work than the others, which can bottleneck the whole cluster."
     },
     {
       "datasource": {
@@ -689,7 +689,7 @@
         }
       ],
       "type": "table",
-      "description": "Stored procedures ranked by how many times they ran over the selected time range. Use it to see which procedures drive the workload and where tuning effort will pay off most."
+      "description": "Stored procedures ranked by how many times they ran over the selected time range, including the K-safety fan-out (each run on every partition copy counts). Use it to see which procedures drive the workload and where tuning effort will pay off most."
     },
     {
       "datasource": {
@@ -1048,7 +1048,7 @@
       ],
       "title": "Procedure invocations count by time buckets",
       "type": "bargauge",
-      "description": "How stored-procedure execution times were distributed over the selected range, grouped into latency buckets. Weight in the higher buckets means some calls are slow; use it to judge overall latency and catch outliers."
+      "description": "How stored-procedure execution times were distributed over the selected range, grouped into latency buckets. This measures the procedure body only - queueing and the wait for partition replicas are not included. Weight in the higher buckets means some calls are slow; use it to judge execution latency and catch outliers."
     },
     {
       "datasource": {
@@ -1180,7 +1180,7 @@
         }
       ],
       "type": "marcusolsson-treemap-panel",
-      "description": "Each block is one stored procedure on one partition, sized by how often it ran and labelled with its slowest execution time. Use it to find the procedure-and-partition combinations that dominate the workload or run unusually slowly, pinpointing a hot pair."
+      "description": "Each block is one stored procedure on one partition, sized by how often it ran and labelled with its slowest execution time (procedure body only, excluding queueing and the replica wait). Use it to find the procedure-and-partition combinations that dominate the workload or run unusually slowly, pinpointing a hot pair."
     },
     {
       "datasource": {
@@ -1371,7 +1371,7 @@
       ],
       "title": "Cumulative Procedure Invocation Distribution",
       "type": "heatmap",
-      "description": "Distribution of stored-procedure execution times over the selected range, shown as a heatmap so you can watch how latency shifts. Bands drifting toward higher execution times indicate procedures slowing down."
+      "description": "Distribution of stored-procedure execution times over the selected range, shown as a heatmap so you can watch how latency shifts. This times the procedure body only, excluding queueing and the K-safety replication wait; bands drifting toward higher execution times indicate procedures slowing down."
     },
     {
       "datasource": {
