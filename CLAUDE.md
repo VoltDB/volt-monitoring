@@ -46,6 +46,11 @@ application. Every panel description must:
   per-node fraction can exceed 100% and falsely trip thresholds.
 - **Units**: VoltDB metrics are base-unit (`_seconds`, `_bytes`). Set the Grafana unit to the
   base unit (`s`, not `ms`) and express thresholds in base units too (50 ms = `0.05`).
+  **Known exporter bug (15.3, Jira pending)**: the DR producer/consumer and export
+  `last_*_timestamp_seconds` gauges actually export epoch **milliseconds** (topic/ttl/
+  conflict/readiness timestamps are correct seconds). Panels/rules using them must divide
+  by 1000 for second math — or use Grafana datetime units, which expect ms. Verify with a
+  live query (`> 1e11` ⇒ ms) before trusting any `_timestamp_seconds` metric.
 - **Always filter by `namespace="$cluster"`** (and usually `host_name=~"$host"`) — a missing
   cluster filter silently mixes data from every monitored cluster.
 - **Titles must match the query**: don't say "5m" if the query uses `$__rate_interval`,
