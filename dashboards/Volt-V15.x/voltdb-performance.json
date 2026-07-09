@@ -1953,7 +1953,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "p99 time to allocate a new command log segment file (voltdb_commandlog_segment_allocation_time).",
+      "description": "How long it takes to create a new command-log file on disk (99th percentile). Rising times point to a slow or busy disk holding the command log.",
       "fieldConfig": {
         "defaults": {
           "color": {

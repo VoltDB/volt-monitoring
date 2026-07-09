@@ -726,7 +726,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Per-node status. **Load** is metric `voltdb_cpu_load_percent`: the recent CPU usage of the VoltDB server *process* on that host, 0-100%. Source: CpuStats.java -> the JVM's `com.sun.management.OperatingSystemMXBean.getProcessCpuLoad() * 100` (fraction of total CPU across all cores consumed by the Volt process over a recent interval - NOT system-wide CPU). Other columns: host, Uptime, version, and XDCR-ready per node.",
+      "description": "One row per server in the cluster. \"Load\" is how busy that server's VoltDB process is: the percentage of CPU it is using (0-100%) - this is the Volt process only, not the whole machine. The row also shows how long the server has been up, its software version, and whether cross-datacenter replication (XDCR) is ready on it.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2647,7 +2647,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Worst (highest) per-node CPU across the cluster: `max` over hosts of `voltdb_cpu_load_percent`, the recent CPU usage of the VoltDB *process* (JVM `getProcessCpuLoad() * 100`, 0-100%). Per-node CPU is on the Performance dashboard.",
+      "description": "The busiest server's CPU usage right now - the highest VoltDB CPU percentage across all servers. A high value here points to a single overloaded node even when the rest of the cluster is fine.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2726,7 +2726,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Highest per-node RAM usage across the cluster (the busiest node), NOT a cluster total: `max` over hosts of `voltdb_memory_rss_bytes / voltdb_memory_physicalmemory_bytes` - RSS as a fraction of that node's total physical memory. A single gauge intentionally surfaces the worst node so a hot node isn't hidden by a cluster average. Per-node RSS and % are on the Memory dashboard.",
+      "description": "The most memory-stressed server in the cluster: the largest share of a server's memory being used by VoltDB, as a percentage. It shows the single busiest server (not a cluster average) so one hot node isn't hidden. Use the Memory dashboard for a per-server breakdown.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2815,7 +2815,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Highest per-node Java heap usage across the cluster (the node closest to its -Xmx limit), NOT a cluster total: `max` over hosts of `voltdb_memory_javaused_bytes / voltdb_memory_javamaxheap_bytes`. Per-node heap is on the Memory dashboard.",
+      "description": "The server closest to its Java memory limit: the largest share of the available Java heap in use across all servers, as a percentage. Values near 100% risk pauses or out-of-memory errors. Use the Memory dashboard for per-server detail.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -5268,7 +5268,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Times command logging fell far enough behind to block transactions (voltdb_commandlog_backpressure). Async logging only; 0 for sync.",
+      "description": "How often command logging fell so far behind that it had to pause transactions. Any value above zero means writes to the command log couldn't keep up, usually because the disk holding it is slow or saturated. Applies only when command logging runs in asynchronous mode.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -5338,7 +5338,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "When command logging last backpressured (voltdb_commandlog_last_backpressure_timestamp). Zero if it never has.",
+      "description": "When command logging last had to pause transactions to catch up. Shows a placeholder if it never has.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -5417,7 +5417,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "p99 time to allocate a new command log segment file (voltdb_commandlog_segment_allocation_time).",
+      "description": "How long it takes to create a new command-log file on disk (99th percentile). Rising times point to a slow or busy disk holding the command log.",
       "fieldConfig": {
         "defaults": {
           "color": {

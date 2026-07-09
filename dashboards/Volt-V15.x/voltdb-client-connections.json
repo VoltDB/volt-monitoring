@@ -151,7 +151,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Total open client connections across the cluster. Clamped at 0: voltdb_client_connections_open_total can read negative right after startup (connections opened before the metrics window are decremented on close without a matching increment); it converges as new connections open.",
+      "description": "Total client connections currently open across the cluster. May briefly show 0 right after startup while connection counts settle.",
       "fieldConfig": {
         "defaults": {
           "color": {

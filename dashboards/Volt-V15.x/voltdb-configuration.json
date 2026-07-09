@@ -1257,7 +1257,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Command logging configuration from @SystemInformation DEPLOYMENT: whether command logging is enabled (`commandlogenabled`), the logging mode (`commandlogmode`, sync or async), the allocated command-log disk space (`commandlogsize`, in **MB**; default 5120 MB ≈ 5 GB), and the flush frequency by time (`commandlogfreqtime`, ms) and by transaction count (`commandlogfreqtxns`).",
+      "description": "Command logging settings: whether it is enabled, the mode (synchronous or asynchronous), the disk space reserved for command logs (in MB), and how often data is flushed to disk - both by time (in milliseconds) and by number of transactions.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1859,7 +1859,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Configured maximum JVM heap size (-Xmx) reported by the Java runtime (voltdb_memory_javamaxheap_bytes). Set via the container/pod heap settings, not deployment.xml.",
+      "description": "The maximum Java memory (heap) the VoltDB server is allowed to use, set when the server starts. If usage approaches this limit the server can pause or run out of memory.",
       "fieldConfig": {
         "defaults": {
           "color": {

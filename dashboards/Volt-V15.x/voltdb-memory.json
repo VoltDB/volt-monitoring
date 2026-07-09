@@ -355,7 +355,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Highest per-node RSS as a percentage of that node's configured resource-monitor limit. Volt pauses at 100%.",
+      "description": "The most memory-stressed server, shown as a percentage of its configured memory limit. VoltDB pauses the database if a server reaches 100% of this limit.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -542,7 +542,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "RSS as a percentage of the memory VoltDB sees on that node.",
+      "description": "How much of each server's memory VoltDB is using, as a percentage.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -648,7 +648,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Per-node RSS against the configured resource-monitor memory limit.",
+      "description": "Each server's memory in use compared with its configured memory limit. VoltDB pauses the database if usage reaches the limit.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1436,7 +1436,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "Total RSS across the whole cluster (not per node).",
+      "description": "Total memory used by VoltDB across all servers combined.",
       "fieldConfig": {
         "defaults": {
           "color": {

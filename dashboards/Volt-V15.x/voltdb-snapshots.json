@@ -329,7 +329,7 @@
       ],
       "title": "Sites snapshotting now",
       "type": "stat",
-      "description": "Number of execution sites currently writing a snapshot (voltdb_snapshot_in_progress). >0 means a snapshot is in progress right now."
+      "description": "How many parts of the database are writing a snapshot right now. Any value above zero means a snapshot is in progress."
     },
     {
       "datasource": {

@@ -515,7 +515,7 @@
       ],
       "title": "Tuple count over time ($table)",
       "type": "timeseries",
-      "description": "Row count per table over time (voltdb_table_tuple_total), for tracking data growth per table. Pair with 'Table sizes' (bytes) alongside."
+      "description": "Number of rows in each table over time - useful for watching data growth. Pair it with the 'Table sizes' panel alongside to compare rows against bytes."
     },
     {
       "datasource": {

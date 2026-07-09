@@ -131,7 +131,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "When XDCR readiness last changed on this cluster (voltdb_xdcr_readiness_since_timestamp_seconds, updated on every transition). Read together with the XDCR status tile: when status is NOT READY this is when replication broke; when READY it is when replication last recovered.",
+      "description": "When cross-datacenter replication (XDCR) last changed state on this cluster. Read it together with the XDCR status tile: if the status is NOT READY this is when replication broke; if READY, when it last recovered.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3129,7 +3129,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "When XDCR readiness last changed on this host (voltdb_xdcr_readiness_since_timestamp). Shows how long replication has been ready/broken. Resets on node restart.",
+      "description": "When cross-datacenter replication last became ready on this host - i.e. how long replication has been stable.",
       "fieldConfig": {
         "defaults": {
           "color": {
