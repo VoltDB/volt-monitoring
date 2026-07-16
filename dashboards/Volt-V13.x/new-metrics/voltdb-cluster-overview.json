@@ -1940,7 +1940,7 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "percentunit"
         }
       },
       "gridPos": {
@@ -1977,7 +1977,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "max(rate(voltdb_gc_time_seconds{namespace=\"$cluster\",host_name=~\"$host\"}[$__rate_interval]))",
+          "expr": "max(sum by (host_name) (rate(voltdb_gc_time_seconds{namespace=\"$cluster\",host_name=~\"$host\"}[$__rate_interval])))",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -4678,7 +4678,7 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "percentunit"
         }
       },
       "gridPos": {
@@ -4892,7 +4892,7 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "percentunit"
         }
       },
       "gridPos": {

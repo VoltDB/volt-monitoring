@@ -1608,7 +1608,7 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "percentunit"
         }
       },
       "gridPos": {
@@ -1822,7 +1822,7 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "percentunit"
         }
       },
       "gridPos": {
