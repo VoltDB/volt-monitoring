@@ -326,6 +326,58 @@ groups:
           description: "Rows are pending for export source {{ $labels.export_source }} but nothing has been acknowledged for 15 minutes."
 
   # =========================================================================
+  # Stalls: stuck or long-running multi-partition transactions
+  # =========================================================================
+  # One MP transaction runs fragments on EVERY partition behind a barrier, so
+  # a single stuck or slow MP halts the whole cluster. The two rules below
+  # were validated against recorded incidents (a 169s MP write and a frozen
+  # node) and together also tell you WHICH failure mode you have:
+  #   both firing            -> long-running MP: sites are executing and work
+  #                             is piling up behind it (queue backlog grows)
+  #   VoltClusterStalled only-> stuck MP: nothing is executing (frozen /
+  #                             partitioned node, lost fragment, or a bug)
+  # Either way, volt.log is the next step: the long-running-procedure
+  # watchdog names the procedure, SQL and tuple counts if it is executing;
+  # heartbeat complaints name the unresponsive host if it is not. (That
+  # watchdog has no metric counterpart, so log-based alerting or a
+  # longest-running-transaction gauge would be the server-side improvement.)
+  - name: voltdb-stalls
+    rules:
+      - alert: VoltClusterStalled
+        # Throughput collapsed to <2% of what this cluster was doing minutes
+        # ago. Ratio-based so it works at any workload size; gated on prior
+        # activity (>25/s) so idle clusters never fire, and suppressed while
+        # the cluster is deliberately PAUSED.
+        expr: |
+          (
+            sum by (namespace) (rate(voltdb_procedure_invoked_total[2m]))
+            < 0.02 * sum by (namespace) (rate(voltdb_procedure_invoked_total[30m] offset 3m))
+          )
+          and on (namespace)
+            (sum by (namespace) (rate(voltdb_procedure_invoked_total[30m] offset 3m)) > 25)
+          unless on (namespace)
+            (count by (namespace) (voltdb_systeminformation_overview_cluster_info{clusterstate="PAUSED"}) > 0)
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Cluster {{ $labels.namespace }} has stopped processing transactions"
+          description: "Throughput fell to {{ $value | humanize }}/s from >2% of its recent level - the signature of a stuck or long-running multi-partition transaction blocking all partitions. If VoltExecutionBacklog is also firing, an MP is executing and work is queuing behind it: check volt.log for 'is taking a long time to execute' (names the procedure and SQL). If not, nothing is executing: check for an unresponsive node ('Have not received a message from host ...' in volt.log)."
+
+      - alert: VoltExecutionBacklog
+        # Tasks piling up in a site's execution queue. Normal operation sits
+        # near zero; a long-running MP pushed this past 7000 within two
+        # minutes in testing. Also catches a hot partition that cannot keep
+        # up with skewed load.
+        expr: max by (namespace, host_name) (voltdb_task_queue_depth_total) > 500
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Execution queue backlog on {{ $labels.host_name }} ({{ $labels.namespace }})"
+          description: "{{ $value | humanize }} tasks are waiting in execution queues. Paired with VoltClusterStalled this means a long-running multi-partition transaction is holding every partition; alone it points to an overloaded site or hot partition."
+
+  # =========================================================================
   # Client experience: what applications actually see
   # =========================================================================
   # These use the initiator-side metrics, which count each transaction ONCE
