@@ -287,7 +287,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "",
+      "description": "Combined Java heap in use across all nodes - the cluster-wide counterpart of the per-node heap panels below. Rising heap usually tracks growing data and workload; compare it with the per-node view to see whether growth is spread evenly.",
       "fieldConfig": {
         "defaults": {
           "color": {
