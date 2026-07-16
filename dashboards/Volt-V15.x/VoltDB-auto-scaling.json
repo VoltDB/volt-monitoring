@@ -727,7 +727,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (host_name) (voltdb_xdcr_readiness_info{namespace=\"$cluster\"})",
+          "expr": "sum by (host_name, dr_is_ready) (voltdb_xdcr_readiness_info{namespace=\"$cluster\"})",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -786,7 +786,8 @@
               "pod": true,
               "service": true,
               "uptime": false,
-              "v2": true
+              "v2": true,
+              "Value #A": true
             },
             "indexByName": {
               "Time 1": 4,
@@ -807,7 +808,8 @@
               "cpucores": "",
               "host_name": "host",
               "hostid": "",
-              "version": "version"
+              "version": "version",
+              "dr_is_ready": "XDCR ready"
             }
           }
         }

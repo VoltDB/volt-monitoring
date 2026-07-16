@@ -169,9 +169,9 @@
         "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
-            "sum"
+            "lastNotNull"
           ],
-          "fields": "/^IN_PROGRESS$/",
+          "fields": "",
           "values": false
         },
         "showPercentChange": false,
@@ -186,68 +186,15 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "exemplar": false,
-          "expr": "group by (snapshot_txn_id, snapshot_result) (voltdb_snapshot_summary_info{namespace=\"$cluster\",host_name=~\"$host\"})",
-          "format": "time_series",
-          "instant": false,
+          "instant": true,
+          "range": false,
+          "refId": "A",
           "legendFormat": "__auto",
-          "range": true,
-          "refId": "C"
+          "expr": "count(group by (host_name) (present_over_time(voltdb_snapshot_summary_info{namespace=\"$cluster\",host_name=~\"$host\",snapshot_result=\"IN_PROGRESS\"}[1m]))) or vector(0)"
         }
       ],
       "title": "Servers doing snapshots",
-      "transformations": [
-        {
-          "id": "joinByLabels",
-          "options": {
-            "value": "snapshot_result"
-          }
-        },
-        {
-          "id": "groupBy",
-          "options": {
-            "fields": {
-              "IN_PROGRESS": {
-                "aggregations": [],
-                "operation": "groupby"
-              },
-              "SUCCESS": {
-                "aggregations": [],
-                "operation": "groupby"
-              },
-              "snapshot_txn_id": {
-                "aggregations": [],
-                "operation": "groupby"
-              }
-            }
-          }
-        },
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "greater",
-                  "options": {
-                    "value": 0
-                  }
-                },
-                "fieldName": "IN_PROGRESS"
-              },
-              {
-                "config": {
-                  "id": "isNull",
-                  "options": {}
-                },
-                "fieldName": "SUCCESS"
-              }
-            ],
-            "match": "all",
-            "type": "include"
-          }
-        }
-      ],
+      "transformations": [],
       "type": "stat",
       "description": "How many snapshots are still being written and have not yet completed. This should drop back to zero shortly after each backup finishes; a value that stays high means a snapshot is taking a long time or is stuck."
     },
@@ -455,9 +402,9 @@
         "percentChangeColorMode": "standard",
         "reduceOptions": {
           "calcs": [
-            "last"
+            "lastNotNull"
           ],
-          "fields": "/^snapshot_bytes_written$/",
+          "fields": "/snapshot_bytes_written.*/",
           "values": false
         },
         "showPercentChange": false,
@@ -472,16 +419,69 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "voltdb_snapshot_summary_info{namespace=\"$cluster\",host_name=~\"$host\",snapshot_nonce=~\".*SNAP.*\"}",
           "format": "table",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
+          "instant": true,
+          "range": false,
+          "refId": "A",
+          "expr": "group by (snapshot_txn_id, snapshot_bytes_written, host_name) (voltdb_snapshot_summary_info{namespace=\"$cluster\",host_name=~\"$host\",snapshot_result=\"SUCCESS\"})"
         }
       ],
       "title": "Last snapshot size",
       "type": "stat",
-      "description": "Size on disk of the most recent snapshot. Useful for tracking how large your backups are and how much storage space they need."
+      "description": "Size on disk of the most recent snapshot. Useful for tracking how large your backups are and how much storage space they need.",
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "number",
+                "targetField": "snapshot_txn_id"
+              },
+              {
+                "destinationType": "number",
+                "targetField": "snapshot_bytes_written"
+              }
+            ],
+            "fields": {}
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "snapshot_txn_id": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "snapshot_bytes_written": {
+                "aggregations": [
+                  "sum"
+                ],
+                "operation": "aggregate"
+              }
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "snapshot_txn_id"
+              }
+            ]
+          }
+        },
+        {
+          "id": "limit",
+          "options": {
+            "limitField": 1
+          }
+        }
+      ]
     },
     {
       "datasource": {
@@ -992,7 +992,7 @@
           "calcs": [
             "max"
           ],
-          "fields": "/^snapshot_bytes_written$/",
+          "fields": "/snapshot_bytes_written.*/",
           "values": false
         },
         "showPercentChange": false,
@@ -1007,16 +1007,30 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "voltdb_snapshot_table_summary_info{namespace=\"$cluster\",host_name=~\"$host\"}",
           "format": "table",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
+          "instant": true,
+          "range": false,
+          "refId": "A",
+          "expr": "group by (snapshot_txn_id, table_name, host_name, snapshot_bytes_written) (voltdb_snapshot_table_summary_info{namespace=\"$cluster\",host_name=~\"$host\"})"
         }
       ],
       "title": "Max table snapshot size",
       "type": "stat",
-      "description": "Size of the largest single table backup file across recent snapshots. Helps you spot which tables dominate backup size and storage use."
+      "description": "Size of the largest single table backup file across recent snapshots. Helps you spot which tables dominate backup size and storage use.",
+      "transformations": [
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "number",
+                "targetField": "snapshot_bytes_written"
+              }
+            ],
+            "fields": {}
+          }
+        }
+      ]
     },
     {
       "datasource": {
@@ -1169,25 +1183,15 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "exemplar": false,
-          "expr": "group by (snapshot_txn_id, table_name, snapshot_bytes_written) (voltdb_snapshot_table_summary_info{namespace=\"$cluster\",host_name=~\"$host\", snapshot_result!=\"IN_PROGRESS\"})",
           "format": "table",
           "instant": true,
-          "legendFormat": "__auto",
           "range": false,
-          "refId": "A"
+          "refId": "A",
+          "expr": "group by (table_name, host_name, snapshot_txn_id, snapshot_bytes_written) (voltdb_snapshot_table_summary_info{namespace=\"$cluster\",host_name=~\"$host\",snapshot_result=\"SUCCESS\"})"
         }
       ],
       "title": "Total snapshot sizes by table",
       "transformations": [
-        {
-          "id": "partitionByValues",
-          "options": {
-            "fields": [
-              "table_name"
-            ]
-          }
-        },
         {
           "id": "convertFieldType",
           "options": {
@@ -1195,30 +1199,41 @@
               {
                 "destinationType": "number",
                 "targetField": "snapshot_bytes_written"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "Value"
               }
             ],
             "fields": {}
           }
         },
         {
-          "id": "reduce",
+          "id": "groupBy",
           "options": {
-            "includeTimeField": false,
-            "mode": "reduceFields",
-            "reducers": [
-              "sum"
-            ]
+            "fields": {
+              "table_name": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "snapshot_bytes_written": {
+                "aggregations": [
+                  "sum"
+                ],
+                "operation": "aggregate"
+              }
+            }
           }
         },
         {
-          "id": "renameByRegex",
+          "id": "rowsToFields",
           "options": {
-            "regex": "snapshot_bytes_written (.*)",
-            "renamePattern": "$1"
+            "mappings": [
+              {
+                "fieldName": "table_name",
+                "handlerKey": "field.name"
+              },
+              {
+                "fieldName": "snapshot_bytes_written (sum)",
+                "handlerKey": "field.value"
+              }
+            ]
           }
         }
       ],

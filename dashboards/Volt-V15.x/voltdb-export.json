@@ -303,7 +303,7 @@
           },
           "editorMode": "code",
           "exemplar": true,
-          "expr": "max(voltdb_export_latency_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "expr": "(max(voltdb_export_latency_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"})) / 1000",
           "interval": "",
           "legendFormat": "",
           "range": true,

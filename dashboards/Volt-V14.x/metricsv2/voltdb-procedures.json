@@ -511,7 +511,7 @@
                   }
                 ]
               },
-              "unit": "short"
+              "unit": "reqps"
             },
             "overrides": []
           },
@@ -551,7 +551,7 @@
               "refId": "A"
             }
           ],
-          "title": "Total procedures invocation counts",
+          "title": "Procedure invocation rate over time",
           "type": "timeseries"
         },
         {
@@ -606,7 +606,7 @@
                   }
                 ]
               },
-              "unit": "short"
+              "unit": "reqps"
             },
             "overrides": []
           },
@@ -646,7 +646,7 @@
               "refId": "A"
             }
           ],
-          "title": "Total transactions counts",
+          "title": "Transaction rate over time",
           "type": "timeseries"
         },
         {
@@ -1256,7 +1256,7 @@
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "sum by (procedure_name)\n(\n    voltdb_procedure_invoked_time_seconds_max\n    {\n        namespace=\"$cluster\",\n        host_name=~\"$host\",\n        partition_id=~\"$partition\",\n        procedure_name=~\"$procedure\"\n    }\n)",
+              "expr": "max by (procedure_name)\n(\n    voltdb_procedure_invoked_time_seconds_max\n    {\n        namespace=\"$cluster\",\n        host_name=~\"$host\",\n        partition_id=~\"$partition\",\n        procedure_name=~\"$procedure\"\n    }\n)",
               "legendFormat": "{{procedure_name}}",
               "range": true,
               "refId": "A"
@@ -1447,7 +1447,7 @@
                   }
                 ]
               },
-              "unit": "decbytes"
+              "unit": "Bps"
             },
             "overrides": []
           },
@@ -1485,7 +1485,7 @@
               "refId": "A"
             }
           ],
-          "title": "Average result size ($procedure)",
+          "title": "Result data rate ($procedure)",
           "type": "timeseries"
         }
       ],
@@ -1560,7 +1560,7 @@
                 "uid": "prometheus"
               },
               "editorMode": "code",
-              "expr": "sum by (procedure_name, host_name)\n(\n    voltdb_procedure_invoked_time_seconds_max\n    {\n        namespace=\"$cluster\",\n        host_name=~\"$host\",\n        partition_id=~\"$partition\",\n        procedure_name=~\"$procedure\"\n    }\n)",
+              "expr": "max by (procedure_name, host_name)\n(\n    voltdb_procedure_invoked_time_seconds_max\n    {\n        namespace=\"$cluster\",\n        host_name=~\"$host\",\n        partition_id=~\"$partition\",\n        procedure_name=~\"$procedure\"\n    }\n)",
               "format": "table",
               "instant": false,
               "legendFormat": "{{host_name}} / {{procedure_name}}",
@@ -1568,7 +1568,7 @@
               "refId": "A"
             }
           ],
-          "title": "Procedures x Hostame execution time matrix ($procedure) - size proportional to time",
+          "title": "Procedures x Hostname execution time matrix ($procedure) - size proportional to time",
           "transformations": [
             {
               "id": "groupBy",
@@ -1692,7 +1692,7 @@
               "refId": "A"
             }
           ],
-          "title": "Procedures x Hostame execution time matrix ($procedure)",
+          "title": "Procedures x Hostname execution time matrix ($procedure)",
           "transformations": [
             {
               "id": "reduce",
@@ -1865,7 +1865,7 @@
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "sum by (procedure_name, partition_id)\n(\n    voltdb_procedure_invoked_time_seconds_max\n    {\n        namespace=\"$cluster\",\n        host_name=~\"$host\",\n        partition_id=~\"$partition\",\n        procedure_name=~\"$procedure\"\n    }\n)",
+              "expr": "max by (procedure_name, partition_id)\n(\n    voltdb_procedure_invoked_time_seconds_max\n    {\n        namespace=\"$cluster\",\n        host_name=~\"$host\",\n        partition_id=~\"$partition\",\n        procedure_name=~\"$procedure\"\n    }\n)",
               "instant": false,
               "legendFormat": "__auto",
               "range": true,

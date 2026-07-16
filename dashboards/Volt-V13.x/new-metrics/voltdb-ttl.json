@@ -200,7 +200,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(increase(voltdb_ttl_rows_deleted_total{namespace=~\"$cluster\", host_name=~\"$host\"}[$__range]))",
+          "expr": "sum(increase(voltdb_ttl_rows_deleted_total{namespace=\"$cluster\", host_name=~\"$host\"}[$__range]))",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,

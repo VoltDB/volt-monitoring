@@ -46,11 +46,19 @@ application. Every panel description must:
   per-node fraction can exceed 100% and falsely trip thresholds.
 - **Units**: VoltDB metrics are base-unit (`_seconds`, `_bytes`). Set the Grafana unit to the
   base unit (`s`, not `ms`) and express thresholds in base units too (50 ms = `0.05`).
-  **Known exporter bug (15.3, Jira pending)**: the DR producer/consumer and export
-  `last_*_timestamp_seconds` gauges actually export epoch **milliseconds** (topic/ttl/
-  conflict/readiness timestamps are correct seconds). Panels/rules using them must divide
-  by 1000 for second math — or use Grafana datetime units, which expect ms. Verify with a
-  live query (`> 1e11` ⇒ ms) before trusting any `_timestamp_seconds` metric.
+  **Known exporter bugs (15.3/14.x/13.x, Jira pending)**:
+  - the DR producer/consumer and export `last_*_timestamp_seconds` gauges actually export
+    epoch **milliseconds** (topic/ttl/conflict/readiness timestamps are correct seconds).
+    Panels/rules using them must divide by 1000 for second math — or use Grafana datetime
+    units, which expect ms. Verify with a live query (`> 1e11` ⇒ ms) before trusting any
+    `_timestamp_seconds` metric.
+  - `voltdb_export_latency_seconds_*` is really **milliseconds** (enum declares
+    NANOSECONDS, stat source is ms, no conversion lands). The export dashboard's max-latency
+    panel compensates with `/1000` — remove when the server fix ships.
+  - `voltdb_ttl_last_execution_timestamp_seconds` is **SUM-aggregated across per-partition
+    stat rows**, so it reads N× the epoch (observed exactly 2.000×). A timestamp gauge needs
+    MAX aggregation. NOT compensated in dashboards (N varies) — the TTL "Last execution
+    time" panel shows a far-future date until the server is fixed.
 - **Always filter by `namespace="$cluster"`** (and usually `host_name=~"$host"`) — a missing
   cluster filter silently mixes data from every monitored cluster.
 - **Titles must match the query**: don't say "5m" if the query uses `$__rate_interval`,
