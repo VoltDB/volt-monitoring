@@ -2112,7 +2112,7 @@
               }
             ]
           },
-          "unit": "short",
+          "unit": "reqps",
           "noValue": "0"
         }
       },
@@ -2641,7 +2641,7 @@
           "refId": "A"
         }
       ],
-      "title": "Transaction rate",
+      "title": "TPS per node",
       "type": "timeseries"
     },
     {
