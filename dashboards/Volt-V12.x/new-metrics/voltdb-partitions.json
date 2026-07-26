@@ -30,12 +30,6 @@
       "version": ""
     },
     {
-      "type": "panel",
-      "id": "marcusolsson-treemap-panel",
-      "name": "Treemap",
-      "version": "2.0.1"
-    },
-    {
       "type": "datasource",
       "id": "prometheus",
       "name": "Prometheus",
@@ -58,6 +52,12 @@
       "id": "timeseries",
       "name": "Time series",
       "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "marcusolsson-treemap-panel",
+      "name": "Treemap",
+      "version": "2.0.0"
     }
   ],
   "annotations": {
@@ -79,7 +79,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -167,7 +166,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "The distribution of time tasks were waiting in the queue.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -252,7 +251,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "The number of tasks in the queue.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -325,7 +324,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "The distribution of the amount of time the execution site had to wait for a new task.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -650,7 +649,8 @@
         }
       ],
       "title": "Busiest sites (percent of the time)",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The distribution of the amount of time the execution site had to wait for a new task."
     },
     {
       "datasource": {
@@ -761,7 +761,8 @@
         }
       ],
       "title": "Procedure invocations per partition",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The total number of invocations of this procedure at this site."
     },
     {
       "datasource": {
@@ -850,7 +851,8 @@
         }
       ],
       "title": "Procedure failures per partition",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The number of times the procedure failed unexpectedly."
     },
     {
       "datasource": {
@@ -965,7 +967,8 @@
           }
         }
       ],
-      "type": "table"
+      "type": "table",
+      "description": "The total number of invocations of this procedure at this site."
     },
     {
       "datasource": {
@@ -1097,14 +1100,15 @@
           "options": {}
         }
       ],
-      "type": "marcusolsson-treemap-panel"
+      "type": "marcusolsson-treemap-panel",
+      "description": "- `voltdb_procedure_invoked_time_seconds`: The length of time it took to execute the stored procedure.\n- `voltdb_procedure_invoked_total`: The total number of invocations of this procedure at this site."
     },
     {
       "datasource": {
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "The length of time it took to execute the stored procedure.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1303,7 +1307,7 @@
           "color": "orange"
         },
         "filterValues": {
-          "le": 1e-9
+          "le": 1e-09
         },
         "legend": {
           "show": true
@@ -1338,7 +1342,8 @@
         }
       ],
       "title": "Cumulative Procedure Invocation Distribution",
-      "type": "heatmap"
+      "type": "heatmap",
+      "description": "The length of time it took to execute the stored procedure."
     },
     {
       "datasource": {
@@ -1436,7 +1441,8 @@
         }
       ],
       "title": "Command queue depth by site",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The number of tasks in the queue."
     },
     {
       "datasource": {
@@ -1585,7 +1591,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "",
+      "description": "The number of rows stored for this table in the current partition. For streams, the cumulative total number of rows inserted into the stream.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1795,13 +1801,12 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Partitions",
-  "uid": "fae27ae5-43a8-4dba-aadd-48e48ef0c03c",
-  "version": 73,
+  "uid": "volt-v12x-partitions",
   "weekStart": ""
 }

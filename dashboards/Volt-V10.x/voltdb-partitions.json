@@ -7,7 +7,7 @@
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
-        "name": "Annotations \u0026 Alerts",
+        "name": "Annotations & Alerts",
         "target": {
           "limit": 100,
           "matchAny": false,
@@ -21,8 +21,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 660,
-  "iteration": 1658840689302,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -77,7 +75,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -148,7 +148,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -220,7 +222,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -292,7 +296,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -363,7 +369,9 @@
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "fields": "",
           "values": false
         },
@@ -481,7 +489,10 @@
       "id": 38,
       "options": {
         "legend": {
-          "calcs": ["max", "sum"],
+          "calcs": [
+            "max",
+            "sum"
+          ],
           "displayMode": "table",
           "placement": "right",
           "sortBy": "Max",
@@ -584,7 +595,10 @@
       "id": 39,
       "options": {
         "legend": {
-          "calcs": ["max", "lastNotNull"],
+          "calcs": [
+            "max",
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right",
           "sortBy": "Max",
@@ -684,7 +698,10 @@
       "id": 41,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull", "sum"],
+          "calcs": [
+            "lastNotNull",
+            "sum"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -785,7 +802,10 @@
       "id": 50,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull", "sum"],
+          "calcs": [
+            "lastNotNull",
+            "sum"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -886,7 +906,10 @@
       "id": 51,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull", "sum"],
+          "calcs": [
+            "lastNotNull",
+            "sum"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -968,7 +991,9 @@
       "options": {
         "footer": {
           "fields": "",
-          "reducer": ["sum"],
+          "reducer": [
+            "sum"
+          ],
           "show": false
         },
         "showHeader": true
@@ -993,7 +1018,9 @@
         {
           "id": "reduce",
           "options": {
-            "reducers": ["sum"]
+            "reducers": [
+              "sum"
+            ]
           }
         },
         {
@@ -1068,7 +1095,9 @@
       "options": {
         "colorByField": "Value #A",
         "groupByField": "procedure",
-        "labelFields": ["Value #A"],
+        "labelFields": [
+          "Value #A"
+        ],
         "sizeField": "Value #B",
         "textField": "partitionid",
         "tiling": "treemapSquarify"
@@ -1184,7 +1213,9 @@
       "id": 53,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right"
         },
@@ -1285,7 +1316,9 @@
       "id": 54,
       "options": {
         "legend": {
-          "calcs": ["lastNotNull"],
+          "calcs": [
+            "lastNotNull"
+          ],
           "displayMode": "table",
           "placement": "right",
           "sortBy": "Last *",
@@ -1390,7 +1423,10 @@
   "refresh": "",
   "schemaVersion": 34,
   "style": "dark",
-  "tags": ["voltdb", "partitions"],
+  "tags": [
+    "voltdb",
+    "partitions"
+  ],
   "templating": {
     "list": [
       {
@@ -1531,7 +1567,14 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Partitions",
-  "uid": "mf8hZIgVz",
-  "version": 6,
-  "weekStart": ""
+  "uid": "volt-v10x-partitions",
+  "weekStart": "",
+  "__requires": [
+    {
+      "type": "panel",
+      "id": "marcusolsson-treemap-panel",
+      "name": "Treemap",
+      "version": "2.0.0"
+    }
+  ]
 }

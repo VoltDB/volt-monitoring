@@ -18,12 +18,6 @@
       "version": "9.5.3"
     },
     {
-      "type": "panel",
-      "id": "marcusolsson-treemap-panel",
-      "name": "Treemap",
-      "version": "2.0.1"
-    },
-    {
       "type": "datasource",
       "id": "prometheus",
       "name": "Prometheus",
@@ -40,6 +34,12 @@
       "id": "timeseries",
       "name": "Time series",
       "version": ""
+    },
+    {
+      "type": "panel",
+      "id": "marcusolsson-treemap-panel",
+      "name": "Treemap",
+      "version": "2.0.0"
     }
   ],
   "annotations": {
@@ -61,7 +61,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -139,7 +138,8 @@
         }
       ],
       "title": "Table allocated memory",
-      "type": "stat"
+      "type": "stat",
+      "description": "The amount of memory allocated for the storage of database records (including free space)."
     },
     {
       "datasource": {
@@ -201,7 +201,8 @@
         }
       ],
       "title": "Tuple count",
-      "type": "stat"
+      "type": "stat",
+      "description": "The number of rows stored for this table in the current partition. For streams, the cumulative total number of rows inserted into the stream."
     },
     {
       "datasource": {
@@ -263,7 +264,8 @@
         }
       ],
       "title": "Index memory usage",
-      "type": "stat"
+      "type": "stat",
+      "description": "The estimated amount of memory consumed by the index entries."
     },
     {
       "datasource": {
@@ -325,7 +327,8 @@
         }
       ],
       "title": "Number of index entries",
-      "type": "stat"
+      "type": "stat",
+      "description": "The number of index entries in the partition."
     },
     {
       "collapsed": false,
@@ -431,7 +434,8 @@
         }
       ],
       "title": "Table sizes ($table)",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "The total size of memory allocated for storing inline data associated with this table in this partition. For streams, the amount of memory in use to queue export data (both in memory and as export overflow) prior to its being passed to the export target."
     },
     {
       "datasource": {
@@ -516,7 +520,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "avg by(tablename)(voltdb_compaction_max_execution_time_seconds{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",tablename=~\"$table\"})",
+          "expr": "avg by(table_name)(voltdb_compaction_max_execution_time_seconds{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"})",
           "hide": true,
           "legendFormat": "{{table}}",
           "range": true,
@@ -528,7 +532,7 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "code",
-          "expr": "avg by(tablename)(voltdb_compaction_avg_relocated_count{namespace=\"$cluster\",hostname=~\"$host\",partitionid=~\"$partition\",tablename=~\"$table\"})",
+          "expr": "avg by(table_name)(voltdb_compaction_avg_relocated_count{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"})",
           "hide": true,
           "legendFormat": "__auto",
           "range": true,
@@ -572,7 +576,8 @@
         }
       ],
       "title": "Table Compaction ($table)",
-      "type": "timeseries"
+      "type": "timeseries",
+      "description": "- `voltdb_compaction_execution_seconds`: The amount of time it took for compaction to complete.\n- `voltdb_compaction_relocated_total`: The number of tuples relocated during compaction."
     },
     {
       "datasource": {
@@ -628,7 +633,8 @@
         }
       ],
       "title": "Tuple count: table by partition (table == $table, partition == $partition)",
-      "type": "marcusolsson-treemap-panel"
+      "type": "marcusolsson-treemap-panel",
+      "description": "The number of rows stored for this table in the current partition. For streams, the cumulative total number of rows inserted into the stream."
     },
     {
       "datasource": {
@@ -687,7 +693,8 @@
         }
       ],
       "title": "Hosts by partitions",
-      "type": "marcusolsson-treemap-panel"
+      "type": "marcusolsson-treemap-panel",
+      "description": "The number of rows stored for this table in the current partition. For streams, the cumulative total number of rows inserted into the stream."
     },
     {
       "datasource": {
@@ -742,7 +749,8 @@
         }
       ],
       "title": "Index name by partition matrix (table == $table, partition == $partition)",
-      "type": "marcusolsson-treemap-panel"
+      "type": "marcusolsson-treemap-panel",
+      "description": "The number of index entries in the partition."
     }
   ],
   "refresh": "",
@@ -868,13 +876,12 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Tables",
-  "uid": "f2e22fc1-d7b7-49bf-ac8e-40cb0dbf7b61",
-  "version": 23,
+  "uid": "volt-v12x-tables",
   "weekStart": ""
 }

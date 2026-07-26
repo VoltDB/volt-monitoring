@@ -1,0 +1,552 @@
+# Example Prometheus alerting rules for VoltDB (new "v2" metrics, V13.x+).
+#
+# These are starting points: review thresholds and `for:` durations against
+# your workload and SLOs before production use. All rules assume a `namespace`
+# label identifies the cluster (added automatically by the Volt Operator on
+# Kubernetes; see the README for bare-metal setups) and that Prometheus scrapes
+# at most half the VoltDB metric interval.
+#
+# Load via prometheus.yml:
+#   rule_files:
+#     - voltdb-alerts.yml
+#
+# ---------------------------------------------------------------------------
+# Storage / disk-usage alarms are NOT here on purpose.
+# ---------------------------------------------------------------------------
+# "Volt storage exceeds N% of available storage" for voltdbroot, command logs,
+# command-log snapshots, manual/scheduled snapshots and the DR overflow dir are
+# filesystem measurements. VoltDB does NOT export disk usage into the
+# Prometheus metric stream, so no rule here can see it.
+
+# For Prometheus/Grafana (trends, dashboards, Alertmanager), alert on the
+#    volume the data lives on:
+#
+#   # Kubernetes (kubelet / PVC):
+#   (kubelet_volume_stats_used_bytes / kubelet_volume_stats_capacity_bytes) > 0.85
+#   # Bare metal / VM (node_exporter):
+#   (1 - node_filesystem_avail_bytes{mountpoint="/voltdbroot"}
+#      / node_filesystem_size_bytes{mountpoint="/voltdbroot"}) > 0.85
+#
+# VoltDB *does* give early-warning health signals for the same subsystems that
+# fire before a disk fills - command-log backpressure and DR overflow-to-disk
+# (both below) - so use those alongside the infra disk alarms.
+
+groups:
+  # =========================================================================
+  # Liveness: node down / cluster down / paused / reduced k-safety
+  # =========================================================================
+  - name: voltdb-liveness
+    rules:
+      - alert: VoltNodeDown
+        # A configured scrape target is unreachable. `up` keeps reporting the
+        # series (value 0) after a target dies, so this fires per missing node.
+        expr: up{job=~"voltdb.*"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Volt node {{ $labels.instance }} is down"
+          description: "Prometheus cannot scrape {{ $labels.instance }} in {{ $labels.namespace }}. The node is down or unreachable."
+
+      - alert: VoltClusterDown
+        # Every node in the cluster is down. NOTE: `up{...} == 1` would filter
+        # away down targets BEFORE aggregating, so an all-down cluster yields
+        # no series at all and the alert could never fire. max() keeps one
+        # series per namespace (up reports 0 for dead targets) and is 0 only
+        # when every node is down.
+        expr: max by (namespace) (up{job=~"voltdb.*"}) == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Volt cluster {{ $labels.namespace }} is down"
+          description: "No live nodes are reachable in {{ $labels.namespace }}."
+
+      - alert: VoltClusterSafetyReduced
+        expr: voltdb_systeminformation_overview_cluster_info{clustersafety="REDUCED"} == 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Volt cluster {{ $labels.namespace }} is running with reduced k-safety"
+          description: "The cluster reports k-safety REDUCED: one or more nodes are down and it cannot survive another failure at the same k-factor."
+
+      - alert: VoltClusterPaused
+        # Cluster is in admin/read-only mode. Note the DB pauses itself when the
+        # resource-monitor memory limit is exceeded, so pair this with memory.
+        expr: voltdb_systeminformation_overview_cluster_info{clusterstate="PAUSED"} == 1
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Volt cluster {{ $labels.namespace }} is paused (read-only)"
+          description: "The cluster has been paused for 5 minutes. If unplanned, check whether the resource-monitor memory/disk limit tripped."
+
+  # =========================================================================
+  # Memory: RSS vs pod memory and vs configured resource-monitor limit
+  # =========================================================================
+  - name: voltdb-memory
+    rules:
+      - alert: VoltRssMemoryHighPodPercent
+        # "RSS exceeds N% of available memory on a Volt pod."
+        # CAVEAT: inside a container VoltDB reads /proc/meminfo, which often
+        # reports the NODE's memory, not the pod's cgroup limit - so this ratio
+        # can understate real pressure. On Kubernetes prefer cAdvisor:
+        #   container_memory_rss / container_spec_memory_limit_bytes > 0.85
+        expr: voltdb_memory_rss_bytes / voltdb_memory_physicalmemory_bytes > 0.85
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "RSS above 85% of visible memory on {{ $labels.host_name }}"
+          description: "RSS is {{ $value | humanizePercentage }} of the memory VoltDB can see on {{ $labels.host_name }} ({{ $labels.namespace }})."
+
+      - alert: VoltMemoryNearConfiguredLimit
+        # RSS vs the resource-monitor memory limit. The DB PAUSES
+        # when this limit is reached, so this is the more actionable of the two.
+        expr: voltdb_memory_rss_bytes / voltdb_memory_limit_bytes > 0.8
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "RSS above 80% of the configured memory limit on {{ $labels.host_name }}"
+          description: "RSS is {{ $value | humanizePercentage }} of the resource-monitor limit. VoltDB pauses the database when the limit is reached."
+
+  # =========================================================================
+  # Replication: XDCR broken / lag / round-trip / overflow
+  # =========================================================================
+  - name: voltdb-replication
+    rules:
+      - alert: VoltXdcrNotReady
+        # "XDCR is broken." dr_is_ready folds producer + consumer readiness.
+        expr: voltdb_xdcr_readiness_info{dr_is_ready="false"} == 1
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "XDCR not ready on {{ $labels.host_name }} ({{ $labels.namespace }})"
+          description: "Producer state {{ $labels.dr_prod_state }} (connection {{ $labels.dr_prod_cnx_status }}), consumer state {{ $labels.dr_cons_state }}. On ENG-29298 releases, voltdb_xdcr_readiness_since_timestamp_seconds shows since when it was last ready."
+
+      - alert: VoltDrQueueGap
+        # A gap in the producer queue means buffers were dropped/missed - the DR
+        # stream is broken, not just slow. Distinct from lag.
+        expr: sum by (namespace, remote_cluster_id) (voltdb_dr_producer_partition_queue_gap_total) > 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "XDCR queue gap to cluster {{ $labels.remote_cluster_id }} from {{ $labels.namespace }}"
+          description: "The DR producer reports a queue gap - the replication stream to cluster {{ $labels.remote_cluster_id }} is broken and may need a DR reset."
+
+      - alert: VoltXdcrLagHigh
+        # "XDCR lag = LASTQUEUED - LASTACKNOWLEDGED > N seconds."
+        # GUARD: raw (last_queued - last_ack) reads as huge phantom lag on IDLE
+        # partitions (an old queued timestamp with nothing left to ack). The
+        # `and rate(last_queued[5m]) > 0` clause keeps only partitions that are
+        # actively producing, so the alarm reflects real backlog.
+        # UNIT BUG: despite the _seconds suffix, the DR producer/consumer and
+        # export last-*-timestamp gauges are exported in epoch MILLISECONDS.
+        # Hence, the /1000.
+        expr: |
+          max by (namespace, remote_cluster_id) (
+            (
+              voltdb_dr_producer_partition_last_queued_timestamp_seconds
+              - voltdb_dr_producer_partition_last_ack_timestamp_seconds
+            )
+            and
+            (rate(voltdb_dr_producer_partition_last_queued_timestamp_seconds[5m]) > 0)
+          ) / 1000 > 10
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "XDCR lag > 10s to cluster {{ $labels.remote_cluster_id }} from {{ $labels.namespace }}"
+          description: "Producer-to-consumer lag on an active partition is {{ $value | humanizeDuration }}."
+
+      - alert: VoltXdcrRoundTripHigh
+        # "XDCR round-trip time exceeds N seconds." First-class histogram.
+        expr: |
+          histogram_quantile(0.99,
+            sum by (le, namespace, remote_cluster_id) (
+              rate(voltdb_dr_producer_partition_round_trip_time_seconds_bucket[5m])
+            )
+          ) > 5
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "XDCR p99 round-trip > 5s to cluster {{ $labels.remote_cluster_id }} from {{ $labels.namespace }}"
+          description: "p99 DR producer round-trip time is {{ $value | humanizeDuration }}. Check the inter-cluster network and the remote consumer's apply rate."
+
+      - alert: VoltDrOverflowToDisk
+        # "DR overflow." VoltDB has no metric for the overflow directory's disk
+        # %, but it does expose how many queued bytes have spilled OUT of memory
+        # to disk: queued_total - queued_in_memory. Non-zero = the consumer is
+        # not keeping up and DR is buffering to disk. (Disk-% itself is infra.)
+        expr: |
+          sum by (namespace, remote_cluster_id) (
+            voltdb_dr_producer_partition_queued_total_bytes
+            - voltdb_dr_producer_partition_queued_in_memory_total_bytes
+          ) > 1073741824
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "XDCR buffering >1GiB to disk for cluster {{ $labels.remote_cluster_id }} ({{ $labels.namespace }})"
+          description: "{{ $value | humanize1024 }}B of DR data has overflowed from memory to the DR overflow directory. Also watch the overflow volume's disk usage at the infra layer."
+
+  # =========================================================================
+  # DRCONFLICT: meaningful conflict activity, deduplicated per site-pair
+  # =========================================================================
+  #   - The recording rules aggregate by (namespace, cluster_id,
+  #     remote_cluster_id). One series per site-pair -> one alert. If you want
+  #     the notification to also list impacted tables, keep table_name on a
+  #     companion warning rule and let Alertmanager group by site-pair:
+  #       route:
+  #         group_by: ['namespace', 'cluster_id', 'remote_cluster_id']
+  #         group_wait: 30s
+  #         group_interval: 5m
+  #         repeat_interval: 4h            # suppression / no alert storms
+  #       inhibit_rules:                   # critical silences the warning
+  #         - source_matchers: [ severity="critical", alertname="VoltDrDataDivergence" ]
+  #           target_matchers: [ severity="warning", alertname="VoltDrConflictsActive" ]
+  #           equal: ['namespace', 'cluster_id', 'remote_cluster_id']
+  #   - "Severity levels": two alerts - any conflict = warning; the data-
+  #     diverging subtypes (divergence / missing-row) = critical.
+  #   - "Subtype breakdown (missing/divergence/timestamp/constraint)": four
+  #     source counters, recorded separately below.
+  - name: voltdb-drconflicts
+    rules:
+      # ---- recording rules: per site-pair conflict rates ----
+      - record: sitepair:voltdb_dr_conflicts:rate5m
+        expr: sum by (namespace, cluster_id, remote_cluster_id) (rate(voltdb_dr_conflicts_count_total[5m]))
+
+      # Each subtype counter is absent until its first event, and vector
+      # addition drops any site-pair present on only one side - so a lone
+      # divergence (without a missing-row) would vanish from the sum. Each
+      # operand is zero-filled against the total-conflicts series (recorded
+      # above in this group, so it is fresh), which exists whenever any
+      # conflict has ever been counted for the pair.
+      - record: sitepair:voltdb_dr_data_divergence:rate5m
+        expr: |
+          (
+            sum by (namespace, cluster_id, remote_cluster_id) (rate(voltdb_dr_divergence_count_total[5m]))
+            or 0 * sitepair:voltdb_dr_conflicts:rate5m
+          )
+          + (
+            sum by (namespace, cluster_id, remote_cluster_id) (rate(voltdb_dr_missing_row_count_total[5m]))
+            or 0 * sitepair:voltdb_dr_conflicts:rate5m
+          )
+
+      # ---- alerts ----
+      - alert: VoltDrConflictsActive
+        expr: sitepair:voltdb_dr_conflicts:rate5m > 0
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "XDCR conflicts {{ $labels.cluster_id }}<->{{ $labels.remote_cluster_id }} ({{ $labels.namespace }})"
+          description: "Sustained DR conflict activity ({{ $value | humanize }}/s over 5m) between cluster {{ $labels.cluster_id }} and {{ $labels.remote_cluster_id }}. Subtype/table breakdown on the XDCR conflicts dashboard filtered to this site-pair."
+
+      - alert: VoltDrDataDivergence
+        expr: sitepair:voltdb_dr_data_divergence:rate5m > 0
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "XDCR data divergence {{ $labels.cluster_id }}<->{{ $labels.remote_cluster_id }} ({{ $labels.namespace }})"
+          description: "Divergence / missing-row conflicts ({{ $value | humanize }}/s) mean the two clusters hold different data. Investigate immediately; a DR reset or manual reconciliation may be required."
+
+  # =========================================================================
+  # Durability: command log, snapshots, TTL
+  # =========================================================================
+  - name: voltdb-durability
+    rules:
+      - alert: VoltCommandLogBackpressure
+        # Fires BEFORE the command-log volume fills - a better early
+        # warning than disk % for command-log storage.
+        expr: increase(voltdb_commandlog_backpressure_total[10m]) > 0
+        labels:
+          severity: warning
+        annotations:
+          summary: "Command logging is backpressuring transactions on {{ $labels.host_name }}"
+          description: "Command-log writes fell behind and blocked transactions in the last 10m. Check throughput on the command-log volume."
+
+      - alert: VoltSnapshotFailed
+        expr: voltdb_snapshot_summary_info{snapshot_result="FAILURE"} == 1
+        labels:
+          severity: critical
+        annotations:
+          summary: "Snapshot {{ $labels.snapshot_nonce }} failed on {{ $labels.host_name }}"
+
+      - alert: VoltTtlFailures
+        # Series appears only when a TTL sweep fails (e.g. missing index).
+        expr: increase(voltdb_ttl_failed_total[15m]) > 0
+        labels:
+          severity: warning
+        annotations:
+          summary: "TTL processing failures on {{ $labels.host_name }}"
+
+  # =========================================================================
+  # Export
+  # =========================================================================
+  - name: voltdb-export
+    rules:
+      - alert: VoltExportStalled
+        expr: voltdb_export_tuple_pending_total > 0 and increase(voltdb_export_tuple_count_total[15m]) == 0
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Export target {{ $labels.export_target }} stalled on {{ $labels.host_name }}"
+          description: "Rows are pending for export source {{ $labels.export_source }} but nothing has been acknowledged for 15 minutes."
+
+  # =========================================================================
+  # Stalls: stuck or long-running multi-partition transactions
+  # =========================================================================
+  # One MP transaction runs fragments on EVERY partition behind a barrier, so
+  # a single stuck or slow MP halts the whole cluster. The two rules below
+  # were validated against recorded incidents and together also tell you WHICH
+  # failure mode you have:
+  #   both firing            -> long-running MP: sites are executing and work
+  #                             is piling up behind it (queue backlog grows)
+  #   VoltClusterStalled only-> stuck MP: nothing is executing (frozen /
+  #                             partitioned node, lost fragment, or a bug)
+  # Either way, volt.log is the next step: the long-running-procedure
+  # watchdog names the procedure, SQL and tuple counts if it is executing;
+  # heartbeat complaints name the unresponsive host if it is not. (That
+  # watchdog has no metric counterpart, so log-based alerting or a
+  # longest-running-transaction gauge would be the server-side improvement.)
+  - name: voltdb-stalls
+    rules:
+      - alert: VoltClusterStalled
+        # Throughput collapsed to <2% of what this cluster was doing minutes
+        # ago. Ratio-based so it works at any workload size; gated on prior
+        # activity (>25/s) so idle clusters never fire, and suppressed while
+        # the cluster is deliberately PAUSED.
+        expr: |
+          (
+            sum by (namespace) (rate(voltdb_procedure_invoked_total[2m]))
+            < 0.02 * sum by (namespace) (rate(voltdb_procedure_invoked_total[30m] offset 3m))
+          )
+          and on (namespace)
+            (sum by (namespace) (rate(voltdb_procedure_invoked_total[30m] offset 3m)) > 25)
+          unless on (namespace)
+            (count by (namespace) (voltdb_systeminformation_overview_cluster_info{clusterstate="PAUSED"}) > 0)
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Cluster {{ $labels.namespace }} has stopped processing transactions"
+          description: "Throughput fell to {{ $value | humanize }}/s from >2% of its recent level - the signature of a stuck or long-running multi-partition transaction blocking all partitions. If VoltExecutionBacklog is also firing, an MP is executing and work is queuing behind it: check volt.log for 'is taking a long time to execute' (names the procedure and SQL). If not, nothing is executing: check for an unresponsive node ('Have not received a message from host ...' in volt.log)."
+
+      - alert: VoltExecutionBacklog
+        # Tasks piling up in a site's execution queue. Normal operation sits
+        # near zero; a long-running MP pushed this past 7000 within two
+        # minutes in testing. Also catches a hot partition that cannot keep
+        # up with skewed load.
+        expr: max by (namespace, host_name) (voltdb_task_queue_depth_total) > 500
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Execution queue backlog on {{ $labels.host_name }} ({{ $labels.namespace }})"
+          description: "{{ $value | humanize }} tasks are waiting in execution queues. Paired with VoltClusterStalled this means a long-running multi-partition transaction is holding every partition; alone it points to an overloaded site or hot partition."
+
+  # =========================================================================
+  # Client experience: what applications actually see
+  # =========================================================================
+  # These use the initiator-side metrics, which count each transaction ONCE
+  # (per client request) and time the full request-to-response path - unlike
+  # the per-site voltdb_procedure_* metrics, which multiply work across
+  # partition copies in a K-safe cluster and time only the procedure body.
+  - name: voltdb-client-experience
+    rules:
+      - alert: VoltClientErrorRatioHigh
+        # Failed + aborted transactions as a fraction of all client requests.
+        # Ratio-based so one threshold works across workload sizes. The error
+        # counters are absent until the first error, so each is zero-filled
+        # against the always-present invoked counter before adding (a plain
+        # A+B would drop namespaces until BOTH counters exist). Do NOT be
+        # tempted by a {__name__=~"failed|aborted"} regex selector: once both
+        # counters exist with identical labelsets, rate() drops __name__ and
+        # the query fails with a duplicate-labelset error, silently stopping
+        # the alert.
+        expr: |
+          (
+            (
+              sum by (namespace) (rate(voltdb_initiator_procedure_failed_total[5m]))
+              or 0 * sum by (namespace) (rate(voltdb_initiator_procedure_invoked_total[5m]))
+            )
+            + (
+              sum by (namespace) (rate(voltdb_initiator_procedure_aborted_total[5m]))
+              or 0 * sum by (namespace) (rate(voltdb_initiator_procedure_invoked_total[5m]))
+            )
+          )
+          /
+          sum by (namespace) (
+            rate(voltdb_initiator_procedure_invoked_total[5m])
+          ) > 0.01
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "More than 1% of client transactions failing in {{ $labels.namespace }}"
+          description: "{{ $value | humanizePercentage }} of client requests are failing or aborting, as seen by the clients themselves. Check the procedures dashboard's failure/abort panels and application logs."
+
+      - alert: VoltClientLatencyP99High
+        # Initiator latency: request arrives on the network -> response sent,
+        # including queueing, execution and the K-safety replication wait.
+        # 100ms is a generic default - set this to your SLO.
+        expr: |
+          histogram_quantile(0.99,
+            sum by (le, namespace) (
+              rate(voltdb_initiator_procedure_invoked_time_seconds_bucket[5m])
+            )
+          ) > 0.1
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "p99 client latency > 100ms in {{ $labels.namespace }}"
+          description: "p99 initiator latency is {{ $value | humanizeDuration }}. Decompose it with the performance dashboard's latency-anatomy row: inbound queue wait vs procedure execution vs replication round-trip."
+
+      - alert: VoltClientConnectionsNearLimit
+        expr: |
+          voltdb_client_connections_open_total
+          / voltdb_client_connections_limit_total > 0.9
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Client connections at {{ $value | humanizePercentage }} of limit on {{ $labels.host_name }} ({{ $labels.namespace }})"
+          description: "New client connections will be refused once the limit is reached. Raise the limit or reduce per-client connection counts."
+
+      - alert: VoltClientConnectionsRefused
+        # This counter increments ONLY when a connection is rejected at the
+        # limit - clients are actively being turned away right now.
+        expr: increase(voltdb_dropped_connections_total[5m]) > 0
+        labels:
+          severity: critical
+        annotations:
+          summary: "Clients being refused connections on {{ $labels.host_name }} ({{ $labels.namespace }})"
+          description: "{{ $value | humanize }} connection attempts were rejected in the last 5m because the server hit its connection limit."
+
+      - alert: VoltFileDescriptorsNearLimit
+        expr: |
+          voltdb_file_descriptors_count_total
+          / voltdb_file_descriptors_limit_total > 0.9
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "File descriptors at {{ $value | humanizePercentage }} of limit on {{ $labels.host_name }} ({{ $labels.namespace }})"
+          description: "Running out of file descriptors breaks connections and file operations. Raise the OS limit for the VoltDB process."
+
+  # =========================================================================
+  # Cluster health: coordination and intra-cluster overhead
+  # =========================================================================
+  - name: voltdb-cluster-health
+    rules:
+      - alert: VoltClockSkewHigh
+        # Metric is in seconds (base units): 0.05 = 50ms. Large skew disrupts
+        # coordination between nodes.
+        expr: max by (namespace) (voltdb_clockskew_seconds) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Clock skew > 50ms within cluster {{ $labels.namespace }}"
+          description: "Worst pairwise clock difference is {{ $value | humanizeDuration }}. Check the time service (NTP/chrony) on the drifting node - the overview dashboard's clock-skew matrix shows which one."
+
+      - alert: VoltGcPressureHigh
+        # Share of wall-clock time the JVM spends paused for GC, per node.
+        expr: |
+          sum by (namespace, host_name) (
+            rate(voltdb_gc_time_seconds[5m])
+          ) > 0.2
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "{{ $labels.host_name }} spending {{ $value | humanizePercentage }} of time in GC ({{ $labels.namespace }})"
+          description: "Sustained garbage-collection pressure adds latency to transactions and usually precedes heap exhaustion. Check heap usage on the memory dashboard."
+
+      - alert: VoltKsafetyReplicationRttHigh
+        # Intra-cluster replica acknowledgment time - the wait K-safety adds to
+        # every transaction. Only produces data when K > 0.
+        expr: |
+          histogram_quantile(0.99,
+            sum by (le, namespace) (
+              rate(voltdb_io_network_replication_round_trip_time_seconds_bucket[5m])
+            )
+          ) > 0.05
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "p99 intra-cluster replication RTT > 50ms in {{ $labels.namespace }}"
+          description: "Replica acknowledgments are taking {{ $value | humanizeDuration }} at p99; every transaction on the affected partitions waits this long. Check the internal network and whether a node is overloaded."
+
+      - alert: VoltForwardedTransactionsHigh
+        # Transactions landing on the wrong node pay an extra network hop.
+        # A sustained high ratio usually means clients are not topology-aware
+        # (fix on the client side) - or a server-side importer is routing rows
+        # to partitioned procedures, which cannot be topology-aware and is
+        # expected to forward (in that case, tune or silence this alert).
+        expr: |
+          sum by (namespace) (rate(voltdb_procedure_forwarded_total[10m]))
+          /
+          sum by (namespace) (rate(voltdb_procedure_invoked_total[10m])) > 0.1
+        for: 30m
+        labels:
+          severity: info
+        annotations:
+          summary: "{{ $value | humanizePercentage }} of transactions forwarded between nodes in {{ $labels.namespace }}"
+          description: "A large share of transactions arrive at a node that is not the leader for their partition and pay an extra hop. Enable topology awareness / client affinity in the client if this traffic comes from external clients."
+
+  # =========================================================================
+  # Workload plumbing: import, topics, scheduled tasks
+  # =========================================================================
+  - name: voltdb-workload
+    rules:
+      - alert: VoltImportFailures
+        expr: increase(voltdb_importer_failure_total[10m]) > 0
+        labels:
+          severity: warning
+        annotations:
+          summary: "Import transactions failing for {{ $labels.importer_name }} on {{ $labels.host_name }}"
+          description: "{{ $value | humanize }} import transactions failed in the last 10m - records are being rejected and not reaching the database."
+
+      - alert: VoltImportStalled
+        # Records have been read from the source but nothing is completing.
+        expr: |
+          voltdb_importer_outstanding_requests_total > 0
+          and
+          increase(voltdb_importer_success_total[15m]) == 0
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Importer {{ $labels.importer_name }} stalled on {{ $labels.host_name }} ({{ $labels.namespace }})"
+          description: "Records are outstanding but no import transaction has completed for 15 minutes."
+
+      - alert: VoltTopicNotStable
+        # Statuses other than STABLE (BLOCKED / BACKFILLING / ORPHANED) mean
+        # records are missing or being recovered for that topic partition.
+        expr: voltdb_topic_info{topic_status!="STABLE"} == 1
+        for: 15m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Topic {{ $labels.topic_name }} is {{ $labels.topic_status }} on {{ $labels.host_name }} ({{ $labels.namespace }})"
+
+      - alert: VoltScheduledTaskError
+        # ERROR = the task hit an error and stopped (ON ERROR STOP). PAUSED and
+        # DISABLED are intentional/expected states and do not alert.
+        expr: voltdb_scheduler_action_status_info{task_status="ERROR"} == 1
+        labels:
+          severity: warning
+        annotations:
+          summary: "Scheduled task {{ $labels.task_name }} stopped with an error ({{ $labels.namespace }})"
+          description: "The task's procedure returned an error and the task is no longer running. Its scheduled work is not happening until it is re-enabled."
