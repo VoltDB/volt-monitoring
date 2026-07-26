@@ -46,15 +46,13 @@ application. Every panel description must:
   per-node fraction can exceed 100% and falsely trip thresholds.
 - **Units**: VoltDB metrics are base-unit (`_seconds`, `_bytes`). Set the Grafana unit to the
   base unit (`s`, not `ms`) and express thresholds in base units too (50 ms = `0.05`).
-  **Known exporter bugs (15.3/14.x/13.x, Jira pending)**:
+  **Known exporter subtleties (15.3/14.x/13.x)**:
   - the DR producer/consumer and export `last_*_timestamp_seconds` gauges actually export
     epoch **milliseconds** (topic/ttl/conflict/readiness timestamps are correct seconds).
     Panels/rules using them must divide by 1000 for second math — or use Grafana datetime
-    units, which expect ms. Verify with a live query (`> 1e11` ⇒ ms) before trusting any
-    `_timestamp_seconds` metric.
-  - `voltdb_export_latency_seconds_*` is really **milliseconds** (enum declares
-    NANOSECONDS, stat source is ms, no conversion lands). The export dashboard's max-latency
-    panel compensates with `/1000` — remove when the server fix ships.
+    units, which expect ms.
+  - `voltdb_export_latency_seconds_*` is really **milliseconds**. The export dashboard's 
+    max-latency panel compensates with `/1000` — remove when the server fix ships.
   - `voltdb_ttl_last_execution_timestamp_seconds` is **SUM-aggregated across per-partition
     stat rows**, so it reads N× the epoch (observed exactly 2.000×). A timestamp gauge needs
     MAX aggregation. NOT compensated in dashboards (N varies) — the TTL "Last execution
@@ -93,8 +91,7 @@ application. Every panel description must:
   Kafka import/export, topics, TTL, scheduled tasks and a workload — Prometheus on
   `localhost:9090`, Grafana on `localhost:3000`. Check that a metric you reference actually
   exists and eyeball its live values (units!) before wiring a panel to it.
-- Authoritative metric semantics: `internal/volt-server/src/main/resources/org/voltdb/metrics/`
-  `v1/exporter/http/handler/prometheus/bundle/helpMessages_en_US.properties` (official help
+- Authoritative metric semantics: `helpMessages_en_US.properties` (official help
   text per metric) and the stats sources under `org/voltdb/stats/` in the internal repo.
 - A per-dashboard review sweep (does each description match its query?) catches real bugs —
   when making broad edits, verify panel-by-panel against `targets[].expr`, not from memory.

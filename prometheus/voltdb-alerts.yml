@@ -4,8 +4,7 @@
 # your workload and SLOs before production use. All rules assume a `namespace`
 # label identifies the cluster (added automatically by the Volt Operator on
 # Kubernetes; see the README for bare-metal setups) and that Prometheus scrapes
-# at most half the VoltDB metric interval. Rules flagged "ENG-29298" need a
-# VoltDB release that carries those metrics (15.3.x+ / 16.x).
+# at most half the VoltDB metric interval.
 #
 # Load via prometheus.yml:
 #   rule_files:
@@ -17,19 +16,9 @@
 # "Volt storage exceeds N% of available storage" for voltdbroot, command logs,
 # command-log snapshots, manual/scheduled snapshots and the DR overflow dir are
 # filesystem measurements. VoltDB does NOT export disk usage into the
-# Prometheus metric stream, so no rule here can see it. Two complementary
-# options instead:
-#
-# 1. VoltDB's built-in Resource Monitor (deployment: systemsettings >
-#    resourcemonitor > disklimit) watches the disk holding each feature
-#    directory - SNAPSHOTS, COMMANDLOG, COMMANDLOGSNAPSHOT, EXPORTOVERFLOW,
-#    DROVERFLOW, TOPICSDATA - with percent or absolute thresholds per feature.
-#    Each feature takes two levels: `alert` raises an SNMP trap (+ log
-#    warning), `size` makes the database PAUSE itself to protect data. If your
-#    alarming is SNMP-based, this is the native path and needs no external
-#    agent. See MonitorSysResource in the Administrator's Guide.
-#
-# 2. For Prometheus/Grafana (trends, dashboards, Alertmanager), alert on the
+# Prometheus metric stream, so no rule here can see it.
+
+# For Prometheus/Grafana (trends, dashboards, Alertmanager), alert on the
 #    volume the data lives on:
 #
 #   # Kubernetes (kubelet / PVC):
@@ -113,7 +102,7 @@ groups:
           description: "RSS is {{ $value | humanizePercentage }} of the memory VoltDB can see on {{ $labels.host_name }} ({{ $labels.namespace }})."
 
       - alert: VoltMemoryNearConfiguredLimit
-        # RSS vs the resource-monitor memory limit (ENG-29298). The DB PAUSES
+        # RSS vs the resource-monitor memory limit. The DB PAUSES
         # when this limit is reached, so this is the more actionable of the two.
         expr: voltdb_memory_rss_bytes / voltdb_memory_limit_bytes > 0.8
         for: 10m
@@ -156,9 +145,8 @@ groups:
         # `and rate(last_queued[5m]) > 0` clause keeps only partitions that are
         # actively producing, so the alarm reflects real backlog.
         # UNIT BUG: despite the _seconds suffix, the DR producer/consumer and
-        # export last-*-timestamp gauges are exported in epoch MILLISECONDS
-        # (verified against 15.3; Jira pending). Hence the /1000. Re-check when
-        # upgrading - if the server fixes the units, remove the division.
+        # export last-*-timestamp gauges are exported in epoch MILLISECONDS.
+        # Hence, the /1000.
         expr: |
           max by (namespace, remote_cluster_id) (
             (
@@ -210,9 +198,7 @@ groups:
   # =========================================================================
   # DRCONFLICT: meaningful conflict activity, deduplicated per site-pair
   # =========================================================================
-  # Design note (answers the client's DRCONFLICT suggestion):
-  #   - "Single deduplicated incident per site-pair, not per row/table":
-  #     the recording rules aggregate by (namespace, cluster_id,
+  #   - The recording rules aggregate by (namespace, cluster_id,
   #     remote_cluster_id). One series per site-pair -> one alert. If you want
   #     the notification to also list impacted tables, keep table_name on a
   #     companion warning rule and let Alertmanager group by site-pair:
@@ -225,26 +211,16 @@ groups:
   #         - source_matchers: [ severity="critical", alertname="VoltDrDataDivergence" ]
   #           target_matchers: [ severity="warning", alertname="VoltDrConflictsActive" ]
   #           equal: ['namespace', 'cluster_id', 'remote_cluster_id']
-  #   - "Rate/delta-based logic + hysteresis": rate() over 5m + `for:`.
   #   - "Severity levels": two alerts - any conflict = warning; the data-
   #     diverging subtypes (divergence / missing-row) = critical.
   #   - "Subtype breakdown (missing/divergence/timestamp/constraint)": four
   #     source counters, recorded separately below.
-  #   - "Top impacted tables/partitions" + "trend/last conflict time": Prometheus
-  #     annotations cannot run topk, so the alert carries the site-pair identity
-  #     and links to the pre-filtered conflicts dashboard; table_name /
-  #     partition_id and voltdb_dr_last_conflict_timestamp_seconds are the
-  #     enrichment surface there. (Conflicts occur only in active-active XDCR,
-  #     and the counter series are absent until the first conflict - hence the
-  #     increase()/rate() form.)
   - name: voltdb-drconflicts
     rules:
       # ---- recording rules: per site-pair conflict rates ----
       - record: sitepair:voltdb_dr_conflicts:rate5m
         expr: sum by (namespace, cluster_id, remote_cluster_id) (rate(voltdb_dr_conflicts_count_total[5m]))
 
-      # Data-diverging subtypes: the clusters' data actually differs (as opposed
-      # to constraint/timestamp conflicts that last-writer-wins resolves).
       # Each subtype counter is absent until its first event, and vector
       # addition drops any site-pair present on only one side - so a lone
       # divergence (without a missing-row) would vanish from the sum. Each
@@ -287,7 +263,7 @@ groups:
   - name: voltdb-durability
     rules:
       - alert: VoltCommandLogBackpressure
-        # ENG-29298. Fires BEFORE the command-log volume fills - a better early
+        # Fires BEFORE the command-log volume fills - a better early
         # warning than disk % for command-log storage.
         expr: increase(voltdb_commandlog_backpressure_total[10m]) > 0
         labels:
@@ -330,8 +306,8 @@ groups:
   # =========================================================================
   # One MP transaction runs fragments on EVERY partition behind a barrier, so
   # a single stuck or slow MP halts the whole cluster. The two rules below
-  # were validated against recorded incidents (a 169s MP write and a frozen
-  # node) and together also tell you WHICH failure mode you have:
+  # were validated against recorded incidents and together also tell you WHICH
+  # failure mode you have:
   #   both firing            -> long-running MP: sites are executing and work
   #                             is piling up behind it (queue backlog grows)
   #   VoltClusterStalled only-> stuck MP: nothing is executing (frozen /
@@ -574,8 +550,3 @@ groups:
         annotations:
           summary: "Scheduled task {{ $labels.task_name }} stopped with an error ({{ $labels.namespace }})"
           description: "The task's procedure returned an error and the task is no longer running. Its scheduled work is not happening until it is re-enabled."
-
-# Not expressible with current metrics: license-expiry alerting. The expiration
-# is only a label on voltdb_systeminformation_license_info and Prometheus cannot
-# compare label values numerically. Track it operationally, or request a numeric
-# license-expiry-seconds gauge.
