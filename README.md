@@ -6,14 +6,13 @@ This repo provides Grafana dashboards for reporting on Volt Active Data metrics 
 
 The dashboards are provided in Grafana JSON format and are divided into categories:
 
-- **Volt** - Dashboards for the latest version of Volt Active Data in any environment, including bare metal, Kubernetes and VMs (currently a link to `Volt-V14.x`).
+- **Volt** - Dashboards for the latest version of Volt Active Data in any environment, including bare metal, Kubernetes and VMs (currently a link to `Volt-V15.x`).
 - **Volt-V15.x** - Dashboards for Volt Active Data V15.x.
 - **Volt-V14.x** - Dashboards for Volt Active Data V14.x (new metrics system).
 - **Volt-V13.x** - Dashboards for Volt Active Data V13.x (new metrics system).
 - **Volt-V12.x** - Dashboards for the long-term support (LTS) version 12 of Volt Active Data (`new-metrics`; for the legacy Prometheus exporter use the Volt-V10.x dashboards).
 - **Volt-V10.x** - Dashboards for the long-term support (LTS) version 10 of Volt Active Data.
 - **Volt-V9.x** - Dashboards for the long-term support (LTS) version 9 of Volt Active Data.
-- **Volt-K8s-13.x** - Kubernetes-flavoured variant of the V13.x dashboards.
 
 Within each subdirectory are multiple dashboards, each providing a different view of the database activity, performance, or status. Try the different dashboards to see which ones suit your monitoring needs.
 
