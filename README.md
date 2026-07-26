@@ -13,7 +13,7 @@ The dashboards are provided in Grafana JSON format and are divided into categori
 - **Volt-V12.x** - Dashboards for the long-term support (LTS) version 12 of Volt Active Data.
 - **Volt-V10.x** - Dashboards for the long-term support (LTS) version 10 of Volt Active Data.
 - **Volt-V9.x** - Dashboards for the long-term support (LTS) version 9 of Volt Active Data.
-- **Volt-K8s-13.x / Volt-K8s-12.3.x** - Kubernetes-flavoured variants of the V13.x / V12.3.x dashboards.
+- **Volt-K8s-13.x** - Kubernetes-flavoured variant of the V13.x dashboards.
 
 Within each subdirectory are multiple dashboards, each providing a different view of the database activity, performance, or status. Try the different dashboards to see which ones suit your monitoring needs.
 

@@ -683,6 +683,6 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB TTL",
-  "uid": "volt-k8s-123x-ttl",
+  "uid": "volt-v12x-ttl",
   "weekStart": ""
 }

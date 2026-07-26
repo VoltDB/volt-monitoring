@@ -1756,6 +1756,6 @@
   "timepicker": {},
   "timezone": "",
   "title": "VoltDB Tasks",
-  "uid": "volt-k8s-123x-tasks",
+  "uid": "volt-v12x-tasks",
   "weekStart": ""
 }
