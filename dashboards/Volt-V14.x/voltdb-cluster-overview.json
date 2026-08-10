@@ -2092,7 +2092,7 @@
         "type": "prometheus",
         "uid": "prometheus"
       },
-      "description": "The rate of stored-procedure executions the cluster is running per second - the headline measure of how busy the database is. In a K-safe cluster each transaction fans out to every copy of its partition, so this counts each transaction once per copy and runs higher than the client transaction rate.",
+      "description": "The rate of transactions the cluster is executing per second, counted once per client request - the headline measure of client load. The Procedure calls tile next to it counts every execution including the fan-out to partition copies, so it runs higher; a growing gap between the two means more replicated or multi-partition work per transaction.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2150,7 +2150,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(rate(voltdb_procedure_invoked_total{namespace=\"$cluster\",host_name=~\"$host\"}[$__rate_interval]))",
+          "expr": "sum(rate(voltdb_initiator_procedure_invoked_total{namespace=\"$cluster\",host_name=~\"$host\"}[$__rate_interval]))",
           "format": "time_series",
           "instant": false,
           "interval": "",
