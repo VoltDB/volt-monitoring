@@ -1418,6 +1418,22 @@
               },
               {
                 "id": "custom.filterable"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "range",
+                    "options": {
+                      "from": -1000000000000000.0,
+                      "to": -1,
+                      "result": {
+                        "text": "in progress",
+                        "index": 0
+                      }
+                    }
+                  }
+                ]
               }
             ]
           },
@@ -1818,6 +1834,22 @@
               },
               {
                 "id": "custom.filterable"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "range",
+                    "options": {
+                      "from": -1000000000000000.0,
+                      "to": -1,
+                      "result": {
+                        "text": "in progress",
+                        "index": 0
+                      }
+                    }
+                  }
+                ]
               }
             ]
           },
@@ -2236,6 +2268,22 @@
               },
               {
                 "id": "custom.filterable"
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "range",
+                    "options": {
+                      "from": -1000000000000000.0,
+                      "to": -1,
+                      "result": {
+                        "text": "in progress",
+                        "index": 0
+                      }
+                    }
+                  }
+                ]
               }
             ]
           },
