@@ -1144,10 +1144,6 @@
           "mappings": [
             {
               "options": {
-                "drpriority": {
-                  "index": 0,
-                  "text": "drpriority"
-                },
                 "drrole": {
                   "index": 1,
                   "text": "Cluster's DR role (MASTER,REPLICA,XDCR,NONE)"
@@ -1233,7 +1229,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "max (voltdb_systeminformation_deployment_info{v2=\"1\", namespace=\"$cluster\", host_name=~\"$host\"}) by (drpriority,drrole, elasticduration, elasticthroughput, export, heartbeattimeout, partitiondetection, prioritiesenabled, temptablesmaxsize, metrics, memorylimit, drconsumermaxbuffers, drconsumermaxbytes)",
+          "expr": "max (voltdb_systeminformation_deployment_info{v2=\"1\", namespace=\"$cluster\", host_name=~\"$host\"}) by (drrole, elasticduration, elasticthroughput, export, heartbeattimeout, partitiondetection, temptablesmaxsize, metrics, memorylimit, drconsumermaxbuffers, drconsumermaxbytes)",
           "format": "time_series",
           "instant": true,
           "interval": "",

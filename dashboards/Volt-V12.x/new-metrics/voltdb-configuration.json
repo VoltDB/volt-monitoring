@@ -1022,10 +1022,6 @@
           "mappings": [
             {
               "options": {
-                "drpriority": {
-                  "index": 0,
-                  "text": "drpriority"
-                },
                 "drrole": {
                   "index": 1,
                   "text": "Cluster's DR role (MASTER,REPLICA,XDCR,NONE)"
@@ -1115,7 +1111,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "max (voltdb_systeminformation_deployment_info{v2=\"1\", namespace=\"$cluster\", host_name=~\"$host\"}) by (drpriority,drrole, elasticduration, elasticthroughput, export, heartbeattimeout, partitiondetection, prioritiesenabled, temptablesmaxsize)",
+          "expr": "max (voltdb_systeminformation_deployment_info{v2=\"1\", namespace=\"$cluster\", host_name=~\"$host\"}) by (drrole, elasticduration, elasticthroughput, export, heartbeattimeout, partitiondetection, temptablesmaxsize)",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -1133,7 +1129,7 @@
         }
       ],
       "type": "table",
-      "description": "Database deployment settings from @SystemInformation DEPLOYMENT: DR role (drrole) and DR transaction priority (drpriority), elastic rebalance target duration (elasticduration, ms) and throughput (elasticthroughput, MB/s), whether export is enabled (export), heartbeat timeout (heartbeattimeout, seconds), and whether network partition detection is enabled (partitiondetection)."
+      "description": "Database deployment settings from @SystemInformation DEPLOYMENT: DR role (drrole), elastic rebalance target duration (elasticduration, ms) and throughput (elasticthroughput, MB/s), whether export is enabled (export), heartbeat timeout (heartbeattimeout, seconds), and whether network partition detection is enabled (partitiondetection)."
     },
     {
       "datasource": {
