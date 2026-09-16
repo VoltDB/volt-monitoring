@@ -895,7 +895,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "max by(host_name)(voltdb_initiator_procedure_invoked_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "expr": "max by(host_name)(voltdb_initiator_procedure_invoked_time_max_seconds{namespace=\"$cluster\",host_name=~\"$host\"} or voltdb_initiator_procedure_invoked_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"})",
           "legendFormat": "{{host_name}} max",
           "range": true,
           "refId": "B"
@@ -1473,7 +1473,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "max by(host_name,procedure_name)(voltdb_procedure_invoked_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\",procedure_name=~\"$procedure\"})",
+          "expr": "max by(host_name,procedure_name)(voltdb_procedure_invoked_time_max_seconds{namespace=\"$cluster\",host_name=~\"$host\",procedure_name=~\"$procedure\"} or voltdb_procedure_invoked_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\",procedure_name=~\"$procedure\"})",
           "legendFormat": "{{host_name}} {{procedure_name}}",
           "range": true,
           "refId": "A"
@@ -1698,7 +1698,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "max by(host_name,procedure_name)(voltdb_initiator_procedure_invoked_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\",procedure_name=~\"$procedure\"})",
+          "expr": "max by(host_name,procedure_name)(voltdb_initiator_procedure_invoked_time_max_seconds{namespace=\"$cluster\",host_name=~\"$host\",procedure_name=~\"$procedure\"} or voltdb_initiator_procedure_invoked_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\",procedure_name=~\"$procedure\"})",
           "legendFormat": "{{host_name}} {{procedure_name}}",
           "range": true,
           "refId": "A"
@@ -2175,7 +2175,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "max by(host_name)(voltdb_compaction_execution_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "expr": "max by(host_name)(voltdb_compaction_execution_max_seconds{namespace=\"$cluster\",host_name=~\"$host\"} or voltdb_compaction_execution_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"})",
           "legendFormat": "{{host_name}} max",
           "range": true,
           "refId": "B"

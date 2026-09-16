@@ -2054,7 +2054,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "max(voltdb_deployment_update_elapsed_seconds_max{namespace=\"$cluster\"}) or vector(0)",
+          "expr": "max(voltdb_deployment_update_elapsed_max_seconds{namespace=\"$cluster\"} or voltdb_deployment_update_elapsed_seconds_max{namespace=\"$cluster\"}) or vector(0)",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -2124,7 +2124,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "max(voltdb_deployment_update_blocked_seconds_max{namespace=\"$cluster\"}) or vector(0)",
+          "expr": "max(voltdb_deployment_update_blocked_max_seconds{namespace=\"$cluster\"} or voltdb_deployment_update_blocked_seconds_max{namespace=\"$cluster\"}) or vector(0)",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"

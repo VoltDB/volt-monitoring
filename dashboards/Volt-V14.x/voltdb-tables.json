@@ -606,7 +606,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "avg by(table_name)(voltdb_compaction_execution_seconds_max{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"})",
+          "expr": "avg by(table_name)(voltdb_compaction_execution_max_seconds{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"} or voltdb_compaction_execution_seconds_max{namespace=\"$cluster\",host_name=~\"$host\",partition_id=~\"$partition\",table_name=~\"$table\"})",
           "hide": true,
           "legendFormat": "{{table}}",
           "range": true,

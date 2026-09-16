@@ -53,6 +53,14 @@ application. Every panel description must:
     units, which expect ms.
   - `voltdb_export_latency_seconds_*` is really **milliseconds**. The export dashboard's 
     max-latency panel compensates with `/1000` — remove when the server fix ships.
+  - histogram **maxima were renamed**: `voltdb_<x>_seconds_max` (an illegal child of the
+    histogram family, which made Google Managed Prometheus drop the whole family) became a
+    standalone gauge `voltdb_<x>_max_seconds` in ENG-30001. It lands mid-line on 13.3.x/14.3.x/
+    15.3.x, so within one major version both names are in the field. Panels therefore query
+    `new or old`; PromQL set-operator matching ignores `__name__`, so a server emitting the new
+    name suppresses the old series rather than drawing both. Drop the `or <old>` branch once the
+    oldest supported patch of the line carries the fix. There is no replacement for
+    `voltdb_<x>_seconds_min` — the minimum is no longer exported (no panel used it).
   - `voltdb_ttl_last_execution_timestamp_seconds` is **SUM-aggregated across per-partition
     stat rows**, so it reads N× the epoch (observed exactly 2.000×). A timestamp gauge needs
     MAX aggregation. NOT compensated in dashboards (N varies) — the TTL "Last execution

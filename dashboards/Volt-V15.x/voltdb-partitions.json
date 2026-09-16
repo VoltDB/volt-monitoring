@@ -169,7 +169,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "max(voltdb_task_queue_wait_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "expr": "max(voltdb_task_queue_wait_time_max_seconds{namespace=\"$cluster\",host_name=~\"$host\"} or voltdb_task_queue_wait_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "B"
@@ -1123,7 +1123,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "max by(procedure_name, partition_id) (voltdb_procedure_invoked_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"})",
+          "expr": "max by(procedure_name, partition_id) (voltdb_procedure_invoked_time_max_seconds{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"} or voltdb_procedure_invoked_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\",site_id=~\"$site\",partition_id=~\"$partition\"})",
           "format": "table",
           "instant": false,
           "legendFormat": "__auto",
