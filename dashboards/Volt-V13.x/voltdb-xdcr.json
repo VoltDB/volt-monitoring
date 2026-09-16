@@ -351,7 +351,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "max(voltdb_dr_producer_partition_round_trip_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"})",
+          "expr": "max(voltdb_dr_producer_partition_round_trip_time_max_seconds{namespace=\"$cluster\",host_name=~\"$host\"} or voltdb_dr_producer_partition_round_trip_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"})",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -3023,7 +3023,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "max(voltdb_dr_producer_partition_round_trip_time_seconds_max{namespace=\"$cluster\"})",
+          "expr": "max(voltdb_dr_producer_partition_round_trip_time_max_seconds{namespace=\"$cluster\"} or voltdb_dr_producer_partition_round_trip_time_seconds_max{namespace=\"$cluster\"})",
           "legendFormat": "max",
           "range": true,
           "refId": "B"
@@ -3388,7 +3388,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "1000*max(max_over_time(voltdb_dr_producer_partition_round_trip_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"}[1m]))",
+          "expr": "1000*max(max_over_time(voltdb_dr_producer_partition_round_trip_time_max_seconds{namespace=\"$cluster\",host_name=~\"$host\"}[1m]) or max_over_time(voltdb_dr_producer_partition_round_trip_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"}[1m]))",
           "instant": true,
           "legendFormat": "",
           "range": false,
@@ -3524,7 +3524,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "1000*max(max_over_time(voltdb_dr_producer_partition_round_trip_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"}[5m]))",
+          "expr": "1000*max(max_over_time(voltdb_dr_producer_partition_round_trip_time_max_seconds{namespace=\"$cluster\",host_name=~\"$host\"}[5m]) or max_over_time(voltdb_dr_producer_partition_round_trip_time_seconds_max{namespace=\"$cluster\",host_name=~\"$host\"}[5m]))",
           "instant": true,
           "legendFormat": "",
           "range": false,
