@@ -1104,7 +1104,7 @@
               },
               "editorMode": "code",
               "exemplar": false,
-              "expr": "sort(\n    max by (procedure_name)\n    (\n        voltdb_procedure_invoked_time_seconds_max\n        {\n            namespace=\"$cluster\",\n            host_name=~\"$host\",\n            procedure_name=~\"$procedure\"\n    \n        }\n    )\n)",
+              "expr": "sort(\n    max by (procedure_name)\n    (\n        voltdb_procedure_invoked_time_max_seconds\n        {\n            namespace=\"$cluster\",\n            host_name=~\"$host\",\n            procedure_name=~\"$procedure\"\n    \n        }\n        or\n        voltdb_procedure_invoked_time_seconds_max\n        {\n            namespace=\"$cluster\",\n            host_name=~\"$host\",\n            procedure_name=~\"$procedure\"\n    \n        }\n    )\n)",
               "instant": false,
               "legendFormat": "{{procedure_name}}",
               "range": true,
