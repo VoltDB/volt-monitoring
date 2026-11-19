@@ -287,11 +287,11 @@
               },
               {
                 "color": "#EAB839",
-                "value": 45
+                "value": 0.45
               },
               {
                 "color": "red",
-                "value": 60
+                "value": 0.6
               }
             ]
           },
@@ -530,7 +530,7 @@
               },
               {
                 "color": "red",
-                "value": 80
+                "value": 0.8
               }
             ]
           },
@@ -1020,7 +1020,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "sum"
+            "lastNotNull"
           ],
           "fields": "",
           "values": false

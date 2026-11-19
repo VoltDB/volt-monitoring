@@ -1995,6 +1995,7 @@
   "preload": false,
   "refresh": "",
   "schemaVersion": 42,
+  "description": "Topics were removed in VoltDB V16, so this dashboard stays empty on V16 and later clusters.",
   "tags": [
     "voltdb",
     "topics"
@@ -2141,7 +2142,7 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "VoltDB Topics",
+  "title": "VoltDB Topics (V15.x and earlier)",
   "uid": "volt-v15x-topics",
   "weekStart": "",
   "__requires": [
