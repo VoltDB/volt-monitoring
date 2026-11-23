@@ -310,11 +310,11 @@
               },
               {
                 "color": "red",
-                "value": 80
+                "value": 0.08
               }
             ]
           },
-          "unit": "ms"
+          "unit": "s"
         },
         "overrides": []
       },
@@ -2976,11 +2976,11 @@
               },
               {
                 "color": "red",
-                "value": 80
+                "value": 0.08
               }
             ]
           },
-          "unit": "ms"
+          "unit": "s"
         },
         "overrides": []
       },
@@ -3012,7 +3012,7 @@
             "uid": "prometheus"
           },
           "editorMode": "code",
-          "expr": "rate(voltdb_dr_producer_partition_round_trip_time_seconds_sum{namespace=\"$cluster\"}[$__rate_interval])",
+          "expr": "rate(voltdb_dr_producer_partition_round_trip_time_seconds_sum{namespace=\"$cluster\"}[$__rate_interval]) / (rate(voltdb_dr_producer_partition_round_trip_time_seconds_count{namespace=\"$cluster\"}[$__rate_interval]) > 0)",
           "legendFormat": "{{host_name}}[{{partition_id}}]",
           "range": true,
           "refId": "A"
